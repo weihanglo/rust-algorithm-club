@@ -4,7 +4,7 @@
 
 - [x] [Insertion sort](sorting/insertion_sort)
 - [x] [Selection sort](sorting/merge_sort)
-- [ ] [Merge sort](sorting/merge_sort)
+- [x] [Merge sort](sorting/merge_sort)
 - [ ] [Heap sort](sorting/heap_sort)
 - [ ] [Quick sort](sorting/quick_sort)
 - [x] [Bubble sort](sorting/bubble_sort)
