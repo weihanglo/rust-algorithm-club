@@ -1,4 +1,7 @@
 /// Oldschool in-place selection sort
+
+use std::cmp;
+
 fn selection_sort<T: PartialOrd + Copy>(arr: &mut [T]) {
     // Rust would skip iteration if lower bound >= upper bound.
     // Hence, `arr.len() - 1` is only a skip of last iteration.

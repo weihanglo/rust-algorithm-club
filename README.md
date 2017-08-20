@@ -1,18 +1,31 @@
 # Algorithms in Rust
 
-## Sorting algorithms
+## Sorting
 
-- [x] [Insertion sort](sorting/insertion_sort)
-- [x] [Selection sort](sorting/merge_sort)
-- [x] [Merge sort](sorting/merge_sort)
-- [ ] [Heap sort](sorting/heap_sort)
-- [ ] [Quick sort](sorting/quick_sort)
-- [x] [Bubble sort](sorting/bubble_sort)
-- [ ] [Shell sort](sorting/shell_sort)
-- [ ] [Comb sort](sorting/comb_sort)
-- [ ] [Counting sort](sorting/counting_sort)
-- [ ] [Bucket sort](bucket_sort)
-- [ ] [Radix sort](radix_sort)
+**Simple sorts:**
+
+- [Insertion sort](insertion_sort)
+- [Selection sort](selection_sort)
+- [Bubble sort](bubble_sort)
+- [Shellsort](shellsort)
+
+**Efficient sorts:**
+
+- [Heapsort](heapsort)
+- [Quicksort](quicksort)
+- [Mergesort](mergesort)
+
+**Hybrid sorts (more efficient):**
+
+- [Timsort](timsort)
+- [Introsort](introsort)
+<!-- - [Smoothsort](smoothsort) -->
+
+**Special-purpose sorts:**
+
+- [Counting sort](counting_sort)
+- [Bucket sort](bucket_sort)
+- [Radix sort](radix_sort)
 
 ## License
 

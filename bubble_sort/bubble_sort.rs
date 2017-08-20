@@ -1,4 +1,7 @@
-/// Oldschool in-place bubble sort
+/// Bubble sort
+
+use std::cmp;
+
 fn bubble_sort<T: PartialOrd + Copy>(arr: &mut [T]) {
     let mut swapped = true;
     while swapped { // No swap means array is sorted.
