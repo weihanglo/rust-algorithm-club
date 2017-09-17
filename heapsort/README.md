@@ -92,9 +92,9 @@ Max-heap 會將最大的元素擺在 root 的位置，我們先將最後一個 n
 
 |              | Complexity       |
 | :----------- | :--------------- |
-| Worst case   | `O(nlogn)`       |
-| Best case    | `O(nlogn)`       |
-| Average case | `O(nlogn)`       |
+| Worst        | `O(nlogn)`       |
+| Best         | `O(nlogn)`       |
+| Average      | `O(nlogn)`       |
 | Worst space  | `O(1)` auxiliary |
 
 Heapsort 最佳、最差、平均的時間複雜度皆為 `O(nlogn)`，同樣分為兩部分簡單解釋。

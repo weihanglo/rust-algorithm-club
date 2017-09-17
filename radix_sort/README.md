@@ -93,9 +93,9 @@ sort by leftmost digit -->
 
 |              | Complexity           |
 | :----------- | :------------------- |
-| Worst case   | $O(dn)$              |
-| Best case    | $\Omega(dn)$         |
-| Average case | $\Theta(dn)$         |
+| Worst        | $O(dn)$              |
+| Best         | $\Omega(dn)$         |
+| Average      | $\Theta(dn)$         |
 | Worst space  | $O(d + n)$ auxiliary |
 
 > $n$：資料筆數。  

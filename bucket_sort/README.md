@@ -86,9 +86,9 @@ Original array
 
 |              | Complexity               |
 | :----------- | :----------------------- |
-| Worst case   | $O(n^2)$                 |
-| Best case    | $\Omega(n + k)$          |
-| Average case | $\Theta(n + k)$          |
+| Worst        | $O(n^2)$                 |
+| Best         | $\Omega(n + k)$          |
+| Average      | $\Theta(n + k)$          |
 | Worst space  | $O(n + k)$ auxiliary |
 
 > $k$ = 桶子的數量（number of buckets）

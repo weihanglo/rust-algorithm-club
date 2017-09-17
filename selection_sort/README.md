@@ -8,8 +8,8 @@
 
 |              | Complexity |
 | :----------- | :--------- |
-| Worst case   |            |
-| Best case    |            |
-| Average case |            |
+| Worst        |            |
+| Best         |            |
+| Average      |            |
 | Worst space  |  auxiliary |
 

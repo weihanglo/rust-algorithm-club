@@ -41,7 +41,7 @@ Lomuto 是最簡單最容易理解的 partition scheme 之一，常被作為教�
 
 |              | Complexity                    |
 | :----------- | :---------------------------- |
-| Worst case   | `O(n^2)`                      |
-| Best case    | `O(nlogn)` or `O(n)`          |
-| Average case | `O(nlogn)`                    |
+| Worst        | `O(n^2)`                      |
+| Best         | `O(nlogn)` or `O(n)`          |
+| Average      | `O(nlogn)`                    |
 | Worst space  | `O(logn)` or `O(n)` auxiliary |

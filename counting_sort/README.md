@@ -96,9 +96,9 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 
 |              | Complexity           |
 | :----------- | :------------------- |
-| Worst case   | $O(n + k)$           |
-| Best case    | $\Omega(n + k)$      |
-| Average case | $\Theta(n + k)$      |
+| Worst        | $O(n + k)$           |
+| Best         | $\Omega(n + k)$      |
+| Average      | $\Theta(n + k)$      |
 | Worst space  | $O(n + k)$ auxiliary |
 
 > k 為資料已知範圍上下界之差。
