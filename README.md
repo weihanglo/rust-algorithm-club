@@ -19,9 +19,8 @@
 
 - [Timsort](timsort)
 - [Introsort](introsort)
-<!-- - [Smoothsort](smoothsort) -->
 
-**Special-purpose sorts:**
+**Distribution sorts:**
 
 - [Counting sort](counting_sort)
 - [Bucket sort](bucket_sort)

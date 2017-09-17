@@ -1,13 +1,18 @@
 # Bucket sort
 
-- 又稱 **bin sort**
-- 非比較式排序法（Non-comparative sort）
-- 分配式排序法（Distribution sort）
-- 預期資料為**均勻分佈**
+[Bucket sort][wiki-bucket-sort]，是一個非[比較排序][wiki-comparison-sort]。原理是建立一些桶子，每個桶子對應一資料區間，在將待排序資料分配到不同的桶中，桶子內部各自排序。  
+由於並非比較排序，使用 Bucket sort 需要事先知道資料的範圍與分佈，才能決定桶子對應的區間。
+
+Bucket sort 基本特性如下：
+
+- 又稱 **bin sort**。
+- **穩定排序**：相同鍵值的元素，排序後相對位置不改變。
+- **分配式排序**：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。
+- **預期**：資料為**均勻分佈**。
 
 ## Algorithm
 
-假設要排序 $N$ 個元素的陣列，這些元素的值平均散落在某個**已知的預期範圍內**，例如 1 到 100。
+假設要排序 $n$ 個元素的陣列，這些元素的值平均散落在某個**已知的預期範圍內**，例如 1 到 100。
 
 1. **Create buckets**：建立 $k$ 個桶子（bucket）的陣列。每個桶子**對應預期範圍的某區間**，如第一個桶子放 1 到 10，第二個放 11 到 20。
 2. **Scatter**：將每個元素依照該值放入對應的桶子中。
@@ -18,7 +23,7 @@
 
 以下用 ASCII diagram 視覺化解釋：
 
-這裡有一些整數，落在 1 至 100 之間。我們有 $N=10$ 的陣列要排序。
+這裡有一些整數，落在 1 至 100 之間。我們有 $n = 10$ 的陣列要排序。
 
 ```
 Original array
@@ -28,7 +33,7 @@ Original array
 +-------------------------------------------------+
 ```
 
-**1. Create buckets**：建立一定數量的桶子，這裡我們建立與原始陣列相同數量的桶子（10）。每個桶子對應 $N - 1 * 10$ 到 $N * 10$ 的區間。
+**1. Create buckets**：建立一定數量的桶子，這裡我們建立與原始陣列相同數量的桶子（10）。每個桶子對應 $n - 1 * 10$ 到 $n * 10$ 的區間。
 
 ```
 Bucket array
@@ -79,14 +84,16 @@ Original array
 
 ## Performance
 
-|              | Complexity           |
-| :----------- | :------------------- |
-| Worst case   | $O(n^2)$             |
-| Best case    | $\Omega(n + k)$      |
-| Average case | $\Theta(n + k)$      |
+|              | Complexity               |
+| :----------- | :----------------------- |
+| Worst case   | $O(n^2)$                 |
+| Best case    | $\Omega(n + k)$          |
+| Average case | $\Theta(n + k)$          |
 | Worst space  | $O(n + k)$ auxiliary |
 
 > $k$ = 桶子的數量（number of buckets）
+> $n$ = 資料筆數
+
 
 ### Worst case
 
@@ -94,7 +101,7 @@ Bucket sort 是一個分配式排序法，對資料分佈有既定的預期：�
 
 ### Best case
 
-最佳的狀況則是完全符合預期的平均分佈，一個蘿蔔一個坑，每個桶內排序的最佳時間複雜度為 $O(n / k)$，再乘上桶子總數 $k$，僅需 $k \cdot O(n / k)$ 也就是 $O(k \cdot (n / k)) = O(n)$。計算結果看起來非常合理，但實際上最佳時間複雜度為 $O(n + k)$，為什麼呢？
+最佳的狀況則是完全符合預期的平均分佈，一個蘿蔔一個坑，每個桶內排序的最佳時間複雜度為 $O(n / k)$，再乘上桶子總數 $k$，僅需 $O(k \cdot (n / k)) = O(n)$。計算結果看起來非常合理，但實際上最佳時間複雜度為 $O(n + k)$，為什麼呢？
 
 無庸置疑，桶內排序最佳時間複雜度為 $O(n / k)$，但別忘了這是省略常數項過後式子，進行符號運算時，較精確的表達是 $c_0 O(n / k) + c_1$，對於實作層面的常數 $c_0$ 和 $c_1$ 則予以保留。
 
@@ -122,14 +129,23 @@ for (each bucket b in all k buckets)
 
 端看桶子總數而定，若桶子總數很大，比元素個數 $n$ 大得多，則桶子總數對執行時間的影響恐較劇烈，就算大多數為空桶子，仍須挨家挨戶查看是否需要執行桶內排序。
 
+### Space Complexity
+
+Bucket sort 須額外建立 $k$ 個桶子，每個桶子需要配置長度為 $n$ 的 array，因此空間複雜度為 $O(n \cdot k)$。如果以 dynamic array 實作 bucket，並考慮平攤分析（Amortized analysis），則空間複雜度降至 $O(n + k)$，這也是大多數人接受的分析結果，畢竟不會有人無聊到預先配置 $n \cdot k$ 個 empty bucket。
+
 ## Implementation
 
 ## Reference
 
-- [Wiki: Bucket sort](https://en.wikipedia.org/wiki/Bucket_sort)
+- [Wiki: Bucket sort][wiki-bucket-sort]
+- [Wiki: Amortized analysis][wiki-amortized-analysis]
+- [How is the complexity of bucket sort is O(n+k) if we implement buckets using linked lists?][stackoverflow-bucket-sort-analysis]
+- [Bucket sort in Rust][bucket-sort-in-rust]
 
-- [How is the complexity of bucket sort is O(n+k) if we implement buckets using linked lists?](https://stackoverflow.com/questions/7311415)
 
-- [Swift Algorithm Club: Bucket Sort](https://github.com/raywenderlich/swift-algorithm-club/tree/master/Bucket%20Sort)
+[wiki-bucket-sort]: https://en.wikipedia.org/wiki/Bucket_sort
+[wiki-amortized-analysis]: https://en.wikipedia.org/wiki/Amortized_analysis
+[wiki-comparison-sort]: https://en.wikipedia.org/wiki/Comparison_sort
+[stackoverflow-bucket-sort-analysis]: https://stackoverflow.com/questions/7311415
+[bucket-sort-in-rust]: https://codereview.stackexchange.com/questions/145113/bucket-sort-in-rust
 
-https://codereview.stackexchange.com/questions/145113/bucket-sort-in-rust
