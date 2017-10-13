@@ -1,0 +1,7 @@
+[package]
+name = "rust-algorithm-club"
+version = "0.1.0"
+authors = ["Weihang Lo <weihanglotw@gmail.com>"]
+
+[dev-dependencies]
+rand = "0.3"
