@@ -19,9 +19,7 @@ fn partition(arr: &mut [i32], lo: usize, hi: usize) -> usize {
     let mut i = lo;
     let mut j = hi;
 
-    println!("{:?} {:?}", lo, hi);
     loop {
-        println!("{:?} {} {} {} {} {}", &arr[lo..hi + 1], lo, hi, pivot, i, j);
         while arr[i] < pivot {
             i += 1;
         }
