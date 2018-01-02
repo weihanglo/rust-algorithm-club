@@ -1,6 +1,3 @@
-// To flatten nested modules, we make each module private,
-// and only export sorting functions instead of the whole module.
-
 mod bubble_sort;
 pub use self::bubble_sort::bubble_sort;
 pub use self::bubble_sort::bubble_sort_optimized;

@@ -1,2 +1,2 @@
-mod list;
-pub use list::SinglyLinkedList;
+mod linkedList;
+pub use self::linkedList::SinglyLinkedList;

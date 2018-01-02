@@ -2,14 +2,14 @@
 
 [Radix sort][wiki-radix-sort] 是一個特殊的[整數排序法][wiki-integer-sorting]，透過 sorting subroutine 依序比較整數的每個位數（digit／radix）來排序。通常 subroutine 選用 Bucket sort 或 Counting sort。
 
-Radix sort 與 Counting sort、Bucket sort 都是能夠突破比較排序法 $O(n \log n)$ 限制的排序法。比起後兩者僅能比較單一 key 來排序，Radix sort 可以比較多個 key，並降低 subroutine 每個 key 的範圍。
+Radix sort 與 Counting sort、Bucket sort 都是能夠突破比較排序法 $O(n \log n)$ 限制的排序法。比起後兩者僅能比較單一 key 來排序，Radix sort 可以比較多個 key，並降低 subroutine 每個 key 的範圍。
 
 例如：欲排序一群範圍在 0 - 999 的整數，若以 Counting sort 排序，則需建立一個「1000 元素的陣列」來計算每個整數的出現次數；若使用以 10 為基數的 Radix sort，則 key 的整數範圍僅 0 - 9，這種小範圍整數非常適合 Counting sort 作為 subroutine，也節省了配置 `int arr[1000]` 的 count array 的時空間。
 
-Radix sort 基本特性如下：
+Radix sort 基本特性如下：
 
 - **整數排序法**：以整數作為排序的鍵值。
-- **分配式排序法**：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。
+- **分配式排序法**：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。
 - **穩定性**：採用 LSD 的 Radix sort 屬穩定排序法（Stable sort）；透過優化，採用 MSD 也可以是穩定排序法。
 
 ## Algorithm
@@ -104,13 +104,13 @@ sort by leftmost digit -->
 
 ### Time complexity
 
-欲分析 Radix sort 的時間複雜度，我們可以逐一擊破，先從 subroutine 開始分析。
+欲分析 Radix sort 的時間複雜度，我們可以逐一擊破，先從 subroutine 開始分析。
 
 Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每個 subroutine 的複雜度為 $O(n + k)$，$k$ 為 key 的範圍，以 10 為基數，就是 0 - 9 之間 $k = 10$。
 
 再來我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 $d$ 位數，時間複雜度需乘上 $d$，為 $O(d (n + k))$，那這個 $k$ 是否可以捨去呢？
 
-分析 Counting sort 或 Bucket sort 時，範圍 $k$ 會隨輸入資料而變化，若 $k$ 過大，對複雜度的影響甚至會超過 $n$，因此分析複雜度時無法將 $k$ 捨去。而在 Radix sort，$k$ 通常為一個已知的常數，例如以 bytes 為基數 $k = 8$，$k$ 可以捨去。最後可得 Radix sort 的時間複雜度為 $O(d \cdot n)$。
+分析 Counting sort 或 Bucket sort 時，範圍 $k$ 會隨輸入資料而變化，若 $k$ 過大，對複雜度的影響甚至會超過 $n$，因此分析複雜度時無法將 $k$ 捨去。而在 Radix sort，$k$ 通常為一個已知的常數，例如以 bytes 為基數 $k = 8$，$k$ 可以捨去。最後可得 Radix sort 的時間複雜度為 $O(d \cdot n)$。
 
 ### Space complexity
 
