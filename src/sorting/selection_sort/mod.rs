@@ -1,5 +1,5 @@
-/// Oldschool in-place selection sort
-pub fn selection_sort<T: PartialOrd + Copy>(arr: &mut [T]) {
+/// Selection sort
+pub fn selection_sort(arr: &mut [i32]) {
     // Rust would skip iteration if lower bound >= upper bound.
     // Hence, `arr.len() - 1` is only a skip of last iteration.
     for i in 0..(arr.len() - 1) {
