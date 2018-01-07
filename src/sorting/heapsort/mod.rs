@@ -1,5 +1,5 @@
-/// Heapsort
-pub fn heapsort<T: PartialOrd + Copy>(arr: &mut [T]) {
+/// Heapsort.
+pub fn heapsort(arr: &mut [i32]) {
     // Heapify part (build max-heap/min-heap)
     let end = arr.len();
     for start in (0..end).rev() {
@@ -13,7 +13,7 @@ pub fn heapsort<T: PartialOrd + Copy>(arr: &mut [T]) {
     }
 }
 
-fn sift_down<T: PartialOrd + Copy>(arr: &mut [T], start: usize, end: usize) {
+fn sift_down(arr: &mut [i32], start: usize, end: usize) {
     let mut root = start;
     loop {
         let mut child = root * 2 + 1; // Get the left child
@@ -33,4 +33,10 @@ fn sift_down<T: PartialOrd + Copy>(arr: &mut [T], start: usize, end: usize) {
             break;
         }
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    base_cases!(heapsort);
 }

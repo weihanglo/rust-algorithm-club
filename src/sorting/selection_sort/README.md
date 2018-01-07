@@ -65,6 +65,8 @@ $$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$
 
 因此無論序列是否排序完成，selection sort 仍需執行 $n^2$ 次比較，時間複雜度為 $O(n^2)$。
 
+## Implementation
+
 ## Variants
 
 ### Heapsort

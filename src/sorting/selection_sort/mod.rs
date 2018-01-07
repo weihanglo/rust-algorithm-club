@@ -1,14 +1,21 @@
-/// Selection sort
+/// Selection sort.
 pub fn selection_sort(arr: &mut [i32]) {
+    let len = arr.len();
     // Rust would skip iteration if lower bound >= upper bound.
-    // Hence, `arr.len() - 1` is only a skip of last iteration.
-    for i in 0..(arr.len() - 1) {
+    // Hence, no need to `len - 1`.
+    for i in 0..len {
         let mut temp = i;
-        for j in (i + 1)..arr.len() {
+        for j in (i + 1)..len {
             if arr[temp] > arr[j] {
                 temp = j;
             }
         }
         arr.swap(i, temp);
     }
+}
+
+#[cfg(test)]
+mod base {
+    use super::*;
+    base_cases!(selection_sort);
 }

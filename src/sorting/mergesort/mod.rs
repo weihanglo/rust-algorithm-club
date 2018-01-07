@@ -1,9 +1,8 @@
-use std;
-/// Mergesort
+/// Mergesort.
 ///
 /// - buttom-up (for array-based data structure)
 /// - iterative
-pub fn mergesort<T: PartialOrd + Copy>(arr: &mut [T]) {
+pub fn mergesort(arr: &mut [i32]) {
     let mut width: usize = 1;
     let mut ret = arr.to_vec(); // for collecting return value
     let len = arr.len();
@@ -11,7 +10,7 @@ pub fn mergesort<T: PartialOrd + Copy>(arr: &mut [T]) {
     while width < len {
         let mut i: usize = 0;
         while i < len {
-            let upper = std::cmp::min(i + 2 * width, len);
+            let upper = ::std::cmp::min(i + 2 * width, len);
             // width minus 1 for zero-based index
             merge(&arr[i..upper], width - 1, &mut ret[i..upper]);
             i += 2 * width;
@@ -21,11 +20,11 @@ pub fn mergesort<T: PartialOrd + Copy>(arr: &mut [T]) {
     }
 }
 
-/// Oldschool index-based merge sort
+/// Recursive merge sort.
 ///
 /// - top-down
 /// - recursive
-pub fn mergesort_recursive<T: PartialOrd + Copy>(arr: &mut [T]) {
+pub fn mergesort_recursive(arr: &mut [i32]) {
     let n = arr.len();
     let mid = n / 2;
     if mid == 0 {
@@ -44,7 +43,7 @@ pub fn mergesort_recursive<T: PartialOrd + Copy>(arr: &mut [T]) {
 }
 
 /// merge helper
-fn merge<T: PartialOrd + Copy>(arr: &[T], mid: usize, ret: &mut [T]) {
+fn merge(arr: &[i32], mid: usize, ret: &mut [i32]) {
     let mut left = 0; // head of left pile
     let mut right = mid + 1; // head of right pile
     for i in 0..arr.len() {
@@ -58,3 +57,16 @@ fn merge<T: PartialOrd + Copy>(arr: &[T], mid: usize, ret: &mut [T]) {
         };
     }
 }
+
+#[cfg(test)]
+mod base {
+    use super::*;
+    base_cases!(mergesort);
+}
+
+#[cfg(test)]
+mod recursive {
+    use super::*;
+    base_cases!(mergesort_recursive);
+}
+

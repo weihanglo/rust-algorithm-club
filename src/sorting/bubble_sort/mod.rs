@@ -33,3 +33,16 @@ pub fn bubble_sort_optimized(arr: &mut [i32]) {
         len = new_len;
     }
 }
+
+#[cfg(test)]
+mod base {
+    use super::*;
+    base_cases!(bubble_sort);
+}
+
+#[cfg(test)]
+mod optimized {
+    use super::*;
+    base_cases!(bubble_sort_optimized);
+}
+
