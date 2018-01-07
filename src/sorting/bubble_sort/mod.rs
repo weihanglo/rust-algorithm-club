@@ -1,5 +1,5 @@
 /// Bubble sort
-pub fn bubble_sort<T: PartialOrd + Copy>(arr: &mut [T]) {
+pub fn bubble_sort(arr: &mut [i32]) {
     let mut swapped = true;
     while swapped {
         // No swap means array is sorted.
@@ -13,8 +13,10 @@ pub fn bubble_sort<T: PartialOrd + Copy>(arr: &mut [T]) {
     }
 }
 
+/// Optimized bubble sort
+///
 /// Memorize last swapped index to avoid unnecessary check.
-pub fn bubble_sort_optimized<T: PartialOrd + Copy>(arr: &mut [T]) {
+pub fn bubble_sort_optimized(arr: &mut [i32]) {
     let mut new_len: usize;
     let mut len = arr.len();
     loop {
