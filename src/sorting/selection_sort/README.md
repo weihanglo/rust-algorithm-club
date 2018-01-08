@@ -48,8 +48,6 @@ Selection sort 的特性如下：
 首先，回想一下穩定排序的定義：**相同鍵值的元素，排序後相對位置不改變。**
 
 問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 $O(1)$ insertion 的資料結構，不然就會多出額外 $O(n^2)$ 的寫入成本。
-
-
 ## Performance
 
 |              | Complexity       |
@@ -67,18 +65,43 @@ $$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$
 
 ## Implementation
 
+簡單實作如下：
+
+```rust
+pub fn selection_sort(arr: &mut [i32]) {
+    let len = arr.len();
+    for i in 0..len {                     // 1
+        let mut temp = i;
+        for j in (i + 1)..len {           // 2
+            if arr[temp] > arr[j] {
+                temp = j;
+            }
+        }
+        arr.swap(i, temp);                // 3
+    }
+}
+```
+
+1. 外層迴圈負責儲存當前要排序的 index `i` 的位置。
+2. 內層迴圈負責在 unsorted pile 範圍 [`i`, `len`) 找最小值。
+3. 外層迴圈在找到最小值之後，置換兩元素。
+
+眼尖的人會發現，內外兩層迴圈的 upper bound 都是 `len`，這樣是否內側迴圈會 out of bound？Rust 的 range operator（`core::ops::Range`）實作 [`Iterator`][impl-iterator] trait 時，有檢查 `range.start < range.end`，因此這個寫法並不會有出界問題，但會多跑一次無意義的迭代。
+
+[impl-iterator]: https://doc.rust-lang.org/core/ops/struct.Range.html#impl-Iterator
+
 ## Variants
 
 ### Heapsort
 
 [Heapsort][heapsort] 是一個高效的排序法，使用 selection sort 融合 [heap][wiki-heap] 這種半排序的資料結構，讓時間複雜度進化至 $O(n \log n)$。更多詳情可以參考[這篇介紹][heapsort]。
 
+[heapsort]: ../heapsort/README.md
+[wiki-heap]: https://en.wikipedia.org/wiki/Heap_(data_structure)
+
 ## Reference
 
-- [Wiki: Selection sort][wiki-selection-sort]
-- [Why Selection sort can be stable or unstable][why-selection-sort-can-be-stable-or-unstable]
+- [Wiki: Selection sort](https://en.wikipedia.org/wiki/Selection_sort)
+- [Why Selection sort can be stable or unstable](https://stackoverflow.com/questions/20761396/)
 
-[wiki-selection-sort]: https://en.wikipedia.org/wiki/Selection_sort
-[why-selection-sort-can-be-stable-or-unstable]: https://stackoverflow.com/questions/20761396/
-[wiki-heap]: https://en.wikipedia.org/wiki/Heap_(data_structure)
-[heapsort]: ../heapsort/README.md
+- Sorting GIF by Joestape89 [CC-BY-SA-3.0](http://creativecommons.org/licenses/by-sa/3.0/) via Wikimedia Commons.

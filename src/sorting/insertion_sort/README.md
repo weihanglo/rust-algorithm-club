@@ -1,6 +1,6 @@
 # Insertion sort
 
-[Insertion sort][wiki-insertion-sort] 是最簡單的排序法之一，比起 quicksort 等知名的排序法，對大資料的處理效能較不理想。其演算法是將欲排序元素直接插入正確位置，因而得名。
+Insertion sort 是最簡單的排序法之一，比起 quicksort 等知名的排序法，對大資料的處理效能較不理想。其演算法是將欲排序元素直接插入正確位置，因而得名。
 
 Insertion sort 基本特性如下：
 
@@ -51,6 +51,25 @@ $$\frac{cn^2}{2} - \frac{cn}{2}$$
 
 捨去低次項，得到時間複雜度為 $O(n^2)$。
 
+## Implementation
+
+簡單實作的程式碼如下：
+
+```rust
+pub fn insertion_sort(arr: &mut [i32]) {
+    for i in 1..arr.len() {                   // 1
+        let mut j = i;
+        while j > 0 && arr[j - 1] > arr[j] {  // 2
+            arr.swap(j - 1, j);
+            j -= 1;
+        }
+    }
+}
+```
+
+1. 外層迴圈迭代整個序列。並取出 index `i`，`arr[i]` 是待排序的元素，index 比 `i` 小的元素則組成已排序的部分序列。
+2. 內層迴圈負責元素比較，決定待排序元素該從何處插入，若前一個元素比待排元素大，則置換兩元素，並繼續往下尋找正確的插入點。直到 `j == 0` 或待排元素比任何已排序元素都大為止。
+
 ## Variants
 
 ### Binary insertion sort (binsort)
@@ -59,12 +78,33 @@ $$\frac{cn^2}{2} - \frac{cn}{2}$$
 
 Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 [binary search][wiki-binary-search] 搜尋新元素應要插入哪個位置，最多僅需 $\log_2n$ 次比較。但 binary insertion sort 的複雜度依舊是 $O(n^2)$，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。
 
+Binary insertion sort 的程式碼和一般的 insertion sort 差不了多少，我們這裡使用 `slice` 內建的 `binary_search` 來找尋插入點。
+
+```rust
+pub fn binary_insertion_sort(arr: &mut [i32]) {
+    for i in 1..arr.len() {
+        let val = arr[i];
+        let mut j = i;
+        let pos = match arr[..i].binary_search(&val) { // 1
+            Ok(pos) => pos,                            // 2
+            Err(pos) => pos,
+        };
+        while j > pos {                                // 3
+            arr.swap(j - 1, j);
+            j -= 1;
+        }
+    }
+}
+```
+
+1. 先限制 `binary_search` 的範圍，我們取出 sorted pile `arr[..i]`。再對 slice 執行 `binary_search`，
+2. `binary_search` 回傳一個 `Result<usize, usize>` 型別，找到時回傳 `Ok(index 值)`，找無時回傳 `Err(不影響排序穩定度的插入點)`，這個 `Err` 的設計巧妙地解決新值插入的問題。
+3. 和普通 insertion sort 雷同，從插入點至 sorted pile 開始迭代到 末端以進行排序，省下不少比較操作。
+
+[wiki-binary-search]: https://en.wikipedia.org/wiki/Binary_search
+
 ## Reference
 
-- [Wiki: Insertion sort][wiki-insertion-sort]
-- [Wiki: Binary search algorithm][wiki-binary-search]
-- [CPython: listsort note][cpython-listsort-note]
-
-[wiki-insertion-sort]: https://en.wikipedia.org/wiki/Insertion_sort
-[wiki-binary-search]: https://en.wikipedia.org/wiki/Binary_search
-[cpython-listsort-note]: https://github.com/python/cpython/blob/15f44ab043b37c064d6891c7864205fed9fb0dd1/Objects/listsort.txt#L686-L703
+- [Wiki: Insertion sort](https://en.wikipedia.org/wiki/Insertion_sort)
+- [CPython: listsort note](https://github.com/python/cpython/blob/15f44ab043b37c064d6891c7864205fed9fb0dd1/Objects/listsort.txt#L686-L703)
+- Sorting GIF by Swfung8 (Own work) [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) via Wikimedia Commons.
