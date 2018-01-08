@@ -1,6 +1,13 @@
-# Algorithms in Rust
+# Rust Algorithm Club
 
-## Sorting
+This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust].
+
+[swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
+[rust]: https://www.rust-lang.org/
+
+## Dive into algorithms!
+
+### Sorting
 
 **Simple sorts:**
 
@@ -19,6 +26,7 @@
 
 - [Timsort](src/sorting/timsort)
 - [Introsort](src/sorting/introsort)
+- [Pdqsort](src/sorting/pdqsort)
 
 **Distribution sorts:**
 
@@ -26,13 +34,26 @@
 - [Bucket sort](src/sorting/bucket_sort)
 - [Radix sort](src/sorting/radix_sort)
 
-## Collections
+### Collections
 
 **Linked list:**
 
 - [Singly linked list](src/collections/linkedList#singly-linked-list)
 - [Doubly linked ilst](src/collections/linkedList#doubly-linked-list)
 - [Circular linked ilst](src/collections/linkedList#circular-linked-list)
+
+## Learning resources
+
+For learning more, you may checkout following online resources:
+
+- [VisuAlgo](https://visualgo.net/) - Probably the best algorithms visualization website.
+- [Big-O Cheat Sheet](http://bigocheatsheet.com/) - Comprehensive Big-O notation cheat sheet.
+- [Rosetta Code](http://rosettacode.org) - Hundred of solutions of tasks in almost any programming languages.
+- [Competitive Programmer's Handbook](https://cses.fi/book.html) - Make you more competitive. The book itself is also competitive.
+
+## Maintainers
+
+- [@weihanglo](https://github.com/weihanglo)
 
 ## License
 
