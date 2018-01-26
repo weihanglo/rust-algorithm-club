@@ -5,7 +5,7 @@ This repository was originally inspired by [Swift Algorithm Club][swift-algorith
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
 
-## Dive into algorithms!
+## Dive Into Algorithms!
 
 ### Sorting
 
@@ -42,7 +42,7 @@ This repository was originally inspired by [Swift Algorithm Club][swift-algorith
 - [Doubly linked ilst](src/collections/linkedList#doubly-linked-list)
 - [Circular linked ilst](src/collections/linkedList#circular-linked-list)
 
-## Learning resources
+## Learning Resources
 
 For learning more, you may checkout following online resources:
 
@@ -57,4 +57,6 @@ For learning more, you may checkout following online resources:
 
 ## License
 
-[MIT](LICENSE)
+[The MIT License (MIT)](LICENSE)
+
+Copyright © 2017 - 2018 Weihang Lo
