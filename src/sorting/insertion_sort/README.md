@@ -1,6 +1,6 @@
 # Insertion sort
 
-Insertion sort 是最簡單的排序法之一，比起 quicksort 等知名的排序法，對大資料的處理效能較不理想。其演算法是將欲排序元素直接插入正確位置，因而得名。
+Insertion sort 是最簡單的排序法之一，比起 quicksort 等高效的排序法，對大資料的處理效能較不理想。其演算法是將欲排序元素直接插入正確位置，因而得名。
 
 Insertion sort 基本特性如下：
 
