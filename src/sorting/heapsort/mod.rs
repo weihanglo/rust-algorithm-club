@@ -1,18 +1,24 @@
 /// Heapsort.
 pub fn heapsort(arr: &mut [i32]) {
-    // Heapify part (build max-heap/min-heap)
+    // -- Heapify part --
+    // This procedure would build a valid max-heap.
+    // (or min-heap for sorting descendantly)
     let end = arr.len();
-    for start in (0..end).rev() {
+    for start in (0..end / 2).rev() { // Skip leaf nodes (end / 2).
         sift_down(arr, start, end - 1);
     }
 
-    // Sorting part
+    // -- Sorting part --
+    // Iteratively sift down unsorted part (the heap).
     for end in (1..arr.len()).rev() {
         arr.swap(end, 0);
         sift_down(arr, 0, end - 1);
     }
 }
 
+/// Internal function for heap to fix itself to conform to heap definition.
+/// Precondiition: all elements below `start` are in heap order 
+/// expect `start` itself.
 fn sift_down(arr: &mut [i32], start: usize, end: usize) {
     let mut root = start;
     loop {
