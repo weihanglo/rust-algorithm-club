@@ -31,3 +31,12 @@ pub use self::bucket_sort::bucket_sort;
 
 mod radix_sort;
 pub use self::radix_sort::radix_sort;
+
+mod timsort;
+pub use self::timsort::timsort;
+
+mod introsort;
+pub use self::introsort::introsort;
+
+mod pdqsort;
+pub use self::pdqsort::pdqsort;
