@@ -1,0 +1,7 @@
+{
+  "root": "../../src",
+  "structure": {
+    "readme": "README.zh.md",
+    "summary": "SUMMARY.zh.md"
+  }
+}
