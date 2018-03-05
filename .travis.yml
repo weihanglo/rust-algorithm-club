@@ -1,0 +1,46 @@
+dist: trusty
+language: rust
+services: docker
+sudo: required
+
+env:
+  global:
+    - RUST_BACKTRACE: full
+
+matrix:
+  include:
+    # Stable channel.
+    - env: TARGET=x86_64-unknown-linux-gnu
+    # Beta channel.
+    - env: TARGET=x86_64-unknown-linux-gnu
+      rust: beta
+    # Nighly channel.
+    - env: TARGET=x86_64-unknown-linux-gnu
+      rust: nightly
+
+before_install:
+  - set -e
+  - rustup self update
+
+install:
+
+  - source ~/.cargo/env || true
+
+script:
+  - cargo build --target $TARGET
+  - cargo build --target $TARGET --release
+  - cargo test --target $TARGET
+  - cargo test --target $TARGET --release
+
+after_script: set +e
+
+cache: cargo
+before_cache:
+  # Travis can't cache files that are not readable by "others"
+  - chmod -R a+r $HOME/.cargo
+
+branches:
+  only:
+    # release tags
+    - /^v?\d+\.\d+\.\d+.*$/
+    - master

@@ -1,5 +1,7 @@
 # Rust Algorithm Club
 
+[![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)](https://travis-ci.com/weihanglo/rust-algorithm-club)
+
 This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust].
 
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
