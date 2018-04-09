@@ -1,6 +1,11 @@
 {
-  "root": "book",
+  "root": "src",
   "title": "Rust Algorithm Club",
   "author": "Weihang Lo",
-  "description": "Learn algorithms and data structures with Rust"
+  "description": "Learn algorithms and data structures with Rust",
+  "structure": {
+    "readme": "README.md",
+    "summary": "SUMMARY.md"
+  },
+  "plugins": ["katex-plus"]
 }
