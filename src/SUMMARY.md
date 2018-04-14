@@ -12,7 +12,7 @@
     - [Heapsort](sorting/heapsort/README.md)
     - [Quicksort](sorting/quicksort/README.md)
     - [Mergesort](sorting/mergesort/README.md)
-  - [Hybrid sorts (more efficient)](sorting/README.md)
+  - [Hybrid sorts](sorting/README.md)
     - [Timsort](sorting/timsort/README.md)
     - [Introsort](sorting/introsort/README.md)
     - [Pdqsort](sorting/pdqsort/README.md)

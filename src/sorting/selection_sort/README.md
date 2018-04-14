@@ -103,5 +103,4 @@ pub fn selection_sort(arr: &mut [i32]) {
 
 - [Wiki: Selection sort](https://en.wikipedia.org/wiki/Selection_sort)
 - [Why Selection sort can be stable or unstable](https://stackoverflow.com/questions/20761396/)
-
 - Sorting GIF by Joestape89 [CC-BY-SA-3.0](http://creativecommons.org/licenses/by-sa/3.0/) via Wikimedia Commons.

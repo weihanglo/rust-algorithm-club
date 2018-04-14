@@ -74,7 +74,7 @@ pub fn insertion_sort(arr: &mut [i32]) {
 
 ### Binary insertion sort (binsort)
 
-在一般演算法討論中，通常以簡單的型別如 `i32` 來探討並實作。在真實世界中，做哪種操作，用哪種語言，都會影響到實際效能。例如 Python 的排序成本很高，要在 runtime 檢查物件是否實作 `__lt__` `__gt__` 等方法才能調用。排序法的實作就要特別注意減少比較操作的次數。
+在一般演算法討論中，通常以簡單的型別如 `i32` 來探討並實作。在真實世界中，做哪種操作，用哪種語言，都會影響到實際效能。例如 Python 的比較操作相對於置換元素，成本高出不少，是因為每個物件在 Python 的比較需動態檢查是否實作 `__lt__` `__gt__` 等方法才能進行比較。所以 Python 排序法實作就要特別注意減少比較操作的次數。
 
 Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 [binary search][wiki-binary-search] 搜尋新元素應要插入哪個位置，最多僅需 $\log_2n$ 次比較。但 binary insertion sort 的複雜度依舊是 $O(n^2)$，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。
 

@@ -2,7 +2,7 @@
 
 [Radix sort][wiki-radix-sort] 是一個特殊的[整數排序法][wiki-integer-sorting]，透過 sorting subroutine 依序比較整數的每個位數（digit／radix）來排序。通常 subroutine 選用 Bucket sort 或 Counting sort。
 
-Radix sort 與 Counting sort、Bucket sort 都是能夠突破比較排序法 $O(n \log n)$ 限制的排序法。比起後兩者僅能比較單一 key 來排序，Radix sort 可以比較多個 key，並降低 subroutine 每個 key 的範圍。
+Radix sort 與 [Counting sort](../counting_sort)、[Bucket sort](../bucket_sort) 都是能夠突破比較排序法 $O(n \log n)$ 限制的排序法。比起後兩者僅能比較單一 key 來排序，Radix sort 可以比較多個 key，並降低 subroutine 每個 key 的範圍。
 
 例如：欲排序一群範圍在 0 - 999 的整數，若以 Counting sort 排序，則需建立一個「1000 元素的陣列」來計算每個整數的出現次數；若使用以 10 為基數的 Radix sort，則 key 的整數範圍僅 0 - 9，這種小範圍整數非常適合 Counting sort 作為 subroutine，也節省了配置 `int arr[1000]` 的 count array 的時空間。
 

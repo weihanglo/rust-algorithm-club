@@ -9,10 +9,11 @@ Heapsort 的特性如下：
 - 使用 [heap][wiki-heap] 資料結構輔助，通常使用 [binary heap][wiki-binary-heap]。
 - **不穩定排序**：排序後，相同鍵值的元素相對位置可能改變。
 - **原地排序**：不需額外花費儲存空間來排序。
-- **較差的記憶體快取**：heap 不連續存取位址的特性，不利於記憶體快取。
+- **較差的 CPU 快取**：heap 不連續存取位址的特性，不利於 [CPU 快取][wiki-cpu-cache]。
 
 [selection-sort]: ../selection_sort
 [wiki-binary-heap]: https://en.wikipedia.org/wiki/Binary_heap
+[wiki-cpu-cache]: https://en.wikipedia.org/wiki/CPU_cache
 
 ## Algorithm
 
@@ -80,7 +81,8 @@ Heapsort 的演算法分為兩大步驟：
 [20, 3, 17, 1, 2 | 21]
 ```
 
-有沒有看出一些端倪？  
+有沒有看出一些端倪？
+
 只要不斷將 root 和最後一個 node 交換，並將剩餘資料修正至滿足 heap ordering，就完成排序了。
 
 ```
@@ -93,7 +95,7 @@ Heapsort 的演算法分為兩大步驟：
 (sift down)-->
 
 [17, 3, 2, 1 | 20, 21]
- *         *  
+ *         *
 (swap) -->
 
 [1, 3, 2 | 17, 20, 21]
@@ -128,7 +130,9 @@ Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n)$，同樣
 
 **Heapify** 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 **sift down**，在[實作](#Implementation)一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n)$，$n$ 為陣列元素個數。
 
-Heapify 從最末個元素開始反向迭代，每個元素都調用 `sift_down` 調整 heap 符合 heap ordering。總共要做 $n$ 次 `sift_down` 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為 $\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$。
+Heapify 從最末個元素開始反向迭代，每個元素都調用 `sift_down` 調整 heap 符合 heap ordering。總共要做 $n$ 次 `sift_down` 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為
+
+$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$
 
 > 實際上，build heap 步驟的複雜度可達到 $\Theta(n)$，可以看看 UMD 演算法課程 [Lecture note 的分析][umd-algo-analysis]。
 
@@ -152,7 +156,7 @@ pub fn heapsort(arr: &mut [i32]) {
     // This procedure would build a valid max-heap.
     // (or min-heap for sorting descendantly)
     let end = arr.len();
-    for start in (0..end / 2).rev() {                       // 1
+    for start in (0..end / 2).rev() {                   // 1
         sift_down(arr, start, end - 1);
     }
 
@@ -201,7 +205,7 @@ fn sift_down(arr: &mut [i32], start: usize, end: usize) {
 - `arr`：欲修正為符合 heap 定義的序列。
 - `start`：欲往下移動的 node index，可視為需要被修正的元素。
 - `end`：此 node 以內（包含）的序列都會被修正為有效的 heap。
- 
+
 `sift_down` 有些假設條件：從 `start` index 出發的子樹，除了 `start` 本身以外，其他皆符合 heap ordering。
 
 再來看看 `sift_down` 實作內容，`loop` 中幹的活就是不斷將 `start` index 上的元素與其子樹比較，若不符合 heap ordering，則兩者置換。
