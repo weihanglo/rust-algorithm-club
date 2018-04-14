@@ -21,7 +21,13 @@ mod heapsort;
 pub use self::heapsort::heapsort;
 
 mod quicksort;
-pub use self::quicksort::{quicksort_hoare, quicksort_lomuto};
+pub use self::quicksort::{
+    quicksort,
+    quicksort_optimized,
+    quicksort_manual_tco,
+    quicksort_3way,
+    quicksort_hoare, 
+};
 
 mod counting_sort;
 pub use self::counting_sort::counting_sort;
