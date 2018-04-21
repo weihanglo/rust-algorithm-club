@@ -1,60 +1,85 @@
 /// Mergesort.
 ///
-/// - buttom-up (for array-based data structure)
-/// - iterative
+/// - Top-down
+/// - Recursive
 pub fn mergesort(arr: &mut [i32]) {
-    let mut width: usize = 1;
-    let mut ret = arr.to_vec(); // for collecting return value
-    let len = arr.len();
-
-    while width < len {
-        let mut i: usize = 0;
-        while i < len {
-            let upper = ::std::cmp::min(i + 2 * width, len);
-            // width minus 1 for zero-based index
-            merge(&arr[i..upper], width - 1, &mut ret[i..upper]);
-            i += 2 * width;
-        }
-        arr.copy_from_slice(&ret[..]);
-        width *= 2;
-    }
-}
-
-/// Recursive merge sort.
-///
-/// - top-down
-/// - recursive
-pub fn mergesort_recursive(arr: &mut [i32]) {
-    let n = arr.len();
-    let mid = n / 2;
+    let mid = arr.len() / 2;
     if mid == 0 {
         return;
     }
 
-    mergesort_recursive(&mut arr[..mid]);
-    mergesort_recursive(&mut arr[mid..]);
+    mergesort(&mut arr[..mid]);
+    mergesort(&mut arr[mid..]);
 
+    // Create an array to store intermediate result.
     let mut ret = arr.to_vec();
 
-    // `mid` minus 1 for zero-based index
-    merge(arr, mid - 1, &mut ret[..]);
+    // Merge the two piles.
+    merge(&arr[..mid], &arr[mid..], &mut ret[..]);
 
-    arr.copy_from_slice(&ret[..]);
+    // Copy back the result back to original array.
+    arr.copy_from_slice(&ret);
 }
 
-/// merge helper
-fn merge(arr: &[i32], mid: usize, ret: &mut [i32]) {
-    let mut left = 0; // head of left pile
-    let mut right = mid + 1; // head of right pile
-    for i in 0..arr.len() {
-        let push_right = right < arr.len() && arr[left] > arr[right];
-        if left >= mid + 1 || push_right {
-            ret[i] = arr[right];
-            right += 1;
-        } else {
-            ret[i] = arr[left];
+/// Mergesort bottom-up version.
+///
+/// - Buttom-up (for array-based data structure)
+/// - Iterative
+pub fn mergesort_bottom_up(arr: &mut [i32]) {
+    let mut width = 1;
+    // Create an array to store intermediate result.
+    let mut ret = arr.to_vec();
+    let len = arr.len();
+
+    while width < len {
+        let mut i = 0;
+        while i < len {
+            // Check to avoid upper bound and middle index out of bound.
+            let upper = ::std::cmp::min(i + 2 * width, len);
+            let mid = ::std::cmp::min(i + width, len);
+
+            merge(&arr[i..mid], &arr[mid..upper], &mut ret[i..upper]);
+
+            // Copy the merged result back to original array.
+            arr[i..upper].copy_from_slice(&ret[i..upper]);
+
+            // Increase start index to merge next two subsequences.
+            i += 2 * width;
+        }
+        width *= 2;
+    }
+}
+
+/// Merge helper.
+///
+/// * `arr1` - Left pile to be sorted.
+/// * `arr2` - Right pile to be sorted.
+/// * `ret` - Result array to be returned.
+fn merge(arr1: &[i32], arr2: &[i32], ret: &mut [i32]) {
+    let mut left = 0; // Head of left pile.
+    let mut right = 0; // Head of right pile.
+    let mut index = 0;
+
+    // Compare element and insert back to result array.
+    while left < arr1.len() && right < arr2.len() {
+        if arr1[left] <= arr2[right] {
+            ret[index] = arr1[left];
+            index += 1;
             left += 1;
-        };
+        } else {
+            ret[index] = arr2[right];
+            index += 1;
+            right += 1;
+        }
+    }
+
+    // Copy the reset elements to returned array.
+    // `memcpy` may be more performant than for-loop assignment.
+    if left < arr1.len() {
+        ret[index..].copy_from_slice(&arr1[left..]);
+    }
+    if right < arr2.len() {
+        ret[index..].copy_from_slice(&arr2[right..]);
     }
 }
 
@@ -65,8 +90,8 @@ mod base {
 }
 
 #[cfg(test)]
-mod recursive {
+mod bottom_up {
     use super::*;
-    base_cases!(mergesort_recursive);
+    base_cases!(mergesort_bottom_up);
 }
 

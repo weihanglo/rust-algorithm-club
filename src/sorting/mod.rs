@@ -15,7 +15,7 @@ mod shellsort;
 pub use self::shellsort::{shellsort, MARCIN_GAPS};
 
 mod mergesort;
-pub use self::mergesort::{mergesort, mergesort_recursive};
+pub use self::mergesort::{mergesort, mergesort_bottom_up};
 
 mod heapsort;
 pub use self::heapsort::heapsort;
