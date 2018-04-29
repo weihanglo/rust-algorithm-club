@@ -1,6 +1,6 @@
 # Counting sort
 
-[Counting sort][wiki-counting-sort] 是一個特殊的整數排序法，被視為 Bucket sort 的特例。原理是在已知整數範圍內，計算每個鍵值出現次數，並用額外的陣列保存（Count array）。最後將 Count array 的元素值作為排序資料的新 index。
+[Counting sort][wiki-counting-sort] 是一個特殊的整數排序法，被視為 [Bucket sort](../bucket_sort) 的特例。原理是在已知整數範圍內，計算每個鍵值出現次數，並用額外的陣列保存（Count array）。最後將 Count array 的元素值作為排序資料的新 index。
 
 Counting sort 基本特性如下：
 
@@ -103,15 +103,128 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 
 > k 為資料已知範圍上下界之差。
 
-### Time complexity
+### Time Complexity
 
 Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 $n$ 個輸入的資料，因此複雜度為 $O(n)$；步驟二計算 prefix sum，，以及 count array 自身的初始化則需執行 $k + 1$ 次（給定的資料範圍），這部分的複雜度為 $O(k)$。由於 $n$ 與 $k$ 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 $O(n + k)$。
 
 ### Space complexity
 
-Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的記憶體空間，因此 $O(n)$ 的額外（auxiliary）空間複雜度絕對免不了。再加上需要長度為 $k$ 的 count array 保存每個 key 的出現次數，因此需再加上 $O(k)$。除了原始的輸入 array，總共需額外花費 $O(n + k)$ 的空間複雜度。
+Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的記憶體空間，因此 $O(n)$ 的額外（auxiliary）空間複雜度絕對免不了。再加上需要長度為 $k$ 的 count array 保存每個 key 的出現次數，因此需再加上 $O(k)$。除了原始的輸入 array，總共需花費 $O(n + k)$ 的額外空間複雜度。
 
-> 如果欲排序資料就是整數自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，空間複雜度也會下降至 $O(k)$ 了。
+> 如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 $O(k)$，但也因此成為不穩定排序法。
+
+## Implementation
+
+由於 Counting sort 屬於分布式排序（Distribution sort），這裡使用泛型，以彰顯分布式排序的特色。
+
+### Function Signature
+
+首先，我們先看函式簽名（function signature）。
+
+```rust
+pub fn counting_sort<F, T>(arr: &mut [T], min: usize, max: usize, key: F) 
+    where F: Fn(&T) -> usize, 
+          T: Clone,
+```
+
+這裡使用了四個參數：
+
+- `arr`：待排序陣列。
+- `min`、`max`：整數排序的上下界。
+- `key`：由於資料不一定是整數，需要一個 function 從資料擷取鍵值做排
+
+另外，也使用兩個泛型型別：
+
+- `F`：`key` extactor 的型別，回傳的 `usize` 必須落在 `[min, max)` 之間。
+- `T`：陣列元素的型別，實作 `Clone` 是由於 Counting sort 需要將 output 再複製回原本的參數 `arr` 上，達成「偽」原地排序。
+
+### Prefix Sums Array
+
+再來，了解如何建立一個元素出現次數的陣列。
+
+```rust
+fn counting_sort() {
+    // ...
+
+    let mut prefix_sums = {
+        // 1. Initialize the count array with default value 0.
+        let len = max - min;
+        let mut count_arr = Vec::with_capacity(len);
+        count_arr.resize(len, 0);
+
+        // 2. Scan elements to collect counts.
+        for value in arr.iter() {
+            count_arr[key(value)] += 1;
+        }
+
+        // 3. Calculate prefix sum.
+        count_arr.into_iter().scan(0, |state, x| {
+                *state += x;
+                Some(*state - x)
+            }).collect::<Vec<usize>>()
+    };
+    // ...
+}
+```
+
+1. 建立一個長度為上下界之差的 count array。注意，這裡使用了 `Vec.resize`，因為 Rust initialize 空的 `Vec` 時並不會插入 0 或其他預設值。
+2. 遍歷整個輸入資料，利用 `key` function 取出每筆資料的鍵值，出現一次就 +1。
+3. 利用 Iterator 上的 `scan` method 計算每個鍵值的 prefix sum。需要注意的是，每個元素對應的 prefix sum 不包含自身，例如 key 3 的計算結果就是 1 與 2 的出現總次數，如此一來，prefix sum 才會直接對應到排序後的位置。
+
+### Prefix Sums as Start Index
+
+最後一步就是將 prefix sum 當作每個 element 的正確位置，把資料重頭排序。
+
+```rust
+fn counting_sort() {
+    // ...
+
+    for value in arr.to_vec().iter() {            // 1
+        let index = key(value);
+        arr[prefix_sums[index]] = value.clone();  // 2
+        prefix_sums[index] += 1;                  // 3
+    }
+}
+```
+
+1. 將輸入資料透過 `to_vec` 複製起來迭代，需要複製 `arr` 是因為之後要直接在 `arr` 插入新值，需要另一份原始輸入的拷貝。
+2. 利用 `key` 擷取鍵值後，把資料複製給 `arra` 上對應 `prefix_sums[index]` 的位置。
+3. 將該 `prefix_sums[index]` 的值加一，以便元素重複時，可以正常複製到下一個位置。
+
+完成了！這裡再貼一次完整的程式碼。
+
+
+```rust
+pub fn counting_sort<F, T>(arr: &mut [T], min: usize, max: usize, key: F) 
+    where F: Fn(&T) -> usize,
+          T: Clone,
+{
+    let mut prefix_sums = {
+        // 1. Initialize the count array with default value 0.
+        let len = max - min;
+        let mut count_arr = Vec::with_capacity(len);
+        count_arr.resize(len, 0);
+
+        // 2. Scan elements to collect counts.
+        for value in arr.iter() {
+            count_arr[key(value)] += 1;
+        }
+
+        // 3. Calculate prefix sum.
+        count_arr.into_iter().scan(0, |state, x| {
+                *state += x;
+                Some(*state - x)
+            }).collect::<Vec<usize>>()
+    };
+
+    // 4. Use prefix sum as index position of output element.
+    for value in arr.to_vec().iter() {
+        let index = key(value);
+        arr[prefix_sums[index]] = value.clone();
+        prefix_sums[index] += 1;
+    }
+}
+```
 
 ## Reference
 

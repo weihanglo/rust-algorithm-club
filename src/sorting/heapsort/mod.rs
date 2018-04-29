@@ -42,7 +42,7 @@ fn sift_down(arr: &mut [i32], start: usize, end: usize) {
 }
 
 #[cfg(test)]
-mod tests {
+mod base {
     use super::*;
     base_cases!(heapsort);
 }

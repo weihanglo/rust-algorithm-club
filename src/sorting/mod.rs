@@ -29,11 +29,11 @@ pub use self::quicksort::{
     quicksort_hoare, 
 };
 
-mod counting_sort;
-pub use self::counting_sort::counting_sort;
-
 mod bucket_sort;
 pub use self::bucket_sort::bucket_sort;
+
+mod counting_sort;
+pub use self::counting_sort::counting_sort;
 
 mod radix_sort;
 pub use self::radix_sort::radix_sort;
