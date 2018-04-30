@@ -5,7 +5,7 @@ Insertion sort 是最簡單的排序法之一，比起 quicksort 等高效的排
 Insertion sort 基本特性如下：
 
 - 實作簡單易理解。
-- 資料量少時較高效，且比其他 $O(n^2)$ 的排序法高效（selection sort/bubble sort）。
+- 資料量少時較高效，且比其他 \\(O(n^2) \\) 的排序法高效（selection sort/bubble sort）。
 - **自適應排序**：可根據當前資料排序情形加速排序，資料越接近排序完成，效率越高。
 - **穩定排序**：相同鍵值的元素，排序後相對位置不改變。
 - **原地排序**：不需額外花費儲存空間來排序。
@@ -34,14 +34,14 @@ Insertion sort 非常簡單，看動畫就能明瞭。
 
 |              | Complexity       |
 | :----------- | :--------------- |
-| Worst        | $O(n^2)$         |
-| Best         | $\Omega(n)$      |
-| Average      | $\Theta(n^2)$    |
-| Worst space  | $O(1)$ auxiliary |
+| Worst        | \\(O(n^2) \\)         |
+| Best         | \\(\Omega(n) \\)      |
+| Average      | \\(\Theta(n^2) \\)    |
+| Worst space  | \\(O(1) \\) auxiliary |
 
-最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 $n$ 次。
+最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 \\(n \\) 次。
 
-最差時間複雜度發生在資料完全相反時，insertion sort 每取得一個新元素是，都需將資料插入序列最前面，，因此所需的操作如下（$c$ 為任意常數）：
+最差時間複雜度發生在資料完全相反時，insertion sort 每取得一個新元素是，都需將資料插入序列最前面，，因此所需的操作如下（ \\(c \\) 為任意常數）：
 
 $$ c \cdot 1 + c \cdot 2 + c \cdot 3 \cdots + c \cdot (n - 1) = \frac{c(n - 1 + 1)(n - 1)}{2}$$
 
@@ -49,7 +49,7 @@ $$ c \cdot 1 + c \cdot 2 + c \cdot 3 \cdots + c \cdot (n - 1) = \frac{c(n - 1 + 
 
 $$\frac{cn^2}{2} - \frac{cn}{2}$$
 
-捨去低次項，得到時間複雜度為 $O(n^2)$。
+捨去低次項，得到時間複雜度為 \\(O(n^2) \\)。
 
 ## Implementation
 
@@ -76,7 +76,7 @@ pub fn insertion_sort(arr: &mut [i32]) {
 
 在一般演算法討論中，通常以簡單的型別如 `i32` 來探討並實作。在真實世界中，做哪種操作，用哪種語言，都會影響到實際效能。例如 Python 的比較操作相對於置換元素，成本高出不少，是因為每個物件在 Python 的比較需動態檢查是否實作 `__lt__` `__gt__` 等方法才能進行比較。所以 Python 排序法實作就要特別注意減少比較操作的次數。
 
-Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 [binary search][wiki-binary-search] 搜尋新元素應要插入哪個位置，最多僅需 $\log_2n$ 次比較。但 binary insertion sort 的複雜度依舊是 $O(n^2)$，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。
+Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 [binary search][wiki-binary-search] 搜尋新元素應要插入哪個位置，最多僅需 \\(\log_2n \\) 次比較。但 binary insertion sort 的複雜度依舊是 \\(O(n^2) \\)，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。
 
 Binary insertion sort 的程式碼和一般的 insertion sort 差不了多少，我們這裡使用 `slice` 內建的 `binary_search` 來找尋插入點。
 
@@ -97,9 +97,9 @@ pub fn binary_insertion_sort(arr: &mut [i32]) {
 }
 ```
 
-1. 先限制 `binary_search` 的範圍，我們取出 sorted pile `arr[..i]`。再對 slice 執行 `binary_search`，
-2. `binary_search` 回傳一個 `Result<usize, usize>` 型別，找到時回傳 `Ok(index 值)`，找無時回傳 `Err(不影響排序穩定度的插入點)`，這個 `Err` 的設計巧妙地解決新值插入的問題。
-3. 和普通 insertion sort 雷同，從插入點至 sorted pile 開始迭代到 末端以進行排序，省下不少比較操作。
+1. 先限制 `binary_search` 範圍，取出 sorted pile `arr[..i]`。再對 slice 執行 `binary_search`。
+2. `binary_search` 回傳一個 `Result<usize, usize>` 型別，找到時回傳 `Ok(index 值)`，找無時回傳 `Err(不影響排序穩定度的插入點)`，這個 `Err` 的設計巧妙解決新值插入的問題。
+3. 和普通 insertion sort 雷同，從插入點至 sorted pile 迭代到末端以進行排序，省下不少比較操作。
 
 [wiki-binary-search]: https://en.wikipedia.org/wiki/Binary_search
 

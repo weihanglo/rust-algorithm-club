@@ -1,8 +1,8 @@
 # Mergesort
 
-Mergesort 是一個泛用且高效穩定的排序法，最佳與最差時間複雜都是 $O(n \log n)$。Mergesort 可謂著名「Divide and Conquer」手法的經典案例，先將序列分成更小的子序列（Divide），一個個排序後（Conquer），再合併已排序的子序列（Combine）。
+Mergesort 是一個泛用且高效穩定的排序法，最佳與最差時間複雜都是 \\(O(n \log n) \\)。Mergesort 可謂著名「Divide and Conquer」手法的經典案例，先將序列分成更小的子序列（Divide），一個個排序後（Conquer），再合併已排序的子序列（Combine）。
 
-- **高效穩定**：最佳、平均，與最差時間複雜度皆為 $O(n \log n)$。
+- **高效穩定**：最佳、平均，與最差時間複雜度皆為 \\(O(n \log n) \\)。
 - **穩定排序**：相同鍵值的元素，排序後相對位置不改變。
 - **非原地排序**：除了資料本身，仍需額外花費儲存空間來排序。
 - **分治演算法**：將主問題化作數個子問題，各個擊破。
@@ -62,18 +62,18 @@ Recursively merge subarray respecting the order.
 
 |              | Complexity         |
 | :----------- | :----------------- |
-| Worst        | $O(n \log n)$      |
-| Best         | $\Omega(n \log n)$ |
-| Average      | $\Theta(n \log n)$ |
-| Worst space  | $O(n)$ auxiliary   |
+| Worst        | \\(O(n \log n) \\)      |
+| Best         | \\(\Omega(n \log n) \\) |
+| Average      | \\(\Theta(n \log n) \\) |
+| Worst space  | \\(O(n) \\) auxiliary   |
 
 ### Time Complexity
 
-透過遞迴關係式，很容易計算 Mergesort 的時間複雜度。假設排序長度為 $n$ 的序列最多需要 $T(n)$ 時間。可以觀察到，如果序列只有一個元素，Mergesort 僅需要常數時間就可以完成排序，寫成 $T(n) = 1$。
+透過遞迴關係式，很容易計算 Mergesort 的時間複雜度。假設排序長度為 \\(n \\) 的序列最多需要 \\(T(n) \\) 時間。可以觀察到，如果序列只有一個元素，Mergesort 僅需要常數時間就可以完成排序，寫成 \\(T(n) = 1 \\)。
 
-如果 $n > 2$，Mergesort 會將序列分為 $\lceil \frac{n}{2} \rceil$ 部分，以及 $\lfloor \frac{n}{2} \rfloor$ 部分。我們可以將排序前者寫成 $T(\lceil \frac{n}{2} \rceil)$，而後者花費時間為 $ T(\lfloor \frac{n}{2} \rfloor)$。
+如果 \\(n > 2 \\)，Mergesort 會將序列分為 \\(\lceil \frac{n}{2} \rceil \\) 部分，以及 \\(\lfloor \frac{n}{2} \rfloor \\) 部分。我們可以將排序前者寫成 \\(T(\lceil \frac{n}{2} \rceil) \\)，而後者花費時間為 \\( T(\lfloor \frac{n}{2} \rfloor) \\)。
 
-最後，合併兩個子序列僅需 $n$ 個操作。可得下列遞迴關係式。  
+最後，合併兩個子序列僅需 \\(n \\) 個操作。可得下列遞迴關係式。  
 （為了方便計算，把 floor 和 ceil 捨去）
 
 $$
@@ -84,13 +84,13 @@ $$
   \end{cases}
 $$
 
-根據 [Master Theorem](master-theorem)，可得複雜度為 $O(n \log n)$。
+根據 [Master Theorem](master-theorem)，可得複雜度為 \\(O(n \log n) \\)。
 
 [master-theorem]: https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)
 
 ### Space Complexity
 
-Mergesort 的缺點之一就是在合併子序列時，需要額外的空間依序插入排序資料；若是遞迴版本的 Mergesort 還需額外加上遞迴花費的 call stack 空間，因此額外空間複雜度為 $O(n) + O(\log n) = O(n)$（以陣列實作）。
+Mergesort 的缺點之一就是在合併子序列時，需要額外的空間依序插入排序資料；若是遞迴版本的 Mergesort 還需額外加上遞迴花費的 call stack 空間，因此額外空間複雜度為 \\(O(n) + O(\log n) = O(n) \\)（以陣列實作）。
 
 ## Implementation
 
