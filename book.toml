@@ -1,0 +1,15 @@
+[book]
+title = "Rust Algorithm Club"
+authors = ["Weihang Lo"]
+description = "Learn algorithms and data structures with Rust"
+src = "src"
+
+[build]
+build-dir = "_book"
+create-missing = false
+
+[output.html]
+curly-quotes = true
+mathjax-support = true
+no-section-label = true
+rewrite-to-dir = ["index.html"]

@@ -10,6 +10,12 @@ This repository was originally inspired by [Swift Algorithm Club][swift-algorith
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
 
+## General Concepts
+
+- 🚧 [Asympototic Notation](src/concepts/asympototic-notation.md)
+- 🚧 [Master Theorem](src/concepts/master-theorem.md)
+- 🚧 [Algorithm Design](src/concepts/algorithm-design.md)
+
 ## Algorithms
 
 ### Sorting
@@ -29,8 +35,8 @@ Efficient sorts:
 
 Hybrid sorts (more efficient):
 
-- 🚧 [Timsort](src/sorting/timsort)
 - 🚧 [Introsort](src/sorting/introsort)
+- 🚧 [Timsort](src/sorting/timsort)
 - 🚧 [Pdqsort](src/sorting/pdqsort)
 
 Special-purpose sorts:
@@ -62,6 +68,9 @@ For learning more, you may check out following online resources:
 
 ## License
 
-[The MIT License (MIT)](LICENSE)
+This project is licensed under:
+
+- Source code: [The MIT License (MIT)](LICENSE).
+- Articles and creative works: [Creative Commons 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 Copyright © 2017 - 2018 Weihang Lo
