@@ -23,14 +23,13 @@ before_install:
   - rustup self update
 
 install:
-
   - source ~/.cargo/env || true
+  # Fetch forked `mdBook` for deployment.
+  - cargo install --git https://github.com/weihanglo/mdBook.git --branch "workaround/algo-club" mdbook
 
 script:
   - cargo build --target $TARGET
-  - cargo build --target $TARGET --release
   - cargo test --target $TARGET
-  - cargo test --target $TARGET --release
 
 after_script: set +e
 
@@ -44,3 +43,17 @@ branches:
     # release tags
     - /^v?\d+\.\d+\.\d+.*$/
     - master
+
+before_deploy:
+  # Build the book!
+  - mdbook build
+
+deploy:
+  provider: pages
+  target-branch: gh-pages
+  local-dir: .book
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  on:
+    condition: "$TRAVIS_RUST_VERSION = stable"

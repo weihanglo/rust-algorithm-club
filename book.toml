@@ -5,11 +5,13 @@ description = "Learn algorithms and data structures with Rust"
 src = "src"
 
 [build]
-build-dir = "_book"
+build-dir = ".book"
 create-missing = false
 
 [output.html]
 curly-quotes = true
 mathjax-support = true
 no-section-label = true
+readme-to-index = true
+google-analytics = "UA-118441906-1"
 rewrite-to-dir = ["index.html"]
