@@ -1,0 +1,360 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>氣泡排序 Bubble sort - Rust Algorithm Club</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Learn algorithms and data structures with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+
+        <link rel="stylesheet" href="../../book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asympototic-notation.html">漸近符號 Asympototic Notation</a></li><li><a href="../../concepts/master-theorem.html">主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/" class="active">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">循環鏈結串列 Circular linked list</a></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#bubble-sort" id="bubble-sort"><h1>Bubble sort</h1></a>
+<p>Bubble sort 是最簡單的排序法之一，由於排序時每個元素會如同泡泡般，一個一個浮出序列頂部，因而得名。由於其簡單好理解，名稱又有趣，常作為第一個學習的入門排序法。不過其效率不彰，甚至不如同為 quardratic time 的 insertion sort。Bubble sort 的原理很平凡，就是相鄰兩兩元素互相比較，如果大小順序錯了，就置換位置。再往下一個 pair 比較。</p>
+<p>Bubble sort 的特性如下：</p>
+<ul>
+<li>又稱為 <strong>sinking sort</strong>。</li>
+<li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
+<li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
+</ul>
+<a class="header" href="#algorithm" id="algorithm"><h2>Algorithm</h2></a>
+<ol>
+<li>比較兩個相鄰元素，若首個元素比次個元素大，置換兩者的位置。</li>
+<li>依序對相鄰元素執行步驟一，直到抵達序列頂端，此時頂端元素排序完成。</li>
+<li>重複步驟 1 - 2 的整個序列迭代，直到任何一次迭代沒有執行元素置換。</li>
+</ol>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="" />
+<em>Swfung8 - CC BY-SA 3.0</em></p>
+<a class="header" href="#explanation" id="explanation"><h2>Explanation</h2></a>
+<p>給定一組序列 <code>[5, 3, 8, 7, 2]</code>，以 bubble sort 遞增排序。以 ASCII diagram 表示：</p>
+<p><strong>第一次迭代</strong></p>
+<pre><code class="language-bash"> *  *               *  *
+[5, 3, 8, 7, 4] -&gt; [3, 5, 8, 7, 4] # 置換 3 與 5
+
+    *  *               *  *
+[3, 5, 8, 7, 4] -&gt; [3, 5, 8, 7, 4] # 不需置換
+
+       *  *               *  *
+[3, 5, 8, 7, 4] -&gt; [3, 5, 7, 8, 4] # 置換 7 與 8
+
+          *  *               *  *
+[3, 5, 7, 8, 4] -&gt; [3, 5, 7, 4, 8] # 置換 4 與 8，8 已排好序
+</code></pre>
+<p><strong>第二次迭代</strong></p>
+<pre><code class="language-bash"> *  *               *  *
+[3, 5, 7, 4, 8] -&gt; [3, 5, 7, 4, 8] # 不需置換
+
+    *  *               *  *
+[3, 5, 7, 4, 8] -&gt; [3, 5, 7, 4, 8] # 不需置換
+
+       *  *               *  *
+[3, 5, 7, 4, 8] -&gt; [3, 5, 4, 7, 8] # 置換 4 與 7
+
+          *  *               *  *
+[3, 5, 4, 7, 8] -&gt; [3, 5, 4, 7, 8] # 不需置換
+</code></pre>
+<blockquote>
+<p>naïve bubble sort 會跑完整個序列，即是已排序完成。</p>
+</blockquote>
+<p><strong>第三次迭代</strong></p>
+<pre><code class="language-bash"> *  *               *  *
+[3, 5, 4, 7, 8] -&gt; [3, 5, 4, 7, 8] # 不需置換
+
+    *  *               *  *
+[3, 5, 4, 7, 8] -&gt; [3, 4, 5, 7, 8] # 置換 4 與 5
+
+       *  *               *  *
+[3, 5, 4, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+
+          *  *               *  *
+[3, 5, 4, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+</code></pre>
+<p><strong>第四次迭代</strong></p>
+<pre><code class="language-bash"> *  *               *  *
+[3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+
+    *  *               *  *
+[3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+
+       *  *               *  *
+[3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+
+          *  *               *  *
+[3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+</code></pre>
+<p>很簡單的排序法！</p>
+<a class="header" href="#performance" id="performance"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity       </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)         </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n) \)      </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n^2) \)    </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
+</tbody></table>
+<a class="header" href="#time-complexity" id="time-complexity"><h3>Time complexity</h3></a>
+<p>Bubble sort 總共需要 \(n - 1 \) 次迭代，每次迭代至少需要執行 \(n - 1 - i \) 置換（ \)i \) 為第幾次迭代），總共需要迭代</p>
+<p>$$\sum_{i=0}^{n-1} (n - i - 1) = n^2 - \sum_{i=0}^{n-1}i - n = n^2 - \frac{n(n - 1)}{2} - n = \frac{n^2}{2} - \frac{n}{2}$$</p>
+<p>次，因此，時間複雜度為 \(O(n^2) \)。</p>
+<p>Bubble sort 在已排序完成的序列上，只需要迭代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
+<a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<p>Bubble sort 簡單實作如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn bubble_sort(arr: &amp;mut [i32]) {
+    let mut swapped = true;                 // 1
+    while swapped {
+        swapped = false;
+        for i in 1..arr.len() {             // 2
+            if arr[i - 1] &gt; arr[i] {
+                arr.swap(i - 1, i);
+                swapped = true              // 3
+            }
+        }
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>建立一個旗標，標誌該次迭代是否有元素置換。</li>
+<li>內層迴圈依序比較兩兩相鄰元素。</li>
+<li>若有任何置換動作，將旗標標誌為「已置換（<code>true</code>）」。</li>
+</ol>
+<p>倘若記錄已排好序的元素位置，雖然複雜度仍是 \(O(n^2) \)，但如此以來，每次迭代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
+    let mut new_len: usize;
+    let mut len = arr.len();            // 1
+    loop {
+        new_len = 0;
+        for i in 1..len {
+            if arr[i - 1] &gt; arr[i] {
+                arr.swap(i - 1, i);
+                new_len = i;            // 2
+            }
+        }
+        if new_len == 0 {               // 3
+            break;
+        }
+        len = new_len;                  // 4
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>將當前的序列長度記錄到 <code>len</code>。</li>
+<li>內層迴圈負責比較、置換，以及記錄未排序部分的序列長度到 <code>new_len</code>。</li>
+<li>若未排序部分 <code>new_len</code> 為零，代表排序完成。</li>
+<li>外層迴圈將新長度值 <code>new_len</code> 賦予 <code>len</code>，下一次迭代就可少做一次比較。</li>
+</ol>
+<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Bubble_sort">Wiki: Bubble sort</a></li>
+<li>Sorting GIF was created by Swfung8 (Own work) <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a> via Wikimedia Commons.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../sorting/selection_sort/" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../sorting/shellsort/" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../sorting/selection_sort/" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../sorting/shellsort/" class="nav-chapters next" title="Next chapter ../../" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-118441906-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="../../searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

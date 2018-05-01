@@ -1,0 +1,416 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>桶排序 Bucket sort - Rust Algorithm Club</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Learn algorithms and data structures with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+
+        <link rel="stylesheet" href="../../book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asympototic-notation.html">漸近符號 Asympototic Notation</a></li><li><a href="../../concepts/master-theorem.html">主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/" class="active">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">循環鏈結串列 Circular linked list</a></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#bucket-sort" id="bucket-sort"><h1>Bucket sort</h1></a>
+<p><a href="https://en.wikipedia.org/wiki/Bucket_sort">Bucket sort</a>，是一個非比較排序。原理是建立一些桶子，每個桶子對應一資料區間，在將待排序資料分配到不同的桶中，桶子內部各自排序。由於並非<a href="https://en.wikipedia.org/wiki/Comparison_sort">比較排序</a>，使用 Bucket sort 需要事先知道資料的範圍與分佈，才能決定桶子對應的區間。</p>
+<p>Bucket sort 基本特性如下：</p>
+<ul>
+<li>又稱 <strong>bin sort</strong>。</li>
+<li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
+<li><strong>分配式排序</strong>：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。</li>
+<li><strong>預期分佈</strong>：資料為<strong>均勻分佈</strong>。</li>
+</ul>
+<a class="header" href="#algorithm" id="algorithm"><h2>Algorithm</h2></a>
+<p>假設要排序 \(n \) 個元素的陣列，這些元素的值平均散落在某個<strong>已知的預期範圍內</strong>，例如 1 到 100。</p>
+<ol>
+<li><strong>Create buckets</strong>：建立 \(k \) 個桶子（bucket）的陣列。每個桶子<strong>對應預期範圍的某區間</strong>，如第一個桶子放 1 到 10，第二個放 11 到 20。</li>
+<li><strong>Scatter</strong>：將每個元素依照該值放入對應的桶子中。</li>
+<li><strong>Inner sort</strong>：排序所有非空的桶子。</li>
+<li><strong>Gather</strong>：依序走訪所有桶子，將桶內的元素放回原本的陣列中。</li>
+</ol>
+<a class="header" href="#explanation" id="explanation"><h2>Explanation</h2></a>
+<p>以下用 ASCII diagram 視覺化解釋：</p>
+<p>這裡有一些整數，落在 1 至 100 之間。我們有 \(n = 10 \) 的陣列要排序。</p>
+<pre><code>Original array
+
++-------------------------------------------------+
+|  6 | 28 | 96 | 14 | 74 | 37 |  9 | 71 | 91 | 36 |
++-------------------------------------------------+
+</code></pre>
+<p><strong>1. Create buckets</strong>：建立一定數量的桶子，這裡我們建立與原始陣列相同數量的桶子（10）。每個桶子對應 \(n - 1 * 10 \) 到 \(n * 10 \) 的區間。</p>
+<pre><code>Bucket array
+
++-------------------------------------------------+
+|    |    |    |    |    |    |    |    |    |    |
++-------------------------------------------------+
+  ^    ^
+  |    |
+  |    |
+  |    holds values in range 11 to 20
+  holds values in range 1 to 10
+</code></pre>
+<p><strong>2. Scatter</strong>：將原始陣列中的元素，放入對應的桶中。</p>
+<pre><code>Bucket array
+
+  6,9  14   28   37,36               74,71     96,91
+  |    |    |    |                   |         |
++-v----v----v----v-------------------v---------v--+
+|    |    |    |    |    |    |    |    |    |    |
++-------------------------------------------------+
+</code></pre>
+<p><strong>3. Inner sort</strong>：排序所有非空桶子中的元素，桶內排序可用任意排序法，通常選用「insertion sort」，可確保排序穩定性，並降低額外開銷。</p>
+<pre><code>Bucket array
+
+  sort sort sort sort                sort      sort
+  ---  --   --   -----               -----     -----
+  6,9  14   28   36,37               71,74     91,96
+  |    |    |    |                   |         |
++-v----v----v----v-------------------v---------v--+
+|    |    |    |    |    |    |    |    |    |    |
++-------------------------------------------------+
+</code></pre>
+<p><strong>4. Gather</strong>：排序完後，再將所有桶中元素依序放回原始的陣列。</p>
+<pre><code>Original array
++-------------------------------------------------+
+|  6 |  9 | 14 | 28 | 36 | 37 | 71 | 74 | 91 | 96 |
++-------------------------------------------------+
+</code></pre>
+<a class="header" href="#performance" id="performance"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity               </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)                 </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n + k) \)          </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n + k) \)          </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(n + k) \) auxiliary </td></tr>
+</tbody></table>
+<blockquote>
+<p>\(k \) = 桶子的數量（number of buckets）
+\(n \) = 資料筆數</p>
+</blockquote>
+<a class="header" href="#worst-case" id="worst-case"><h3>Worst case</h3></a>
+<p>Bucket sort 是一個分配式排序法，對資料分佈有既定的預期：「<strong>所有元素平均分佈在每個 bucket 的區間內</strong>」。可想而知，最差的狀況是所有元素都聚集（clustering）在同一個 bucket 中，整個 bucket sort 的會退化成單一一個 inner sort 的複雜度。而桶內排序通常選用 insertion sort（最差 \(O(n^2) \)），所以最差的時間複雜度為「 \(O(n^2) \)」。</p>
+<a class="header" href="#best-case" id="best-case"><h3>Best case</h3></a>
+<p>最佳的狀況則是完全符合預期的平均分佈，一個蘿蔔一個坑，每個桶內排序的最佳時間複雜度為 \(O(n / k) \)，再乘上桶子總數 \(k \)，僅需 \(O(k \cdot (n / k)) = O(n) \)。計算結果看起來非常合理，但實際上最佳時間複雜度為 \(O(n + k) \)，為什麼呢？</p>
+<p>無庸置疑，桶內排序最佳時間複雜度為 \(O(n / k) \)，但別忘了這是省略常數項過後式子，進行符號運算時，較精確的表達是 \(c_0 O(n / k) + c_1 \)，對於實作層面的常數 \(c_0 \) 和 \(c_1 \) 則予以保留。</p>
+<p>當我們乘上 \(k \)，試著算出總運算量時，</p>
+<p>$$k \cdot (c_0(n / k) + c_1) $$</p>
+<p>會得到：</p>
+<p>$$ c_0n + c_1k $$</p>
+<p>可以得知，整個計算與 \(k \) 有關，所以需要耗時 \(O(n + k) \)。</p>
+<p>撇開數學，我們從 pseudo code 來看。最佳情況下，將所有元素蒐集回陣列的步驟（Gather）如下：</p>
+<pre><code>for (each bucket b in all k buckets)
+  for (each element x in b)
+    append x to the array
+</code></pre>
+<p>最外層的迴圈依桶子數 \(k \) 而定，至少需要執行 \(k \) 次，複雜度為 \(O(k) \)。內層的迴圈則是每個桶內的元素都會執行，而我們的資料時均勻分布，因此執行時間與元素總數 \(n \) 相關，為 \(O(n) \)。兩者加起來就是我們所說的 \(O(n + k) \) 的最佳複雜度。</p>
+<p><strong>那 \(k \) 究竟會是多少，影響會比 \(n \) 大嗎？</strong></p>
+<p>端看桶子總數而定，若桶子總數很大，比元素個數 \(n \) 大得多，則桶子總數對執行時間的影響恐較劇烈，就算大多數為空桶子，仍須挨家挨戶查看是否需要執行桶內排序。</p>
+<a class="header" href="#space-complexity" id="space-complexity"><h3>Space Complexity</h3></a>
+<p>Bucket sort 須額外建立 \(k \) 個桶子，每個桶子需要配置長度為 \(n \) 的 array，因此空間複雜度為 \(O(n \cdot k) \)。如果以 dynamic array 實作 bucket，並考慮平攤分析（Amortized analysis），則空間複雜度降至 \(O(n + k) \)，這也是大多數人接受的分析結果，畢竟不會有人無聊到預先配置 \(n \cdot k \) 個 empty bucket。</p>
+<a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<a class="header" href="#bucket" id="bucket"><h3>Bucket</h3></a>
+<p>Bucket sort 有許多種各異的實作法，差異最大之處就是桶子 bucket 這部分。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// Bucket to store elements.
+struct Bucket&lt;H, T&gt; {
+    hash: H,
+    values: Vec&lt;T&gt;,
+}
+
+impl&lt;H, T&gt; Bucket&lt;H, T&gt; {
+    /// Create a new bucket and insert its first value.
+    ///
+    /// * `hash` - Hash value generated by hasher param of `bucket_sort`.
+    /// * `value` - Value to be put in the bucket.
+    pub fn new(hash: H, value: T) -&gt; Bucket&lt;H, T&gt; {
+        Bucket {
+            hash: hash,
+            values: vec![value],
+        }
+    }
+}
+#}</code></pre></pre>
+<p>這裡的桶子實作兩個 struct fields：</p>
+<ul>
+<li><code>values</code>：使用 <a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a> 儲存對應範圍內的元素</li>
+<li><code>hash</code>：Bucket Sort 主函式有一個 <code>hasher</code> 函式，會計算出對應各個桶子的雜湊值，因此要確保桶子的雜湊值有唯一性。</li>
+</ul>
+<a class="header" href="#sorting" id="sorting"><h3>Sorting</h3></a>
+<p>接下來就是排序主函式。依照慣例，先看看函式簽名（Function signature）。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn bucket_sort&lt;H, F, T&gt;(arr: &amp;mut [T], hasher: F)
+    where H: Ord,
+          F: Fn(&amp;T) -&gt; H,
+          T: Ord + Clone,
+#}</code></pre></pre>
+<p>這個 <code>bucket_sort</code> 函式使用了不少泛型：</p>
+<ul>
+<li><code>H</code>：<code>hasher</code> 函式的回傳型別，用來辨識不同的桶子。</li>
+<li><code>F</code>：<code>hasher</code> 函式自身，只需要一個參數 <code>&amp;T</code>，回傳一個 <code>H</code>。</li>
+<li><code>T</code>：欲排序資料的型別。</li>
+</ul>
+<p>函式自身稍微複雜一點，但仍是 <a href="#algorithm">Algorithm</a> 一節介紹的四步驟：Create buckets、Scatter、Inner sort，還有 Gather。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn bucket_sort() {
+    // ...
+
+    // 1. Create buckets.
+    let mut buckets: Vec&lt;Bucket&lt;H, T&gt;&gt; = Vec::new();
+
+    // 2. Scatter
+    for value in arr.iter() {
+        let hash = hasher(&amp;value); // 2.1.
+
+        let value = value.clone();
+        // 2.2.
+        match buckets.binary_search_by(|bucket| bucket.hash.cmp(&amp;hash)) {
+            // If exists, push the value to the bucket.
+            Ok(index) =&gt; buckets[index].values.push(value),
+            // If none, create and new bucket and insert value in.
+            Err(index) =&gt; buckets.insert(index, Bucket::new(hash, value)),
+        }
+    }
+
+    // 3. Inner sort and gather
+    let ret = buckets.into_iter().flat_map(|mut bucket| {
+        bucket.values.sort(); // 3.1.
+        bucket.values
+    }).collect::&lt;Vec&lt;T&gt;&gt;();   // 3.2.
+
+    arr.clone_from_slice(&amp;ret); // 4 Copy to original array
+}
+#}</code></pre></pre>
+<ol>
+<li>一般來說，第一步會配置完所有桶子，但這裡實作僅建立儲存桶子們的容器 <code>buckets</code>，這是由於實作了 <code>hasher</code> 函式，元素對應桶子的邏輯交由外部決定，因此桶子不需事先配置，而是交給第二步驟時 <strong>on-the-fly</strong> 建立。</li>
+<li>迭代輸入的 <code>arr</code>，將元素散佈到桶子中。
+<ol>
+<li>使用元素值 <code>value</code> 取得雜湊值。</li>
+<li>從一堆桶子內 <code>buckets</code> 尋找對應雜湊值的桶子，如有對應桶子，則將待排序元素插入桶中；若無對應桶子，則馬上建立桶子，並插入待排序元素。</li>
+</ol>
+</li>
+<li>由於桶子們 <code>buckets</code> 是一個二維陣列集合，我們使用 <code>flat_map</code> 將之壓平。
+<ol>
+<li>使用 Rust 內建 sort（Timsort 的變形）作為我們 inner sort 的實作，將桶內所有元素排好序</li>
+<li>別忘了 Rust 的 Iterator 很 lazy，記得要使用 <code>collect</code> 蒐集 iterator 實作後的結果。</li>
+</ol>
+</li>
+<li>由於要模擬 in-place 原地排序法的特性，將排序好的資料再次拷貝到 <code>arr</code> 上。這也是為什麼函式元素泛型 <code>T</code> 需要 <code>Clone</code> trait 的原因了。</li>
+</ol>
+<p>有關於步驟 2.2.，這部分可以用 <code>HashMap</code> 的變形 <a href="https://github.com/bluss/indexmap">IndexMap</a>（一個保存插入順序的有序 HashMap）保存雜湊值對應桶子的資訊，使得外界更容易依雜湊值找到桶子。但為了保持範例程式的簡潔，決定不引入第三方的 crate（Rust 語言第三方模組的代稱），且 <code>binary_search_by</code> 的複雜度為 \(O(\log n) \)，對 Bucket sort 最差複雜度並無影響。</p>
+<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Bucket_sort">Wiki: Bucket sort</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Amortized_analysis">Wiki: Amortized analysis</a></li>
+<li><a href="https://stackoverflow.com/questions/7311415">How is the complexity of bucket sort is O(n+k) if we implement buckets using linked lists?</a></li>
+<li><a href="https://codereview.stackexchange.com/questions/145113/bucket-sort-in-rust">Bucket sort in Rust</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../sorting/counting_sort/" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../sorting/radix_sort/" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../sorting/counting_sort/" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../sorting/radix_sort/" class="nav-chapters next" title="Next chapter ../../" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-118441906-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="../../searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

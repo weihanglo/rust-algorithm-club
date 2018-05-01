@@ -1,0 +1,405 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>堆排序 Heapsort - Rust Algorithm Club</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Learn algorithms and data structures with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+
+        <link rel="stylesheet" href="../../book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asympototic-notation.html">漸近符號 Asympototic Notation</a></li><li><a href="../../concepts/master-theorem.html">主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/" class="active">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">循環鏈結串列 Circular linked list</a></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#heapsort" id="heapsort"><h1>Heapsort</h1></a>
+<p>Heapsort（堆積排序法）可以看作是 <a href="../selection_sort">selection sort</a> 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。</p>
+<p>和 selection sort 不同之處是，heapsort 利用 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序（partially sorted）的資料結構輔助並加速排序。</p>
+<p>Heapsort 的特性如下：</p>
+<ul>
+<li>使用 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 資料結構輔助，通常使用 <a href="https://en.wikipedia.org/wiki/Binary_heap">binary heap</a>。</li>
+<li><strong>不穩定排序</strong>：排序後，相同鍵值的元素相對位置可能改變。</li>
+<li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
+<li><strong>較差的 CPU 快取</strong>：heap 不連續存取位址的特性，不利於 <a href="https://en.wikipedia.org/wiki/CPU_cache">CPU 快取</a>。</li>
+</ul>
+<a class="header" href="#algorithm" id="algorithm"><h2>Algorithm</h2></a>
+<p>Heapsort 的演算法分為兩大步驟：</p>
+<ol>
+<li>將資料轉換為 heap 資料結構（遞增排序用 max-heap, 遞減排序選擇 min-heap）。</li>
+<li>逐步取出最大／最小值，並與最後一個元素置換。具體步驟如下：
+<ol>
+<li>交換 heap 的 root 與最後一個 node，縮小 heap 的範圍（排序一筆資料，故 heap 長度 -1）。</li>
+<li>更新剩下的資料，使其滿足 heap 的特性，稱為 heap ordering property。</li>
+<li>重複前兩個步驟，直到 heap 中剩最後一個未排序的資料。</li>
+</ol>
+</li>
+</ol>
+<p>透過 GIF 動畫感受一下 heapsort 的威力吧！</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif" alt="" /></p>
+<a class="header" href="#explanation" id="explanation"><h2>Explanation</h2></a>
+<p>在開始之前，定義幾個 heap 常用名詞：</p>
+<ul>
+<li><strong>Heap ordering property</strong>：一個 heap 必須要滿足的條件。以 heap 種類不同有幾種變形。
+<ul>
+<li><strong>min-heap property</strong>：每個結點皆大於等於其父節點的值，且最小值在 heap root。</li>
+<li><strong>max-heap property</strong>：每個結點皆小於等於其父節點的值，且最大值在 heap root。</li>
+</ul>
+</li>
+</ul>
+<p>而 heapsort 主要分為兩個部分：</p>
+<ol>
+<li><strong>Heapify</strong>：將陣列轉換為 heap 資料結構（heapify）。</li>
+<li><strong>Sorting</strong>：不斷置換 heap root 與最後一個元素來排序，並修正剩餘未排序資料使其符合 heap order。</li>
+</ol>
+<p>這裡有一個未排序的序列，將以遞增方向排序之。</p>
+<pre><code>[17, 20, 2, 1, 3, 21]
+</code></pre>
+<p>首先，將資料轉換為 heap 資料結構，這個步驟即時 <strong>heapify</strong>。由於是遞增排序，我們採用 max-heap（最大元素在 root）。</p>
+<pre><code>[21, 20, 17, 1, 3, 2]
+</code></pre>
+<p>對應的二元樹（binary tree）的圖形如下：</p>
+<p><img src="tree.png" height="300px" /></p>
+<p>再來就是<strong>排序的部分</strong>，Max-heap 會將最大的元素擺在 root 的位置，我們先將最後一個 node 與 root 進行交換，完成第一個排序步驟。</p>
+<blockquote>
+<p>若不熟悉 heap，可以閱讀<a href="https://en.wikipedia.org/wiki/Heap_(data_structure)"> Wiki 的介紹</a>，其實 heap 就是用陣列實作的二元樹。</p>
+</blockquote>
+<pre><code>[21, 20, 17, 1, 3, 2]
+ *                 *
+(swap) --&gt;
+
+        unsorted | sorted
+[2, 20, 17, 1, 3 | 21]
+</code></pre>
+<p>接下來，將未排序的資料區塊重整為符合 max-heap 的結構。</p>
+<pre><code>[2, 20, 17, 1, 3 | 21]
+
+(sift down) --&gt;
+
+[20, 3, 17, 1, 2 | 21]
+</code></pre>
+<p>有沒有看出一些端倪？</p>
+<p>只要不斷將 root 和最後一個 node 交換，並將剩餘資料修正至滿足 heap ordering，就完成排序了。</p>
+<pre><code>[20, 3, 17, 1, 2 | 21]
+ *             *
+(swap) --&gt;
+
+[2, 3, 17, 1 | 20, 21]
+
+(sift down)--&gt;
+
+[17, 3, 2, 1 | 20, 21]
+ *         *
+(swap) --&gt;
+
+[1, 3, 2 | 17, 20, 21]
+
+(sift down)--&gt;
+
+[3, 1, 2 | 17, 20, 21]
+ *     *
+(swap) --&gt;
+
+[1, 2 | 3, 17, 20, 21]
+
+(Done!)
+</code></pre>
+<p>以上便是 heapsort 演算法的簡單流程，是不是和 selection sort 非常相似呢！</p>
+<a class="header" href="#performance" id="performance"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity         </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n \log n) \)      </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n \log n) \) </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n \log n) \) </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary   </td></tr>
+</tbody></table>
+<p>Heapsort 最佳、最差、平均的時間複雜度皆為 \(O(n \log n) \)，同樣分為兩部分簡單解釋。</p>
+<a class="header" href="#build-heap-heapify" id="build-heap-heapify"><h3>Build heap (heapify)</h3></a>
+<p>建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。</p>
+<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#Implementation">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 \(O(\lceil {\log_2(n)} \rceil) = O(\log n) \)， \(n \) 為陣列元素個數。</p>
+<p>Heapify 從最末個元素開始反向迭代，每個元素都調用 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 \(n \) 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
+<p>$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$</p>
+<blockquote>
+<p>實際上，build heap 步驟的複雜度可達到 \(\Theta(n) \)，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
+</blockquote>
+<a class="header" href="#sorting-sift-down" id="sorting-sift-down"><h3>Sorting (sift down)</h3></a>
+<p>講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 <strong>sift down</strong> 修正符合 heap order。所以總共需要做 \(n \) 次 sift down，複雜度為 \(O(n \log n) \)。</p>
+<a class="header" href="#sum-up" id="sum-up"><h3>Sum up</h3></a>
+<p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 \(O(n \log n) \)。</p>
+<a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<p>Heapsort 的實作相對簡單，只需要不斷調用 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn heapsort(arr: &amp;mut [i32]) {
+    // -- Heapify part --
+    // This procedure would build a valid max-heap.
+    // (or min-heap for sorting descendantly)
+    let end = arr.len();
+    for start in (0..end / 2).rev() {                   // 1
+        sift_down(arr, start, end - 1);
+    }
+
+    // -- Sorting part --
+    // Iteratively sift down unsorted part (the heap).
+    for end in (1..arr.len()).rev() {                   // 2
+        arr.swap(end, 0);                               // 3
+        sift_down(arr, 0, end - 1);                     // 4
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>這部分是 heapify，從最小 non-leaf node 開始（<code>end</code> / 2），修正序列至滿足 heap order，再反向迭代做 heapify。</li>
+<li>這部分負責排序，每次迭代都將排序 heap 的 root 元素，步驟如 3 - 4：</li>
+<li>不斷將 max-heap 中最大值（在 root 上）與 heap 最後一個元素 <code>end</code> 置換，</li>
+<li>並利用 <code>sift_down</code> 將序列修正至 max-heap 資料結構，依照定義，此時 unsorted pile 首個元素成為 max-heap root，是最大值。</li>
+</ol>
+<p>Heapsort 全靠 <code>sift_down</code> 神救援，那 <code>sift_down</code> 到底有什麼神奇魔力，一探究竟吧！</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
+    let mut root = start;
+    loop {
+        let mut child = root * 2 + 1; // Get the left child   // 1
+        if child &gt; end {
+            break;
+        }
+        if child + 1 &lt;= end &amp;&amp; arr[child] &lt; arr[child + 1] {  // 2
+            // Right child exists and is greater.
+            child += 1;
+        }
+
+        if arr[root] &lt; arr[child] {                           // 3
+            // If child is greater than root, swap'em!
+            arr.swap(root, child);
+            root = child;
+        } else {
+            break;
+        }
+    }
+}
+#}</code></pre></pre>
+<p><code>sift_down</code> 的功能是將 node 往下移。通常用在 heap 刪除或取代 node 時，將序列修正為有效的 heap。 這裡實作的版本有三個參數：</p>
+<ul>
+<li><code>arr</code>：欲修正為符合 heap 定義的序列。</li>
+<li><code>start</code>：欲往下移動的 node index，可視為需要被修正的元素。</li>
+<li><code>end</code>：此 node 以內（包含）的序列都會被修正為有效的 heap。</li>
+</ul>
+<p><code>sift_down</code> 有些假設條件：從 <code>start</code> index 出發的子樹，除了 <code>start</code> 本身以外，其他皆符合 heap ordering。</p>
+<p>再來看看 <code>sift_down</code> 實作內容，<code>loop</code> 中幹的活就是不斷將 <code>start</code> index 上的元素與其子樹比較，若不符合 heap ordering，則兩者置換。</p>
+<ol>
+<li><strong>是否有子結點</strong>：依照 binary heap 的定義找出 root 的左子樹（left substree），若左子樹的 index <code>child</code> 比 <code>end</code> 還大，表示沒有 heap 沒有子結點，停止迭代。</li>
+<li><strong>檢查右子樹值較大</strong>：若 root 下有右子樹且較大，我們會標記右子樹，並在下一步對右子樹進行處理。</li>
+<li><strong>置換</strong>：若 <code>root</code> 元素比 <code>child</code> 的元素小，則置換兩者，並將 <code>child</code> 設置為下個迭代的 <code>root</code>，繼續檢查最初的 <code>start</code> 元素是否滿足 heap ordering。</li>
+</ol>
+<p>以上就是簡單的 <code>sift_down</code> 實作，也是整個 heapsort 的精髓。</p>
+<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">Wiki: Heap</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Heapsort">Wiki: Heapsort</a></li>
+<li><a href="www.cs..html">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
+<li>Sorting GIF by RolandH <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> via Wikimedia Commons.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../sorting/" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../sorting/quicksort/" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../sorting/" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../sorting/quicksort/" class="nav-chapters next" title="Next chapter ../../" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-118441906-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="../../searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

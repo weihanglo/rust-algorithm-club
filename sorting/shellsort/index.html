@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>希爾排序 Shellsort - Rust Algorithm Club</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Learn algorithms and data structures with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+
+        <link rel="stylesheet" href="../../book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asympototic-notation.html">漸近符號 Asympototic Notation</a></li><li><a href="../../concepts/master-theorem.html">主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/" class="active">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">循環鏈結串列 Circular linked list</a></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#shellsort" id="shellsort"><h1>Shellsort</h1></a>
+<p>眾所周知，insertion sort 用在幾乎完成排序的序列上非常高效，換句話說，當元素置換不需移動太遠時，效率很高。反之，如果有元素錯位非常遙遠，效能就會大打折扣。Shellsort 以一個 gap sequence 將資料依指定的間隔（gap）分組進行 insertion sort，使得較遠的元素能夠快速歸位，下一次的排序就會因前次排序結果愈來愈接近完成而加速。</p>
+<p>Shellsort 最後一個 gap 必定是 1，也就是排序會退化成 insertion sort，此時大部分元素皆排序完成，insertion sort 會非常高效。</p>
+<p>Shellsort 特性如下：</p>
+<ul>
+<li><strong>自適應排序</strong>：可根據當前資料排序情形加速排序，資料越接近排序完成，效率越高。</li>
+<li><strong>不穩定排序</strong>：排序後，相同鍵值的元素相對位置可能改變。</li>
+<li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
+<li>可視為一般化（Generalizaion）的 <a href="../insertion_sort">insertion sort</a>。</li>
+</ul>
+<a class="header" href="#algorithm" id="algorithm"><h2>Algorithm</h2></a>
+<p>Shellsort 分為兩個步驟：</p>
+<ol>
+<li>決定 gap sequence，組後一個</li>
+<li>迭代 gap sequence 進行分組排序，每次執行有間隔的 insertion sort。也就是每個元素與其相鄰 gap 的元素比較與置換。</li>
+</ol>
+<blockquote>
+<p>最後一次排序（gap = 1）會退化為 insertion sort，完成整個排序。</p>
+</blockquote>
+<a class="header" href="#gap-sequneces" id="gap-sequneces"><h3>Gap Sequneces</h3></a>
+<p>Shellsort 的效率取決於 gap sequence 的選擇，這邊舉幾個常見的 gap sequence：</p>
+<table><thead><tr><th align="left">              </th><th align="left"> Sequence                        </th></tr></thead><tbody>
+<tr><td align="left"> Marcin Ciura </td><td align="left"> 1, 4, 10, 23, 57, 132, 301, 701 </td></tr>
+<tr><td align="left"> \(2^{k} - 1 \)  </td><td align="left"> 1, 3, 7, 15, 31, 63,...         </td></tr>
+<tr><td align="left"> \(\lfloor {\frac {N}{2^k}} \rfloor \) </td><td align="left"> \(\lfloor {\frac {N}{2}} \rfloor \), \(\lfloor {\frac {N}{4}} \rfloor \), ..., 1</td></tr>
+</tbody></table>
+<p>感受一下 gap sequence 為 23, 10, 4, 1 的 shellsort 吧。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Sorting_shellsort_anim.gif" alt="" /></p>
+<a class="header" href="#explanation" id="explanation"><h2>Explanation</h2></a>
+<p>Shellsort 其實就是進行好幾次不同 gap 的 insertion sort，以下用 ASCII diagram 解釋。</p>
+<p>假定這裡有一個序列需要遞增排序。</p>
+<pre><code>[5, 3, 8, 7, 4, 9, 6, 2]
+</code></pre>
+<p>我們選擇最簡單的 \(\lfloor {\frac {N}{2^k}} \rfloor \) gap sequence 來排序。我們以<strong>星號</strong>標示出每次 insertion sort 對應排序</p>
+<p>首先算出第一個 gap 為 \(8 / 2^1 = 4 \)。開始 insertion sort。</p>
+<pre><code> *           *
+[5, 3, 8, 7, 4, 9, 6, 2]
+
+-&gt; (sort subsequence [5, 4])
+
+    *           *
+[4, 3, 8, 7, 5, 9, 6, 2]
+
+-&gt; (skip)
+       *           *
+[4, 3, 8, 7, 5, 9, 6, 2]
+
+-&gt; (sort subsequence [8, 6])
+          *           *
+[4, 3, 6, 7, 5, 9, 8, 2]
+
+-&gt; (sort subsequence [7, 2])
+
+[4, 3, 8, 2, 5, 9, 6, 7]
+</code></pre>
+<p>再來算出第二個 gap 為 \(8 / 2^2 = 2 \)。開始 insertion sort。</p>
+<pre><code> *     *
+[4, 3, 8, 2, 5, 9, 6, 7]
+
+-&gt; (skip)
+    *     *
+[4, 3, 8, 2, 5, 9, 6, 7]
+
+-&gt; (sort subsequence [3, 2])
+ *     *     *
+[4, 2, 8, 3, 5, 9, 6, 7]
+
+-&gt; (sort subsequence [4, 8, 5])
+    *     *     *
+[4, 2, 5, 3, 8, 9, 6, 7]
+
+-&gt; (skip)
+ *     *     *     *
+[4, 2, 5, 3, 8, 9, 6, 7]
+
+-&gt; (sort subsequence [4, 5, 8, 6])
+    *     *     *     *
+[4, 2, 5, 3, 6, 9, 8, 7]
+
+-&gt; (sort subsequence [2, 3, 9, 7])
+[4, 2, 5, 3, 6, 7, 8, 9]
+</code></pre>
+<p>再來進行第三次排序。gap 為 \(8 / 2^3 = 1 \)，shellsort 退化至 insertion sort，但前一次結果已經很接近排序完成，insertion sort 可以幾乎在 one pass 完成排序。</p>
+<blockquote>
+<p>Insertion sort 的 ASCII diagram 我們就不展示了，請參考 <a href="../insertion_sort">Insertion sort</a>。</p>
+</blockquote>
+<a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<p>我們這裡以 <a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Marcin 的 Paper</a> 中提到的經驗式為例，首先，先建立一個 gap sequence 的常數。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// Marcin Ciura's gap sequence.
+pub const MARCIN_GAPS: [usize; 8] = [701, 301, 132, 57, 23, 10, 4, 1];
+#}</code></pre></pre>
+<p>再來就是主程式的部分，總共會有三個迴圈，</p>
+<ul>
+<li>最外層是迭代 gap sequence，</li>
+<li>中間層是迭代整個資料序列，</li>
+<li>內層就是每個元素的插入排序動作。</li>
+</ul>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// Shellsort
+pub fn shellsort(arr: &amp;mut [i32]) {
+    let len = arr.len();
+    for gap in MARCIN_GAPS.iter() {                     // 1
+        let mut i = *gap;                               // 4
+        while i &lt; len {                                 // 2
+            let mut j = i;
+            while j &gt;= *gap &amp;&amp; arr[j - gap] &gt; arr[j] {  // 3
+                arr.swap(j - *gap, j);
+                j -= *gap;
+            }
+            i += 1;
+        }
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>最外層的迴圈，利用 <code>iter()</code> trait 產生迭代器，迭代 gap sequence。</li>
+<li>中間層迴圈，控制 <code>i</code> 是否超出資料序列，以迭代整合資料序列。</li>
+<li>最內層迴圈，執行插入動作，將每個元素置換到正確位置。</li>
+<li>由於 <code>gap</code> 的型別是 <code>&amp;usize</code>，需透過 <code>*gap</code> dereference 得到 <code>usize</code> 型別。</li>
+</ol>
+<a class="header" href="#performance" id="performance"><h2>Performance</h2></a>
+<table><thead><tr><th>              </th><th> Complexity                                            </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \) ~  \(O(n \log^2 n) \) (Depends on gap sequence) </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n \log n) \)                                    </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> Depends on gap sequence                               </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary                                      </td></tr>
+</tbody></table>
+<p>Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 \(O(n \log^2 n) \)，有著不錯的表現。有興趣可以參考<a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">這篇文章</a>。</p>
+<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Shellsort">Wiki: Shellsort</a></li>
+<li><a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Best Increments for the Average Case of Shellsort, M. Ciura, 2001</a></li>
+<li><a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">Shellsort and Sorting Networks (Outstanding Dissertations in the Computer Sciences)</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../sorting/bubble_sort/" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../sorting/" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../sorting/bubble_sort/" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../sorting/" class="nav-chapters next" title="Next chapter ../../" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-118441906-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="../../searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

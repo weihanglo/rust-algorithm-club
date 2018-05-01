@@ -1,0 +1,2425 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rust Algorithm Club</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Learn algorithms and data structures with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="">Rust Algorithm Club</a></li><li><a href="concepts/">基礎概念</a></li><li><ol class="section"><li><a href="concepts/asympototic-notation.html">漸近符號 Asympototic Notation</a></li><li><a href="concepts/master-theorem.html">主定理 Master Theorem</a></li><li><a href="concepts/algorithm-design.html">演算法設計 Algorithm Design</a></li></ol></li><li><a href="sorting/">排序</a></li><li><ol class="section"><li><a href="sorting/">簡單排序</a></li><li><ol class="section"><li><a href="sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="sorting/">高效排序</a></li><li><ol class="section"><li><a href="sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="sorting/">混合排序</a></li><li><ol class="section"><li><a href="sorting/introsort/">內省排序 Introsort</a></li><li><a href="sorting/timsort/">自適應的合併排序 Timsort</a></li><li><a href="sorting/pdqsort/">模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="sorting/">特殊排序</a></li><li><ol class="section"><li><a href="sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="collections/">資料結構</a></li><li><ol class="section"><li><a href="collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="collections/linked_list/">單向鏈結串列 Singly linked list</a></li><li><a href="collections/linked_list/">雙向鏈結串列 Doubly linked list</a></li><li><a href="collections/linked_list/">循環鏈結串列 Circular linked list</a></li></ol></li></ol></li><li><a href="LICENSE.html">授權條款</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#rust-algorithm-club" id="rust-algorithm-club"><h1>Rust Algorithm Club</h1></a>
+<p>本專案受 <a href="https://github.com/raywenderlich/swift-algorithm-club">Swift Algorithm Club</a> 啟發，專案中的演算法皆使用 <a href="https://www.rust-lang.org/">Rust 程式語言</a>撰寫說明與實作！</p>
+<a class="header" href="#a通用概念" id="a通用概念"><h2>通用概念</h2></a>
+<ul>
+<li>🚧 <a href="concepts/asympototic-notation.html">漸近符號 Asympototic Notation</a></li>
+<li>🚧 <a href="concepts/master-theorem.html">主定理 Master Theorem</a></li>
+<li>🚧 <a href="concepts/algorithm-design.html">演算法設計 Algorithm Design</a></li>
+</ul>
+<a class="header" href="#a演算法" id="a演算法"><h2>演算法</h2></a>
+<a class="header" href="#a排序" id="a排序"><h3>排序</h3></a>
+<p>簡單排序：</p>
+<ul>
+<li><a href="sorting/insertion_sort">插入排序 Insertion sort</a></li>
+<li><a href="sorting/selection_sort">選擇排序 Selection sort</a></li>
+<li><a href="sorting/bubble_sort">氣泡排序 Bubble sort</a></li>
+<li><a href="sorting/shellsort">希爾排序 Shellsort</a></li>
+</ul>
+<p>高效排序：</p>
+<ul>
+<li><a href="sorting/heapsort">堆排序 Heapsort</a></li>
+<li><a href="sorting/quicksort">快速排序 Quicksort</a></li>
+<li><a href="sorting/mergesort">合併排序 Mergesort</a></li>
+</ul>
+<p>混合排序（更高效）：</p>
+<ul>
+<li>🚧 <a href="sorting/introsort">內省排序 Introsort</a></li>
+<li>🚧 <a href="sorting/timsort">自適應的合併排序 Timsort</a></li>
+<li>🚧 <a href="sorting/pdqsort">模式消除快速排序 Pdqsort</a></li>
+</ul>
+<p>特殊排序：</p>
+<ul>
+<li><a href="sorting/counting_sort">計數排序 Counting sort</a></li>
+<li><a href="sorting/bucket_sort">桶排序 Bucket sort</a></li>
+<li><a href="sorting/radix_sort">基數排序 Radix sort</a></li>
+</ul>
+<a class="header" href="#a資料結構" id="a資料結構"><h2>資料結構</h2></a>
+<a class="header" href="#a鏈結串列" id="a鏈結串列"><h3>鏈結串列</h3></a>
+<ul>
+<li>🚧 <a href="collections/linked_list/#singly-linked-list">單向鏈結串列 Singly linked list</a></li>
+<li>🚧 <a href="collections/linked_list/#doubly-linked-list">雙向鏈結串列 Doubly linked ilst</a></li>
+<li>🚧 <a href="collections/linked_list/#circular-linked-list">循環鏈結串列 Circular linked ilst</a></li>
+</ul>
+<a class="header" href="#a學習資源" id="a學習資源"><h2>學習資源</h2></a>
+<p>有許多優秀的網站與學習資源，分享給大家學習演算法。</p>
+<ul>
+<li><a href="https://visualgo.net/">VisuAlgo</a> - 也許是最好的演算法視覺化專案。</li>
+<li><a href="http://bigocheatsheet.com/">Big-O Cheat Sheet</a> - 最全面的 Big O cheat sheet。</li>
+<li><a href="http://rosettacode.org">Rosetta Code</a> - 使用各種程式語言，解答上百種不同程式問題。</li>
+<li><a href="https://cses.fi/book.html">Competitive Programmer’s Handbook</a> - 讓你更有競爭力。這書本身也很有競爭力。</li>
+</ul>
+<a class="header" href="#a維護者" id="a維護者"><h2>維護者</h2></a>
+<ul>
+<li><a href="https://github.com/weihanglo">@weihanglo</a></li>
+</ul>
+<a class="header" href="#a授權條款" id="a授權條款"><h2>授權條款</h2></a>
+<p>本專案分為兩部分授權：</p>
+<ul>
+<li>程式碼與函式庫依據 <a href="LICENSE">The MIT License (MIT)</a> 授權條款發佈。</li>
+<li>文章與相關著作依據 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons 4.0 (CC BY-NC-SA 4.0)</a> 授權條款發佈。</li>
+</ul>
+<p>Copyright © 2017 - 2018 Weihang Lo</p>
+<a class="header" href="#a基礎概念" id="a基礎概念"><h1>基礎概念</h1></a>
+<ul>
+<li><a href="asympototic-notation.html">漸近符號 Asympototic Notation</a></li>
+<li><a href="master-theorem.html">主定理 Master Theorem</a></li>
+<li><a href="algorithm-design.html">演算法設計 Algorithm Design</a></li>
+</ul>
+<a class="header" href="#a漸近符號-asympototic-notation" id="a漸近符號-asympototic-notation"><h1>漸近符號 Asympototic Notation</h1></a>
+<a class="header" href="#a主定理-master-theorem" id="a主定理-master-theorem"><h1>主定理 Master Theorem</h1></a>
+<a class="header" href="#a演算法設計-algorithm-design" id="a演算法設計-algorithm-design"><h1>演算法設計 Algorithm Design</h1></a>
+<a class="header" href="#a排序演算法" id="a排序演算法"><h1>排序演算法</h1></a>
+<p>記錄常見的排序演算法。</p>
+<a class="header" href="#a編排慣例" id="a編排慣例"><h2>編排慣例</h2></a>
+<p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
+<a class="header" href="#a排序演算法-1" id="a排序演算法-1"><h1>排序演算法</h1></a>
+<p>記錄常見的排序演算法。</p>
+<a class="header" href="#a編排慣例-1" id="a編排慣例-1"><h2>編排慣例</h2></a>
+<p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
+<a class="header" href="#insertion-sort" id="insertion-sort"><h1>Insertion sort</h1></a>
+<p>Insertion sort 是最簡單的排序法之一，比起 quicksort 等高效的排序法，對大資料的處理效能較不理想。其演算法是將欲排序元素直接插入正確位置，因而得名。</p>
+<p>Insertion sort 基本特性如下：</p>
+<ul>
+<li>實作簡單易理解。</li>
+<li>資料量少時較高效，且比其他 \(O(n^2) \) 的排序法高效（selection sort/bubble sort）。</li>
+<li><strong>自適應排序</strong>：可根據當前資料排序情形加速排序，資料越接近排序完成，效率越高。</li>
+<li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
+<li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
+<li><strong>即時演算法</strong>：可處理逐步輸入的資料，不需等資料完全備妥。</li>
+</ul>
+<a class="header" href="#algorithm" id="algorithm"><h2>Algorithm</h2></a>
+<p>將序列分為未排序與部分排序兩個區域。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Insertionsort-before.png" alt="" /></p>
+<ol>
+<li><strong>取第一個元素</strong>，將該元素視為已排序。</li>
+<li><strong>取出下一元素</strong>，該元素將插入序列的部分排序區域。</li>
+<li><strong>尋找正確位置</strong>：若部分排序元素比新元素大，則互換位置。並重複步驟 2 - 3，直到部分排序元素小於等於新元素。</li>
+<li><strong>插入元素</strong>：將新元素<strong>插入</strong>最後的位置。</li>
+<li>重複步驟 2 - 4，直到排序完成。</li>
+</ol>
+<p>簡而言之，即是每次取一個元素，尋找並插入該元素在部分排序區域的排序位置，再逐步把序列單邊排序完成。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Insertionsort-after.png" alt="" /></p>
+<p>Insertion sort 非常簡單，看動畫就能明瞭。
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif" alt="" /></p>
+<a class="header" href="#performance" id="performance"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity       </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)         </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n) \)      </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n^2) \)    </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
+</tbody></table>
+<p>最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 \(n \) 次。</p>
+<p>最差時間複雜度發生在資料完全相反時，insertion sort 每取得一個新元素是，都需將資料插入序列最前面，，因此所需的操作如下（ \(c \) 為任意常數）：</p>
+<p>$$ c \cdot 1 + c \cdot 2 + c \cdot 3 \cdots + c \cdot (n - 1) = \frac{c(n - 1 + 1)(n - 1)}{2}$$</p>
+<p>最後等於</p>
+<p>$$\frac{cn^2}{2} - \frac{cn}{2}$$</p>
+<p>捨去低次項，得到時間複雜度為 \(O(n^2) \)。</p>
+<a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<p>簡單實作的程式碼如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn insertion_sort(arr: &amp;mut [i32]) {
+    for i in 1..arr.len() {                   // 1
+        let mut j = i;
+        while j &gt; 0 &amp;&amp; arr[j - 1] &gt; arr[j] {  // 2
+            arr.swap(j - 1, j);
+            j -= 1;
+        }
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>外層迴圈迭代整個序列。並取出 index <code>i</code>，<code>arr[i]</code> 是待排序的元素，index 比 <code>i</code> 小的元素則組成已排序的部分序列。</li>
+<li>內層迴圈負責元素比較，決定待排序元素該從何處插入，若前一個元素比待排元素大，則置換兩元素，並繼續往下尋找正確的插入點。直到 <code>j == 0</code> 或待排元素比任何已排序元素都大為止。</li>
+</ol>
+<a class="header" href="#variants" id="variants"><h2>Variants</h2></a>
+<a class="header" href="#binary-insertion-sort-binsort" id="binary-insertion-sort-binsort"><h3>Binary insertion sort (binsort)</h3></a>
+<p>在一般演算法討論中，通常以簡單的型別如 <code>i32</code> 來探討並實作。在真實世界中，做哪種操作，用哪種語言，都會影響到實際效能。例如 Python 的比較操作相對於置換元素，成本高出不少，是因為每個物件在 Python 的比較需動態檢查是否實作 <code>__lt__</code> <code>__gt__</code> 等方法才能進行比較。所以 Python 排序法實作就要特別注意減少比較操作的次數。</p>
+<p>Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 <a href="https://en.wikipedia.org/wiki/Binary_search">binary search</a> 搜尋新元素應要插入哪個位置，最多僅需 \(\log_2n \) 次比較。但 binary insertion sort 的複雜度依舊是 \(O(n^2) \)，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。</p>
+<p>Binary insertion sort 的程式碼和一般的 insertion sort 差不了多少，我們這裡使用 <code>slice</code> 內建的 <code>binary_search</code> 來找尋插入點。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
+    for i in 1..arr.len() {
+        let val = arr[i];
+        let mut j = i;
+        let pos = match arr[..i].binary_search(&amp;val) { // 1
+            Ok(pos) =&gt; pos,                            // 2
+            Err(pos) =&gt; pos,
+        };
+        while j &gt; pos {                                // 3
+            arr.swap(j - 1, j);
+            j -= 1;
+        }
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>先限制 <code>binary_search</code> 範圍，取出 sorted pile <code>arr[..i]</code>。再對 slice 執行 <code>binary_search</code>。</li>
+<li><code>binary_search</code> 回傳一個 <code>Result&lt;usize, usize&gt;</code> 型別，找到時回傳 <code>Ok(index 值)</code>，找無時回傳 <code>Err(不影響排序穩定度的插入點)</code>，這個 <code>Err</code> 的設計巧妙解決新值插入的問題。</li>
+<li>和普通 insertion sort 雷同，從插入點至 sorted pile 迭代到末端以進行排序，省下不少比較操作。</li>
+</ol>
+<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Insertion_sort">Wiki: Insertion sort</a></li>
+<li><a href="https://github.com/python/cpython/blob/15f44ab043b37c064d6891c7864205fed9fb0dd1/Objects/listsort.txt#L686-L703">CPython: listsort note</a></li>
+<li>Sorting GIF by Swfung8 (Own work) <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a> via Wikimedia Commons.</li>
+</ul>
+<a class="header" href="#selection-sort" id="selection-sort"><h1>Selection sort</h1></a>
+<p>Selection sort 是最易實作的入門排序法之一，會將資料分為 sorted pile 與 unsorted pile，每次從 unsorted pile 尋找最大／最小值，加入 sorted pile 中。</p>
+<p>Selection sort 的特性如下：</p>
+<ul>
+<li>最簡單的排序法之一。</li>
+<li>對小資料序列排序效率較高。</li>
+<li><strong>不穩定排序</strong>：排序後，相同鍵值的元素相對位置可能改變。</li>
+<li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
+</ul>
+<a class="header" href="#algorithm-1" id="algorithm-1"><h2>Algorithm</h2></a>
+<ol>
+<li>將資料分為 sorted pile 與 unsorted pile。</li>
+<li>從 unsorted pile 尋找最小值。</li>
+<li>置換該最小值元素與 unsorted pile 第一個元素。</li>
+<li>重複步驟 2 - 3，直到排序完成。</li>
+</ol>
+<blockquote>
+<p>注意，這個 naïve 的 selection sort 實作為<strong>不穩定排序</strong>。</p>
+</blockquote>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif" alt="" /></p>
+<p><em>Joestape89 - CC BY-SA 3.0</em></p>
+<a class="header" href="#explanation" id="explanation"><h2>Explanation</h2></a>
+<p>為什麼 naïve 的 selection sort 會是不穩定排序？</p>
+<p>假定有一個序列要遞增排序，其中有重複的 <code>2</code> 元素，我們將其標上 <code>2a</code>、<code>2b</code> 以利辨識。</p>
+<pre><code>[2a, 3, 4, 2b, 1]
+</code></pre>
+<p>開始迭代找出最小值並指環。</p>
+<pre><code class="language-bash"> *             *
+[1, 3, 4, 2b, 2a] # 1. 置換 2a, 1
+
+     *     *
+[1, 2b, 4, 3, 2a] # 2. 置換 3, 2b
+
+        *       *
+[1, 2b, 2a, 3, 4] # 3. 置換 4, 2a
+</code></pre>
+<p>有沒有發現，<code>2a</code> 與 <code>2b</code> 的相對順序顛倒了呢？</p>
+<p>首先，回想一下穩定排序的定義：<strong>相同鍵值的元素，排序後相對位置不改變。</strong></p>
+<p>問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 \(O(1) \) insertion 的資料結構，不然就會多出額外 \(O(n^2) \) 的寫入成本。</p>
+<a class="header" href="#performance-1" id="performance-1"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity       </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)         </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n^2) \)    </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n^2) \)    </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
+</tbody></table>
+<p>對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 \(n - 1 \) 次比較，第二個 \(n - 2 \) 次，總比較次數如下：</p>
+<p>$$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$</p>
+<p>因此無論序列是否排序完成，selection sort 仍需執行 \(n^2 \) 次比較，時間複雜度為 \(O(n^2) \)。</p>
+<a class="header" href="#implementation-1" id="implementation-1"><h2>Implementation</h2></a>
+<p>簡單實作如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn selection_sort(arr: &amp;mut [i32]) {
+    let len = arr.len();
+    for i in 0..len {                     // 1
+        let mut temp = i;
+        for j in (i + 1)..len {           // 2
+            if arr[temp] &gt; arr[j] {
+                temp = j;
+            }
+        }
+        arr.swap(i, temp);                // 3
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>外層迴圈負責儲存當前要排序的 index <code>i</code> 的位置。</li>
+<li>內層迴圈負責在 unsorted pile 範圍 [<code>i</code>, <code>len</code>) 找最小值。</li>
+<li>外層迴圈在找到最小值之後，置換兩元素。</li>
+</ol>
+<p>眼尖的人會發現，內外兩層迴圈的 upper bound 都是 <code>len</code>，這樣是否內側迴圈會 out of bound？Rust 的 range operator（<code>core::ops::Range</code>）實作 <a href="https://doc.rust-lang.org/core/ops/struct.Range.html#impl-Iterator"><code>Iterator</code></a> trait 時，有檢查 <code>range.start &lt; range.end</code>，因此這個寫法並不會有出界問題，但會多跑一次無意義的迭代。</p>
+<a class="header" href="#variants-1" id="variants-1"><h2>Variants</h2></a>
+<a class="header" href="#heapsort" id="heapsort"><h3>Heapsort</h3></a>
+<p><a href="../heapsort/README.html">Heapsort</a> 是一個高效的排序法，使用 selection sort 融合 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序的資料結構，讓時間複雜度進化至 \(O(n \log n) \)。更多詳情可以參考<a href="../heapsort/README.html">這篇介紹</a>。</p>
+<a class="header" href="#reference-1" id="reference-1"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Selection_sort">Wiki: Selection sort</a></li>
+<li><a href="https://stackoverflow.com/questions/20761396/">Why Selection sort can be stable or unstable</a></li>
+<li>Sorting GIF by Joestape89 <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> via Wikimedia Commons.</li>
+</ul>
+<a class="header" href="#bubble-sort" id="bubble-sort"><h1>Bubble sort</h1></a>
+<p>Bubble sort 是最簡單的排序法之一，由於排序時每個元素會如同泡泡般，一個一個浮出序列頂部，因而得名。由於其簡單好理解，名稱又有趣，常作為第一個學習的入門排序法。不過其效率不彰，甚至不如同為 quardratic time 的 insertion sort。Bubble sort 的原理很平凡，就是相鄰兩兩元素互相比較，如果大小順序錯了，就置換位置。再往下一個 pair 比較。</p>
+<p>Bubble sort 的特性如下：</p>
+<ul>
+<li>又稱為 <strong>sinking sort</strong>。</li>
+<li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
+<li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
+</ul>
+<a class="header" href="#algorithm-2" id="algorithm-2"><h2>Algorithm</h2></a>
+<ol>
+<li>比較兩個相鄰元素，若首個元素比次個元素大，置換兩者的位置。</li>
+<li>依序對相鄰元素執行步驟一，直到抵達序列頂端，此時頂端元素排序完成。</li>
+<li>重複步驟 1 - 2 的整個序列迭代，直到任何一次迭代沒有執行元素置換。</li>
+</ol>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="" />
+<em>Swfung8 - CC BY-SA 3.0</em></p>
+<a class="header" href="#explanation-1" id="explanation-1"><h2>Explanation</h2></a>
+<p>給定一組序列 <code>[5, 3, 8, 7, 2]</code>，以 bubble sort 遞增排序。以 ASCII diagram 表示：</p>
+<p><strong>第一次迭代</strong></p>
+<pre><code class="language-bash"> *  *               *  *
+[5, 3, 8, 7, 4] -&gt; [3, 5, 8, 7, 4] # 置換 3 與 5
+
+    *  *               *  *
+[3, 5, 8, 7, 4] -&gt; [3, 5, 8, 7, 4] # 不需置換
+
+       *  *               *  *
+[3, 5, 8, 7, 4] -&gt; [3, 5, 7, 8, 4] # 置換 7 與 8
+
+          *  *               *  *
+[3, 5, 7, 8, 4] -&gt; [3, 5, 7, 4, 8] # 置換 4 與 8，8 已排好序
+</code></pre>
+<p><strong>第二次迭代</strong></p>
+<pre><code class="language-bash"> *  *               *  *
+[3, 5, 7, 4, 8] -&gt; [3, 5, 7, 4, 8] # 不需置換
+
+    *  *               *  *
+[3, 5, 7, 4, 8] -&gt; [3, 5, 7, 4, 8] # 不需置換
+
+       *  *               *  *
+[3, 5, 7, 4, 8] -&gt; [3, 5, 4, 7, 8] # 置換 4 與 7
+
+          *  *               *  *
+[3, 5, 4, 7, 8] -&gt; [3, 5, 4, 7, 8] # 不需置換
+</code></pre>
+<blockquote>
+<p>naïve bubble sort 會跑完整個序列，即是已排序完成。</p>
+</blockquote>
+<p><strong>第三次迭代</strong></p>
+<pre><code class="language-bash"> *  *               *  *
+[3, 5, 4, 7, 8] -&gt; [3, 5, 4, 7, 8] # 不需置換
+
+    *  *               *  *
+[3, 5, 4, 7, 8] -&gt; [3, 4, 5, 7, 8] # 置換 4 與 5
+
+       *  *               *  *
+[3, 5, 4, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+
+          *  *               *  *
+[3, 5, 4, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+</code></pre>
+<p><strong>第四次迭代</strong></p>
+<pre><code class="language-bash"> *  *               *  *
+[3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+
+    *  *               *  *
+[3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+
+       *  *               *  *
+[3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+
+          *  *               *  *
+[3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
+</code></pre>
+<p>很簡單的排序法！</p>
+<a class="header" href="#performance-2" id="performance-2"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity       </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)         </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n) \)      </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n^2) \)    </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
+</tbody></table>
+<a class="header" href="#time-complexity" id="time-complexity"><h3>Time complexity</h3></a>
+<p>Bubble sort 總共需要 \(n - 1 \) 次迭代，每次迭代至少需要執行 \(n - 1 - i \) 置換（ \)i \) 為第幾次迭代），總共需要迭代</p>
+<p>$$\sum_{i=0}^{n-1} (n - i - 1) = n^2 - \sum_{i=0}^{n-1}i - n = n^2 - \frac{n(n - 1)}{2} - n = \frac{n^2}{2} - \frac{n}{2}$$</p>
+<p>次，因此，時間複雜度為 \(O(n^2) \)。</p>
+<p>Bubble sort 在已排序完成的序列上，只需要迭代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
+<a class="header" href="#implementation-2" id="implementation-2"><h2>Implementation</h2></a>
+<p>Bubble sort 簡單實作如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn bubble_sort(arr: &amp;mut [i32]) {
+    let mut swapped = true;                 // 1
+    while swapped {
+        swapped = false;
+        for i in 1..arr.len() {             // 2
+            if arr[i - 1] &gt; arr[i] {
+                arr.swap(i - 1, i);
+                swapped = true              // 3
+            }
+        }
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>建立一個旗標，標誌該次迭代是否有元素置換。</li>
+<li>內層迴圈依序比較兩兩相鄰元素。</li>
+<li>若有任何置換動作，將旗標標誌為「已置換（<code>true</code>）」。</li>
+</ol>
+<p>倘若記錄已排好序的元素位置，雖然複雜度仍是 \(O(n^2) \)，但如此以來，每次迭代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
+    let mut new_len: usize;
+    let mut len = arr.len();            // 1
+    loop {
+        new_len = 0;
+        for i in 1..len {
+            if arr[i - 1] &gt; arr[i] {
+                arr.swap(i - 1, i);
+                new_len = i;            // 2
+            }
+        }
+        if new_len == 0 {               // 3
+            break;
+        }
+        len = new_len;                  // 4
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>將當前的序列長度記錄到 <code>len</code>。</li>
+<li>內層迴圈負責比較、置換，以及記錄未排序部分的序列長度到 <code>new_len</code>。</li>
+<li>若未排序部分 <code>new_len</code> 為零，代表排序完成。</li>
+<li>外層迴圈將新長度值 <code>new_len</code> 賦予 <code>len</code>，下一次迭代就可少做一次比較。</li>
+</ol>
+<a class="header" href="#reference-2" id="reference-2"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Bubble_sort">Wiki: Bubble sort</a></li>
+<li>Sorting GIF was created by Swfung8 (Own work) <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a> via Wikimedia Commons.</li>
+</ul>
+<a class="header" href="#shellsort" id="shellsort"><h1>Shellsort</h1></a>
+<p>眾所周知，insertion sort 用在幾乎完成排序的序列上非常高效，換句話說，當元素置換不需移動太遠時，效率很高。反之，如果有元素錯位非常遙遠，效能就會大打折扣。Shellsort 以一個 gap sequence 將資料依指定的間隔（gap）分組進行 insertion sort，使得較遠的元素能夠快速歸位，下一次的排序就會因前次排序結果愈來愈接近完成而加速。</p>
+<p>Shellsort 最後一個 gap 必定是 1，也就是排序會退化成 insertion sort，此時大部分元素皆排序完成，insertion sort 會非常高效。</p>
+<p>Shellsort 特性如下：</p>
+<ul>
+<li><strong>自適應排序</strong>：可根據當前資料排序情形加速排序，資料越接近排序完成，效率越高。</li>
+<li><strong>不穩定排序</strong>：排序後，相同鍵值的元素相對位置可能改變。</li>
+<li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
+<li>可視為一般化（Generalizaion）的 <a href="../insertion_sort">insertion sort</a>。</li>
+</ul>
+<a class="header" href="#algorithm-3" id="algorithm-3"><h2>Algorithm</h2></a>
+<p>Shellsort 分為兩個步驟：</p>
+<ol>
+<li>決定 gap sequence，組後一個</li>
+<li>迭代 gap sequence 進行分組排序，每次執行有間隔的 insertion sort。也就是每個元素與其相鄰 gap 的元素比較與置換。</li>
+</ol>
+<blockquote>
+<p>最後一次排序（gap = 1）會退化為 insertion sort，完成整個排序。</p>
+</blockquote>
+<a class="header" href="#gap-sequneces" id="gap-sequneces"><h3>Gap Sequneces</h3></a>
+<p>Shellsort 的效率取決於 gap sequence 的選擇，這邊舉幾個常見的 gap sequence：</p>
+<table><thead><tr><th align="left">              </th><th align="left"> Sequence                        </th></tr></thead><tbody>
+<tr><td align="left"> Marcin Ciura </td><td align="left"> 1, 4, 10, 23, 57, 132, 301, 701 </td></tr>
+<tr><td align="left"> \(2^{k} - 1 \)  </td><td align="left"> 1, 3, 7, 15, 31, 63,...         </td></tr>
+<tr><td align="left"> \(\lfloor {\frac {N}{2^k}} \rfloor \) </td><td align="left"> \(\lfloor {\frac {N}{2}} \rfloor \), \(\lfloor {\frac {N}{4}} \rfloor \), ..., 1</td></tr>
+</tbody></table>
+<p>感受一下 gap sequence 為 23, 10, 4, 1 的 shellsort 吧。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Sorting_shellsort_anim.gif" alt="" /></p>
+<a class="header" href="#explanation-2" id="explanation-2"><h2>Explanation</h2></a>
+<p>Shellsort 其實就是進行好幾次不同 gap 的 insertion sort，以下用 ASCII diagram 解釋。</p>
+<p>假定這裡有一個序列需要遞增排序。</p>
+<pre><code>[5, 3, 8, 7, 4, 9, 6, 2]
+</code></pre>
+<p>我們選擇最簡單的 \(\lfloor {\frac {N}{2^k}} \rfloor \) gap sequence 來排序。我們以<strong>星號</strong>標示出每次 insertion sort 對應排序</p>
+<p>首先算出第一個 gap 為 \(8 / 2^1 = 4 \)。開始 insertion sort。</p>
+<pre><code> *           *
+[5, 3, 8, 7, 4, 9, 6, 2]
+
+-&gt; (sort subsequence [5, 4])
+
+    *           *
+[4, 3, 8, 7, 5, 9, 6, 2]
+
+-&gt; (skip)
+       *           *
+[4, 3, 8, 7, 5, 9, 6, 2]
+
+-&gt; (sort subsequence [8, 6])
+          *           *
+[4, 3, 6, 7, 5, 9, 8, 2]
+
+-&gt; (sort subsequence [7, 2])
+
+[4, 3, 8, 2, 5, 9, 6, 7]
+</code></pre>
+<p>再來算出第二個 gap 為 \(8 / 2^2 = 2 \)。開始 insertion sort。</p>
+<pre><code> *     *
+[4, 3, 8, 2, 5, 9, 6, 7]
+
+-&gt; (skip)
+    *     *
+[4, 3, 8, 2, 5, 9, 6, 7]
+
+-&gt; (sort subsequence [3, 2])
+ *     *     *
+[4, 2, 8, 3, 5, 9, 6, 7]
+
+-&gt; (sort subsequence [4, 8, 5])
+    *     *     *
+[4, 2, 5, 3, 8, 9, 6, 7]
+
+-&gt; (skip)
+ *     *     *     *
+[4, 2, 5, 3, 8, 9, 6, 7]
+
+-&gt; (sort subsequence [4, 5, 8, 6])
+    *     *     *     *
+[4, 2, 5, 3, 6, 9, 8, 7]
+
+-&gt; (sort subsequence [2, 3, 9, 7])
+[4, 2, 5, 3, 6, 7, 8, 9]
+</code></pre>
+<p>再來進行第三次排序。gap 為 \(8 / 2^3 = 1 \)，shellsort 退化至 insertion sort，但前一次結果已經很接近排序完成，insertion sort 可以幾乎在 one pass 完成排序。</p>
+<blockquote>
+<p>Insertion sort 的 ASCII diagram 我們就不展示了，請參考 <a href="../insertion_sort">Insertion sort</a>。</p>
+</blockquote>
+<a class="header" href="#implementation-3" id="implementation-3"><h2>Implementation</h2></a>
+<p>我們這裡以 <a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Marcin 的 Paper</a> 中提到的經驗式為例，首先，先建立一個 gap sequence 的常數。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// Marcin Ciura's gap sequence.
+pub const MARCIN_GAPS: [usize; 8] = [701, 301, 132, 57, 23, 10, 4, 1];
+#}</code></pre></pre>
+<p>再來就是主程式的部分，總共會有三個迴圈，</p>
+<ul>
+<li>最外層是迭代 gap sequence，</li>
+<li>中間層是迭代整個資料序列，</li>
+<li>內層就是每個元素的插入排序動作。</li>
+</ul>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// Shellsort
+pub fn shellsort(arr: &amp;mut [i32]) {
+    let len = arr.len();
+    for gap in MARCIN_GAPS.iter() {                     // 1
+        let mut i = *gap;                               // 4
+        while i &lt; len {                                 // 2
+            let mut j = i;
+            while j &gt;= *gap &amp;&amp; arr[j - gap] &gt; arr[j] {  // 3
+                arr.swap(j - *gap, j);
+                j -= *gap;
+            }
+            i += 1;
+        }
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>最外層的迴圈，利用 <code>iter()</code> trait 產生迭代器，迭代 gap sequence。</li>
+<li>中間層迴圈，控制 <code>i</code> 是否超出資料序列，以迭代整合資料序列。</li>
+<li>最內層迴圈，執行插入動作，將每個元素置換到正確位置。</li>
+<li>由於 <code>gap</code> 的型別是 <code>&amp;usize</code>，需透過 <code>*gap</code> dereference 得到 <code>usize</code> 型別。</li>
+</ol>
+<a class="header" href="#performance-3" id="performance-3"><h2>Performance</h2></a>
+<table><thead><tr><th>              </th><th> Complexity                                            </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \) ~  \(O(n \log^2 n) \) (Depends on gap sequence) </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n \log n) \)                                    </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> Depends on gap sequence                               </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary                                      </td></tr>
+</tbody></table>
+<p>Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 \(O(n \log^2 n) \)，有著不錯的表現。有興趣可以參考<a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">這篇文章</a>。</p>
+<a class="header" href="#reference-3" id="reference-3"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Shellsort">Wiki: Shellsort</a></li>
+<li><a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Best Increments for the Average Case of Shellsort, M. Ciura, 2001</a></li>
+<li><a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">Shellsort and Sorting Networks (Outstanding Dissertations in the Computer Sciences)</a></li>
+</ul>
+<a class="header" href="#a排序演算法-2" id="a排序演算法-2"><h1>排序演算法</h1></a>
+<p>記錄常見的排序演算法。</p>
+<a class="header" href="#a編排慣例-2" id="a編排慣例-2"><h2>編排慣例</h2></a>
+<p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
+<a class="header" href="#heapsort-1" id="heapsort-1"><h1>Heapsort</h1></a>
+<p>Heapsort（堆積排序法）可以看作是 <a href="../selection_sort">selection sort</a> 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。</p>
+<p>和 selection sort 不同之處是，heapsort 利用 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序（partially sorted）的資料結構輔助並加速排序。</p>
+<p>Heapsort 的特性如下：</p>
+<ul>
+<li>使用 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 資料結構輔助，通常使用 <a href="https://en.wikipedia.org/wiki/Binary_heap">binary heap</a>。</li>
+<li><strong>不穩定排序</strong>：排序後，相同鍵值的元素相對位置可能改變。</li>
+<li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
+<li><strong>較差的 CPU 快取</strong>：heap 不連續存取位址的特性，不利於 <a href="https://en.wikipedia.org/wiki/CPU_cache">CPU 快取</a>。</li>
+</ul>
+<a class="header" href="#algorithm-4" id="algorithm-4"><h2>Algorithm</h2></a>
+<p>Heapsort 的演算法分為兩大步驟：</p>
+<ol>
+<li>將資料轉換為 heap 資料結構（遞增排序用 max-heap, 遞減排序選擇 min-heap）。</li>
+<li>逐步取出最大／最小值，並與最後一個元素置換。具體步驟如下：
+<ol>
+<li>交換 heap 的 root 與最後一個 node，縮小 heap 的範圍（排序一筆資料，故 heap 長度 -1）。</li>
+<li>更新剩下的資料，使其滿足 heap 的特性，稱為 heap ordering property。</li>
+<li>重複前兩個步驟，直到 heap 中剩最後一個未排序的資料。</li>
+</ol>
+</li>
+</ol>
+<p>透過 GIF 動畫感受一下 heapsort 的威力吧！</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif" alt="" /></p>
+<a class="header" href="#explanation-3" id="explanation-3"><h2>Explanation</h2></a>
+<p>在開始之前，定義幾個 heap 常用名詞：</p>
+<ul>
+<li><strong>Heap ordering property</strong>：一個 heap 必須要滿足的條件。以 heap 種類不同有幾種變形。
+<ul>
+<li><strong>min-heap property</strong>：每個結點皆大於等於其父節點的值，且最小值在 heap root。</li>
+<li><strong>max-heap property</strong>：每個結點皆小於等於其父節點的值，且最大值在 heap root。</li>
+</ul>
+</li>
+</ul>
+<p>而 heapsort 主要分為兩個部分：</p>
+<ol>
+<li><strong>Heapify</strong>：將陣列轉換為 heap 資料結構（heapify）。</li>
+<li><strong>Sorting</strong>：不斷置換 heap root 與最後一個元素來排序，並修正剩餘未排序資料使其符合 heap order。</li>
+</ol>
+<p>這裡有一個未排序的序列，將以遞增方向排序之。</p>
+<pre><code>[17, 20, 2, 1, 3, 21]
+</code></pre>
+<p>首先，將資料轉換為 heap 資料結構，這個步驟即時 <strong>heapify</strong>。由於是遞增排序，我們採用 max-heap（最大元素在 root）。</p>
+<pre><code>[21, 20, 17, 1, 3, 2]
+</code></pre>
+<p>對應的二元樹（binary tree）的圖形如下：</p>
+<p><img src="tree.png" height="300px" /></p>
+<p>再來就是<strong>排序的部分</strong>，Max-heap 會將最大的元素擺在 root 的位置，我們先將最後一個 node 與 root 進行交換，完成第一個排序步驟。</p>
+<blockquote>
+<p>若不熟悉 heap，可以閱讀<a href="https://en.wikipedia.org/wiki/Heap_(data_structure)"> Wiki 的介紹</a>，其實 heap 就是用陣列實作的二元樹。</p>
+</blockquote>
+<pre><code>[21, 20, 17, 1, 3, 2]
+ *                 *
+(swap) --&gt;
+
+        unsorted | sorted
+[2, 20, 17, 1, 3 | 21]
+</code></pre>
+<p>接下來，將未排序的資料區塊重整為符合 max-heap 的結構。</p>
+<pre><code>[2, 20, 17, 1, 3 | 21]
+
+(sift down) --&gt;
+
+[20, 3, 17, 1, 2 | 21]
+</code></pre>
+<p>有沒有看出一些端倪？</p>
+<p>只要不斷將 root 和最後一個 node 交換，並將剩餘資料修正至滿足 heap ordering，就完成排序了。</p>
+<pre><code>[20, 3, 17, 1, 2 | 21]
+ *             *
+(swap) --&gt;
+
+[2, 3, 17, 1 | 20, 21]
+
+(sift down)--&gt;
+
+[17, 3, 2, 1 | 20, 21]
+ *         *
+(swap) --&gt;
+
+[1, 3, 2 | 17, 20, 21]
+
+(sift down)--&gt;
+
+[3, 1, 2 | 17, 20, 21]
+ *     *
+(swap) --&gt;
+
+[1, 2 | 3, 17, 20, 21]
+
+(Done!)
+</code></pre>
+<p>以上便是 heapsort 演算法的簡單流程，是不是和 selection sort 非常相似呢！</p>
+<a class="header" href="#performance-4" id="performance-4"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity         </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n \log n) \)      </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n \log n) \) </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n \log n) \) </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary   </td></tr>
+</tbody></table>
+<p>Heapsort 最佳、最差、平均的時間複雜度皆為 \(O(n \log n) \)，同樣分為兩部分簡單解釋。</p>
+<a class="header" href="#build-heap-heapify" id="build-heap-heapify"><h3>Build heap (heapify)</h3></a>
+<p>建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。</p>
+<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#Implementation">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 \(O(\lceil {\log_2(n)} \rceil) = O(\log n) \)， \(n \) 為陣列元素個數。</p>
+<p>Heapify 從最末個元素開始反向迭代，每個元素都調用 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 \(n \) 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
+<p>$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$</p>
+<blockquote>
+<p>實際上，build heap 步驟的複雜度可達到 \(\Theta(n) \)，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
+</blockquote>
+<a class="header" href="#sorting-sift-down" id="sorting-sift-down"><h3>Sorting (sift down)</h3></a>
+<p>講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 <strong>sift down</strong> 修正符合 heap order。所以總共需要做 \(n \) 次 sift down，複雜度為 \(O(n \log n) \)。</p>
+<a class="header" href="#sum-up" id="sum-up"><h3>Sum up</h3></a>
+<p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 \(O(n \log n) \)。</p>
+<a class="header" href="#implementation-4" id="implementation-4"><h2>Implementation</h2></a>
+<p>Heapsort 的實作相對簡單，只需要不斷調用 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn heapsort(arr: &amp;mut [i32]) {
+    // -- Heapify part --
+    // This procedure would build a valid max-heap.
+    // (or min-heap for sorting descendantly)
+    let end = arr.len();
+    for start in (0..end / 2).rev() {                   // 1
+        sift_down(arr, start, end - 1);
+    }
+
+    // -- Sorting part --
+    // Iteratively sift down unsorted part (the heap).
+    for end in (1..arr.len()).rev() {                   // 2
+        arr.swap(end, 0);                               // 3
+        sift_down(arr, 0, end - 1);                     // 4
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>這部分是 heapify，從最小 non-leaf node 開始（<code>end</code> / 2），修正序列至滿足 heap order，再反向迭代做 heapify。</li>
+<li>這部分負責排序，每次迭代都將排序 heap 的 root 元素，步驟如 3 - 4：</li>
+<li>不斷將 max-heap 中最大值（在 root 上）與 heap 最後一個元素 <code>end</code> 置換，</li>
+<li>並利用 <code>sift_down</code> 將序列修正至 max-heap 資料結構，依照定義，此時 unsorted pile 首個元素成為 max-heap root，是最大值。</li>
+</ol>
+<p>Heapsort 全靠 <code>sift_down</code> 神救援，那 <code>sift_down</code> 到底有什麼神奇魔力，一探究竟吧！</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
+    let mut root = start;
+    loop {
+        let mut child = root * 2 + 1; // Get the left child   // 1
+        if child &gt; end {
+            break;
+        }
+        if child + 1 &lt;= end &amp;&amp; arr[child] &lt; arr[child + 1] {  // 2
+            // Right child exists and is greater.
+            child += 1;
+        }
+
+        if arr[root] &lt; arr[child] {                           // 3
+            // If child is greater than root, swap'em!
+            arr.swap(root, child);
+            root = child;
+        } else {
+            break;
+        }
+    }
+}
+#}</code></pre></pre>
+<p><code>sift_down</code> 的功能是將 node 往下移。通常用在 heap 刪除或取代 node 時，將序列修正為有效的 heap。 這裡實作的版本有三個參數：</p>
+<ul>
+<li><code>arr</code>：欲修正為符合 heap 定義的序列。</li>
+<li><code>start</code>：欲往下移動的 node index，可視為需要被修正的元素。</li>
+<li><code>end</code>：此 node 以內（包含）的序列都會被修正為有效的 heap。</li>
+</ul>
+<p><code>sift_down</code> 有些假設條件：從 <code>start</code> index 出發的子樹，除了 <code>start</code> 本身以外，其他皆符合 heap ordering。</p>
+<p>再來看看 <code>sift_down</code> 實作內容，<code>loop</code> 中幹的活就是不斷將 <code>start</code> index 上的元素與其子樹比較，若不符合 heap ordering，則兩者置換。</p>
+<ol>
+<li><strong>是否有子結點</strong>：依照 binary heap 的定義找出 root 的左子樹（left substree），若左子樹的 index <code>child</code> 比 <code>end</code> 還大，表示沒有 heap 沒有子結點，停止迭代。</li>
+<li><strong>檢查右子樹值較大</strong>：若 root 下有右子樹且較大，我們會標記右子樹，並在下一步對右子樹進行處理。</li>
+<li><strong>置換</strong>：若 <code>root</code> 元素比 <code>child</code> 的元素小，則置換兩者，並將 <code>child</code> 設置為下個迭代的 <code>root</code>，繼續檢查最初的 <code>start</code> 元素是否滿足 heap ordering。</li>
+</ol>
+<p>以上就是簡單的 <code>sift_down</code> 實作，也是整個 heapsort 的精髓。</p>
+<a class="header" href="#reference-4" id="reference-4"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">Wiki: Heap</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Heapsort">Wiki: Heapsort</a></li>
+<li><a href="www.cs..html">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
+<li>Sorting GIF by RolandH <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> via Wikimedia Commons.</li>
+</ul>
+<a class="header" href="#quicksort" id="quicksort"><h1>Quicksort</h1></a>
+<p>Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 \(\Theta(n \log n) \) 的平均時間複雜度。雖然最差時間複雜度與 <a href="../bubble_sort">bubble sort</a> 同為 \(O(n^2) \)，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 \(O(\log n) \) 的額外儲存空間，比它的競爭對手 <a href="../mergesort">mergesort</a> 來得節省。非常適合運用在真實世界中的排序法。</p>
+<p>Quicksort 基本特性如下：</p>
+<ul>
+<li>實作簡單，速度快。</li>
+<li><strong>不穩定排序</strong>：排序後，相同鍵值的元素相對位置可能改變。</li>
+<li><strong>非原地排序</strong>：除了資料本身，仍需額外花費儲存空間來排序。</li>
+<li><strong>分治演算法</strong>：將主問題化作數個子問題，各個擊破。</li>
+</ul>
+<a class="header" href="#algorithm-5" id="algorithm-5"><h2>Algorithm</h2></a>
+<p>Quicksort 是一個分治演算法（divide-and-conquer），不斷遞迴下列三個步驟：</p>
+<ol>
+<li><strong>選擇 Pivot</strong>：在序列中任意選擇一個元素，稱為 <strong>Pivot</strong>。</li>
+<li><strong>分割序列</strong>：將序列重新排序，分為兩部分，比 pivot 小 的元素置換到 pivot 之前，比 pivot 大的元素置換到 pivot 之後，而 pivot 本身會座落在它最終的正確位置。</li>
+<li><strong>遞迴</strong>：分別將_比 pivot 小_，以及_比 pivot 大_ 兩部分分別重複上述步驟，直到新序列的長度小於等於 1，無法繼續分割為止，此時排序完成。</li>
+</ol>
+<a class="header" href="#lomuto-partition-scheme" id="lomuto-partition-scheme"><h3>Lomuto partition scheme</h3></a>
+<p>為了達成上述條件，Quicksort 有許多不同的分割序列實作方案（partition scheme），其中以 Lomuto partition 最易理解，常被做為教材。</p>
+<ol>
+<li>以序列最後一個元素當做 pivot。</li>
+<li>利用兩個指標 <code>i</code> <code>j</code>，其中 <code>j</code> 從頭迭代整個序列
+<ul>
+<li>若有序列第 j 個元素小於 pivot，則與第 i 個元素置換。</li>
+<li>第 i 個元素已落在小於 pivot 的範圍，將 i 指標往後移一個，處理下個元素。</li>
+</ul>
+</li>
+<li>迭代完成後，小於 pivot 的元素全都置換至序列前端，此時將 pivot 與第 i 個元素置換，pivot 會剛好在最終正確位置上（符合不等式）。</li>
+</ol>
+<p>ASCII 畫出來的分割圖如下：</p>
+<pre><code>[ values &lt;= pivot | values &gt; pivot | not checked yet | pivot ]
+  low           i   i+1        j-1   j        high-1   high
+</code></pre>
+<ul>
+<li><code>arr[low...i]</code> 包含所有小於等於 pivot 的元素。</li>
+<li><code>arr[i+1...j-1]</code> 包含所有大於 pivot 的元素。</li>
+<li><code>arr[j...high-1]</code> 包含所有尚未迭代的元素。</li>
+<li><code>arr[high]</code> pivot 本身。</li>
+</ul>
+<a class="header" href="#explanation-4" id="explanation-4"><h2>Explanation</h2></a>
+<p>以 Lomuto partition scheme 為例，使用 ASCII diagram 解釋。</p>
+<p>給定一個序列，並選擇最後一個元素作為 pivot，<code>i</code> <code>j</code> 指標則在第一個元素位置。</p>
+<pre><code>                      * -&gt; pivot
+[17, 20, 2, 1, 3, 21, 8]
+ i
+ j
+</code></pre>
+<p>第 <code>j</code> 個元素 17 大於 pivot 8，不置換。</p>
+<pre><code>17 &gt; 8, no swap
+                       * -&gt; pivot
+[17| 20, 2, 1, 3, 21, 8]
+ i
+ j
+</code></pre>
+<p>第 <code>j</code> 個元素 20 大於 pivot 8，不置換。</p>
+<pre><code>20 &gt; 8, no swap
+                      * -&gt; pivot
+[17, 20| 2, 1, 3, 21, 8]
+ i
+     j
+</code></pre>
+<p>第 <code>j</code> 個元素 2 小於 pivot 8，置換 <code>i</code> <code>j</code>。<code>i</code> 往後一個位置。</p>
+<pre><code>2 &lt;= 8,
+swap i, j
+                      * -&gt; pivot
+[2, 20, 17| 1, 3, 21, 8]
+ i-&gt;i
+        j
+</code></pre>
+<p>第 <code>j</code> 個元素 1 小於 pivot 8，置換 <code>i</code> <code>j</code>。<code>i</code> 往後一個位置。</p>
+<pre><code>1 &lt;= 8
+swap i, j
+                      * -&gt; pivot
+[2, 1, 17, 20| 3, 21, 8]
+    i-&gt;i
+            j
+</code></pre>
+<p>第 <code>j</code> 個元素 3 小於 pivot 8，置換 <code>i</code> <code>j</code>。<code>i</code> 往後一個位置。</p>
+<pre><code>3 &lt;= 8
+swap i, j
+                      * -&gt; pivot
+[2, 1, 3, 20, 17| 21, 8]
+       i-&gt;i
+               j
+</code></pre>
+<p>第 <code>j</code> 個元素 21 大於 pivot 8，不置換。</p>
+<pre><code>21 &gt; 8, no swap
+                      * -&gt; pivot
+[2, 1, 3, 20, 17, 21| 8]
+           i
+                   j
+</code></pre>
+<p>最後，將 pivot 與第 <code>i</code> 個元素置換，此時 pivot 已在最終位置上，前面的元素皆小於等於 8，其後的元素皆大於 8。</p>
+<pre><code>swap pivot, i
+          i    &lt;-&gt;   * -&gt; pivot
+[2, 1, 3, 8, 17, 21, 20]
+</code></pre>
+<p>這樣就完成一次的 partition 了！</p>
+<p>之後再遞迴分割 subarray 即可完成 Quicksort。</p>
+<pre><code>[2, 1, 3, 8, 17, 21, 20]
+ #     #     *       *
+ |     |     |       |
+ -------     ---------
+ quicksort    quicksort
+</code></pre>
+<a class="header" href="#performance-5" id="performance-5"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity                      </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)                        </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n \log n) \)              </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n \log n) \)              </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(\log n) \) or \(O(n) \) auxiliary </td></tr>
+</tbody></table>
+<a class="header" href="#time-complexity-1" id="time-complexity-1"><h3>Time complexity</h3></a>
+<p>Quicksort 僅有「<strong>選擇 Pivot</strong>」與「<strong>分割序列</strong>」兩步驟，不同的實作的效能各異，也影響 Quicksort 的時間複雜度。</p>
+<a class="header" href="#a最差情況" id="a最差情況"><h4>最差情況</h4></a>
+<p>最差的分割序列狀況發生在挑選的 pivot 總是最大或最小值（或在 Lomuto partition 下，所有元素值都一樣）。由於 Lomuto 總是選擇最後一個元素作為 pivot，這種情形好發於已排序或接近排序完成的資料上。</p>
+<p>而當每次的 partition 都是最不平衡的分割序列，就會產生最差時間複雜度的狀況。遞迴在序列長度等於 1 時停止，因此整個排序法的 call stack 需要 \(n - 1 \) 的嵌套遞迴調用（nested call）；而第 \(i \) 次分割會執行 \(n - i \) 次基本操作（ \(O(n) \)），所以總共需執行</p>
+<p>$$\sum_{i = 0}^n (n - i) = n^2 - \frac{n(n + 1)}{2}$$</p>
+<p>次基本操作，最差時間複雜度為 \(O(n^2) \)。</p>
+<a class="header" href="#a最佳情況" id="a最佳情況"><h4>最佳情況</h4></a>
+<p>既然最差情況發生在 pivot 總選到最大或最小值，反之，最佳情況則發生在每次 pivot 都可以順利選到序列的中位數（median），如此一來，每次遞迴分割的序列長度都會減半（ \(n / 2 \)），call stack 的嵌套遞迴總共需要 \(2 \log_2{n} \) 次，序列的長度就會減至 1，而每次分割同樣有 \(O(n) \) 的複雜度，因此最佳情況為：</p>
+<p>$$\Omega(n \cdot 2 \log_2{n}) = \Omega(n \log n)$$</p>
+<a class="header" href="#space-complexity" id="space-complexity"><h3>Space complexity</h3></a>
+<p>Quicksort 的空間複雜度取決於實作細節，由於<strong>分割序列</strong>步驟需 \(O(1) \) 的空間複雜度，因此僅需分析遞迴式會在 call stack 產生多少 stack frame 即可。</p>
+<p><a href="#%E6%9C%80%E5%B7%AE%E6%83%85%E6%B3%81">前面提及</a>，最 naïve 的 Lomuto partition 最糟糕的情形下，會產生 \(n - 1 \) 個嵌套遞迴，也就是需額外使用 \(O(n) \) 的空間儲存 call stack frame，但只要 compiler 有支援 <a href="https://en.wikipedia.org/wiki/Tail_call">尾端調用</a>最佳化（tail-call optimization，TCO），Quicksort 很容易最佳化至 \(O(\log n) \)。</p>
+<a class="header" href="#implementation-5" id="implementation-5"><h2>Implementation</h2></a>
+<p>Quicksort 實作主要分為兩部分：遞迴，以及分割序列（partition）。</p>
+<a class="header" href="#recursion" id="recursion"><h3>Recursion</h3></a>
+<p>遞迴函式本身實作非常簡單，分別將小於 pivot 與大於 pivot 兩部分遞迴調用自身即可。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// Recursion helper
+fn quicksort_helper(arr: &amp;mut [i32], lo: isize, hi: isize) {
+    if lo &lt;= hi {                               // 1
+        let pivot = partition(arr, lo, hi);     // 2
+        quicksort_helper(arr, lo, pivot - 1);   // 3
+        quicksort_helper(arr, pivot + 1, hi);   // 4
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>利用 <code>lo</code> 與 <code>hi</code> 兩個指標決定每次的遞迴範圍，並在 <code>lo</code> 大於 <code>hi</code> 時停止遞迴，避免重複分割序列。</li>
+<li>分割序列步驟，回傳該序列範圍內 pivot 的 index。</li>
+<li>遞迴小於 pivot 的部分。</li>
+<li>遞迴大於 pivot 的部分。</li>
+</ol>
+<blockquote>
+<p>這邊比較特別的是，<code>lo</code> 和 <code>hi</code> 兩個指標的型別為 <code>isize</code>，因為當 pivot 可能為 0，在第三步驟 - 1 時會產生型別錯誤，故為之。有任何更好的寫法歡迎提供！</p>
+</blockquote>
+<p>由於外部不需知道排序法實作細節，我們將函式命名為 <code>quicksort_helper</code> ，對外再多封裝一層主函式 <code>quicksort_lomuto</code>，實作如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn quicksort_lomuto(arr: &amp;mut [i32]) {
+    let hi = arr.len() as isize - 1;
+    quicksort_helper(arr, 0, hi);
+}
+#}</code></pre></pre>
+<a class="header" href="#partitioning" id="partitioning"><h3>Partitioning</h3></a>
+<p>一般來說，分割序列的實作有下列兩個步驟：</p>
+<ul>
+<li>選擇 pivot</li>
+<li>遍歷序列置換元素</li>
+</ul>
+<p>我們以 Lomuto scheme 實作 partition。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; isize {
+    // -- Determine the pivot --
+    // In Lomuto parition scheme,
+    // the latest element is always chosen as the pivot.
+    let pivot = arr[hi as usize];               // 1
+    let mut i = lo;
+
+    // -- Swap elements --
+    for j in lo..hi {                           // 2
+        if arr[j as usize] &lt; pivot {
+            arr.swap(i as usize, j as usize);
+            i += 1;                             // 3
+        }
+    }
+    // Swap pivot to the middle of two piles.
+    arr.swap(i as usize, hi as usize);          // 4
+    i // Return the final index of the pivot
+}
+#}</code></pre></pre>
+<ol>
+<li>Lomuto scheme 選擇 pivot 的方式很直接，就是選擇最後一個元素。</li>
+<li>利用 <code>i</code>、<code>j</code> 兩個指標迭代指定的序列範圍，若第 j 個值小於 pivot 時，則於第 i 個元素置換。</li>
+<li><code>i</code> 指標加一，繼續處理下個元素。</li>
+<li>最後置換第 i 個元素於 pivot，此時 pivot 已落在最終正確的位置。</li>
+</ol>
+<a class="header" href="#optimizations-and-variants" id="optimizations-and-variants"><h2>Optimizations and Variants</h2></a>
+<p>Quicksort 有數個方向可以探討最佳化：</p>
+<ul>
+<li><a href="#%E9%99%8D%E4%BD%8E%E9%A1%8D%E5%A4%96%E7%A9%BA%E9%96%93%E8%A4%87%E9%9B%9C%E5%BA%A6">降低額外空間複雜度</a></li>
+<li><a href="#%E9%81%B8%E6%93%87-pivot-%E7%9A%84%E6%96%B9%E6%B3%95">選擇 Pivot 的方法</a></li>
+<li><a href="#%E5%B0%8D%E4%BB%98%E9%87%8D%E8%A4%87%E7%9A%84%E5%85%83%E7%B4%A0">對付重複的元素</a></li>
+<li><a href="%E9%81%B8%E6%93%87%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%86%E5%89%B2%E6%96%B9%E6%A1%88">選擇不同的分割方案</a></li>
+</ul>
+<a class="header" href="#a降低額外空間複雜度" id="a降低額外空間複雜度"><h3>降低額外空間複雜度</h3></a>
+<p>前述提到最佳情形下（每次 pivot 都選到中位數），僅需 \(\log n \) 個嵌套遞迴，額外空間複雜度僅需 \(\Omega(\log n) \)。
+倘若編譯器有實作 <strong>尾端調用最佳化</strong>，Quicksort 可以達到 \(O(\log n) \) 對數級別的額外空間使用。</p>
+<p>實作尾端調用最佳化的思路很簡單，「<strong>先遞迴較少元素的部分，再利用 tall-call 遞迴另一部分</strong>」，如此以來，較多元素的遞迴則會直接被編譯器展開，消去遞迴時需要的 call stack 空間。剩下較少元素的部分，則與最佳情形相同，最多僅需 \(\log n \) 次嵌套遞迴。</p>
+<p>簡單實作如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn quicksort_helper_optimized(arr: &amp;mut [i32], lo: isize, hi: isize) {
+    if lo &lt;= hi {
+        let pivot = partition(arr, lo, hi);
+        if pivot - lo &lt; hi - pivot {                      // 1
+          quicksort_helper_optimized(arr, lo, pivot - 1);
+          quicksort_helper_optimized(arr, pivot + 1, hi); // 2
+        } else {
+          quicksort_helper_optimized(arr, pivot + 1, hi);
+          quicksort_helper_optimized(arr, lo, pivot - 1); // 3
+        }
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>說穿了就只有這個判斷式，決定哪部分該先遞迴而已。</li>
+<li>這是一個尾端調用，會展開。</li>
+<li>這也是一個尾端調用。</li>
+</ol>
+<p>實際上，截至 2018.2，Rust Core Team 決定暫緩 TCO 的實作，目前 Rust 並沒有支援 TCO。但我們還是可以手動實作 TCO，減少 call stack。</p>
+<p>我們先把原始的 lomuto partition 實作改成手動 TCO 版本。利用 <code>while</code> loop，將 <code>lo</code> 替換成下一個遞迴的引數，減少部分的 call stack。</p>
+<pre><code class="language-diff">- fn quicksort_helper_manual_tco(arr: &amp;mut [i32], lo: isize, hi: isize) {
++ fn quicksort_helper_manual_tco(arr: &amp;mut [i32], mut lo: isize, mut hi: isize) {
+-     if lo &lt;= hi {
++     while lo &lt; hi {
+          let pivot = partition(arr, lo, hi);
+          quicksort_helper(arr, lo, pivot - 1);
+-         quicksort_helper(arr, pivot + 1, hi);
++         lo = pivot + 1;
+      }
+  }
+</code></pre>
+<p>再來，選擇性遞迴較小的部分。Iterative 版本的尾端調用消除（tail-call eliminate）就做完了！</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn quicksort_helper_manual_tco(arr: &amp;mut [i32], mut lo: isize, mut hi: isize) {
+    while lo &lt; hi {
+        let pivot = partition(arr, lo, hi);
+        if pivot - lo &lt; hi - pivot {
+            quicksort_helper_optimized(arr, lo, pivot - 1);
+            lo = pivot + 1;
+        } else {
+            quicksort_helper_optimized(arr, pivot + 1, hi);
+            hi = pivot - 1;
+        }
+    }
+}
+#}</code></pre></pre>
+<a class="header" href="#a選擇-pivot-的方法" id="a選擇-pivot-的方法"><h3>選擇 Pivot 的方法</h3></a>
+<p>選擇 pivot 的方法大致上有以下幾種：</p>
+<ul>
+<li>總是選擇最後一個元素。</li>
+<li>總是選擇第一個元素。</li>
+<li>選擇特定位置（如中位數）的元素。</li>
+<li>隨機選擇任意元素。</li>
+</ul>
+<p>選擇第一個或最後一個元素會印序列已經接近排序完成或相反排序，造成 \(O(n^2) \) 最壞的時間複雜度。隨機或選擇特定位置的方法較能避免這種情況，但實作上較困難。</p>
+<p>除了選擇 pivot 的方法，近幾年來多 pivot（multi-pivot）Quicksort 也愈趨流行，可以減少 20% 的元素置換。相關的討論與證明可以參考<a href="https://cs.stanford.edu/%7Erishig/courses/ref/l11a.pdf">這篇文章</a>。</p>
+<a class="header" href="#a對付重複的元素" id="a對付重複的元素"><h3>對付重複的元素</h3></a>
+<p>若輸入序列有許多重複的元素，使用原本 Lomuto scheme 實作的 Quicksort 仍然會比較置換等於 pivot 的所有元素。3-way partition scheme 就是將序列多分出「等於 pivot」部分，減少重複置換相等元素的排序法。</p>
+<pre><code>[ values &lt; pivot | values == pivot | value &gt; pivot ]
+</code></pre>
+<p>通常是使用著名的 <a href="https://en.wikipedia.org/wiki/Dutch_national_flag_problem">Dutch national flag algorithm</a> 來解決這個問題。實作上和 Lomuto 非常類似。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; (isize, isize) {
+    let pivot = arr[hi as usize];
+    let mut i = lo;         // smaller
+    let mut j = lo;         // equal
+    let mut k = hi;         // large
+
+    while j &lt;= k {
+        if arr[j as usize] &lt; pivot {
+            arr.swap(i as usize, j as usize);
+            i += 1;
+            j += 1;
+        } else if arr[j as usize] &gt; pivot {
+            arr.swap(k as usize, j as usize);
+            k -= 1;
+        } else {
+            // No swap when identicial.
+            j += 1;
+        }
+    }
+
+    // Return smaller and larger pointer to avoid iterate duplicate elements.
+    (i, k)
+}
+#}</code></pre></pre>
+<a class="header" href="#a選擇不同的分割方案" id="a選擇不同的分割方案"><h3>選擇不同的分割方案</h3></a>
+<p>不同的分割方案有著不同的應用場景，如上述的 3-way scheme 就適合重複元素多的序列。這裡再多介紹另一個常見的分割實作方案 Hoare partition，是 Quicksort 發明這 Hoare 自己提出的分割法，Rust 實作演算法如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
+    let pivot = arr[lo];
+    let mut i = lo;
+    let mut j = hi;
+
+    loop {
+        // Find element &gt;= pivot from leftmost element.
+        while arr[i] &lt; pivot {                            // 1
+            i += 1;
+        }
+        // Find element &lt;= pivot from rightmost element.
+        while arr[j] &gt; pivot {                            // 2
+            j -= 1;
+        }
+        if i &gt;= j {
+            return j;
+        }
+        // Two elements are misplaced, swap them.
+        arr.swap(i, j);                                   // 3
+        i += 1;
+        j -= 1;
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>從最左邊開始找比 pivot 大或相等的元素。</li>
+<li>從最右邊開始找比 pivot 小或相等的元素。</li>
+<li>若找到這兩個元素，置換之，以符合小於 pivot 在前，大於 pivot 在後的分割準則。</li>
+</ol>
+<a class="header" href="#reference-5" id="reference-5"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Quicksort">Wiki: Quicksort</a></li>
+<li><a href="https://algs4.cs.princeton.edu/23quicksort/">Algorithms, 4th Edition by R. Sedgewick and K. Wayne</a></li>
+<li><a href="https://www.geeksforgeeks.org/quick-sort/">GeeksForGeeks: QuickSort</a></li>
+<li><a href="https://github.com/raywenderlich/swift-algorithm-club/tree/master/Quicksort">Swift Algorithm Club: Quicksort</a></li>
+</ul>
+<a class="header" href="#mergesort" id="mergesort"><h1>Mergesort</h1></a>
+<p>Mergesort 是一個泛用且高效穩定的排序法，最佳與最差時間複雜都是 \(O(n \log n) \)。Mergesort 可謂著名「Divide and Conquer」手法的經典案例，先將序列分成更小的子序列（Divide），一個個排序後（Conquer），再合併已排序的子序列（Combine）。</p>
+<ul>
+<li><strong>高效穩定</strong>：最佳、平均，與最差時間複雜度皆為 \(O(n \log n) \)。</li>
+<li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
+<li><strong>非原地排序</strong>：除了資料本身，仍需額外花費儲存空間來排序。</li>
+<li><strong>分治演算法</strong>：將主問題化作數個子問題，各個擊破。</li>
+</ul>
+<a class="header" href="#algorithm-6" id="algorithm-6"><h2>Algorithm</h2></a>
+<p>Mergesort 演算法分為以下步驟：</p>
+<ol>
+<li><strong>Divide</strong>：將含有 n 個元素的序列分割成含有 n / 2 個子序列。</li>
+<li><strong>Conquer</strong>：排序分割後的兩個子序列。</li>
+<li><strong>Combine</strong>：合併排序完成的兩子序列，成為一個排好序的序列。</li>
+</ol>
+<p>其中，Conquer 步驟中的「排序」可以不斷遞迴 Mergesort 自身，因此需要停止遞迴的條件（base case），我們將條件設定為「子序列的長度小於 2」，因為長度為 1 的序列可視為已完成排序。</p>
+<p>將 Mergesort 視覺化排序如下：</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Merge_sort_animation2.gif" alt="mergsort" /></p>
+<a class="header" href="#explanation-5" id="explanation-5"><h2>Explanation</h2></a>
+<p>以 ASCII diagram 圖解 Mergesort。</p>
+<p>先將原始序列分割成數個長度為一的子序列。</p>
+<pre><code>Split array into length 1 subarray.
+
+    [8, 7, 1, 2, 4, 6, 5, 3]
+                |
+   [8, 7, 1, 2] | [4, 6, 5, 3]
+                |
+  [8, 7] [1, 2] | [4, 6] [5, 3]
+                |
+[8] [7] [1] [2] | [4] [6] [5] [3]
+                V
+              split
+</code></pre>
+<p>再將子序列依序合併成一個排好序的大序列。</p>
+<pre><code>Recursively merge subarray respecting the order.
+
+              Merge
+                |
+[8] [7] [1] [2] | [4] [6] [5] [3]
+                |
+  [7, 8] [1, 2] | [4, 6] [3, 5]
+                |
+   [1, 2, 7, 8] | [3, 4, 5, 6]
+                V
+    [1, 2, 3, 4, 5, 6, 7, 8]
+</code></pre>
+<a class="header" href="#performance-6" id="performance-6"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity         </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n \log n) \)      </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n \log n) \) </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n \log n) \) </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(n) \) auxiliary   </td></tr>
+</tbody></table>
+<a class="header" href="#time-complexity-2" id="time-complexity-2"><h3>Time Complexity</h3></a>
+<p>透過遞迴關係式，很容易計算 Mergesort 的時間複雜度。假設排序長度為 \(n \) 的序列最多需要 \(T(n) \) 時間。可以觀察到，如果序列只有一個元素，Mergesort 僅需要常數時間就可以完成排序，寫成 \(T(n) = 1 \)。</p>
+<p>如果 \(n &gt; 2 \)，Mergesort 會將序列分為 \(\lceil \frac{n}{2} \rceil \) 部分，以及 \(\lfloor \frac{n}{2} \rfloor \) 部分。我們可以將排序前者寫成 \(T(\lceil \frac{n}{2} \rceil) \)，而後者花費時間為 \( T(\lfloor \frac{n}{2} \rfloor) \)。</p>
+<p>最後，合併兩個子序列僅需 \(n \) 個操作。可得下列遞迴關係式。<br />
+（為了方便計算，把 floor 和 ceil 捨去）</p>
+<p>$$
+T(n) =
+\begin{cases}
+1                   &amp; \text{if } n = 1, \
+2T(\frac{n}{2}) + n &amp; \text{otherwise}.
+\end{cases}
+$$</p>
+<p>根據 <a href="master-theorem">Master Theorem</a>，可得複雜度為 \(O(n \log n) \)。</p>
+<a class="header" href="#space-complexity-1" id="space-complexity-1"><h3>Space Complexity</h3></a>
+<p>Mergesort 的缺點之一就是在合併子序列時，需要額外的空間依序插入排序資料；若是遞迴版本的 Mergesort 還需額外加上遞迴花費的 call stack 空間，因此額外空間複雜度為 \(O(n) + O(\log n) = O(n) \)（以陣列實作）。</p>
+<a class="header" href="#implementation-6" id="implementation-6"><h2>Implementation</h2></a>
+<p>一般來說，Divide and Conquer 有兩種設計、解決問題的技巧：Top-down（自上而下）與 Buttom-up（自下而上）。前者是先對問題有整體的輪廓概念，再逐步針對細節一一處理；後者則是先準備每個問題需要的基礎步驟與元件，再將這些步驟結合，解決整體的問題。</p>
+<p>Mergesort 的實作分為兩部分：</p>
+<ul>
+<li><code>mergesort</code> 主程式：對外的接口，負責分割序列。對應 Divide 功能。</li>
+<li><code>merge</code>：合併子序列，對應到 Conquer 與 Combine 功能。</li>
+</ul>
+<p>先來看看如何分割序列。</p>
+<a class="header" href="#top-down-split" id="top-down-split"><h3>Top-down split</h3></a>
+<p>自上而下的解法會不斷以類似 binary search 的方式找中點，進而分割序列。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn mergesort(arr: &amp;mut [i32]) {
+    let mid = arr.len() / 2;
+    if mid == 0 {                 // 1
+        return;
+    }
+
+    mergesort(&amp;mut arr[..mid]);   // 2
+    mergesort(&amp;mut arr[mid..]);
+
+    // Create an array to store intermediate result.
+    let mut ret = arr.to_vec();   // 3
+
+    // Merge the two piles.
+    merge(&amp;arr[..mid], &amp;arr[mid..], &amp;mut ret[..]);  // 4
+
+    // Copy back the result back to original array.
+    arr.copy_from_slice(&amp;ret);    // 5
+}
+#}</code></pre></pre>
+<ol>
+<li>設定遞迴的終止條件（base case），middle index 為 0 表示長度不大於 1。</li>
+<li>利用 Rust 的 <a href="https://doc.rust-lang.org/std/ops/struct.Range.html">Range Operator</a>，可快速分割兩個 <code>slice</code>。</li>
+<li>建立一個 <code>Vec</code> 儲存排序結果。</li>
+<li>將兩個 <code>slice</code> 合併排序至 <code>ret</code> vector 中。</li>
+<li>將 <code>ret</code> 的結果複製到原始 <code>arr</code> 中，使回傳值保有相同起始位址。</li>
+</ol>
+<a class="header" href="#buttom-up-split" id="buttom-up-split"><h3>Buttom-up split</h3></a>
+<p>自下而上的解法則是預定好最小的子序列長度，直接使用 for 迴圈從頭開始逐一擊破。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn mergesort_bottom_up(arr: &amp;mut [i32]) {
+    let mut width = 1;                                // 1
+    // Create an array to store intermediate result.
+    let mut ret = arr.to_vec();                       // 2
+    let len = arr.len();
+
+    while width &lt; len {
+        let mut i = 0;
+        while i &lt; len {
+            // Check to avoid upper bound and middle index out of bound.
+            let upper = ::std::cmp::min(i + 2 * width, len);  // 3
+            let mid = ::std::cmp::min(i + width, len);
+
+            merge(&amp;arr[i..mid], &amp;arr[mid..upper], &amp;mut ret[i..upper]);
+
+            // Copy the merged result back to original array.
+            arr[i..upper].copy_from_slice(&amp;ret[i..upper]);    // 4
+
+            // Increase start index to merge next two subsequences.
+            i += 2 * width;                           // 5
+        }
+        width *= 2;                                   // 6
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>設定最小的子序列長度，這個長度以下的子序列皆視為已排序。</li>
+<li>建立一個 <code>Vec</code> 儲存排序結果。</li>
+<li>取最小值，避免下標超出邊界，並且維持除了最後一組，其他子序列長度恆為 <code>width</code>。</li>
+<li>複製這部分排序結果 <code>ret</code> 到原始的 <code>arr</code> 中。</li>
+<li>繼續下兩個子序列的合併步驟。</li>
+<li>將下個迭代的子序列長度加倍，繼續合併。</li>
+</ol>
+<a class="header" href="#the-merge-part" id="the-merge-part"><h3>The merge part</h3></a>
+<p>無論是 Top-down 還是 Buttom-up 版本的解法，皆免不了 <code>merge</code> 這個共同步驟，將子序列合併為較大的序列。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
+    let mut left = 0; // Head of left pile.             // 1
+    let mut right = 0; // Head of right pile.
+    let mut index = 0;
+
+    // Compare element and insert back to result array.
+    while left &lt; arr1.len() &amp;&amp; right &lt; arr2.len() {     // 2
+        if arr1[left] &lt;= arr2[right] {                  // 3
+            ret[index] = arr1[left];
+            index += 1;
+            left += 1;
+        } else {
+            ret[index] = arr2[right];
+            index += 1;
+            right += 1;
+        }
+    }
+
+    // Copy the reset elements to returned array.
+    // `memcpy` may be more performant than for-loop assignment.
+    if left &lt; arr1.len() {                              // 4
+        ret[index..].copy_from_slice(&amp;arr1[left..]);
+    }
+    if right &lt; arr2.len() {
+        ret[index..].copy_from_slice(&amp;arr2[right..]);
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>建立三個指標，分別給 <code>arr1</code>、<code>arr2</code> 與回傳陣列 <code>ret</code> 使用。</li>
+<li>這部分依序比較兩個子序列，排序較小者先進入回傳 <code>ret</code>。直到其中一序列所有元素都進入 <code>ret</code> 就停止。</li>
+<li>這邊判斷使用 <code>&lt;=</code> 小於等於確保排序穩定（相同鍵值順序不換）。</li>
+<li>將剩餘未進入 <code>ret</code> 的元素，依序複製到 <code>ret</code> 中。</li>
+</ol>
+<blockquote>
+<p><code>slice.copy_from_slice</code> 底層使用 C 的 <code>memcpy</code>，比起 for-loop 一個個賦值，直接複製整塊記憶體比較快了。</p>
+</blockquote>
+<a class="header" href="#variants-2" id="variants-2"><h2>Variants</h2></a>
+<a class="header" href="#timsort" id="timsort"><h3>Timsort</h3></a>
+<p>在真實世界資料中，早有許多部分排序的分區（natural run），倘若跳過排序這些分區的步驟，就可減少許多不必要的操作，<a href="../timsort">Timsort</a> 就是為了完全利用榨乾這些分區的混合排序法。</p>
+<a class="header" href="#reference-6" id="reference-6"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Merge_sort">Wiki: Merge sort</a></li>
+<li><a href="www.cs..html">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
+<li>Sorting GIF was created By CobaltBlue <a href="https://creativecommons.org/licenses/by-sa/2.5">CC BY-SA 2.5</a> via Wikimedia Commons.</li>
+</ul>
+<a class="header" href="#a排序演算法-3" id="a排序演算法-3"><h1>排序演算法</h1></a>
+<p>記錄常見的排序演算法。</p>
+<a class="header" href="#a編排慣例-3" id="a編排慣例-3"><h2>編排慣例</h2></a>
+<p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
+<a class="header" href="#introsort" id="introsort"><h1>Introsort</h1></a>
+<p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
+<a class="header" href="#timsort-1" id="timsort-1"><h1>Timsort</h1></a>
+<p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
+<a class="header" href="#performance-7" id="performance-7"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity         </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n \log n) \)      </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n) \)        </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n \log n) \) </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(n) \) auxiliary   </td></tr>
+</tbody></table>
+<a class="header" href="#implementation-7" id="implementation-7"><h2>Implementation</h2></a>
+<a class="header" href="#reference-7" id="reference-7"><h2>Reference</h2></a>
+<ul>
+<li>https://en.wikipedia.org/wiki/Timsort</li>
+<li>http://blog.csdn.net/yangzhongblog/article/details/8184707</li>
+<li>https://github.com/rust-lang/rust/pull/38192</li>
+<li>https://github.com/python/cpython/blob/master/Objects/listsort.txt</li>
+<li>https://youtu.be/uVWGZyekGos</li>
+</ul>
+<a class="header" href="#pattern-defeating-quicksort" id="pattern-defeating-quicksort"><h1>Pattern-defeating quicksort</h1></a>
+<p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
+<ul>
+<li>Unstable</li>
+<li>Adopted in libcore in Rust</li>
+</ul>
+<a class="header" href="#reference-8" id="reference-8"><h2>Reference</h2></a>
+<ul>
+<li>https://news.ycombinator.com/item?id=14661659</li>
+<li>https://redd.it/5qa8h6</li>
+<li>https://github.com/orlp/pdqsort</li>
+<li>https://github.com/stjepang/pdqsort</li>
+<li>https://github.com/rust-lang/rust/pull/40601</li>
+</ul>
+<a class="header" href="#a排序演算法-4" id="a排序演算法-4"><h1>排序演算法</h1></a>
+<p>記錄常見的排序演算法。</p>
+<a class="header" href="#a編排慣例-4" id="a編排慣例-4"><h2>編排慣例</h2></a>
+<p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
+<a class="header" href="#counting-sort" id="counting-sort"><h1>Counting sort</h1></a>
+<p><a href="https://en.wikipedia.org/wiki/Counting_sort">Counting sort</a> 是一個特殊的整數排序法，被視為 <a href="../bucket_sort">Bucket sort</a> 的特例。原理是在已知整數範圍內，計算每個鍵值出現次數，並用額外的陣列保存（Count array）。最後將 Count array 的元素值作為排序資料的新 index。</p>
+<p>Counting sort 基本特性如下：</p>
+<ul>
+<li><strong>非原地排序</strong>：額外花費較大量、非固定的空間來排序。</li>
+<li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
+<li><strong>整數排序</strong>：以整數作為排序的鍵值。</li>
+<li><strong>分配式排序</strong>：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。</li>
+<li><strong>線型執行時間</strong>：當輸入資料量 <strong>n</strong> 與已知範圍上下界之差值相近，執行時間接近線型（<strong>O(n)</strong>）</li>
+<li><strong>預期分佈</strong>：預期輸入資料是落在已知範圍內的整數（例如 0 到 k）。</li>
+<li><strong>適用範圍</strong>：僅適用於小範圍整數（額外空間需求大）。</li>
+</ul>
+<a class="header" href="#algorithm-7" id="algorithm-7"><h2>Algorithm</h2></a>
+<ol>
+<li><strong>Count occurrence</strong>：計算每個 key 的出現次數。</li>
+<li><strong>Prefix sum as start index</strong>：計算前綴和（Prefix sum），並作為該元素的 start index。</li>
+<li><strong>Copy output</strong>：利用步驟二的前綴和，遍歷輸入資料，取得元素排序後的索引。</li>
+</ol>
+<a class="header" href="#explanation-6" id="explanation-6"><h2>Explanation</h2></a>
+<p>這裡有資料需要透過正整數的 key 來排序。key 的範圍在 0 - 9 之間，格式為 <code>(key, value)</code>。</p>
+<pre><code>Input: (1, A) (5, B) (8, C) (2, D) (2, E) (9, F)
+</code></pre>
+<p><strong>1. Count occurrence</strong>：首先，先計算每個 key 的出現頻率，儲存在額外的 count array 中。</p>
+<pre><code>Key  : 0 1 2 3 4 5 6 7 8 9
+Count: 0 1 2 0 0 1 0 0 1 1
+</code></pre>
+<p><strong>2. Prefix sum as start index</strong>：再計算 prefix sum，也就是將當前 index 前累計的 key 數量加總。例如 <strong>key 5</strong> 的 prefix sum <strong>1 + 2 = 3</strong>。</p>
+<p>這裡的 prefix sum 等同於每筆資料排序後的位置（index）。例如排序後，<strong>8</strong> 位於陣列第四位。</p>
+<pre><code>Key       : 0 1 2 3 4 5 6 7 8 9
+Prefix Sum: 0 0 1 3 3 3 4 4 4 5
+</code></pre>
+<p><strong>3. Copy output</strong>：透過 key 與 prefix sum 的映射關係，找到原始資料對應的位置。</p>
+<p>實作上，每筆資料找到對應的 start index（prefix sum） 後，要將<strong>該 index 之值 +1</strong>，使得重複的元素可取得正確的 index offset（對唯一的 key 沒有影響）。</p>
+<pre><code>(1, A)
+--&gt; prefix sum 為 0，寫入 array[0]，並將 prefix sum + 1
+
++--------+--------+--------+--------+--------+--------+
+| (1, A) |        |        |        |        |        |
++--------+--------+--------+--------+--------+--------+
+
+(5, B)
+--&gt; prefix sum 為 3，寫入 array[3]，並將 prefix sum + 1
+
++--------+--------+--------+--------+--------+--------+
+| (1, A) |        |        | (5, B) |        |        |
++--------+--------+--------+--------+--------+--------+
+
+(8, C)
+--&gt; prefix sum 為 4，寫入 array[4]，並將 prefix sum + 1
+
++--------+--------+--------+--------+--------+--------+
+| (1, A) |        |        | (5, B) | (8, C) |        |
++--------+--------+--------+--------+--------+--------+
+
+(2, D)
+--&gt; prefix sum 為 2，寫入 array[4]，並將 prefix sum + 1
+
++--------+--------+--------+--------+--------+--------+
+| (1, A) | (2, D) |        | (5, B) | (8, C) |        |
++--------+--------+--------+--------+--------+--------+
+
+(2, E)
+--&gt; prefix sum 為 3（前一步驟 + 1），寫入 array[3]，並將 prefix sum + 1
+
++--------+--------+--------+--------+--------+--------+
+| (1, A) | (2, D) | (2, E) | (5, B) | (8, C) |        |
++--------+--------+--------+--------+--------+--------+
+
+(9, F)
+--&gt; prefix sum 為 5，寫入 array[5]，並將 prefix sum + 1
+
++--------+--------+--------+--------+--------+--------+
+| (1, A) | (2, D) | (2, E) | (5, B) | (8, C) | (9, F) |
++--------+--------+--------+--------+--------+--------+
+</code></pre>
+<p>這樣就完成排序了。此外，觀察 <strong>(2, D)</strong> 與 <strong>(2, E)</strong> 排序前後的位置，會發現 counting sort 是個實實在在的穩定排序，很棒。</p>
+<a class="header" href="#performance-8" id="performance-8"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity           </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n + k) \)           </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n + k) \)      </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n + k) \)      </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(n + k) \) auxiliary </td></tr>
+</tbody></table>
+<blockquote>
+<p>k 為資料已知範圍上下界之差。</p>
+</blockquote>
+<a class="header" href="#time-complexity-3" id="time-complexity-3"><h3>Time Complexity</h3></a>
+<p>Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 \(n \) 個輸入的資料，因此複雜度為 \(O(n) \)；步驟二計算 prefix sum，，以及 count array 自身的初始化則需執行 \(k + 1 \) 次（給定的資料範圍），這部分的複雜度為 \(O(k) \)。由於 \(n \) 與 \(k \) 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 \(O(n + k) \)。</p>
+<a class="header" href="#space-complexity-2" id="space-complexity-2"><h3>Space complexity</h3></a>
+<p>Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的記憶體空間，因此 \(O(n) \) 的額外（auxiliary）空間複雜度絕對免不了。再加上需要長度為 \(k \) 的 count array 保存每個 key 的出現次數，因此需再加上 \(O(k) \)。除了原始的輸入 array，總共需花費 \(O(n + k) \) 的額外空間複雜度。</p>
+<blockquote>
+<p>如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 \(O(k) \)，但也因此成為不穩定排序法。</p>
+</blockquote>
+<a class="header" href="#implementation-8" id="implementation-8"><h2>Implementation</h2></a>
+<p>由於 Counting sort 屬於分布式排序（Distribution sort），這裡使用泛型，以彰顯分布式排序的特色。</p>
+<a class="header" href="#function-signature" id="function-signature"><h3>Function Signature</h3></a>
+<p>首先，我們先看函式簽名（function signature）。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key: F) 
+    where F: Fn(&amp;T) -&gt; usize, 
+          T: Clone,
+#}</code></pre></pre>
+<p>這裡使用了四個參數：</p>
+<ul>
+<li><code>arr</code>：待排序陣列。</li>
+<li><code>min</code>、<code>max</code>：整數排序的上下界。</li>
+<li><code>key</code>：由於資料不一定是整數，需要一個 function 從資料擷取鍵值做排</li>
+</ul>
+<p>另外，也使用兩個泛型型別：</p>
+<ul>
+<li><code>F</code>：<code>key</code> extactor 的型別，回傳的 <code>usize</code> 必須落在 <code>[min, max)</code> 之間。</li>
+<li><code>T</code>：陣列元素的型別，實作 <code>Clone</code> 是由於 Counting sort 需要將 output 再複製回原本的參數 <code>arr</code> 上，達成「偽」原地排序。</li>
+</ul>
+<a class="header" href="#prefix-sums-array" id="prefix-sums-array"><h3>Prefix Sums Array</h3></a>
+<p>再來，了解如何建立一個元素出現次數的陣列。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn counting_sort() {
+    // ...
+
+    let mut prefix_sums = {
+        // 1. Initialize the count array with default value 0.
+        let len = max - min;
+        let mut count_arr = Vec::with_capacity(len);
+        count_arr.resize(len, 0);
+
+        // 2. Scan elements to collect counts.
+        for value in arr.iter() {
+            count_arr[key(value)] += 1;
+        }
+
+        // 3. Calculate prefix sum.
+        count_arr.into_iter().scan(0, |state, x| {
+                *state += x;
+                Some(*state - x)
+            }).collect::&lt;Vec&lt;usize&gt;&gt;()
+    };
+    // ...
+}
+#}</code></pre></pre>
+<ol>
+<li>建立一個長度為上下界之差的 count array。注意，這裡使用了 <code>Vec.resize</code>，因為 Rust initialize 空的 <code>Vec</code> 時並不會插入 0 或其他預設值。</li>
+<li>遍歷整個輸入資料，利用 <code>key</code> function 取出每筆資料的鍵值，出現一次就 +1。</li>
+<li>利用 Iterator 上的 <code>scan</code> method 計算每個鍵值的 prefix sum。需要注意的是，每個元素對應的 prefix sum 不包含自身，例如 key 3 的計算結果就是 1 與 2 的出現總次數，如此一來，prefix sum 才會直接對應到排序後的位置。</li>
+</ol>
+<a class="header" href="#prefix-sums-as-start-index" id="prefix-sums-as-start-index"><h3>Prefix Sums as Start Index</h3></a>
+<p>最後一步就是將 prefix sum 當作每個 element 的正確位置，把資料重頭排序。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn counting_sort() {
+    // ...
+
+    for value in arr.to_vec().iter() {            // 1
+        let index = key(value);
+        arr[prefix_sums[index]] = value.clone();  // 2
+        prefix_sums[index] += 1;                  // 3
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>將輸入資料透過 <code>to_vec</code> 複製起來迭代，需要複製 <code>arr</code> 是因為之後要直接在 <code>arr</code> 插入新值，需要另一份原始輸入的拷貝。</li>
+<li>利用 <code>key</code> 擷取鍵值後，把資料複製給 <code>arra</code> 上對應 <code>prefix_sums[index]</code> 的位置。</li>
+<li>將該 <code>prefix_sums[index]</code> 的值加一，以便元素重複時，可以正常複製到下一個位置。</li>
+</ol>
+<p>完成了！這裡再貼一次完整的程式碼。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key: F) 
+    where F: Fn(&amp;T) -&gt; usize,
+          T: Clone,
+{
+    let mut prefix_sums = {
+        // 1. Initialize the count array with default value 0.
+        let len = max - min;
+        let mut count_arr = Vec::with_capacity(len);
+        count_arr.resize(len, 0);
+
+        // 2. Scan elements to collect counts.
+        for value in arr.iter() {
+            count_arr[key(value)] += 1;
+        }
+
+        // 3. Calculate prefix sum.
+        count_arr.into_iter().scan(0, |state, x| {
+                *state += x;
+                Some(*state - x)
+            }).collect::&lt;Vec&lt;usize&gt;&gt;()
+    };
+
+    // 4. Use prefix sum as index position of output element.
+    for value in arr.to_vec().iter() {
+        let index = key(value);
+        arr[prefix_sums[index]] = value.clone();
+        prefix_sums[index] += 1;
+    }
+}
+#}</code></pre></pre>
+<a class="header" href="#reference-9" id="reference-9"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Counting_sort">Wiki: Counting sort</a></li>
+<li><a href="http://www.growingwiththeweb.com/2014/05/counting-sort.html">Growing with the web: Counting sort</a></li>
+</ul>
+<a class="header" href="#bucket-sort" id="bucket-sort"><h1>Bucket sort</h1></a>
+<p><a href="https://en.wikipedia.org/wiki/Bucket_sort">Bucket sort</a>，是一個非比較排序。原理是建立一些桶子，每個桶子對應一資料區間，在將待排序資料分配到不同的桶中，桶子內部各自排序。由於並非<a href="https://en.wikipedia.org/wiki/Comparison_sort">比較排序</a>，使用 Bucket sort 需要事先知道資料的範圍與分佈，才能決定桶子對應的區間。</p>
+<p>Bucket sort 基本特性如下：</p>
+<ul>
+<li>又稱 <strong>bin sort</strong>。</li>
+<li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
+<li><strong>分配式排序</strong>：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。</li>
+<li><strong>預期分佈</strong>：資料為<strong>均勻分佈</strong>。</li>
+</ul>
+<a class="header" href="#algorithm-8" id="algorithm-8"><h2>Algorithm</h2></a>
+<p>假設要排序 \(n \) 個元素的陣列，這些元素的值平均散落在某個<strong>已知的預期範圍內</strong>，例如 1 到 100。</p>
+<ol>
+<li><strong>Create buckets</strong>：建立 \(k \) 個桶子（bucket）的陣列。每個桶子<strong>對應預期範圍的某區間</strong>，如第一個桶子放 1 到 10，第二個放 11 到 20。</li>
+<li><strong>Scatter</strong>：將每個元素依照該值放入對應的桶子中。</li>
+<li><strong>Inner sort</strong>：排序所有非空的桶子。</li>
+<li><strong>Gather</strong>：依序走訪所有桶子，將桶內的元素放回原本的陣列中。</li>
+</ol>
+<a class="header" href="#explanation-7" id="explanation-7"><h2>Explanation</h2></a>
+<p>以下用 ASCII diagram 視覺化解釋：</p>
+<p>這裡有一些整數，落在 1 至 100 之間。我們有 \(n = 10 \) 的陣列要排序。</p>
+<pre><code>Original array
+
++-------------------------------------------------+
+|  6 | 28 | 96 | 14 | 74 | 37 |  9 | 71 | 91 | 36 |
++-------------------------------------------------+
+</code></pre>
+<p><strong>1. Create buckets</strong>：建立一定數量的桶子，這裡我們建立與原始陣列相同數量的桶子（10）。每個桶子對應 \(n - 1 * 10 \) 到 \(n * 10 \) 的區間。</p>
+<pre><code>Bucket array
+
++-------------------------------------------------+
+|    |    |    |    |    |    |    |    |    |    |
++-------------------------------------------------+
+  ^    ^
+  |    |
+  |    |
+  |    holds values in range 11 to 20
+  holds values in range 1 to 10
+</code></pre>
+<p><strong>2. Scatter</strong>：將原始陣列中的元素，放入對應的桶中。</p>
+<pre><code>Bucket array
+
+  6,9  14   28   37,36               74,71     96,91
+  |    |    |    |                   |         |
++-v----v----v----v-------------------v---------v--+
+|    |    |    |    |    |    |    |    |    |    |
++-------------------------------------------------+
+</code></pre>
+<p><strong>3. Inner sort</strong>：排序所有非空桶子中的元素，桶內排序可用任意排序法，通常選用「insertion sort」，可確保排序穩定性，並降低額外開銷。</p>
+<pre><code>Bucket array
+
+  sort sort sort sort                sort      sort
+  ---  --   --   -----               -----     -----
+  6,9  14   28   36,37               71,74     91,96
+  |    |    |    |                   |         |
++-v----v----v----v-------------------v---------v--+
+|    |    |    |    |    |    |    |    |    |    |
++-------------------------------------------------+
+</code></pre>
+<p><strong>4. Gather</strong>：排序完後，再將所有桶中元素依序放回原始的陣列。</p>
+<pre><code>Original array
++-------------------------------------------------+
+|  6 |  9 | 14 | 28 | 36 | 37 | 71 | 74 | 91 | 96 |
++-------------------------------------------------+
+</code></pre>
+<a class="header" href="#performance-9" id="performance-9"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity               </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)                 </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n + k) \)          </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n + k) \)          </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(n + k) \) auxiliary </td></tr>
+</tbody></table>
+<blockquote>
+<p>\(k \) = 桶子的數量（number of buckets）
+\(n \) = 資料筆數</p>
+</blockquote>
+<a class="header" href="#worst-case" id="worst-case"><h3>Worst case</h3></a>
+<p>Bucket sort 是一個分配式排序法，對資料分佈有既定的預期：「<strong>所有元素平均分佈在每個 bucket 的區間內</strong>」。可想而知，最差的狀況是所有元素都聚集（clustering）在同一個 bucket 中，整個 bucket sort 的會退化成單一一個 inner sort 的複雜度。而桶內排序通常選用 insertion sort（最差 \(O(n^2) \)），所以最差的時間複雜度為「 \(O(n^2) \)」。</p>
+<a class="header" href="#best-case" id="best-case"><h3>Best case</h3></a>
+<p>最佳的狀況則是完全符合預期的平均分佈，一個蘿蔔一個坑，每個桶內排序的最佳時間複雜度為 \(O(n / k) \)，再乘上桶子總數 \(k \)，僅需 \(O(k \cdot (n / k)) = O(n) \)。計算結果看起來非常合理，但實際上最佳時間複雜度為 \(O(n + k) \)，為什麼呢？</p>
+<p>無庸置疑，桶內排序最佳時間複雜度為 \(O(n / k) \)，但別忘了這是省略常數項過後式子，進行符號運算時，較精確的表達是 \(c_0 O(n / k) + c_1 \)，對於實作層面的常數 \(c_0 \) 和 \(c_1 \) 則予以保留。</p>
+<p>當我們乘上 \(k \)，試著算出總運算量時，</p>
+<p>$$k \cdot (c_0(n / k) + c_1) $$</p>
+<p>會得到：</p>
+<p>$$ c_0n + c_1k $$</p>
+<p>可以得知，整個計算與 \(k \) 有關，所以需要耗時 \(O(n + k) \)。</p>
+<p>撇開數學，我們從 pseudo code 來看。最佳情況下，將所有元素蒐集回陣列的步驟（Gather）如下：</p>
+<pre><code>for (each bucket b in all k buckets)
+  for (each element x in b)
+    append x to the array
+</code></pre>
+<p>最外層的迴圈依桶子數 \(k \) 而定，至少需要執行 \(k \) 次，複雜度為 \(O(k) \)。內層的迴圈則是每個桶內的元素都會執行，而我們的資料時均勻分布，因此執行時間與元素總數 \(n \) 相關，為 \(O(n) \)。兩者加起來就是我們所說的 \(O(n + k) \) 的最佳複雜度。</p>
+<p><strong>那 \(k \) 究竟會是多少，影響會比 \(n \) 大嗎？</strong></p>
+<p>端看桶子總數而定，若桶子總數很大，比元素個數 \(n \) 大得多，則桶子總數對執行時間的影響恐較劇烈，就算大多數為空桶子，仍須挨家挨戶查看是否需要執行桶內排序。</p>
+<a class="header" href="#space-complexity-3" id="space-complexity-3"><h3>Space Complexity</h3></a>
+<p>Bucket sort 須額外建立 \(k \) 個桶子，每個桶子需要配置長度為 \(n \) 的 array，因此空間複雜度為 \(O(n \cdot k) \)。如果以 dynamic array 實作 bucket，並考慮平攤分析（Amortized analysis），則空間複雜度降至 \(O(n + k) \)，這也是大多數人接受的分析結果，畢竟不會有人無聊到預先配置 \(n \cdot k \) 個 empty bucket。</p>
+<a class="header" href="#implementation-9" id="implementation-9"><h2>Implementation</h2></a>
+<a class="header" href="#bucket" id="bucket"><h3>Bucket</h3></a>
+<p>Bucket sort 有許多種各異的實作法，差異最大之處就是桶子 bucket 這部分。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// Bucket to store elements.
+struct Bucket&lt;H, T&gt; {
+    hash: H,
+    values: Vec&lt;T&gt;,
+}
+
+impl&lt;H, T&gt; Bucket&lt;H, T&gt; {
+    /// Create a new bucket and insert its first value.
+    ///
+    /// * `hash` - Hash value generated by hasher param of `bucket_sort`.
+    /// * `value` - Value to be put in the bucket.
+    pub fn new(hash: H, value: T) -&gt; Bucket&lt;H, T&gt; {
+        Bucket {
+            hash: hash,
+            values: vec![value],
+        }
+    }
+}
+#}</code></pre></pre>
+<p>這裡的桶子實作兩個 struct fields：</p>
+<ul>
+<li><code>values</code>：使用 <a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a> 儲存對應範圍內的元素</li>
+<li><code>hash</code>：Bucket Sort 主函式有一個 <code>hasher</code> 函式，會計算出對應各個桶子的雜湊值，因此要確保桶子的雜湊值有唯一性。</li>
+</ul>
+<a class="header" href="#sorting" id="sorting"><h3>Sorting</h3></a>
+<p>接下來就是排序主函式。依照慣例，先看看函式簽名（Function signature）。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn bucket_sort&lt;H, F, T&gt;(arr: &amp;mut [T], hasher: F)
+    where H: Ord,
+          F: Fn(&amp;T) -&gt; H,
+          T: Ord + Clone,
+#}</code></pre></pre>
+<p>這個 <code>bucket_sort</code> 函式使用了不少泛型：</p>
+<ul>
+<li><code>H</code>：<code>hasher</code> 函式的回傳型別，用來辨識不同的桶子。</li>
+<li><code>F</code>：<code>hasher</code> 函式自身，只需要一個參數 <code>&amp;T</code>，回傳一個 <code>H</code>。</li>
+<li><code>T</code>：欲排序資料的型別。</li>
+</ul>
+<p>函式自身稍微複雜一點，但仍是 <a href="#algorithm">Algorithm</a> 一節介紹的四步驟：Create buckets、Scatter、Inner sort，還有 Gather。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn bucket_sort() {
+    // ...
+
+    // 1. Create buckets.
+    let mut buckets: Vec&lt;Bucket&lt;H, T&gt;&gt; = Vec::new();
+
+    // 2. Scatter
+    for value in arr.iter() {
+        let hash = hasher(&amp;value); // 2.1.
+
+        let value = value.clone();
+        // 2.2.
+        match buckets.binary_search_by(|bucket| bucket.hash.cmp(&amp;hash)) {
+            // If exists, push the value to the bucket.
+            Ok(index) =&gt; buckets[index].values.push(value),
+            // If none, create and new bucket and insert value in.
+            Err(index) =&gt; buckets.insert(index, Bucket::new(hash, value)),
+        }
+    }
+
+    // 3. Inner sort and gather
+    let ret = buckets.into_iter().flat_map(|mut bucket| {
+        bucket.values.sort(); // 3.1.
+        bucket.values
+    }).collect::&lt;Vec&lt;T&gt;&gt;();   // 3.2.
+
+    arr.clone_from_slice(&amp;ret); // 4 Copy to original array
+}
+#}</code></pre></pre>
+<ol>
+<li>一般來說，第一步會配置完所有桶子，但這裡實作僅建立儲存桶子們的容器 <code>buckets</code>，這是由於實作了 <code>hasher</code> 函式，元素對應桶子的邏輯交由外部決定，因此桶子不需事先配置，而是交給第二步驟時 <strong>on-the-fly</strong> 建立。</li>
+<li>迭代輸入的 <code>arr</code>，將元素散佈到桶子中。
+<ol>
+<li>使用元素值 <code>value</code> 取得雜湊值。</li>
+<li>從一堆桶子內 <code>buckets</code> 尋找對應雜湊值的桶子，如有對應桶子，則將待排序元素插入桶中；若無對應桶子，則馬上建立桶子，並插入待排序元素。</li>
+</ol>
+</li>
+<li>由於桶子們 <code>buckets</code> 是一個二維陣列集合，我們使用 <code>flat_map</code> 將之壓平。
+<ol>
+<li>使用 Rust 內建 sort（Timsort 的變形）作為我們 inner sort 的實作，將桶內所有元素排好序</li>
+<li>別忘了 Rust 的 Iterator 很 lazy，記得要使用 <code>collect</code> 蒐集 iterator 實作後的結果。</li>
+</ol>
+</li>
+<li>由於要模擬 in-place 原地排序法的特性，將排序好的資料再次拷貝到 <code>arr</code> 上。這也是為什麼函式元素泛型 <code>T</code> 需要 <code>Clone</code> trait 的原因了。</li>
+</ol>
+<p>有關於步驟 2.2.，這部分可以用 <code>HashMap</code> 的變形 <a href="https://github.com/bluss/indexmap">IndexMap</a>（一個保存插入順序的有序 HashMap）保存雜湊值對應桶子的資訊，使得外界更容易依雜湊值找到桶子。但為了保持範例程式的簡潔，決定不引入第三方的 crate（Rust 語言第三方模組的代稱），且 <code>binary_search_by</code> 的複雜度為 \(O(\log n) \)，對 Bucket sort 最差複雜度並無影響。</p>
+<a class="header" href="#reference-10" id="reference-10"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Bucket_sort">Wiki: Bucket sort</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Amortized_analysis">Wiki: Amortized analysis</a></li>
+<li><a href="https://stackoverflow.com/questions/7311415">How is the complexity of bucket sort is O(n+k) if we implement buckets using linked lists?</a></li>
+<li><a href="https://codereview.stackexchange.com/questions/145113/bucket-sort-in-rust">Bucket sort in Rust</a></li>
+</ul>
+<a class="header" href="#radix-sort" id="radix-sort"><h1>Radix sort</h1></a>
+<p>如果你對 <a href="../counting_sort">Counting sort</a> 與 <a href="../bucket_sort">Bucket sort</a> 有認識，應該知道這兩個排序都能突破比較排序法複雜度 \(O(n \log n) \) 限制的特殊排序法。<a href="https://en.wikipedia.org/wiki/Radix_sort">Radix sort</a> 也是一個特殊的<a href="https://en.wikipedia.org/wiki/Integer_sorting">整數排序法</a>，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。</p>
+<p>舉例來說，欲排序一群範圍在 0 - 999 的整數，若以 Counting sort 排序，則需建立一個「1000 元素的陣列」來計算每個整數的出現次數；若使用以 10 為基數的 Radix sort，則僅需以個位數、十位數、百位數作為鍵值分別排序三次。通常 Radix sort 的排序副程式（Sorting subroutine）會選用 Counting sort 或 Bucket sort，而以 10 為基數的鍵值範圍僅 0 - 9，這種小範圍整數非常適合 Counting sort 作為排序副程式，節省了配置 <code>int arr[1000]</code> 的 count array 的時空間。</p>
+<p>Radix sort 基本特性如下：</p>
+<ul>
+<li><strong>整數排序法</strong>：以整數作為排序的鍵值。</li>
+<li><strong>分配式排序法</strong>：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。</li>
+<li><strong>穩定性</strong>：採用 LSD 的 Radix sort 屬穩定排序法（Stable sort）；透過優化，採用 MSD 也可以是穩定排序法。</li>
+</ul>
+<a class="header" href="#algorithm-9" id="algorithm-9"><h2>Algorithm</h2></a>
+<p>常見的 Radix sort 依據整數的每個位數來排序，依照位數排序的先後順序，可分為兩種：</p>
+<ul>
+<li><strong>Least significant digit (LSD)</strong>：從最低有效鍵值開始排序（最小位數排到大）。</li>
+<li><strong>Most significant digit (MSD)</strong>：從最高有效鍵值開始排序（最大位數排到小）。</li>
+</ul>
+<p>簡單的 LSD Radix sort 步驟如下：</p>
+<ol>
+<li><strong>LSD of each key</strong>：取得每個資料鍵值的最小位數（LSD）。</li>
+<li><strong>Sorting subroutine</strong>：依據該位數大小排序資料。</li>
+<li><strong>Repeating</strong>：取得下一個有效位數，並重複步驟二，至最大位數（MSD）為止。</li>
+</ol>
+<p>而 MSD Radix sort 的步驟相似，但取得資料鍵值的方向相反。</p>
+<ol>
+<li><strong>MSD of each key</strong>：取得每個資料鍵值的最大位數（MSD）。</li>
+<li><strong>Sorting subroutine</strong>：依據該位數大小排序資料。</li>
+<li><strong>Repeating</strong>：取得下一個有效位數，並重複步驟二，至最小位數（LSD）為止。</li>
+</ol>
+<blockquote>
+<p>由於 MSD Radix sort 先排序最大位數，會出現 <strong>8 &gt; 126</strong> 的結果，這種順序通常稱為 <a href="https://en.wikipedia.org/wiki/Lexicographical_order">Lexicographical order</a>，有如字典一般，越前面的字母排序權重越重，也因此，基本版的 MSD Radix sort 並非穩定排序法。</p>
+</blockquote>
+<a class="header" href="#explanation-8" id="explanation-8"><h2>Explanation</h2></a>
+<p>我們選用 LSD Radix sort 示範，並且為了增加可讀性，將基數設為 10。需注意在現實場景中，有時使用 bytes 作為基數可能更適合。</p>
+<p>待排序的數列如下。</p>
+<pre><code>[170, 45, 75, 90, 802, 2, 24, 66]
+</code></pre>
+<blockquote>
+<p>Radix sort 的排序副程式，通常選用 counting sort 或 bucket sort，因此，開始排序前，需建立供其使用的 buckets（或 count array）。這屬於其他排序法的範疇，有興趣可看 <a href="../counting_sort">Counting sort</a> 或 <a href="../bucket_sort">Bucket sort</a>。</p>
+</blockquote>
+<p>首先，從最小位數開始排序。
+注意，同樣鍵值的資料，相對位置不會改變（穩定排序）。</p>
+<pre><code>   0   5   5   0    2  2   4   6
+   _   _   _   _    _  _   _   _
+[170, 45, 75, 90, 802, 2, 24, 66]
+
+sort by rightmost digit --&gt;
+
+   0   0    2  2   4   5   5   6
+   _   _    _  _   _   _   _   _
+[170, 90, 802, 2, 24, 45, 75, 66]
+</code></pre>
+<p>再來，對下一個位數排序資料。位數不足的資料，予以補 0。</p>
+<pre><code>  7   9    0   0  2   4   7   6
+  _   _    _      _   _   _   _
+[170, 90, 802, 2, 24, 45, 75, 66]
+
+sort by next digit --&gt;
+
+  0   0  2   4   6    7   7   9
+  _      _   _   _    _   _   _
+[802, 2, 24, 45, 66, 170, 75, 90]
+</code></pre>
+<p>最終，對最後一個位數進行排序。大功告成！</p>
+<pre><code> 8    0  0   0   0   1    0   0
+ _                   _
+[802, 2, 24, 45, 66, 170, 75, 90]
+
+sort by leftmost digit --&gt;
+
+ 0  0   0   0   0   0   1    8
+                        _    _
+[2, 24, 45, 66, 75, 90, 170, 802]
+</code></pre>
+<a class="header" href="#performance-10" id="performance-10"><h2>Performance</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity           </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(dn) \)              </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(\Omega(dn) \)         </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(\Theta(dn) \)         </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(d + n) \) auxiliary </td></tr>
+</tbody></table>
+<blockquote>
+<p>\(n \)：資料筆數。<br />
+\(d \)：number of digit，資料中最多有幾個位數（或鍵值）。<br />
+\(k \)：基數，就是一個位數最多有幾種可能的值。</p>
+</blockquote>
+<a class="header" href="#time-complexity-4" id="time-complexity-4"><h3>Time complexity</h3></a>
+<p>欲分析 Radix sort 的時間複雜度，我們可以逐一擊破，先從排序副程式開始分析。</p>
+<p>Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每個 subroutine 的複雜度為 \(O(n + k) \)， \(k \) 為 key 的範圍，以 10 為基數，就是 0 - 9 之間 \(k = 10 \)。</p>
+<p>再來，我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 \(d \) 位數，時間複雜度需乘上 \(d \)，為 \(O(d (n + k)) \)，那這個 \(k \) 是否可以捨去呢？</p>
+<p>分析 Counting sort 或 Bucket sort 時，範圍 \(k \) 會隨輸入資料而變化，若 \(k \) 過大，對複雜度的影響甚至會超過 \(n \)，因此分析複雜度時無法將 \(k \) 捨去。而在 Radix sort， \(k \) 通常為一個已知的常數，例如以 bytes 為基數 \(k = 8 \)， \(k \) 可以捨去。最後可得 Radix sort 的時間複雜度為 \(O(d \cdot n) \)。</p>
+<a class="header" href="#space-complexity-4" id="space-complexity-4"><h3>Space complexity</h3></a>
+<p>Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 \(O(n \cdot k) \)。Radix 的 \(k \) 是常數，予以捨去。再乘上 \(d \) 個位數，最差的空間複雜度為 \(O(d \cdot n) \)。</p>
+<a class="header" href="#implementation-10" id="implementation-10"><h2>Implementation</h2></a>
+<a class="header" href="#reference-11" id="reference-11"><h2>Reference</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Radix_sort">Wiki: Radix sort</a></li>
+<li><a href="https://www.cs.princeton.edu/%7Ers/AlgsDS07/18RadixSort.pdf">Princeton Universioty DSA Course: Radix sort</a></li>
+<li><a href="https://www.byvoid.com/zht/blog/sort-radix">ByVoid: 三種線性排序算法 計數排序、桶排序與基數排序</a></li>
+</ul>
+<a class="header" href="#data-structures" id="data-structures"><h1>Data Structures</h1></a>
+<p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
+<a class="header" href="#linked-list" id="linked-list"><h1>Linked List</h1></a>
+<p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
+<a class="header" href="#singly-linked-list" id="singly-linked-list"><h2>Singly Linked List</h2></a>
+<a class="header" href="#doubly-linked-list" id="doubly-linked-list"><h2>Doubly Linked List</h2></a>
+<a class="header" href="#circlur-linked-list" id="circlur-linked-list"><h2>Circlur Linked List</h2></a>
+<a class="header" href="#linked-list-1" id="linked-list-1"><h1>Linked List</h1></a>
+<p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
+<a class="header" href="#singly-linked-list-1" id="singly-linked-list-1"><h2>Singly Linked List</h2></a>
+<a class="header" href="#doubly-linked-list-1" id="doubly-linked-list-1"><h2>Doubly Linked List</h2></a>
+<a class="header" href="#circlur-linked-list-1" id="circlur-linked-list-1"><h2>Circlur Linked List</h2></a>
+<a class="header" href="#linked-list-2" id="linked-list-2"><h1>Linked List</h1></a>
+<p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
+<a class="header" href="#singly-linked-list-2" id="singly-linked-list-2"><h2>Singly Linked List</h2></a>
+<a class="header" href="#doubly-linked-list-2" id="doubly-linked-list-2"><h2>Doubly Linked List</h2></a>
+<a class="header" href="#circlur-linked-list-2" id="circlur-linked-list-2"><h2>Circlur Linked List</h2></a>
+<a class="header" href="#linked-list-3" id="linked-list-3"><h1>Linked List</h1></a>
+<p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
+<a class="header" href="#singly-linked-list-3" id="singly-linked-list-3"><h2>Singly Linked List</h2></a>
+<a class="header" href="#doubly-linked-list-3" id="doubly-linked-list-3"><h2>Doubly Linked List</h2></a>
+<a class="header" href="#circlur-linked-list-3" id="circlur-linked-list-3"><h2>Circlur Linked List</h2></a>
+<p>MIT License</p>
+<p>Copyright (c) 2017 - 2018 Weihang Lo</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+<p>Attribution-NonCommercial-ShareAlike 4.0 International</p>
+<p>=======================================================================</p>
+<p>Creative Commons Corporation (”Creative Commons”) is not a law firm and
+does not provide legal services or legal advice. Distribution of
+Creative Commons public licenses does not create a lawyer-client or
+other relationship. Creative Commons makes its licenses and related
+information available on an “as-is” basis. Creative Commons gives no
+warranties regarding its licenses, any material licensed under their
+terms and conditions, or any related information. Creative Commons
+disclaims all liability for damages resulting from their use to the
+fullest extent possible.</p>
+<p>Using Creative Commons Public Licenses</p>
+<p>Creative Commons public licenses provide a standard set of terms and
+conditions that creators and other rights holders may use to share
+original works of authorship and other material subject to copyright
+and certain other rights specified in the public license below. The
+following considerations are for informational purposes only, are not
+exhaustive, and do not form part of our licenses.</p>
+<pre><code> Considerations for licensors: Our public licenses are
+ intended for use by those authorized to give the public
+ permission to use material in ways otherwise restricted by
+ copyright and certain other rights. Our licenses are
+ irrevocable. Licensors should read and understand the terms
+ and conditions of the license they choose before applying it.
+ Licensors should also secure all rights necessary before
+ applying our licenses so that the public can reuse the
+ material as expected. Licensors should clearly mark any
+ material not subject to the license. This includes other CC-
+ licensed material, or material used under an exception or
+ limitation to copyright. More considerations for licensors:
+wiki.creativecommons.org/Considerations_for_licensors
+
+ Considerations for the public: By using one of our public
+ licenses, a licensor grants the public permission to use the
+ licensed material under specified terms and conditions. If
+ the licensor's permission is not necessary for any reason--for
+ example, because of any applicable exception or limitation to
+ copyright--then that use is not regulated by the license. Our
+ licenses grant only permissions under copyright and certain
+ other rights that a licensor has authority to grant. Use of
+ the licensed material may still be restricted for other
+ reasons, including because others have copyright or other
+ rights in the material. A licensor may make special requests,
+ such as asking that all changes be marked or described.
+ Although not required by our licenses, you are encouraged to
+ respect those requests where reasonable. More considerations
+ for the public: 
+wiki.creativecommons.org/Considerations_for_licensees
+</code></pre>
+<p>=======================================================================</p>
+<p>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+Public License</p>
+<p>By exercising the Licensed Rights (defined below), You accept and agree
+to be bound by the terms and conditions of this Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International Public License
+(”Public License”). To the extent this Public License may be
+interpreted as a contract, You are granted the Licensed Rights in
+consideration of Your acceptance of these terms and conditions, and the
+Licensor grants You such rights in consideration of benefits the
+Licensor receives from making the Licensed Material available under
+these terms and conditions.</p>
+<p>Section 1 -- Definitions.</p>
+<p>a. Adapted Material means material subject to Copyright and Similar
+Rights that is derived from or based upon the Licensed Material
+and in which the Licensed Material is translated, altered,
+arranged, transformed, or otherwise modified in a manner requiring
+permission under the Copyright and Similar Rights held by the
+Licensor. For purposes of this Public License, where the Licensed
+Material is a musical work, performance, or sound recording,
+Adapted Material is always produced where the Licensed Material is
+synched in timed relation with a moving image.</p>
+<p>b. Adapter’s License means the license You apply to Your Copyright
+and Similar Rights in Your contributions to Adapted Material in
+accordance with the terms and conditions of this Public License.</p>
+<p>c. BY-NC-SA Compatible License means a license listed at
+creativecommons.org/compatiblelicenses, approved by Creative
+Commons as essentially the equivalent of this Public License.</p>
+<p>d. Copyright and Similar Rights means copyright and/or similar rights
+closely related to copyright including, without limitation,
+performance, broadcast, sound recording, and Sui Generis Database
+Rights, without regard to how the rights are labeled or
+categorized. For purposes of this Public License, the rights
+specified in Section 2(b)(1)-(2) are not Copyright and Similar
+Rights.</p>
+<p>e. Effective Technological Measures means those measures that, in the
+absence of proper authority, may not be circumvented under laws
+fulfilling obligations under Article 11 of the WIPO Copyright
+Treaty adopted on December 20, 1996, and/or similar international
+agreements.</p>
+<p>f. Exceptions and Limitations means fair use, fair dealing, and/or
+any other exception or limitation to Copyright and Similar Rights
+that applies to Your use of the Licensed Material.</p>
+<p>g. License Elements means the license attributes listed in the name
+of a Creative Commons Public License. The License Elements of this
+Public License are Attribution, NonCommercial, and ShareAlike.</p>
+<p>h. Licensed Material means the artistic or literary work, database,
+or other material to which the Licensor applied this Public
+License.</p>
+<p>i. Licensed Rights means the rights granted to You subject to the
+terms and conditions of this Public License, which are limited to
+all Copyright and Similar Rights that apply to Your use of the
+Licensed Material and that the Licensor has authority to license.</p>
+<p>j. Licensor means the individual(s) or entity(ies) granting rights
+under this Public License.</p>
+<p>k. NonCommercial means not primarily intended for or directed towards
+commercial advantage or monetary compensation. For purposes of
+this Public License, the exchange of the Licensed Material for
+other material subject to Copyright and Similar Rights by digital
+file-sharing or similar means is NonCommercial provided there is
+no payment of monetary compensation in connection with the
+exchange.</p>
+<p>l. Share means to provide material to the public by any means or
+process that requires permission under the Licensed Rights, such
+as reproduction, public display, public performance, distribution,
+dissemination, communication, or importation, and to make material
+available to the public including in ways that members of the
+public may access the material from a place and at a time
+individually chosen by them.</p>
+<p>m. Sui Generis Database Rights means rights other than copyright
+resulting from Directive 96/9/EC of the European Parliament and of
+the Council of 11 March 1996 on the legal protection of databases,
+as amended and/or succeeded, as well as other essentially
+equivalent rights anywhere in the world.</p>
+<p>n. You means the individual or entity exercising the Licensed Rights
+under this Public License. Your has a corresponding meaning.</p>
+<p>Section 2 -- Scope.</p>
+<p>a. License grant.</p>
+<pre><code>   1. Subject to the terms and conditions of this Public License,
+      the Licensor hereby grants You a worldwide, royalty-free,
+      non-sublicensable, non-exclusive, irrevocable license to
+      exercise the Licensed Rights in the Licensed Material to:
+
+        a. reproduce and Share the Licensed Material, in whole or
+           in part, for NonCommercial purposes only; and
+
+        b. produce, reproduce, and Share Adapted Material for
+           NonCommercial purposes only.
+
+   2. Exceptions and Limitations. For the avoidance of doubt, where
+      Exceptions and Limitations apply to Your use, this Public
+      License does not apply, and You do not need to comply with
+      its terms and conditions.
+
+   3. Term. The term of this Public License is specified in Section
+      6(a).
+
+   4. Media and formats; technical modifications allowed. The
+      Licensor authorizes You to exercise the Licensed Rights in
+      all media and formats whether now known or hereafter created,
+      and to make technical modifications necessary to do so. The
+      Licensor waives and/or agrees not to assert any right or
+      authority to forbid You from making technical modifications
+      necessary to exercise the Licensed Rights, including
+      technical modifications necessary to circumvent Effective
+      Technological Measures. For purposes of this Public License,
+      simply making modifications authorized by this Section 2(a)
+      (4) never produces Adapted Material.
+
+   5. Downstream recipients.
+
+        a. Offer from the Licensor -- Licensed Material. Every
+           recipient of the Licensed Material automatically
+           receives an offer from the Licensor to exercise the
+           Licensed Rights under the terms and conditions of this
+           Public License.
+
+        b. Additional offer from the Licensor -- Adapted Material.
+           Every recipient of Adapted Material from You
+           automatically receives an offer from the Licensor to
+           exercise the Licensed Rights in the Adapted Material
+           under the conditions of the Adapter's License You apply.
+
+        c. No downstream restrictions. You may not offer or impose
+           any additional or different terms or conditions on, or
+           apply any Effective Technological Measures to, the
+           Licensed Material if doing so restricts exercise of the
+           Licensed Rights by any recipient of the Licensed
+           Material.
+
+   6. No endorsement. Nothing in this Public License constitutes or
+      may be construed as permission to assert or imply that You
+      are, or that Your use of the Licensed Material is, connected
+      with, or sponsored, endorsed, or granted official status by,
+      the Licensor or others designated to receive attribution as
+      provided in Section 3(a)(1)(A)(i).
+</code></pre>
+<p>b. Other rights.</p>
+<pre><code>   1. Moral rights, such as the right of integrity, are not
+      licensed under this Public License, nor are publicity,
+      privacy, and/or other similar personality rights; however, to
+      the extent possible, the Licensor waives and/or agrees not to
+      assert any such rights held by the Licensor to the limited
+      extent necessary to allow You to exercise the Licensed
+      Rights, but not otherwise.
+
+   2. Patent and trademark rights are not licensed under this
+      Public License.
+
+   3. To the extent possible, the Licensor waives any right to
+      collect royalties from You for the exercise of the Licensed
+      Rights, whether directly or through a collecting society
+      under any voluntary or waivable statutory or compulsory
+      licensing scheme. In all other cases the Licensor expressly
+      reserves any right to collect such royalties, including when
+      the Licensed Material is used other than for NonCommercial
+      purposes.
+</code></pre>
+<p>Section 3 -- License Conditions.</p>
+<p>Your exercise of the Licensed Rights is expressly made subject to the
+following conditions.</p>
+<p>a. Attribution.</p>
+<pre><code>   1. If You Share the Licensed Material (including in modified
+      form), You must:
+
+        a. retain the following if it is supplied by the Licensor
+           with the Licensed Material:
+
+             i. identification of the creator(s) of the Licensed
+                Material and any others designated to receive
+                attribution, in any reasonable manner requested by
+                the Licensor (including by pseudonym if
+                designated);
+
+            ii. a copyright notice;
+
+           iii. a notice that refers to this Public License;
+
+            iv. a notice that refers to the disclaimer of
+                warranties;
+
+             v. a URI or hyperlink to the Licensed Material to the
+                extent reasonably practicable;
+
+        b. indicate if You modified the Licensed Material and
+           retain an indication of any previous modifications; and
+
+        c. indicate the Licensed Material is licensed under this
+           Public License, and include the text of, or the URI or
+           hyperlink to, this Public License.
+
+   2. You may satisfy the conditions in Section 3(a)(1) in any
+      reasonable manner based on the medium, means, and context in
+      which You Share the Licensed Material. For example, it may be
+      reasonable to satisfy the conditions by providing a URI or
+      hyperlink to a resource that includes the required
+      information.
+   3. If requested by the Licensor, You must remove any of the
+      information required by Section 3(a)(1)(A) to the extent
+      reasonably practicable.
+</code></pre>
+<p>b. ShareAlike.</p>
+<pre><code> In addition to the conditions in Section 3(a), if You Share
+ Adapted Material You produce, the following conditions also apply.
+
+   1. The Adapter's License You apply must be a Creative Commons
+      license with the same License Elements, this version or
+      later, or a BY-NC-SA Compatible License.
+
+   2. You must include the text of, or the URI or hyperlink to, the
+      Adapter's License You apply. You may satisfy this condition
+      in any reasonable manner based on the medium, means, and
+      context in which You Share Adapted Material.
+
+   3. You may not offer or impose any additional or different terms
+      or conditions on, or apply any Effective Technological
+      Measures to, Adapted Material that restrict exercise of the
+      rights granted under the Adapter's License You apply.
+</code></pre>
+<p>Section 4 -- Sui Generis Database Rights.</p>
+<p>Where the Licensed Rights include Sui Generis Database Rights that
+apply to Your use of the Licensed Material:</p>
+<p>a. for the avoidance of doubt, Section 2(a)(1) grants You the right
+to extract, reuse, reproduce, and Share all or a substantial
+portion of the contents of the database for NonCommercial purposes
+only;</p>
+<p>b. if You include all or a substantial portion of the database
+contents in a database in which You have Sui Generis Database
+Rights, then the database in which You have Sui Generis Database
+Rights (but not its individual contents) is Adapted Material,
+including for purposes of Section 3(b); and</p>
+<p>c. You must comply with the conditions in Section 3(a) if You Share
+all or a substantial portion of the contents of the database.</p>
+<p>For the avoidance of doubt, this Section 4 supplements and does not
+replace Your obligations under this Public License where the Licensed
+Rights include other Copyright and Similar Rights.</p>
+<p>Section 5 -- Disclaimer of Warranties and Limitation of Liability.</p>
+<p>a. UNLESS OTHERWISE SEPARATELY UNDERTAKEN BY THE LICENSOR, TO THE
+EXTENT POSSIBLE, THE LICENSOR OFFERS THE LICENSED MATERIAL AS-IS
+AND AS-AVAILABLE, AND MAKES NO REPRESENTATIONS OR WARRANTIES OF
+ANY KIND CONCERNING THE LICENSED MATERIAL, WHETHER EXPRESS,
+IMPLIED, STATUTORY, OR OTHER. THIS INCLUDES, WITHOUT LIMITATION,
+WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, NON-INFRINGEMENT, ABSENCE OF LATENT OR OTHER DEFECTS,
+ACCURACY, OR THE PRESENCE OR ABSENCE OF ERRORS, WHETHER OR NOT
+KNOWN OR DISCOVERABLE. WHERE DISCLAIMERS OF WARRANTIES ARE NOT
+ALLOWED IN FULL OR IN PART, THIS DISCLAIMER MAY NOT APPLY TO YOU.</p>
+<p>b. TO THE EXTENT POSSIBLE, IN NO EVENT WILL THE LICENSOR BE LIABLE
+TO YOU ON ANY LEGAL THEORY (INCLUDING, WITHOUT LIMITATION,
+NEGLIGENCE) OR OTHERWISE FOR ANY DIRECT, SPECIAL, INDIRECT,
+INCIDENTAL, CONSEQUENTIAL, PUNITIVE, EXEMPLARY, OR OTHER LOSSES,
+COSTS, EXPENSES, OR DAMAGES ARISING OUT OF THIS PUBLIC LICENSE OR
+USE OF THE LICENSED MATERIAL, EVEN IF THE LICENSOR HAS BEEN
+ADVISED OF THE POSSIBILITY OF SUCH LOSSES, COSTS, EXPENSES, OR
+DAMAGES. WHERE A LIMITATION OF LIABILITY IS NOT ALLOWED IN FULL OR
+IN PART, THIS LIMITATION MAY NOT APPLY TO YOU.</p>
+<p>c. The disclaimer of warranties and limitation of liability provided
+above shall be interpreted in a manner that, to the extent
+possible, most closely approximates an absolute disclaimer and
+waiver of all liability.</p>
+<p>Section 6 -- Term and Termination.</p>
+<p>a. This Public License applies for the term of the Copyright and
+Similar Rights licensed here. However, if You fail to comply with
+this Public License, then Your rights under this Public License
+terminate automatically.</p>
+<p>b. Where Your right to use the Licensed Material has terminated under
+Section 6(a), it reinstates:</p>
+<pre><code>   1. automatically as of the date the violation is cured, provided
+      it is cured within 30 days of Your discovery of the
+      violation; or
+
+   2. upon express reinstatement by the Licensor.
+
+ For the avoidance of doubt, this Section 6(b) does not affect any
+ right the Licensor may have to seek remedies for Your violations
+ of this Public License.
+</code></pre>
+<p>c. For the avoidance of doubt, the Licensor may also offer the
+Licensed Material under separate terms or conditions or stop
+distributing the Licensed Material at any time; however, doing so
+will not terminate this Public License.</p>
+<p>d. Sections 1, 5, 6, 7, and 8 survive termination of this Public
+License.</p>
+<p>Section 7 -- Other Terms and Conditions.</p>
+<p>a. The Licensor shall not be bound by any additional or different
+terms or conditions communicated by You unless expressly agreed.</p>
+<p>b. Any arrangements, understandings, or agreements regarding the
+Licensed Material not stated herein are separate from and
+independent of the terms and conditions of this Public License.</p>
+<p>Section 8 -- Interpretation.</p>
+<p>a. For the avoidance of doubt, this Public License does not, and
+shall not be interpreted to, reduce, limit, restrict, or impose
+conditions on any use of the Licensed Material that could lawfully
+be made without permission under this Public License.</p>
+<p>b. To the extent possible, if any provision of this Public License is
+deemed unenforceable, it shall be automatically reformed to the
+minimum extent necessary to make it enforceable. If the provision
+cannot be reformed, it shall be severed from this Public License
+without affecting the enforceability of the remaining terms and
+conditions.</p>
+<p>c. No term or condition of this Public License will be waived and no
+failure to comply consented to unless expressly agreed to by the
+Licensor.</p>
+<p>d. Nothing in this Public License constitutes or may be interpreted
+as a limitation upon, or waiver of, any privileges and immunities
+that apply to the Licensor or You, including from the legal
+processes of any jurisdiction or authority.</p>
+<p>=======================================================================</p>
+<p>Creative Commons is not a party to its public
+licenses. Notwithstanding, Creative Commons may elect to apply one of
+its public licenses to material it publishes and in those instances
+will be considered the “Licensor.” The text of the Creative Commons
+public licenses is dedicated to the public domain under the CC0 Public
+Domain Dedication. Except for the limited purpose of indicating that
+material is shared under a Creative Commons public license or as
+otherwise permitted by the Creative Commons policies published at
+creativecommons.org/policies, Creative Commons does not authorize the
+use of the trademark “Creative Commons” or any other trademark or logo
+of Creative Commons without its prior written consent including,
+without limitation, in connection with any unauthorized modifications
+to any of its public licenses or any other arrangements,
+understandings, or agreements concerning use of licensed material. For
+the avoidance of doubt, this paragraph does not form part of the
+public licenses.</p>
+<p>Creative Commons may be contacted at creativecommons.org.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-118441906-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+        
+
+        
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                window.print();
+            })
+        </script>
+        
+
+        
+
+        
+        <script src="searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>
