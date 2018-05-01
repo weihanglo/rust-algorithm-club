@@ -2,7 +2,6 @@
 
 > ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here](https://weihanglo.tw/rust-algorithm-club) if you are able to read Chinese.
 
-
 [![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)](https://travis-ci.com/weihanglo/rust-algorithm-club)
 
 This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
@@ -12,7 +11,7 @@ This repository was originally inspired by [Swift Algorithm Club][swift-algorith
 
 ## General Concepts
 
-- 🚧 [Asympototic Notation](src/concepts/asympototic-notation.md)
+- 🚧 [Asymptotic Notation](src/concepts/asymptotic-notation.md)
 - 🚧 [Master Theorem](src/concepts/master-theorem.md)
 - 🚧 [Algorithm Design](src/concepts/algorithm-design.md)
 
@@ -43,7 +42,7 @@ Special-purpose sorts:
 
 - [Counting sort](src/sorting/counting_sort)
 - [Bucket sort](src/sorting/bucket_sort)
-- [Radix sort](src/sorting/radix_sort)
+- 🚧 [Radix sort](src/sorting/radix_sort)
 
 ## Data Structures
 
