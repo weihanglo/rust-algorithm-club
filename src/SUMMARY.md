@@ -5,7 +5,7 @@
 ------
 
 - [基礎概念](concepts/README.md)
-  - [🚧 漸進符號 Asymptotic Notation](concepts/asymptotic-notation.md)
+  - [漸進符號 Asymptotic Notation](concepts/asymptotic-notation.md)
   - [🚧 主定理 Master Theorem](concepts/master-theorem.md)
   - [🚧 演算法設計 Algorithm Design](concepts/algorithm-design.md)
 - [排序](sorting/README.md)
