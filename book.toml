@@ -2,7 +2,6 @@
 title = "Rust Algorithm Club"
 authors = ["Weihang Lo"]
 description = "Learn algorithms and data structures with Rust"
-src = "src"
 
 [build]
 build-dir = ".book"
