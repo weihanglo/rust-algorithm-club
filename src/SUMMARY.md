@@ -25,7 +25,7 @@
   - [特殊排序](sorting/README.md)
     - [計數排序 Counting sort](sorting/counting_sort/README.md)
     - [桶排序 Bucket sort](sorting/bucket_sort/README.md)
-    - [🚧 基數排序 Radix sort](sorting/radix_sort/README.md)
+    - [基數排序 Radix sort](sorting/radix_sort/README.md)
 - [資料結構](collections/README.md)
   - [鏈結串列](collections/linked_list/README.md)
     - [🚧 單向鏈結串列 Singly linked list](collections/linked_list/README.md)

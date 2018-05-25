@@ -38,7 +38,7 @@
 
 - [計數排序 Counting sort](sorting/counting_sort)
 - [桶排序 Bucket sort](sorting/bucket_sort)
-- 🚧 [基數排序 Radix sort](sorting/radix_sort)
+- [基數排序 Radix sort](sorting/radix_sort)
 
 ## 資料結構
 

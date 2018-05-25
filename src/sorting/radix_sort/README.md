@@ -1,6 +1,6 @@
 # Radix sort
 
-如果你對 [Counting sort](../counting_sort) 與 [Bucket sort](../bucket_sort) 有認識，應該知道這兩個排序都能突破比較排序法複雜度 \\(O(n \log n) \\) 限制的特殊排序法。[Radix sort][wiki-radix-sort] 也是一個特殊的[整數排序法][wiki-integer-sorting]，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。
+如果你對 [Counting sort](../counting_sort) 與 [Bucket sort](../bucket_sort) 有認識，應該知道這兩個排序都能突破比較排序法複雜度 \\(O(n \log n) \\) 限制的特殊排序法。[Radix sort][wiki-radix-sort] 同樣是個特殊的[整數排序法][wiki-integer-sorting]，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。
 
 舉例來說，欲排序一群範圍在 0 - 999 的整數，若以 Counting sort 排序，則需建立一個「1000 元素的陣列」來計算每個整數的出現次數；若使用以 10 為基數的 Radix sort，則僅需以個位數、十位數、百位數作為鍵值分別排序三次。通常 Radix sort 的排序副程式（Sorting subroutine）會選用 Counting sort 或 Bucket sort，而以 10 為基數的鍵值範圍僅 0 - 9，這種小範圍整數非常適合 Counting sort 作為排序副程式，節省了配置 `int arr[1000]` 的 count array 的時空間。
 
@@ -116,9 +116,45 @@ Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每
 
 ### Space complexity
 
-Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 \\(O(n \cdot k) \\)。Radix 的 \\(k \\) 是常數，予以捨去。再乘上 \\(d \\) 個位數，最差的空間複雜度為 \\(O(d \cdot n) \\)。
+Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 \\(O(n \cdot k) \\)。Radix sort 的 \\(k \\) 是常數，予以捨去。再乘上 \\(d \\) 個位數，最差的空間複雜度為 \\(O(d \cdot n) \\)。
 
 ## Implementation
+
+這裡示範實作以 10 為基數，用來排序非負整數的 Radix sort。
+
+首先，我們的排序副程式使用 Counting sort。
+
+```rust
+// 0. Include counting sort.
+use ::sorting::counting_sort;
+```
+
+再來，就是 Radix sort 本體了。為了凸顯 Radix sort 的概念，簡化了函式參數數量，除去泛型宣告，並將基數選擇寫死在函式裡。
+
+```rust
+pub fn radix_sort(arr: &mut [i32]) {
+    let radix = 10;             // 1
+    let mut digit = 1;          // 2
+    let max_value = arr         // 3
+      .iter()
+      .max()
+      .unwrap_or(&0)
+      .clone();
+    while digit <= max_value {  // 4
+        counting_sort(arr, 0, 9, |t| (t / digit % radix) as usize); // 5
+        digit *= radix;         // 6
+    }
+}
+```
+
+1. 設定基數為 10。
+2. 設定一個旗標，記錄當前在排序哪一位數，1 表示從最小位數（個位數）開始。
+3. 先找到輸入資料的最大值，作為之後副程式迴圈結束的條件。尋找最大值的複雜度為 \\(O(n)\\)，因此不影響 Radix Sort 的複雜度。如果 `arr` 為空序列，則最大值設為 0，在第四步驟就會自動結束排序。
+4. 判斷當前排序的位數是否大於最大值，例如當前排序百分位，`digit` 為 `100`，而最大值 `x` 為 26，則不需再排序百分位。
+5. 使用 Counting sort 作為排序副程式，只需要有 0 - 9 十個桶子。而 `key` 參數則取出當前欲比較的位數。
+6. 位數乘上基數，移至下一個位數繼續比較。
+
+> 小提醒：這是簡單又容易理解的實作，相對有許多額外的運算開銷（例如尋找最大值）。實務上，會在對資料有些了解才採用 Radix sort，因此實作並不會這麼 naive。
 
 ## Reference
 

@@ -42,7 +42,7 @@ Special-purpose sorts:
 
 - [Counting sort](src/sorting/counting_sort)
 - [Bucket sort](src/sorting/bucket_sort)
-- 🚧 [Radix sort](src/sorting/radix_sort)
+- [Radix sort](src/sorting/radix_sort)
 
 ## Data Structures
 
