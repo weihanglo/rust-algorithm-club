@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>🚧 基數排序 Radix sort - Rust Algorithm Club</title>
+        <title>基數排序 Radix sort - Rust Algorithm Club</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Learn algorithms and data structures with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,7 +71,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">🚧 漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/" class="active">🚧 基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">🚧 漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/" class="active">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,7 +136,7 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="#radix-sort" id="radix-sort"><h1>Radix sort</h1></a>
-<p>如果你對 <a href="../counting_sort">Counting sort</a> 與 <a href="../bucket_sort">Bucket sort</a> 有認識，應該知道這兩個排序都能突破比較排序法複雜度 \(O(n \log n) \) 限制的特殊排序法。<a href="https://en.wikipedia.org/wiki/Radix_sort">Radix sort</a> 也是一個特殊的<a href="https://en.wikipedia.org/wiki/Integer_sorting">整數排序法</a>，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。</p>
+<p>如果你對 <a href="../counting_sort">Counting sort</a> 與 <a href="../bucket_sort">Bucket sort</a> 有認識，應該知道這兩個排序都能突破比較排序法複雜度 \(O(n \log n) \) 限制的特殊排序法。<a href="https://en.wikipedia.org/wiki/Radix_sort">Radix sort</a> 同樣是個特殊的<a href="https://en.wikipedia.org/wiki/Integer_sorting">整數排序法</a>，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。</p>
 <p>舉例來說，欲排序一群範圍在 0 - 999 的整數，若以 Counting sort 排序，則需建立一個「1000 元素的陣列」來計算每個整數的出現次數；若使用以 10 為基數的 Radix sort，則僅需以個位數、十位數、百位數作為鍵值分別排序三次。通常 Radix sort 的排序副程式（Sorting subroutine）會選用 Counting sort 或 Bucket sort，而以 10 為基數的鍵值範圍僅 0 - 9，這種小範圍整數非常適合 Counting sort 作為排序副程式，節省了配置 <code>int arr[1000]</code> 的 count array 的時空間。</p>
 <p>Radix sort 基本特性如下：</p>
 <ul>
@@ -225,8 +225,45 @@ sort by leftmost digit --&gt;
 <p>再來，我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 \(d \) 位數，時間複雜度需乘上 \(d \)，為 \(O(d (n + k)) \)，那這個 \(k \) 是否可以捨去呢？</p>
 <p>分析 Counting sort 或 Bucket sort 時，範圍 \(k \) 會隨輸入資料而變化，若 \(k \) 過大，對複雜度的影響甚至會超過 \(n \)，因此分析複雜度時無法將 \(k \) 捨去。而在 Radix sort， \(k \) 通常為一個已知的常數，例如以 bytes 為基數 \(k = 8 \)， \(k \) 可以捨去。最後可得 Radix sort 的時間複雜度為 \(O(d \cdot n) \)。</p>
 <a class="header" href="#space-complexity" id="space-complexity"><h3>Space complexity</h3></a>
-<p>Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 \(O(n \cdot k) \)。Radix 的 \(k \) 是常數，予以捨去。再乘上 \(d \) 個位數，最差的空間複雜度為 \(O(d \cdot n) \)。</p>
+<p>Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 \(O(n \cdot k) \)。Radix sort 的 \(k \) 是常數，予以捨去。再乘上 \(d \) 個位數，最差的空間複雜度為 \(O(d \cdot n) \)。</p>
 <a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<p>這裡示範實作以 10 為基數，用來排序非負整數的 Radix sort。</p>
+<p>首先，我們的排序副程式使用 Counting sort。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+// 0. Include counting sort.
+use ::sorting::counting_sort;
+#}</code></pre></pre>
+<p>再來，就是 Radix sort 本體了。為了凸顯 Radix sort 的概念，簡化了函式參數數量，除去泛型宣告，並將基數選擇寫死在函式裡。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn radix_sort(arr: &amp;mut [i32]) {
+    let radix = 10;             // 1
+    let mut digit = 1;          // 2
+    let max_value = arr         // 3
+      .iter()
+      .max()
+      .unwrap_or(&amp;0)
+      .clone();
+    while digit &lt;= max_value {  // 4
+        counting_sort(arr, 0, 9, |t| (t / digit % radix) as usize); // 5
+        digit *= radix;         // 6
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>設定基數為 10。</li>
+<li>設定一個旗標，記錄當前在排序哪一位數，1 表示從最小位數（個位數）開始。</li>
+<li>先找到輸入資料的最大值，作為之後副程式迴圈結束的條件。尋找最大值的複雜度為 \(O(n)\)，因此不影響 Radix Sort 的複雜度。如果 <code>arr</code> 為空序列，則最大值設為 0，在第四步驟就會自動結束排序。</li>
+<li>判斷當前排序的位數是否大於最大值，例如當前排序百分位，<code>digit</code> 為 <code>100</code>，而最大值 <code>x</code> 為 26，則不需再排序百分位。</li>
+<li>使用 Counting sort 作為排序副程式，只需要有 0 - 9 十個桶子。而 <code>key</code> 參數則取出當前欲比較的位數。</li>
+<li>位數乘上基數，移至下一個位數繼續比較。</li>
+</ol>
+<blockquote>
+<p>小提醒：這是簡單又容易理解的實作，相對有許多額外的運算開銷（例如尋找最大值）。實務上，會在對資料有些了解才採用 Radix sort，因此實作並不會這麼 naive。</p>
+</blockquote>
 <a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Radix_sort">Wiki: Radix sort</a></li>
