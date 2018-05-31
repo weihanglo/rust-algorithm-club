@@ -90,11 +90,11 @@ _Swfung8 - CC BY-SA 3.0_
 
 ## Performance
 
-|              | Complexity       |
-| :----------- | :--------------- |
-| Worst        | \\(O(n^2) \\)         |
-| Best         | \\(\Omega(n) \\)      |
-| Average      | \\(\Theta(n^2) \\)    |
+|              | Complexity    |
+| :----------- | :------------ |
+| Worst        | \\(O(n^2) \\) |
+| Best         | \\(O(n) \\)   |
+| Average      | \\(O(n^2) \\) |
 | Worst space  | \\(O(1) \\) auxiliary |
 
 ### Time complexity

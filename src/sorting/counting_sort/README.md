@@ -94,11 +94,11 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 
 ## Performance
 
-|              | Complexity           |
-| :----------- | :------------------- |
-| Worst        | \\(O(n + k) \\)           |
-| Best         | \\(\Omega(n + k) \\)      |
-| Average      | \\(\Theta(n + k) \\)      |
+|              | Complexity      |
+| :----------- | :-------------- |
+| Worst        | \\(O(n + k) \\) |
+| Best         | \\(O(n + k) \\) |
+| Average      | \\(O(n + k) \\) |
 | Worst space  | \\(O(n + k) \\) auxiliary |
 
 > k 為資料已知範圍上下界之差。

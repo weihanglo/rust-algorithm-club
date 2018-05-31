@@ -62,9 +62,9 @@ Recursively merge subarray respecting the order.
 
 |              | Complexity         |
 | :----------- | :----------------- |
-| Worst        | \\(O(n \log n) \\)      |
-| Best         | \\(\Omega(n \log n) \\) |
-| Average      | \\(\Theta(n \log n) \\) |
+| Worst        | \\(O(n \log n) \\) |
+| Best         | \\(O(n \log n) \\) |
+| Average      | \\(O(n \log n) \\) |
 | Worst space  | \\(O(n) \\) auxiliary   |
 
 ### Time Complexity

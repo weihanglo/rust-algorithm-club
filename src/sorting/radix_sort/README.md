@@ -93,11 +93,11 @@ sort by leftmost digit -->
 
 ## Performance
 
-|              | Complexity           |
-| :----------- | :------------------- |
-| Worst        | \\(O(dn) \\)              |
-| Best         | \\(\Omega(dn) \\)         |
-| Average      | \\(\Theta(dn) \\)         |
+|              | Complexity   |
+| :----------- | :----------- |
+| Worst        | \\(O(dn) \\) |
+| Best         | \\(O(dn) \\) |
+| Average      | \\(O(dn) \\) |
 | Worst space  | \\(O(d + n) \\) auxiliary |
 
 > \\(n \\)：資料筆數。  

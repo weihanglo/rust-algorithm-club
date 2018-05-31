@@ -147,9 +147,9 @@ pub fn shellsort(arr: &mut [i32]) {
 |              | Complexity                                            |
 | :----------- | :---------------------------------------------------- |
 | Worst        | \\(O(n^2) \\) ~  \\(O(n \log^2 n) \\) (Depends on gap sequence) |
-| Best         | \\(\Omega(n \log n) \\)                                    |
+| Best         | \\(O(n \log n) \\)                                    |
 | Average      | Depends on gap sequence                               |
-| Worst space  | \\(O(1) \\) auxiliary                                      |
+| Worst space  | \\(O(1) \\) auxiliary                                 |
 
 Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 \\(O(n \log^2 n) \\)，有著不錯的表現。有興趣可以參考[這篇文章][best-sequence]。
 

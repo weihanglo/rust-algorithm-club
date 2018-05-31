@@ -83,11 +83,11 @@ Original array
 
 ## Performance
 
-|              | Complexity               |
-| :----------- | :----------------------- |
-| Worst        | \\(O(n^2) \\)                 |
-| Best         | \\(\Omega(n + k) \\)          |
-| Average      | \\(\Theta(n + k) \\)          |
+|              | Complexity      |
+| :----------- | :-------------- |
+| Worst        | \\(O(n^2) \\)   |
+| Best         | \\(O(n + k) \\) |
+| Average      | \\(O(n + k) \\) |
 | Worst space  | \\(O(n + k) \\) auxiliary |
 
 > \\(k \\) = 桶子的數量（number of buckets）

@@ -32,11 +32,11 @@ Insertion sort 非常簡單，看動畫就能明瞭。
 
 ## Performance
 
-|              | Complexity       |
-| :----------- | :--------------- |
-| Worst        | \\(O(n^2) \\)         |
-| Best         | \\(\Omega(n) \\)      |
-| Average      | \\(\Theta(n^2) \\)    |
+|              | Complexity    |
+| :----------- | :------------ |
+| Worst        | \\(O(n^2) \\) |
+| Best         | \\(O(n) \\)   |
+| Average      | \\(O(n^2) \\) |
 | Worst space  | \\(O(1) \\) auxiliary |
 
 最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 \\(n \\) 次。

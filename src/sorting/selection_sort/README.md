@@ -52,11 +52,11 @@ _Joestape89 - CC BY-SA 3.0_
 問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 \\(O(1) \\) insertion 的資料結構，不然就會多出額外 \\(O(n^2) \\) 的寫入成本。
 ## Performance
 
-|              | Complexity       |
-| :----------- | :--------------- |
-| Worst        | \\(O(n^2) \\)         |
-| Best         | \\(\Omega(n^2) \\)    |
-| Average      | \\(\Theta(n^2) \\)    |
+|              | Complexity    |
+| :----------- | :------------ |
+| Worst        | \\(O(n^2) \\) |
+| Best         | \\(O(n^2) \\) |
+| Average      | \\(O(n^2) \\) |
 | Worst space  | \\(O(1) \\) auxiliary |
 
 對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 \\(n - 1 \\) 次比較，第二個 \\(n - 2 \\) 次，總比較次數如下：

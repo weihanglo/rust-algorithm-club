@@ -1,6 +1,6 @@
 # Quicksort
 
-Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 \\(\Theta(n \log n) \\) 的平均時間複雜度。雖然最差時間複雜度與 [bubble sort](../bubble_sort) 同為 \\(O(n^2) \\)，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 \\(O(\log n) \\) 的額外儲存空間，比它的競爭對手 [mergesort](../mergesort) 來得節省。非常適合運用在真實世界中的排序法。
+Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 \\(O(n \log n) \\) 的平均時間複雜度。雖然最差時間複雜度與 [bubble sort](../bubble_sort) 同為 \\(O(n^2) \\)，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 \\(O(\log n) \\) 的額外儲存空間，比它的競爭對手 [mergesort](../mergesort) 來得節省。非常適合運用在真實世界中的排序法。
 
 Quicksort 基本特性如下：
 
@@ -137,11 +137,11 @@ swap pivot, i
 
 ## Performance
 
-|              | Complexity                      |
-| :----------- | :------------------------------ |
-| Worst        | \\(O(n^2) \\)                        |
-| Best         | \\(\Omega(n \log n) \\)              |
-| Average      | \\(\Theta(n \log n) \\)              |
+|              | Complexity         |
+| :----------- | :----------------- |
+| Worst        | \\(O(n^2) \\)      |
+| Best         | \\(O(n \log n) \\) |
+| Average      | \\(O(n \log n) \\) |
 | Worst space  | \\(O(\log n) \\) or \\(O(n) \\) auxiliary |
 
 ### Time complexity
@@ -162,7 +162,7 @@ $$\sum_{i = 0}^n (n - i) = n^2 - \frac{n(n + 1)}{2}$$
 
 既然最差情況發生在 pivot 總選到最大或最小值，反之，最佳情況則發生在每次 pivot 都可以順利選到序列的中位數（median），如此一來，每次遞迴分割的序列長度都會減半（ \\(n / 2 \\)），call stack 的嵌套遞迴總共需要 \\(2 \log_2{n} \\) 次，序列的長度就會減至 1，而每次分割同樣有 \\(O(n) \\) 的複雜度，因此最佳情況為：
 
-$$\Omega(n \cdot 2 \log_2{n}) = \Omega(n \log n)$$
+$$O(n \cdot 2 \log_2{n}) = O(n \log n)$$
 
 ### Space complexity
 
@@ -253,7 +253,7 @@ Quicksort 有數個方向可以探討最佳化：
 
 ### 降低額外空間複雜度
 
-前述提到最佳情形下（每次 pivot 都選到中位數），僅需 \\(\log n \\) 個嵌套遞迴，額外空間複雜度僅需 \\(\Omega(\log n) \\)。
+前述提到最佳情形下（每次 pivot 都選到中位數），僅需 \\(\log n \\) 個嵌套遞迴，額外空間複雜度僅需 \\(O(\log n) \\)。
 倘若編譯器有實作 **尾端調用最佳化**，Quicksort 可以達到 \\(O(\log n) \\) 對數級別的額外空間使用。
 
 實作尾端調用最佳化的思路很簡單，「**先遞迴較少元素的部分，再利用 tall-call 遞迴另一部分**」，如此以來，較多元素的遞迴則會直接被編譯器展開，消去遞迴時需要的 call stack 空間。剩下較少元素的部分，則與最佳情形相同，最多僅需 \\(\log n \\) 次嵌套遞迴。

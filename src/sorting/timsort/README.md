@@ -7,8 +7,8 @@
 |              | Complexity         |
 | :----------- | :----------------- |
 | Worst        | \\(O(n \log n) \\)      |
-| Best         | \\(\Omega(n) \\)        |
-| Average      | \\(\Theta(n \log n) \\) |
+| Best         | \\(O(n) \\)        |
+| Average      | \\(O(n \log n) \\) |
 | Worst space  | \\(O(n) \\) auxiliary   |
 
 ## Implementation

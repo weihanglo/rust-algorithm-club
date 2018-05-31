@@ -117,10 +117,10 @@ Heapsort 的演算法分為兩大步驟：
 
 |              | Complexity         |
 | :----------- | :----------------- |
-| Worst        | \\(O(n \log n) \\)      |
-| Best         | \\(\Omega(n \log n) \\) |
-| Average      | \\(\Theta(n \log n) \\) |
-| Worst space  | \\(O(1) \\) auxiliary   |
+| Worst        | \\(O(n \log n) \\) |
+| Best         | \\(O(n \log n) \\) |
+| Average      | \\(O(n \log n) \\) |
+| Worst space  | \\(O(1) \\) auxiliary |
 
 Heapsort 最佳、最差、平均的時間複雜度皆為 \\(O(n \log n) \\)，同樣分為兩部分簡單解釋。
 
@@ -134,7 +134,7 @@ Heapify 從最末個元素開始反向迭代，每個元素都調用 `sift_down`
 
 $$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$
 
-> 實際上，build heap 步驟的複雜度可達到 \\(\Theta(n) \\)，可以看看 UMD 演算法課程 [Lecture note 的分析][umd-algo-analysis]。
+> 實際上，build heap 步驟的複雜度可達到 \\(O(n) \\)，可以看看 UMD 演算法課程 [Lecture note 的分析][umd-algo-analysis]。
 
 [umd-algo-analysis]: http://www.cs.umd.edu/~meesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf
 
