@@ -1,4 +1,4 @@
-# Insertion sort
+# 插入排序 Insertion sort
 
 Insertion sort 是最簡單的排序法之一，比起 quicksort 等高效的排序法，對大資料的處理效能較不理想。其演算法是將欲排序元素直接插入正確位置，因而得名。
 
@@ -11,7 +11,7 @@ Insertion sort 基本特性如下：
 - **原地排序**：不需額外花費儲存空間來排序。
 - **即時演算法**：可處理逐步輸入的資料，不需等資料完全備妥。
 
-## Algorithm
+## 步驟
 
 將序列分為未排序與部分排序兩個區域。
 
@@ -30,7 +30,7 @@ Insertion sort 基本特性如下：
 Insertion sort 非常簡單，看動畫就能明瞭。
 ![](https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif)
 
-## Performance
+## 效能
 
 |              | Complexity    |
 | :----------- | :------------ |
@@ -51,7 +51,7 @@ $$\frac{cn^2}{2} - \frac{cn}{2}$$
 
 捨去低次項，得到時間複雜度為 \\(O(n^2) \\)。
 
-## Implementation
+## 實作
 
 簡單實作的程式碼如下：
 
@@ -70,7 +70,7 @@ pub fn insertion_sort(arr: &mut [i32]) {
 1. 外層迴圈迭代整個序列。並取出 index `i`，`arr[i]` 是待排序的元素，index 比 `i` 小的元素則組成已排序的部分序列。
 2. 內層迴圈負責元素比較，決定待排序元素該從何處插入，若前一個元素比待排元素大，則置換兩元素，並繼續往下尋找正確的插入點。直到 `j == 0` 或待排元素比任何已排序元素都大為止。
 
-## Variants
+## 變形
 
 ### Binary insertion sort (binsort)
 
@@ -103,7 +103,7 @@ pub fn binary_insertion_sort(arr: &mut [i32]) {
 
 [wiki-binary-search]: https://en.wikipedia.org/wiki/Binary_search
 
-## Reference
+## 參考資料
 
 - [Wiki: Insertion sort](https://en.wikipedia.org/wiki/Insertion_sort)
 - [CPython: listsort note](https://github.com/python/cpython/blob/15f44ab043b37c064d6891c7864205fed9fb0dd1/Objects/listsort.txt#L686-L703)

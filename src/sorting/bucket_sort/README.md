@@ -1,4 +1,4 @@
-# Bucket sort
+# 桶排序 Bucket sort
 
 [Bucket sort][wiki-bucket-sort]，是一個非比較排序。原理是建立一些桶子，每個桶子對應一資料區間，在將待排序資料分配到不同的桶中，桶子內部各自排序。由於並非[比較排序][wiki-comparison-sort]，使用 Bucket sort 需要事先知道資料的範圍與分佈，才能決定桶子對應的區間。
 
@@ -9,7 +9,7 @@ Bucket sort 基本特性如下：
 - **分配式排序**：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。
 - **預期分佈**：資料為**均勻分佈**。
 
-## Algorithm
+## 步驟
 
 假設要排序 \\(n \\) 個元素的陣列，這些元素的值平均散落在某個**已知的預期範圍內**，例如 1 到 100。
 
@@ -18,7 +18,7 @@ Bucket sort 基本特性如下：
 3. **Inner sort**：排序所有非空的桶子。
 4. **Gather**：依序走訪所有桶子，將桶內的元素放回原本的陣列中。
 
-## Explanation
+## 說明
 
 以下用 ASCII diagram 視覺化解釋：
 
@@ -81,7 +81,7 @@ Original array
 +-------------------------------------------------+
 ```
 
-## Performance
+## 效能
 
 |              | Complexity      |
 | :----------- | :-------------- |
@@ -131,7 +131,7 @@ for (each bucket b in all k buckets)
 
 Bucket sort 須額外建立 \\(k \\) 個桶子，每個桶子需要配置長度為 \\(n \\) 的 array，因此空間複雜度為 \\(O(n \cdot k) \\)。如果以 dynamic array 實作 bucket，並考慮平攤分析（Amortized analysis），則空間複雜度降至 \\(O(n + k) \\)，這也是大多數人接受的分析結果，畢竟不會有人無聊到預先配置 \\(n \cdot k \\) 個 empty bucket。
 
-## Implementation
+## 實作
 
 ### Bucket
 
@@ -228,7 +228,7 @@ pub fn bucket_sort() {
 
 [index-map]: https://github.com/bluss/indexmap
 
-## Reference
+## 參考資料
 
 - [Wiki: Bucket sort][wiki-bucket-sort]
 - [Wiki: Amortized analysis][wiki-amortized-analysis]

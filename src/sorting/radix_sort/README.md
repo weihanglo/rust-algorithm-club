@@ -1,4 +1,4 @@
-# Radix sort
+# 基數排序 Radix sort
 
 如果你對 [Counting sort](../counting_sort) 與 [Bucket sort](../bucket_sort) 有認識，應該知道這兩個排序都能突破比較排序法複雜度 \\(O(n \log n) \\) 限制的特殊排序法。[Radix sort][wiki-radix-sort] 同樣是個特殊的[整數排序法][wiki-integer-sorting]，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。
 
@@ -12,7 +12,7 @@ Radix sort 基本特性如下：
 
 [wiki-integer-sorting]: https://en.wikipedia.org/wiki/Integer_sorting
 
-## Algorithm
+## 步驟
 
 常見的 Radix sort 依據整數的每個位數來排序，依照位數排序的先後順序，可分為兩種：
 
@@ -36,7 +36,7 @@ Radix sort 基本特性如下：
 
 [wiki-lexicographical-order]: https://en.wikipedia.org/wiki/Lexicographical_order
 
-## Explanation
+## 說明
 
 我們選用 LSD Radix sort 示範，並且為了增加可讀性，將基數設為 10。需注意在現實場景中，有時使用 bytes 作為基數可能更適合。
 
@@ -91,7 +91,7 @@ sort by leftmost digit -->
 [2, 24, 45, 66, 75, 90, 170, 802]
 ```
 
-## Performance
+## 效能
 
 |              | Complexity   |
 | :----------- | :----------- |
@@ -118,7 +118,7 @@ Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每
 
 Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 \\(O(n \cdot k) \\)。Radix sort 的 \\(k \\) 是常數，予以捨去。再乘上 \\(d \\) 個位數，最差的空間複雜度為 \\(O(d \cdot n) \\)。
 
-## Implementation
+## 實作
 
 這裡示範實作以 10 為基數，用來排序非負整數的 Radix sort。
 
@@ -156,7 +156,7 @@ pub fn radix_sort(arr: &mut [i32]) {
 
 > 小提醒：這是簡單又容易理解的實作，相對有許多額外的運算開銷（例如尋找最大值）。實務上，會在對資料有些了解才採用 Radix sort，因此實作並不會這麼 naive。
 
-## Reference
+## 參考資料
 
 - [Wiki: Radix sort][wiki-radix-sort]
 - [Princeton Universioty DSA Course: Radix sort](https://www.cs.princeton.edu/~rs/AlgsDS07/18RadixSort.pdf)

@@ -1,4 +1,4 @@
-# Counting sort
+# 計數排序 Counting sort
 
 [Counting sort][wiki-counting-sort] 是一個特殊的整數排序法，被視為 [Bucket sort](../bucket_sort) 的特例。原理是在已知整數範圍內，計算每個鍵值出現次數，並用額外的陣列保存（Count array）。最後將 Count array 的元素值作為排序資料的新 index。
 
@@ -12,13 +12,13 @@ Counting sort 基本特性如下：
 - **預期分佈**：預期輸入資料是落在已知範圍內的整數（例如 0 到 k）。
 - **適用範圍**：僅適用於小範圍整數（額外空間需求大）。
 
-## Algorithm
+## 步驟
 
 1. **Count occurrence**：計算每個 key 的出現次數。
 2. **Prefix sum as start index**：計算前綴和（Prefix sum），並作為該元素的 start index。
 3. **Copy output**：利用步驟二的前綴和，遍歷輸入資料，取得元素排序後的索引。
 
-## Explanation
+## 說明
 
 這裡有資料需要透過正整數的 key 來排序。key 的範圍在 0 - 9 之間，格式為 `(key, value)`。
 
@@ -92,7 +92,7 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 
 這樣就完成排序了。此外，觀察 **(2, D)** 與 **(2, E)** 排序前後的位置，會發現 counting sort 是個實實在在的穩定排序，很棒。
 
-## Performance
+## 效能
 
 |              | Complexity      |
 | :----------- | :-------------- |
@@ -113,7 +113,7 @@ Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的�
 
 > 如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 \\(O(k) \\)，但也因此成為不穩定排序法。
 
-## Implementation
+## 實作
 
 由於 Counting sort 屬於分布式排序（Distribution sort），這裡使用泛型，以彰顯分布式排序的特色。
 
@@ -226,7 +226,7 @@ pub fn counting_sort<F, T>(arr: &mut [T], min: usize, max: usize, key: F)
 }
 ```
 
-## Reference
+## 參考資料
 
 - [Wiki: Counting sort][wiki-counting-sort]
 - [Growing with the web: Counting sort][growingwiththeweb]

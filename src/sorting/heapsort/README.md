@@ -1,6 +1,6 @@
-# Heapsort
+# 堆排序 Heapsort
 
-Heapsort（堆積排序法）可以看作是 [selection sort][selection-sort] 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。
+Heapsort（堆排序）可以看作是 [selection sort][selection-sort] 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。
 
 和 selection sort 不同之處是，heapsort 利用 [heap][wiki-heap] 這種半排序（partially sorted）的資料結構輔助並加速排序。
 
@@ -15,7 +15,7 @@ Heapsort 的特性如下：
 [wiki-binary-heap]: https://en.wikipedia.org/wiki/Binary_heap
 [wiki-cpu-cache]: https://en.wikipedia.org/wiki/CPU_cache
 
-## Algorithm
+## 步驟
 
 Heapsort 的演算法分為兩大步驟：
 
@@ -29,7 +29,7 @@ Heapsort 的演算法分為兩大步驟：
 
 ![](https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif)
 
-## Explanation
+## 說明
 
 在開始之前，定義幾個 heap 常用名詞：
 
@@ -113,7 +113,7 @@ Heapsort 的演算法分為兩大步驟：
 
 以上便是 heapsort 演算法的簡單流程，是不是和 selection sort 非常相似呢！
 
-## Performance
+## 效能
 
 |              | Complexity         |
 | :----------- | :----------------- |
@@ -146,7 +146,7 @@ $$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$
 
 綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 \\(O(n \log n) \\)。
 
-## Implementation
+## 實作
 
 Heapsort 的實作相對簡單，只需要不斷調用 heap 內部的 `sift_down` 方法就可以完成排序。整個演算法架構如下：
 
@@ -216,7 +216,7 @@ fn sift_down(arr: &mut [i32], start: usize, end: usize) {
 
 以上就是簡單的 `sift_down` 實作，也是整個 heapsort 的精髓。
 
-## Reference
+## 參考資料
 
 - [Wiki: Heap][wiki-heap]
 - [Wiki: Heapsort](https://en.wikipedia.org/wiki/Heapsort)

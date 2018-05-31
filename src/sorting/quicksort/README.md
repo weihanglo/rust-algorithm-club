@@ -1,4 +1,4 @@
-# Quicksort
+# 快速排序 Quicksort
 
 Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 \\(O(n \log n) \\) 的平均時間複雜度。雖然最差時間複雜度與 [bubble sort](../bubble_sort) 同為 \\(O(n^2) \\)，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 \\(O(\log n) \\) 的額外儲存空間，比它的競爭對手 [mergesort](../mergesort) 來得節省。非常適合運用在真實世界中的排序法。
 
@@ -9,7 +9,7 @@ Quicksort 基本特性如下：
 - **非原地排序**：除了資料本身，仍需額外花費儲存空間來排序。
 - **分治演算法**：將主問題化作數個子問題，各個擊破。
 
-## Algorithm
+## 步驟
 
 Quicksort 是一個分治演算法（divide-and-conquer），不斷遞迴下列三個步驟：
 
@@ -39,7 +39,7 @@ ASCII 畫出來的分割圖如下：
 - `arr[j...high-1]` 包含所有尚未迭代的元素。
 - `arr[high]` pivot 本身。
 
-## Explanation
+## 說明
 
 以 Lomuto partition scheme 為例，使用 ASCII diagram 解釋。
 
@@ -135,7 +135,7 @@ swap pivot, i
  quicksort    quicksort
 ```
 
-## Performance
+## 效能
 
 |              | Complexity         |
 | :----------- | :----------------- |
@@ -172,7 +172,7 @@ Quicksort 的空間複雜度取決於實作細節，由於**分割序列**步驟
 
 [tail-call]: https://en.wikipedia.org/wiki/Tail_call
 
-## Implementation
+## 實作
 
 Quicksort 實作主要分為兩部分：遞迴，以及分割序列（partition）。
 
@@ -242,7 +242,7 @@ fn partition(arr: &mut [i32], lo: isize, hi: isize) -> isize {
 3. `i` 指標加一，繼續處理下個元素。
 4. 最後置換第 i 個元素於 pivot，此時 pivot 已落在最終正確的位置。
 
-## Optimizations and Variants
+## 最佳化與變形
 
 Quicksort 有數個方向可以探討最佳化：
 
@@ -398,7 +398,7 @@ fn partition(arr: &mut [i32], lo: usize, hi: usize) -> usize {
 2. 從最右邊開始找比 pivot 小或相等的元素。
 3. 若找到這兩個元素，置換之，以符合小於 pivot 在前，大於 pivot 在後的分割準則。
 
-## Reference
+## 參考資料
 
 - [Wiki: Quicksort](https://en.wikipedia.org/wiki/Quicksort)
 - [Algorithms, 4th Edition by R. Sedgewick and K. Wayne](https://algs4.cs.princeton.edu/23quicksort/)

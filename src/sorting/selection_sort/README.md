@@ -1,4 +1,4 @@
-# Selection sort
+# 選擇排序 Selection sort
 
 Selection sort 是最易實作的入門排序法之一，會將資料分為 sorted pile 與 unsorted pile，每次從 unsorted pile 尋找最大／最小值，加入 sorted pile 中。
 
@@ -9,7 +9,7 @@ Selection sort 的特性如下：
 - **不穩定排序**：排序後，相同鍵值的元素相對位置可能改變。
 - **原地排序**：不需額外花費儲存空間來排序。
 
-## Algorithm
+## 步驟
 
 1. 將資料分為 sorted pile 與 unsorted pile。
 2. 從 unsorted pile 尋找最小值。
@@ -22,7 +22,7 @@ Selection sort 的特性如下：
 
 _Joestape89 - CC BY-SA 3.0_
 
-## Explanation
+## 說明
 
 為什麼 naïve 的 selection sort 會是不穩定排序？
 
@@ -50,7 +50,7 @@ _Joestape89 - CC BY-SA 3.0_
 首先，回想一下穩定排序的定義：**相同鍵值的元素，排序後相對位置不改變。**
 
 問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 \\(O(1) \\) insertion 的資料結構，不然就會多出額外 \\(O(n^2) \\) 的寫入成本。
-## Performance
+## 效能
 
 |              | Complexity    |
 | :----------- | :------------ |
@@ -65,7 +65,7 @@ $$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$
 
 因此無論序列是否排序完成，selection sort 仍需執行 \\(n^2 \\) 次比較，時間複雜度為 \\(O(n^2) \\)。
 
-## Implementation
+## 實作
 
 簡單實作如下：
 
@@ -92,7 +92,7 @@ pub fn selection_sort(arr: &mut [i32]) {
 
 [impl-iterator]: https://doc.rust-lang.org/core/ops/struct.Range.html#impl-Iterator
 
-## Variants
+## 變形
 
 ### Heapsort
 
@@ -101,7 +101,7 @@ pub fn selection_sort(arr: &mut [i32]) {
 [heapsort]: ../heapsort/README.md
 [wiki-heap]: https://en.wikipedia.org/wiki/Heap_(data_structure)
 
-## Reference
+## 參考資料
 
 - [Wiki: Selection sort](https://en.wikipedia.org/wiki/Selection_sort)
 - [Why Selection sort can be stable or unstable](https://stackoverflow.com/questions/20761396/)

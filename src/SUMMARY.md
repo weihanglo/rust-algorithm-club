@@ -20,7 +20,7 @@
     - [合併排序 Mergesort](sorting/mergesort/README.md)
   - [混合排序](sorting/README.md)
     - [🚧 內省排序 Introsort](sorting/introsort/README.md)
-    - [🚧 自適應的合併排序 Timsort](sorting/timsort/README.md)
+    - [🚧 自適應合併排序 Timsort](sorting/timsort/README.md)
     - [🚧 模式消除快速排序 Pdqsort](sorting/pdqsort/README.md)
   - [特殊排序](sorting/README.md)
     - [計數排序 Counting sort](sorting/counting_sort/README.md)

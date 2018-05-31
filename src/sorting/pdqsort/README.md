@@ -1,11 +1,11 @@
-# Pattern-defeating quicksort
+# 模式消除快速排序 Pattern-defeating quicksort
 
 🚧 🚧 🚧 TBD 🚧 🚧 🚧
 
 - Unstable
 - Adopted in libcore in Rust
 
-## Reference
+## 參考資料
 
 - https://news.ycombinator.com/item?id=14661659
 - https://redd.it/5qa8h6
