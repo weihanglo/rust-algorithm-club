@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>基數排序 Radix sort - Rust Algorithm Club</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Learn algorithms and data structures with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+    </head>
+    <body class="light">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="README.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="concepts/README.html">基礎概念</a></li><li><ol class="section"><li><a href="concepts/asymptotic-notation.html">漸進符號 Asymptotic Notation</a></li><li><a href="concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="sorting/README.html">排序</a></li><li><ol class="section"><li><a href="sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="sorting/insertion_sort/README.html">插入排序 Insertion sort</a></li><li><a href="sorting/selection_sort/README.html">選擇排序 Selection sort</a></li><li><a href="sorting/bubble_sort/README.html">氣泡排序 Bubble sort</a></li><li><a href="sorting/shellsort/README.html">希爾排序 Shellsort</a></li></ol></li><li><a href="sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="sorting/heapsort/README.html">堆排序 Heapsort</a></li><li><a href="sorting/quicksort/README.html">快速排序 Quicksort</a></li><li><a href="sorting/mergesort/README.html">合併排序 Mergesort</a></li></ol></li><li><a href="sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="sorting/introsort/README.html">🚧 內省排序 Introsort</a></li><li><a href="sorting/timsort/README.html">🚧 自適應合併排序 Timsort</a></li><li><a href="sorting/pdqsort/README.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="sorting/counting_sort/README.html">計數排序 Counting sort</a></li><li><a href="sorting/bucket_sort/README.html">桶排序 Bucket sort</a></li><li><a href="sorting/radix_sort/README.html" class="active">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="collections/README.html">資料結構</a></li><li><ol class="section"><li><a href="collections/linked_list/README.html">鏈結串列</a></li><li><ol class="section"><li><a href="collections/linked_list/README.html">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="collections/linked_list/README.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="collections/linked_list/README.html">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="LICENSE.html">授權條款</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="sorting/radix_sort/README.html#a基數排序-radix-sort" id="a基數排序-radix-sort"><h1>基數排序 Radix sort</h1></a>
+<p>如果你對 <a href="../counting_sort">Counting sort</a> 與 <a href="../bucket_sort">Bucket sort</a> 有認識，應該知道這兩個排序都能突破比較排序法複雜度 \(O(n \log n) \) 限制的特殊排序法。<a href="https://en.wikipedia.org/wiki/Radix_sort">Radix sort</a> 同樣是個特殊的<a href="https://en.wikipedia.org/wiki/Integer_sorting">整數排序法</a>，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。</p>
+<p>舉例來說，欲排序一群範圍在 0 - 999 的整數，若以 Counting sort 排序，則需建立一個「1000 元素的陣列」來計算每個整數的出現次數；若使用以 10 為基數的 Radix sort，則僅需以個位數、十位數、百位數作為鍵值分別排序三次。通常 Radix sort 的排序副程式（Sorting subroutine）會選用 Counting sort 或 Bucket sort，而以 10 為基數的鍵值範圍僅 0 - 9，這種小範圍整數非常適合 Counting sort 作為排序副程式，節省了配置 <code>int arr[1000]</code> 的 count array 的時空間。</p>
+<p>Radix sort 基本特性如下：</p>
+<ul>
+<li><strong>整數排序法</strong>：以整數作為排序的鍵值。</li>
+<li><strong>分配式排序法</strong>：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。</li>
+<li><strong>穩定性</strong>：採用 LSD 的 Radix sort 屬穩定排序法（Stable sort）；透過優化，採用 MSD 也可以是穩定排序法。</li>
+</ul>
+<a class="header" href="sorting/radix_sort/README.html#a步驟" id="a步驟"><h2>步驟</h2></a>
+<p>常見的 Radix sort 依據整數的每個位數來排序，依照位數排序的先後順序，可分為兩種：</p>
+<ul>
+<li><strong>Least significant digit (LSD)</strong>：從最低有效鍵值開始排序（最小位數排到大）。</li>
+<li><strong>Most significant digit (MSD)</strong>：從最高有效鍵值開始排序（最大位數排到小）。</li>
+</ul>
+<p>簡單的 LSD Radix sort 步驟如下：</p>
+<ol>
+<li><strong>LSD of each key</strong>：取得每個資料鍵值的最小位數（LSD）。</li>
+<li><strong>Sorting subroutine</strong>：依據該位數大小排序資料。</li>
+<li><strong>Repeating</strong>：取得下一個有效位數，並重複步驟二，至最大位數（MSD）為止。</li>
+</ol>
+<p>而 MSD Radix sort 的步驟相似，但取得資料鍵值的方向相反。</p>
+<ol>
+<li><strong>MSD of each key</strong>：取得每個資料鍵值的最大位數（MSD）。</li>
+<li><strong>Sorting subroutine</strong>：依據該位數大小排序資料。</li>
+<li><strong>Repeating</strong>：取得下一個有效位數，並重複步驟二，至最小位數（LSD）為止。</li>
+</ol>
+<blockquote>
+<p>由於 MSD Radix sort 先排序最大位數，會出現 <strong>8 &gt; 126</strong> 的結果，這種順序通常稱為 <a href="https://en.wikipedia.org/wiki/Lexicographical_order">Lexicographical order</a>，有如字典一般，越前面的字母排序權重越重，也因此，基本版的 MSD Radix sort 並非穩定排序法。</p>
+</blockquote>
+<a class="header" href="sorting/radix_sort/README.html#a說明" id="a說明"><h2>說明</h2></a>
+<p>我們選用 LSD Radix sort 示範，並且為了增加可讀性，將基數設為 10。需注意在現實場景中，有時使用 bytes 作為基數可能更適合。</p>
+<p>待排序的數列如下。</p>
+<pre><code>[170, 45, 75, 90, 802, 2, 24, 66]
+</code></pre>
+<blockquote>
+<p>Radix sort 的排序副程式，通常選用 counting sort 或 bucket sort，因此，開始排序前，需建立供其使用的 buckets（或 count array）。這屬於其他排序法的範疇，有興趣可看 <a href="../counting_sort">Counting sort</a> 或 <a href="../bucket_sort">Bucket sort</a>。</p>
+</blockquote>
+<p>首先，從最小位數開始排序。
+注意，同樣鍵值的資料，相對位置不會改變（穩定排序）。</p>
+<pre><code>   0   5   5   0    2  2   4   6
+   _   _   _   _    _  _   _   _
+[170, 45, 75, 90, 802, 2, 24, 66]
+
+sort by rightmost digit --&gt;
+
+   0   0    2  2   4   5   5   6
+   _   _    _  _   _   _   _   _
+[170, 90, 802, 2, 24, 45, 75, 66]
+</code></pre>
+<p>再來，對下一個位數排序資料。位數不足的資料，予以補 0。</p>
+<pre><code>  7   9    0   0  2   4   7   6
+  _   _    _      _   _   _   _
+[170, 90, 802, 2, 24, 45, 75, 66]
+
+sort by next digit --&gt;
+
+  0   0  2   4   6    7   7   9
+  _      _   _   _    _   _   _
+[802, 2, 24, 45, 66, 170, 75, 90]
+</code></pre>
+<p>最終，對最後一個位數進行排序。大功告成！</p>
+<pre><code> 8    0  0   0   0   1    0   0
+ _                   _
+[802, 2, 24, 45, 66, 170, 75, 90]
+
+sort by leftmost digit --&gt;
+
+ 0  0   0   0   0   0   1    8
+                        _    _
+[2, 24, 45, 66, 75, 90, 170, 802]
+</code></pre>
+<a class="header" href="sorting/radix_sort/README.html#a效能" id="a效能"><h2>效能</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity   </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(dn) \) </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(O(dn) \) </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(O(dn) \) </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(d + n) \) auxiliary </td></tr>
+</tbody></table>
+<blockquote>
+<p>\(n \)：資料筆數。<br />
+\(d \)：number of digit，資料中最多有幾個位數（或鍵值）。<br />
+\(k \)：基數，就是一個位數最多有幾種可能的值。</p>
+</blockquote>
+<a class="header" href="sorting/radix_sort/README.html#time-complexity" id="time-complexity"><h3>Time complexity</h3></a>
+<p>欲分析 Radix sort 的時間複雜度，我們可以逐一擊破，先從排序副程式開始分析。</p>
+<p>Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每個 subroutine 的複雜度為 \(O(n + k) \)， \(k \) 為 key 的範圍，以 10 為基數，就是 0 - 9 之間 \(k = 10 \)。</p>
+<p>再來，我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 \(d \) 位數，時間複雜度需乘上 \(d \)，為 \(O(d (n + k)) \)，那這個 \(k \) 是否可以捨去呢？</p>
+<p>分析 Counting sort 或 Bucket sort 時，範圍 \(k \) 會隨輸入資料而變化，若 \(k \) 過大，對複雜度的影響甚至會超過 \(n \)，因此分析複雜度時無法將 \(k \) 捨去。而在 Radix sort， \(k \) 通常為一個已知的常數，例如以 bytes 為基數 \(k = 8 \)， \(k \) 可以捨去。最後可得 Radix sort 的時間複雜度為 \(O(d \cdot n) \)。</p>
+<a class="header" href="sorting/radix_sort/README.html#space-complexity" id="space-complexity"><h3>Space complexity</h3></a>
+<p>Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 \(O(n \cdot k) \)。Radix sort 的 \(k \) 是常數，予以捨去。再乘上 \(d \) 個位數，最差的空間複雜度為 \(O(d \cdot n) \)。</p>
+<a class="header" href="sorting/radix_sort/README.html#a實作" id="a實作"><h2>實作</h2></a>
+<p>這裡示範實作以 10 為基數，用來排序非負整數的 Radix sort。</p>
+<p>首先，我們的排序副程式使用 Counting sort。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+// 0. Include counting sort.
+use ::sorting::counting_sort;
+#}</code></pre></pre>
+<p>再來，就是 Radix sort 本體了。為了凸顯 Radix sort 的概念，簡化了函式參數數量，除去泛型宣告，並將基數選擇寫死在函式裡。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn radix_sort(arr: &amp;mut [i32]) {
+    let radix = 10;             // 1
+    let mut digit = 1;          // 2
+    let max_value = arr         // 3
+      .iter()
+      .max()
+      .unwrap_or(&amp;0)
+      .clone();
+    while digit &lt;= max_value {  // 4
+        counting_sort(arr, 0, 9, |t| (t / digit % radix) as usize); // 5
+        digit *= radix;         // 6
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>設定基數為 10。</li>
+<li>設定一個旗標，記錄當前在排序哪一位數，1 表示從最小位數（個位數）開始。</li>
+<li>先找到輸入資料的最大值，作為之後副程式迴圈結束的條件。尋找最大值的複雜度為 \(O(n)\)，因此不影響 Radix Sort 的複雜度。如果 <code>arr</code> 為空序列，則最大值設為 0，在第四步驟就會自動結束排序。</li>
+<li>判斷當前排序的位數是否大於最大值，例如當前排序百分位，<code>digit</code> 為 <code>100</code>，而最大值 <code>x</code> 為 26，則不需再排序百分位。</li>
+<li>使用 Counting sort 作為排序副程式，只需要有 0 - 9 十個桶子。而 <code>key</code> 參數則取出當前欲比較的位數。</li>
+<li>位數乘上基數，移至下一個位數繼續比較。</li>
+</ol>
+<blockquote>
+<p>小提醒：這是簡單又容易理解的實作，相對有許多額外的運算開銷（例如尋找最大值）。實務上，會在對資料有些了解才採用 Radix sort，因此實作並不會這麼 naive。</p>
+</blockquote>
+<a class="header" href="sorting/radix_sort/README.html#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Radix_sort">Wiki: Radix sort</a></li>
+<li><a href="https://www.cs.princeton.edu/%7Ers/AlgsDS07/18RadixSort.pdf">Princeton Universioty DSA Course: Radix sort</a></li>
+<li><a href="https://www.byvoid.com/zht/blog/sort-radix">ByVoid: 三種線性排序算法 計數排序、桶排序與基數排序</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="sorting/bucket_sort/README.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="collections/README.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="sorting/bucket_sort/README.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="collections/README.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-118441906-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="searchindex.js" type="text/javascript" charset="utf-8"></script>
+        
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+    </body>
+</html>

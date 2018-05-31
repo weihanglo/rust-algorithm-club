@@ -3,13 +3,13 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>簡單排序 - Rust Algorithm Club</title>
+        <title>選擇排序 Selection sort - Rust Algorithm Club</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Learn algorithms and data structures with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <base href="../">
+        <base href="../../">
 
         <link rel="stylesheet" href="book.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="README.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="concepts/README.html">基礎概念</a></li><li><ol class="section"><li><a href="concepts/asymptotic-notation.html">漸進符號 Asymptotic Notation</a></li><li><a href="concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="sorting/README.html">排序</a></li><li><ol class="section"><li><a href="sorting/simple-sorts.html" class="active">簡單排序</a></li><li><ol class="section"><li><a href="sorting/insertion_sort/README.html">插入排序 Insertion sort</a></li><li><a href="sorting/selection_sort/README.html">選擇排序 Selection sort</a></li><li><a href="sorting/bubble_sort/README.html">氣泡排序 Bubble sort</a></li><li><a href="sorting/shellsort/README.html">希爾排序 Shellsort</a></li></ol></li><li><a href="sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="sorting/heapsort/README.html">堆排序 Heapsort</a></li><li><a href="sorting/quicksort/README.html">快速排序 Quicksort</a></li><li><a href="sorting/mergesort/README.html">合併排序 Mergesort</a></li></ol></li><li><a href="sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="sorting/introsort/README.html">🚧 內省排序 Introsort</a></li><li><a href="sorting/timsort/README.html">🚧 自適應合併排序 Timsort</a></li><li><a href="sorting/pdqsort/README.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="sorting/counting_sort/README.html">計數排序 Counting sort</a></li><li><a href="sorting/bucket_sort/README.html">桶排序 Bucket sort</a></li><li><a href="sorting/radix_sort/README.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="collections/README.html">資料結構</a></li><li><ol class="section"><li><a href="collections/linked_list/README.html">鏈結串列</a></li><li><ol class="section"><li><a href="collections/linked_list/README.html">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="collections/linked_list/README.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="collections/linked_list/README.html">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="LICENSE.html">授權條款</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="README.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="concepts/README.html">基礎概念</a></li><li><ol class="section"><li><a href="concepts/asymptotic-notation.html">漸進符號 Asymptotic Notation</a></li><li><a href="concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="sorting/README.html">排序</a></li><li><ol class="section"><li><a href="sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="sorting/insertion_sort/README.html">插入排序 Insertion sort</a></li><li><a href="sorting/selection_sort/README.html" class="active">選擇排序 Selection sort</a></li><li><a href="sorting/bubble_sort/README.html">氣泡排序 Bubble sort</a></li><li><a href="sorting/shellsort/README.html">希爾排序 Shellsort</a></li></ol></li><li><a href="sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="sorting/heapsort/README.html">堆排序 Heapsort</a></li><li><a href="sorting/quicksort/README.html">快速排序 Quicksort</a></li><li><a href="sorting/mergesort/README.html">合併排序 Mergesort</a></li></ol></li><li><a href="sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="sorting/introsort/README.html">🚧 內省排序 Introsort</a></li><li><a href="sorting/timsort/README.html">🚧 自適應合併排序 Timsort</a></li><li><a href="sorting/pdqsort/README.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="sorting/counting_sort/README.html">計數排序 Counting sort</a></li><li><a href="sorting/bucket_sort/README.html">桶排序 Bucket sort</a></li><li><a href="sorting/radix_sort/README.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="collections/README.html">資料結構</a></li><li><ol class="section"><li><a href="collections/linked_list/README.html">鏈結串列</a></li><li><ol class="section"><li><a href="collections/linked_list/README.html">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="collections/linked_list/README.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="collections/linked_list/README.html">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="LICENSE.html">授權條款</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,12 +136,87 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="sorting/simple-sorts.html#a簡單排序" id="a簡單排序"><h1>簡單排序</h1></a>
+                        <a class="header" href="sorting/selection_sort/README.html#a選擇排序-selection-sort" id="a選擇排序-selection-sort"><h1>選擇排序 Selection sort</h1></a>
+<p>Selection sort 是最易實作的入門排序法之一，會將資料分為 sorted pile 與 unsorted pile，每次從 unsorted pile 尋找最大／最小值，加入 sorted pile 中。</p>
+<p>Selection sort 的特性如下：</p>
 <ul>
-<li><a href="insertion_sort">插入排序 Insertion sort</a></li>
-<li><a href="selection_sort">選擇排序 Selection sort</a></li>
-<li><a href="bubble_sort">氣泡排序 Bubble sort</a></li>
-<li><a href="shellsort">希爾排序 Shellsort</a></li>
+<li>最簡單的排序法之一。</li>
+<li>對小資料序列排序效率較高。</li>
+<li><strong>不穩定排序</strong>：排序後，相同鍵值的元素相對位置可能改變。</li>
+<li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
+</ul>
+<a class="header" href="sorting/selection_sort/README.html#a步驟" id="a步驟"><h2>步驟</h2></a>
+<ol>
+<li>將資料分為 sorted pile 與 unsorted pile。</li>
+<li>從 unsorted pile 尋找最小值。</li>
+<li>置換該最小值元素與 unsorted pile 第一個元素。</li>
+<li>重複步驟 2 - 3，直到排序完成。</li>
+</ol>
+<blockquote>
+<p>注意，這個 naïve 的 selection sort 實作為<strong>不穩定排序</strong>。</p>
+</blockquote>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif" alt="" /></p>
+<p><em>Joestape89 - CC BY-SA 3.0</em></p>
+<a class="header" href="sorting/selection_sort/README.html#a說明" id="a說明"><h2>說明</h2></a>
+<p>為什麼 naïve 的 selection sort 會是不穩定排序？</p>
+<p>假定有一個序列要遞增排序，其中有重複的 <code>2</code> 元素，我們將其標上 <code>2a</code>、<code>2b</code> 以利辨識。</p>
+<pre><code>[2a, 3, 4, 2b, 1]
+</code></pre>
+<p>開始迭代找出最小值並指環。</p>
+<pre><code class="language-bash"> *             *
+[1, 3, 4, 2b, 2a] # 1. 置換 2a, 1
+
+     *     *
+[1, 2b, 4, 3, 2a] # 2. 置換 3, 2b
+
+        *       *
+[1, 2b, 2a, 3, 4] # 3. 置換 4, 2a
+</code></pre>
+<p>有沒有發現，<code>2a</code> 與 <code>2b</code> 的相對順序顛倒了呢？</p>
+<p>首先，回想一下穩定排序的定義：<strong>相同鍵值的元素，排序後相對位置不改變。</strong></p>
+<p>問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 \(O(1) \) insertion 的資料結構，不然就會多出額外 \(O(n^2) \) 的寫入成本。</p>
+<a class="header" href="sorting/selection_sort/README.html#a效能" id="a效能"><h2>效能</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity    </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \) </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(O(n^2) \) </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(O(n^2) \) </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
+</tbody></table>
+<p>對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 \(n - 1 \) 次比較，第二個 \(n - 2 \) 次，總比較次數如下：</p>
+<p>$$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$</p>
+<p>因此無論序列是否排序完成，selection sort 仍需執行 \(n^2 \) 次比較，時間複雜度為 \(O(n^2) \)。</p>
+<a class="header" href="sorting/selection_sort/README.html#a實作" id="a實作"><h2>實作</h2></a>
+<p>簡單實作如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn selection_sort(arr: &amp;mut [i32]) {
+    let len = arr.len();
+    for i in 0..len {                     // 1
+        let mut temp = i;
+        for j in (i + 1)..len {           // 2
+            if arr[temp] &gt; arr[j] {
+                temp = j;
+            }
+        }
+        arr.swap(i, temp);                // 3
+    }
+}
+#}</code></pre></pre>
+<ol>
+<li>外層迴圈負責儲存當前要排序的 index <code>i</code> 的位置。</li>
+<li>內層迴圈負責在 unsorted pile 範圍 [<code>i</code>, <code>len</code>) 找最小值。</li>
+<li>外層迴圈在找到最小值之後，置換兩元素。</li>
+</ol>
+<p>眼尖的人會發現，內外兩層迴圈的 upper bound 都是 <code>len</code>，這樣是否內側迴圈會 out of bound？Rust 的 range operator（<code>core::ops::Range</code>）實作 <a href="https://doc.rust-lang.org/core/ops/struct.Range.html#impl-Iterator"><code>Iterator</code></a> trait 時，有檢查 <code>range.start &lt; range.end</code>，因此這個寫法並不會有出界問題，但會多跑一次無意義的迭代。</p>
+<a class="header" href="sorting/selection_sort/README.html#a變形" id="a變形"><h2>變形</h2></a>
+<a class="header" href="sorting/selection_sort/README.html#heapsort" id="heapsort"><h3>Heapsort</h3></a>
+<p><a href="../heapsort/README.md">Heapsort</a> 是一個高效的排序法，使用 selection sort 融合 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序的資料結構，讓時間複雜度進化至 \(O(n \log n) \)。更多詳情可以參考<a href="../heapsort/README.md">這篇介紹</a>。</p>
+<a class="header" href="sorting/selection_sort/README.html#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Selection_sort">Wiki: Selection sort</a></li>
+<li><a href="https://stackoverflow.com/questions/20761396/">Why Selection sort can be stable or unstable</a></li>
+<li>Sorting GIF by Joestape89 <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
 
                     </main>
@@ -149,13 +224,13 @@
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="sorting/README.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="sorting/insertion_sort/README.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="sorting/insertion_sort/README.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="sorting/bubble_sort/README.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -167,13 +242,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="sorting/README.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="sorting/insertion_sort/README.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="sorting/insertion_sort/README.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="sorting/bubble_sort/README.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
