@@ -71,7 +71,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="concepts/">基礎概念</a></li><li><ol class="section"><li><a href="concepts/asymptotic-notation.html">漸進符號 Asymptotic Notation</a></li><li><a href="concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="sorting/">排序</a></li><li><ol class="section"><li><a href="sorting/">簡單排序</a></li><li><ol class="section"><li><a href="sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="sorting/">高效排序</a></li><li><ol class="section"><li><a href="sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="sorting/">混合排序</a></li><li><ol class="section"><li><a href="sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="sorting/timsort/">🚧 自適應合併排序 Timsort</a></li><li><a href="sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="sorting/">特殊排序</a></li><li><ol class="section"><li><a href="sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="collections/">資料結構</a></li><li><ol class="section"><li><a href="collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="LICENSE.html">授權條款</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="concepts/">基礎概念</a></li><li><ol class="section"><li><a href="concepts/asymptotic-notation.html">漸進符號 Asymptotic Notation</a></li><li><a href="concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="sorting/">排序</a></li><li><ol class="section"><li><a href="sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="sorting/timsort/">🚧 自適應合併排序 Timsort</a></li><li><a href="sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="collections/">資料結構</a></li><li><ol class="section"><li><a href="collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="LICENSE.html">授權條款</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -284,10 +284,13 @@
 <p>記錄常見的排序演算法。</p>
 <a class="header" href="#a編排慣例" id="a編排慣例"><h2>編排慣例</h2></a>
 <p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
-<a class="header" href="#a排序演算法-1" id="a排序演算法-1"><h1>排序演算法</h1></a>
-<p>記錄常見的排序演算法。</p>
-<a class="header" href="#a編排慣例-1" id="a編排慣例-1"><h2>編排慣例</h2></a>
-<p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
+<a class="header" href="#a簡單排序" id="a簡單排序"><h1>簡單排序</h1></a>
+<ul>
+<li><a href="insertion_sort">插入排序 Insertion sort</a></li>
+<li><a href="selection_sort">選擇排序 Selection sort</a></li>
+<li><a href="bubble_sort">氣泡排序 Bubble sort</a></li>
+<li><a href="shellsort">希爾排序 Shellsort</a></li>
+</ul>
 <a class="header" href="#a插入排序-insertion-sort" id="a插入排序-insertion-sort"><h1>插入排序 Insertion sort</h1></a>
 <p>Insertion sort 是最簡單的排序法之一，比起 quicksort 等高效的排序法，對大資料的處理效能較不理想。其演算法是將欲排序元素直接插入正確位置，因而得名。</p>
 <p>Insertion sort 基本特性如下：</p>
@@ -742,10 +745,12 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <li><a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Best Increments for the Average Case of Shellsort, M. Ciura, 2001</a></li>
 <li><a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">Shellsort and Sorting Networks (Outstanding Dissertations in the Computer Sciences)</a></li>
 </ul>
-<a class="header" href="#a排序演算法-2" id="a排序演算法-2"><h1>排序演算法</h1></a>
-<p>記錄常見的排序演算法。</p>
-<a class="header" href="#a編排慣例-2" id="a編排慣例-2"><h2>編排慣例</h2></a>
-<p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
+<a class="header" href="#a高效排序" id="a高效排序"><h1>高效排序</h1></a>
+<ul>
+<li><a href="heapsort">堆排序 Heapsort</a></li>
+<li><a href="quicksort">快速排序 Quicksort</a></li>
+<li><a href="mergesort">合併排序 Mergesort</a></li>
+</ul>
 <a class="header" href="#a堆排序-heapsort" id="a堆排序-heapsort"><h1>堆排序 Heapsort</h1></a>
 <p>Heapsort（堆排序）可以看作是 <a href="../selection_sort">selection sort</a> 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。</p>
 <p>和 selection sort 不同之處是，heapsort 利用 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序（partially sorted）的資料結構輔助並加速排序。</p>
@@ -1469,10 +1474,12 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
 <li><a href="www.cs..html">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
 <li>Sorting GIF was created By CobaltBlue <a href="https://creativecommons.org/licenses/by-sa/2.5">CC BY-SA 2.5</a> via Wikimedia Commons.</li>
 </ul>
-<a class="header" href="#a排序演算法-3" id="a排序演算法-3"><h1>排序演算法</h1></a>
-<p>記錄常見的排序演算法。</p>
-<a class="header" href="#a編排慣例-3" id="a編排慣例-3"><h2>編排慣例</h2></a>
-<p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
+<a class="header" href="#a混合排序" id="a混合排序"><h1>混合排序</h1></a>
+<ul>
+<li><a href="introsort">內省排序 Introsort</a></li>
+<li><a href="timsort">自適應合併排序 Timsort</a></li>
+<li><a href="pdqsort">模式消除快速排序 Pdqsort</a></li>
+</ul>
 <a class="header" href="#a內省排序-introsort" id="a內省排序-introsort"><h1>內省排序 Introsort</h1></a>
 <p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
 <a class="header" href="#a自適應合併排序-timsort" id="a自適應合併排序-timsort"><h1>自適應合併排序 Timsort</h1></a>
@@ -1507,10 +1514,12 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
 <li>https://github.com/stjepang/pdqsort</li>
 <li>https://github.com/rust-lang/rust/pull/40601</li>
 </ul>
-<a class="header" href="#a排序演算法-4" id="a排序演算法-4"><h1>排序演算法</h1></a>
-<p>記錄常見的排序演算法。</p>
-<a class="header" href="#a編排慣例-4" id="a編排慣例-4"><h2>編排慣例</h2></a>
-<p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
+<a class="header" href="#a特殊排序" id="a特殊排序"><h1>特殊排序</h1></a>
+<ul>
+<li><a href="counting_sort">計數排序 Counting sort</a></li>
+<li><a href="bucket_sort">桶排序 Bucket sort</a></li>
+<li><a href="radix_sort">基數排序 Radix sort</a></li>
+</ul>
 <a class="header" href="#a計數排序-counting-sort" id="a計數排序-counting-sort"><h1>計數排序 Counting sort</h1></a>
 <p><a href="https://en.wikipedia.org/wiki/Counting_sort">Counting sort</a> 是一個特殊的整數排序法，被視為 <a href="../bucket_sort">Bucket sort</a> 的特例。原理是在已知整數範圍內，計算每個鍵值出現次數，並用額外的陣列保存（Count array）。最後將 Count array 的元素值作為排序資料的新 index。</p>
 <p>Counting sort 基本特性如下：</p>
