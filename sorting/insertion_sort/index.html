@@ -71,7 +71,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">🚧 漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/" class="active">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/" class="active">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -135,7 +135,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#insertion-sort" id="insertion-sort"><h1>Insertion sort</h1></a>
+                        <a class="header" href="#a插入排序-insertion-sort" id="a插入排序-insertion-sort"><h1>插入排序 Insertion sort</h1></a>
 <p>Insertion sort 是最簡單的排序法之一，比起 quicksort 等高效的排序法，對大資料的處理效能較不理想。其演算法是將欲排序元素直接插入正確位置，因而得名。</p>
 <p>Insertion sort 基本特性如下：</p>
 <ul>
@@ -146,7 +146,7 @@
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 <li><strong>即時演算法</strong>：可處理逐步輸入的資料，不需等資料完全備妥。</li>
 </ul>
-<a class="header" href="#algorithm" id="algorithm"><h2>Algorithm</h2></a>
+<a class="header" href="#a步驟" id="a步驟"><h2>步驟</h2></a>
 <p>將序列分為未排序與部分排序兩個區域。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Insertionsort-before.png" alt="" /></p>
 <ol>
@@ -160,11 +160,11 @@
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Insertionsort-after.png" alt="" /></p>
 <p>Insertion sort 非常簡單，看動畫就能明瞭。
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif" alt="" /></p>
-<a class="header" href="#performance" id="performance"><h2>Performance</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity       </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)         </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n) \)      </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n^2) \)    </td></tr>
+<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity    </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \) </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(O(n) \)   </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(O(n^2) \) </td></tr>
 <tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
 </tbody></table>
 <p>最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 \(n \) 次。</p>
@@ -173,7 +173,7 @@
 <p>最後等於</p>
 <p>$$\frac{cn^2}{2} - \frac{cn}{2}$$</p>
 <p>捨去低次項，得到時間複雜度為 \(O(n^2) \)。</p>
-<a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>簡單實作的程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -192,7 +192,7 @@ pub fn insertion_sort(arr: &amp;mut [i32]) {
 <li>外層迴圈迭代整個序列。並取出 index <code>i</code>，<code>arr[i]</code> 是待排序的元素，index 比 <code>i</code> 小的元素則組成已排序的部分序列。</li>
 <li>內層迴圈負責元素比較，決定待排序元素該從何處插入，若前一個元素比待排元素大，則置換兩元素，並繼續往下尋找正確的插入點。直到 <code>j == 0</code> 或待排元素比任何已排序元素都大為止。</li>
 </ol>
-<a class="header" href="#variants" id="variants"><h2>Variants</h2></a>
+<a class="header" href="#a變形" id="a變形"><h2>變形</h2></a>
 <a class="header" href="#binary-insertion-sort-binsort" id="binary-insertion-sort-binsort"><h3>Binary insertion sort (binsort)</h3></a>
 <p>在一般演算法討論中，通常以簡單的型別如 <code>i32</code> 來探討並實作。在真實世界中，做哪種操作，用哪種語言，都會影響到實際效能。例如 Python 的比較操作相對於置換元素，成本高出不少，是因為每個物件在 Python 的比較需動態檢查是否實作 <code>__lt__</code> <code>__gt__</code> 等方法才能進行比較。所以 Python 排序法實作就要特別注意減少比較操作的次數。</p>
 <p>Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 <a href="https://en.wikipedia.org/wiki/Binary_search">binary search</a> 搜尋新元素應要插入哪個位置，最多僅需 \(\log_2n \) 次比較。但 binary insertion sort 的複雜度依舊是 \(O(n^2) \)，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。</p>
@@ -220,7 +220,7 @@ pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
 <li><code>binary_search</code> 回傳一個 <code>Result&lt;usize, usize&gt;</code> 型別，找到時回傳 <code>Ok(index 值)</code>，找無時回傳 <code>Err(不影響排序穩定度的插入點)</code>，這個 <code>Err</code> 的設計巧妙解決新值插入的問題。</li>
 <li>和普通 insertion sort 雷同，從插入點至 sorted pile 迭代到末端以進行排序，省下不少比較操作。</li>
 </ol>
-<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Insertion_sort">Wiki: Insertion sort</a></li>
 <li><a href="https://github.com/python/cpython/blob/15f44ab043b37c064d6891c7864205fed9fb0dd1/Objects/listsort.txt#L686-L703">CPython: listsort note</a></li>

@@ -71,7 +71,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">🚧 漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/" class="active">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/" class="active">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -135,7 +135,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#bubble-sort" id="bubble-sort"><h1>Bubble sort</h1></a>
+                        <a class="header" href="#a氣泡排序-bubble-sort" id="a氣泡排序-bubble-sort"><h1>氣泡排序 Bubble sort</h1></a>
 <p>Bubble sort 是最簡單的排序法之一，由於排序時每個元素會如同泡泡般，一個一個浮出序列頂部，因而得名。由於其簡單好理解，名稱又有趣，常作為第一個學習的入門排序法。不過其效率不彰，甚至不如同為 quardratic time 的 insertion sort。Bubble sort 的原理很平凡，就是相鄰兩兩元素互相比較，如果大小順序錯了，就置換位置。再往下一個 pair 比較。</p>
 <p>Bubble sort 的特性如下：</p>
 <ul>
@@ -143,7 +143,7 @@
 <li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 </ul>
-<a class="header" href="#algorithm" id="algorithm"><h2>Algorithm</h2></a>
+<a class="header" href="#a步驟" id="a步驟"><h2>步驟</h2></a>
 <ol>
 <li>比較兩個相鄰元素，若首個元素比次個元素大，置換兩者的位置。</li>
 <li>依序對相鄰元素執行步驟一，直到抵達序列頂端，此時頂端元素排序完成。</li>
@@ -151,7 +151,7 @@
 </ol>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="" />
 <em>Swfung8 - CC BY-SA 3.0</em></p>
-<a class="header" href="#explanation" id="explanation"><h2>Explanation</h2></a>
+<a class="header" href="#a說明" id="a說明"><h2>說明</h2></a>
 <p>給定一組序列 <code>[5, 3, 8, 7, 2]</code>，以 bubble sort 遞增排序。以 ASCII diagram 表示：</p>
 <p><strong>第一次迭代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
@@ -209,11 +209,11 @@
 [3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
 </code></pre>
 <p>很簡單的排序法！</p>
-<a class="header" href="#performance" id="performance"><h2>Performance</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity       </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)         </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n) \)      </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n^2) \)    </td></tr>
+<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity    </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \) </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(O(n) \)   </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(O(n^2) \) </td></tr>
 <tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
 </tbody></table>
 <a class="header" href="#time-complexity" id="time-complexity"><h3>Time complexity</h3></a>
@@ -221,7 +221,7 @@
 <p>$$\sum_{i=0}^{n-1} (n - i - 1) = n^2 - \sum_{i=0}^{n-1}i - n = n^2 - \frac{n(n - 1)}{2} - n = \frac{n^2}{2} - \frac{n}{2}$$</p>
 <p>次，因此，時間複雜度為 \(O(n^2) \)。</p>
 <p>Bubble sort 在已排序完成的序列上，只需要迭代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
-<a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>Bubble sort 簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -272,7 +272,7 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 <li>若未排序部分 <code>new_len</code> 為零，代表排序完成。</li>
 <li>外層迴圈將新長度值 <code>new_len</code> 賦予 <code>len</code>，下一次迭代就可少做一次比較。</li>
 </ol>
-<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Bubble_sort">Wiki: Bubble sort</a></li>
 <li>Sorting GIF was created by Swfung8 (Own work) <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a> via Wikimedia Commons.</li>

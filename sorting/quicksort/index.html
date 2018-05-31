@@ -71,7 +71,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">🚧 漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/" class="active">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/" class="active">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -135,8 +135,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#quicksort" id="quicksort"><h1>Quicksort</h1></a>
-<p>Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 \(\Theta(n \log n) \) 的平均時間複雜度。雖然最差時間複雜度與 <a href="../bubble_sort">bubble sort</a> 同為 \(O(n^2) \)，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 \(O(\log n) \) 的額外儲存空間，比它的競爭對手 <a href="../mergesort">mergesort</a> 來得節省。非常適合運用在真實世界中的排序法。</p>
+                        <a class="header" href="#a快速排序-quicksort" id="a快速排序-quicksort"><h1>快速排序 Quicksort</h1></a>
+<p>Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 \(O(n \log n) \) 的平均時間複雜度。雖然最差時間複雜度與 <a href="../bubble_sort">bubble sort</a> 同為 \(O(n^2) \)，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 \(O(\log n) \) 的額外儲存空間，比它的競爭對手 <a href="../mergesort">mergesort</a> 來得節省。非常適合運用在真實世界中的排序法。</p>
 <p>Quicksort 基本特性如下：</p>
 <ul>
 <li>實作簡單，速度快。</li>
@@ -144,7 +144,7 @@
 <li><strong>非原地排序</strong>：除了資料本身，仍需額外花費儲存空間來排序。</li>
 <li><strong>分治演算法</strong>：將主問題化作數個子問題，各個擊破。</li>
 </ul>
-<a class="header" href="#algorithm" id="algorithm"><h2>Algorithm</h2></a>
+<a class="header" href="#a步驟" id="a步驟"><h2>步驟</h2></a>
 <p>Quicksort 是一個分治演算法（divide-and-conquer），不斷遞迴下列三個步驟：</p>
 <ol>
 <li><strong>選擇 Pivot</strong>：在序列中任意選擇一個元素，稱為 <strong>Pivot</strong>。</li>
@@ -173,7 +173,7 @@
 <li><code>arr[j...high-1]</code> 包含所有尚未迭代的元素。</li>
 <li><code>arr[high]</code> pivot 本身。</li>
 </ul>
-<a class="header" href="#explanation" id="explanation"><h2>Explanation</h2></a>
+<a class="header" href="#a說明" id="a說明"><h2>說明</h2></a>
 <p>以 Lomuto partition scheme 為例，使用 ASCII diagram 解釋。</p>
 <p>給定一個序列，並選擇最後一個元素作為 pivot，<code>i</code> <code>j</code> 指標則在第一個元素位置。</p>
 <pre><code>                      * -&gt; pivot
@@ -239,11 +239,11 @@ swap i, j
  -------     ---------
  quicksort    quicksort
 </code></pre>
-<a class="header" href="#performance" id="performance"><h2>Performance</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity                      </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)                        </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n \log n) \)              </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n \log n) \)              </td></tr>
+<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity         </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)      </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(O(n \log n) \) </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(O(n \log n) \) </td></tr>
 <tr><td align="left"> Worst space  </td><td align="left"> \(O(\log n) \) or \(O(n) \) auxiliary </td></tr>
 </tbody></table>
 <a class="header" href="#time-complexity" id="time-complexity"><h3>Time complexity</h3></a>
@@ -255,11 +255,11 @@ swap i, j
 <p>次基本操作，最差時間複雜度為 \(O(n^2) \)。</p>
 <a class="header" href="#a最佳情況" id="a最佳情況"><h4>最佳情況</h4></a>
 <p>既然最差情況發生在 pivot 總選到最大或最小值，反之，最佳情況則發生在每次 pivot 都可以順利選到序列的中位數（median），如此一來，每次遞迴分割的序列長度都會減半（ \(n / 2 \)），call stack 的嵌套遞迴總共需要 \(2 \log_2{n} \) 次，序列的長度就會減至 1，而每次分割同樣有 \(O(n) \) 的複雜度，因此最佳情況為：</p>
-<p>$$\Omega(n \cdot 2 \log_2{n}) = \Omega(n \log n)$$</p>
+<p>$$O(n \cdot 2 \log_2{n}) = O(n \log n)$$</p>
 <a class="header" href="#space-complexity" id="space-complexity"><h3>Space complexity</h3></a>
 <p>Quicksort 的空間複雜度取決於實作細節，由於<strong>分割序列</strong>步驟需 \(O(1) \) 的空間複雜度，因此僅需分析遞迴式會在 call stack 產生多少 stack frame 即可。</p>
 <p><a href="#%E6%9C%80%E5%B7%AE%E6%83%85%E6%B3%81">前面提及</a>，最 naïve 的 Lomuto partition 最糟糕的情形下，會產生 \(n - 1 \) 個嵌套遞迴，也就是需額外使用 \(O(n) \) 的空間儲存 call stack frame，但只要 compiler 有支援 <a href="https://en.wikipedia.org/wiki/Tail_call">尾端調用</a>最佳化（tail-call optimization，TCO），Quicksort 很容易最佳化至 \(O(\log n) \)。</p>
-<a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>Quicksort 實作主要分為兩部分：遞迴，以及分割序列（partition）。</p>
 <a class="header" href="#recursion" id="recursion"><h3>Recursion</h3></a>
 <p>遞迴函式本身實作非常簡單，分別將小於 pivot 與大於 pivot 兩部分遞迴調用自身即可。</p>
@@ -328,7 +328,7 @@ fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; isize {
 <li><code>i</code> 指標加一，繼續處理下個元素。</li>
 <li>最後置換第 i 個元素於 pivot，此時 pivot 已落在最終正確的位置。</li>
 </ol>
-<a class="header" href="#optimizations-and-variants" id="optimizations-and-variants"><h2>Optimizations and Variants</h2></a>
+<a class="header" href="#a最佳化與變形" id="a最佳化與變形"><h2>最佳化與變形</h2></a>
 <p>Quicksort 有數個方向可以探討最佳化：</p>
 <ul>
 <li><a href="#%E9%99%8D%E4%BD%8E%E9%A1%8D%E5%A4%96%E7%A9%BA%E9%96%93%E8%A4%87%E9%9B%9C%E5%BA%A6">降低額外空間複雜度</a></li>
@@ -337,7 +337,7 @@ fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; isize {
 <li><a href="%E9%81%B8%E6%93%87%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%86%E5%89%B2%E6%96%B9%E6%A1%88">選擇不同的分割方案</a></li>
 </ul>
 <a class="header" href="#a降低額外空間複雜度" id="a降低額外空間複雜度"><h3>降低額外空間複雜度</h3></a>
-<p>前述提到最佳情形下（每次 pivot 都選到中位數），僅需 \(\log n \) 個嵌套遞迴，額外空間複雜度僅需 \(\Omega(\log n) \)。
+<p>前述提到最佳情形下（每次 pivot 都選到中位數），僅需 \(\log n \) 個嵌套遞迴，額外空間複雜度僅需 \(O(\log n) \)。
 倘若編譯器有實作 <strong>尾端調用最佳化</strong>，Quicksort 可以達到 \(O(\log n) \) 對數級別的額外空間使用。</p>
 <p>實作尾端調用最佳化的思路很簡單，「<strong>先遞迴較少元素的部分，再利用 tall-call 遞迴另一部分</strong>」，如此以來，較多元素的遞迴則會直接被編譯器展開，消去遞迴時需要的 call stack 空間。剩下較少元素的部分，則與最佳情形相同，最多僅需 \(\log n \) 次嵌套遞迴。</p>
 <p>簡單實作如下：</p>
@@ -468,7 +468,7 @@ fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
 <li>從最右邊開始找比 pivot 小或相等的元素。</li>
 <li>若找到這兩個元素，置換之，以符合小於 pivot 在前，大於 pivot 在後的分割準則。</li>
 </ol>
-<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Quicksort">Wiki: Quicksort</a></li>
 <li><a href="https://algs4.cs.princeton.edu/23quicksort/">Algorithms, 4th Edition by R. Sedgewick and K. Wayne</a></li>

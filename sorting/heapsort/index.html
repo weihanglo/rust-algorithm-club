@@ -71,7 +71,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">🚧 漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/" class="active">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/" class="active">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -135,8 +135,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#heapsort" id="heapsort"><h1>Heapsort</h1></a>
-<p>Heapsort（堆積排序法）可以看作是 <a href="../selection_sort">selection sort</a> 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。</p>
+                        <a class="header" href="#a堆排序-heapsort" id="a堆排序-heapsort"><h1>堆排序 Heapsort</h1></a>
+<p>Heapsort（堆排序）可以看作是 <a href="../selection_sort">selection sort</a> 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。</p>
 <p>和 selection sort 不同之處是，heapsort 利用 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序（partially sorted）的資料結構輔助並加速排序。</p>
 <p>Heapsort 的特性如下：</p>
 <ul>
@@ -145,7 +145,7 @@
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 <li><strong>較差的 CPU 快取</strong>：heap 不連續存取位址的特性，不利於 <a href="https://en.wikipedia.org/wiki/CPU_cache">CPU 快取</a>。</li>
 </ul>
-<a class="header" href="#algorithm" id="algorithm"><h2>Algorithm</h2></a>
+<a class="header" href="#a步驟" id="a步驟"><h2>步驟</h2></a>
 <p>Heapsort 的演算法分為兩大步驟：</p>
 <ol>
 <li>將資料轉換為 heap 資料結構（遞增排序用 max-heap, 遞減排序選擇 min-heap）。</li>
@@ -159,7 +159,7 @@
 </ol>
 <p>透過 GIF 動畫感受一下 heapsort 的威力吧！</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif" alt="" /></p>
-<a class="header" href="#explanation" id="explanation"><h2>Explanation</h2></a>
+<a class="header" href="#a說明" id="a說明"><h2>說明</h2></a>
 <p>在開始之前，定義幾個 heap 常用名詞：</p>
 <ul>
 <li><strong>Heap ordering property</strong>：一個 heap 必須要滿足的條件。以 heap 種類不同有幾種變形。
@@ -227,12 +227,12 @@
 (Done!)
 </code></pre>
 <p>以上便是 heapsort 演算法的簡單流程，是不是和 selection sort 非常相似呢！</p>
-<a class="header" href="#performance" id="performance"><h2>Performance</h2></a>
+<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th align="left">              </th><th align="left"> Complexity         </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n \log n) \)      </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n \log n) \) </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n \log n) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary   </td></tr>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n \log n) \) </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(O(n \log n) \) </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(O(n \log n) \) </td></tr>
+<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
 </tbody></table>
 <p>Heapsort 最佳、最差、平均的時間複雜度皆為 \(O(n \log n) \)，同樣分為兩部分簡單解釋。</p>
 <a class="header" href="#build-heap-heapify" id="build-heap-heapify"><h3>Build heap (heapify)</h3></a>
@@ -241,13 +241,13 @@
 <p>Heapify 從最末個元素開始反向迭代，每個元素都調用 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 \(n \) 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
 <p>$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$</p>
 <blockquote>
-<p>實際上，build heap 步驟的複雜度可達到 \(\Theta(n) \)，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
+<p>實際上，build heap 步驟的複雜度可達到 \(O(n) \)，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
 </blockquote>
 <a class="header" href="#sorting-sift-down" id="sorting-sift-down"><h3>Sorting (sift down)</h3></a>
 <p>講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 <strong>sift down</strong> 修正符合 heap order。所以總共需要做 \(n \) 次 sift down，複雜度為 \(O(n \log n) \)。</p>
 <a class="header" href="#sum-up" id="sum-up"><h3>Sum up</h3></a>
 <p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 \(O(n \log n) \)。</p>
-<a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>Heapsort 的實作相對簡單，只需要不斷調用 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -315,7 +315,7 @@ fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
 <li><strong>置換</strong>：若 <code>root</code> 元素比 <code>child</code> 的元素小，則置換兩者，並將 <code>child</code> 設置為下個迭代的 <code>root</code>，繼續檢查最初的 <code>start</code> 元素是否滿足 heap ordering。</li>
 </ol>
 <p>以上就是簡單的 <code>sift_down</code> 實作，也是整個 heapsort 的精髓。</p>
-<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">Wiki: Heap</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Heapsort">Wiki: Heapsort</a></li>

@@ -71,7 +71,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">🚧 漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應的合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/" class="active">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation.html">漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/" class="active">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -135,7 +135,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#counting-sort" id="counting-sort"><h1>Counting sort</h1></a>
+                        <a class="header" href="#a計數排序-counting-sort" id="a計數排序-counting-sort"><h1>計數排序 Counting sort</h1></a>
 <p><a href="https://en.wikipedia.org/wiki/Counting_sort">Counting sort</a> 是一個特殊的整數排序法，被視為 <a href="../bucket_sort">Bucket sort</a> 的特例。原理是在已知整數範圍內，計算每個鍵值出現次數，並用額外的陣列保存（Count array）。最後將 Count array 的元素值作為排序資料的新 index。</p>
 <p>Counting sort 基本特性如下：</p>
 <ul>
@@ -147,13 +147,13 @@
 <li><strong>預期分佈</strong>：預期輸入資料是落在已知範圍內的整數（例如 0 到 k）。</li>
 <li><strong>適用範圍</strong>：僅適用於小範圍整數（額外空間需求大）。</li>
 </ul>
-<a class="header" href="#algorithm" id="algorithm"><h2>Algorithm</h2></a>
+<a class="header" href="#a步驟" id="a步驟"><h2>步驟</h2></a>
 <ol>
 <li><strong>Count occurrence</strong>：計算每個 key 的出現次數。</li>
 <li><strong>Prefix sum as start index</strong>：計算前綴和（Prefix sum），並作為該元素的 start index。</li>
 <li><strong>Copy output</strong>：利用步驟二的前綴和，遍歷輸入資料，取得元素排序後的索引。</li>
 </ol>
-<a class="header" href="#explanation" id="explanation"><h2>Explanation</h2></a>
+<a class="header" href="#a說明" id="a說明"><h2>說明</h2></a>
 <p>這裡有資料需要透過正整數的 key 來排序。key 的範圍在 0 - 9 之間，格式為 <code>(key, value)</code>。</p>
 <pre><code>Input: (1, A) (5, B) (8, C) (2, D) (2, E) (9, F)
 </code></pre>
@@ -211,11 +211,11 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 +--------+--------+--------+--------+--------+--------+
 </code></pre>
 <p>這樣就完成排序了。此外，觀察 <strong>(2, D)</strong> 與 <strong>(2, E)</strong> 排序前後的位置，會發現 counting sort 是個實實在在的穩定排序，很棒。</p>
-<a class="header" href="#performance" id="performance"><h2>Performance</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity           </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n + k) \)           </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(\Omega(n + k) \)      </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(\Theta(n + k) \)      </td></tr>
+<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
+<table><thead><tr><th align="left">              </th><th align="left"> Complexity      </th></tr></thead><tbody>
+<tr><td align="left"> Worst        </td><td align="left"> \(O(n + k) \) </td></tr>
+<tr><td align="left"> Best         </td><td align="left"> \(O(n + k) \) </td></tr>
+<tr><td align="left"> Average      </td><td align="left"> \(O(n + k) \) </td></tr>
 <tr><td align="left"> Worst space  </td><td align="left"> \(O(n + k) \) auxiliary </td></tr>
 </tbody></table>
 <blockquote>
@@ -228,7 +228,7 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 <blockquote>
 <p>如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 \(O(k) \)，但也因此成為不穩定排序法。</p>
 </blockquote>
-<a class="header" href="#implementation" id="implementation"><h2>Implementation</h2></a>
+<a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>由於 Counting sort 屬於分布式排序（Distribution sort），這裡使用泛型，以彰顯分布式排序的特色。</p>
 <a class="header" href="#function-signature" id="function-signature"><h3>Function Signature</h3></a>
 <p>首先，我們先看函式簽名（function signature）。</p>
@@ -337,7 +337,7 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#reference" id="reference"><h2>Reference</h2></a>
+<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Counting_sort">Wiki: Counting sort</a></li>
 <li><a href="http://www.growingwiththeweb.com/2014/05/counting-sort.html">Growing with the web: Counting sort</a></li>
