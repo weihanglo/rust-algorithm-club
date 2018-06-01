@@ -9,20 +9,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <base href="../">
 
-        <link rel="stylesheet" href="book.css">
+        <link rel="stylesheet" href="../book.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
 
         <link rel="shortcut icon" href="favicon.png">
 
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="_FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../_FontAwesome/css/font-awesome.css">
 
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         
@@ -53,7 +52,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -72,7 +71,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="README.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="concepts/README.html">基礎概念</a></li><li><ol class="section"><li><a href="concepts/asymptotic-notation.html" class="active">漸進符號 Asymptotic Notation</a></li><li><a href="concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="sorting/README.html">排序</a></li><li><ol class="section"><li><a href="sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="sorting/insertion_sort/README.html">插入排序 Insertion sort</a></li><li><a href="sorting/selection_sort/README.html">選擇排序 Selection sort</a></li><li><a href="sorting/bubble_sort/README.html">氣泡排序 Bubble sort</a></li><li><a href="sorting/shellsort/README.html">希爾排序 Shellsort</a></li></ol></li><li><a href="sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="sorting/heapsort/README.html">堆排序 Heapsort</a></li><li><a href="sorting/quicksort/README.html">快速排序 Quicksort</a></li><li><a href="sorting/mergesort/README.html">合併排序 Mergesort</a></li></ol></li><li><a href="sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="sorting/introsort/README.html">🚧 內省排序 Introsort</a></li><li><a href="sorting/timsort/README.html">🚧 自適應合併排序 Timsort</a></li><li><a href="sorting/pdqsort/README.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="sorting/counting_sort/README.html">計數排序 Counting sort</a></li><li><a href="sorting/bucket_sort/README.html">桶排序 Bucket sort</a></li><li><a href="sorting/radix_sort/README.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="collections/README.html">資料結構</a></li><li><ol class="section"><li><a href="collections/linked_list/README.html">鏈結串列</a></li><li><ol class="section"><li><a href="collections/linked_list/README.html">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="collections/linked_list/README.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="collections/linked_list/README.html">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="LICENSE.html">授權條款</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../concepts/asymptotic-notation.html" class="active">漸進符號 Asymptotic Notation</a></li><li><a href="../concepts/master-theorem.html">🚧 主定理 Master Theorem</a></li><li><a href="../concepts/algorithm-design.html">🚧 演算法設計 Algorithm Design</a></li></ol></li><li><a href="../sorting/">排序</a></li><li><ol class="section"><li><a href="../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="../sorting/heapsort/">堆積排序 Heapsort</a></li><li><a href="../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../sorting/timsort/">🚧 自適應合併排序 Timsort</a></li><li><a href="../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../collections/">資料結構</a></li><li><ol class="section"><li><a href="../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../LICENSE.html">授權條款</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -102,7 +101,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -136,7 +135,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="concepts/asymptotic-notation.html#a漸進符號-asymptotic-notation" id="a漸進符號-asymptotic-notation"><h1>漸進符號 Asymptotic Notation</h1></a>
+                        <a class="header" href="#a漸進符號-asymptotic-notation" id="a漸進符號-asymptotic-notation"><h1>漸進符號 Asymptotic Notation</h1></a>
 <p>日常生活中，你會如何描述處理事情的效率？</p>
 <p>「原來她五分鐘內可以吃掉一頭牛！」</p>
 <p>「房間這麼小你還能擺一堆雜物？還不快收拾！」</p>
@@ -144,7 +143,7 @@
 <p>然而，在不同的機器規格、環境溫濕度、程式語言、實作方式，以及有沒有放乖乖的變異影響下，相同演算法的執行成本常常不一致。為了消弭這些外部因素，讓分析演算法能夠更科學化。科學家抽絲剝繭，發明一個方法：</p>
 <p><strong>「統計演算法內所需操作步驟的數目。」</strong></p>
 <p>這是最簡單，最粗淺比較不同演算法效率的作法。</p>
-<a class="header" href="concepts/asymptotic-notation.html#a用數學表示演算法效率" id="a用數學表示演算法效率"><h2>用數學表示演算法效率</h2></a>
+<a class="header" href="#a用數學表示演算法效率" id="a用數學表示演算法效率"><h2>用數學表示演算法效率</h2></a>
 <p>「計算步驟數目」很像中小學的數學題目：某公司有六個能力相異的工程師，有的工程師一天解決一個 bug，有的工程師連續工作後效率大幅滑落。每個工程師的除蟲效率可以畫成「bug 數 - 解決 bug 所需時數」函數，橫軸為待處理的臭蟲數，縱軸為解決臭蟲所需時數，如圖一所示。</p>
 <p>這裡有一張表，分別代表三個不同能力的工程師：</p>
 <table><thead><tr><th> 時數       </th><th> \(\log N\) </th><th> \(N\) </th><th> \(N^2\) </th></tr></thead><tbody>
@@ -153,7 +152,7 @@
 </tbody></table>
 <p>不論從圖或表，我們都可以明確看出，當 bug 數目小時，每個工程師耗時差不多；當 bug 數目成長到一定程度時，效率好與效率差的工程師差距就很明顯了。</p>
 <p>我們把場景拉回演算法的範疇，再闡明一次。上述的除蟲效率函數關係，可以簡單視為為「輸入資料量 - 運算成本」關係之函數。例如 \(f(x)=x^2+3x+6\)。當輸入資料量增大時，成本也隨之上升，這個用來描述演算法執行成本與輸入資料量之關係的函數，我們稱之為該演算法的「複雜度」。</p>
-<a class="header" href="concepts/asymptotic-notation.html#a何謂漸進符號" id="a何謂漸進符號"><h2>何謂漸進符號</h2></a>
+<a class="header" href="#a何謂漸進符號" id="a何謂漸進符號"><h2>何謂漸進符號</h2></a>
 <p>了解每個演算法的時間複雜度之後，就能比較何者效率佳。但往往天不從人願，給了我們兩個演算法進行比較。</p>
 <p>$$f(x)=\sqrt{\frac{182777}{286}}\pi x^4+5\log_{3}^{26}88x^3-e^{777^{log_2^9}}$$</p>
 <p>$$g(x)=3x^6-2x^2$$</p>
@@ -163,7 +162,7 @@
 <p>我們比較兩個簡單函數，\(f(x) = 6x + 29\) 以及 \(g(x) = 3x^2 + 1\)。從下圖可以看出一開始 \(g(x)\) 的執行時間比 \(f(x)\) 多了不少，但隨著輸入資料量 \(n\) 增多，\(g(x)\) 的執行時間成長愈來愈快速，最後遠遠大於 \(f(x)\)。</p>
 <p>若以 \(an^2 + bn + c\)  表示複雜度，就是當存在一個 \(a &gt; 0\) 時，一定會有 \(n\) 符合 \(an^2 &gt; bn + c\)，這個差距隨著 \(n\) 越大越明顯，這是因為首項（leading term），也就是帶有最高指數的那一項，隨著 輸入大小改變，執行時間變化幅度較大。因此，可捨去複雜度函數中其他較不重要的次項與常數，留下最大次項，「<strong>透過簡單的函數來表述函數接近極限的行為</strong>」,讓複雜度函數更易理解，這就是「漸進符號」的概念。</p>
 <p>這裡介紹常見的幾種漸進符號：</p>
-<a class="header" href="concepts/asymptotic-notation.html#obig-o" id="obig-o"><h3>\(O\)：Big O</h3></a>
+<a class="header" href="#obig-o" id="obig-o"><h3>\(O\)：Big O</h3></a>
 <p>當我們談論演算法複雜度時，通常關心的是演算法「最糟糕的情況下」，「最多」需要執行多久。Big O 就是描述演算法複雜度上界的漸進符號，當一個演算法「實際」的複雜度（或執行成本對輸入資料量函數）為 \(f(n)\) 時，欲以 Big O 描述其複雜度上界時，必須滿足以下定義：</p>
 <p>$$f(n) = O(g(n)) \colon {\exists k&gt;0\ \exists n_0\ \forall n&gt;n_0\ |f(n)| \leq k \cdot g(n)}$$</p>
 <p>假設有一演算法實際複雜度為 \(f(n) = 3n + 2\)，有一組 \(k = 4;\ g(n) = n;\ n_0 = 4\) 滿足</p>
@@ -175,17 +174,17 @@
 <blockquote>
 <p>注意：也寫作 \(f(n) \in O(g(n))\)，因為實際上 \(O(g(n))\) 是所以可描述演算法成長趨勢，並滿足上述條件的函數之「集合」。</p>
 </blockquote>
-<a class="header" href="concepts/asymptotic-notation.html#omegabig-omega" id="omegabig-omega"><h3>\(\Omega\)：Big Omega</h3></a>
+<a class="header" href="#omegabig-omega" id="omegabig-omega"><h3>\(\Omega\)：Big Omega</h3></a>
 <p>相較於 Big O 描述演算法成長趨勢的上界，Big Omega 則是對應成長趨勢的「下界」，定義如下：</p>
 <p>$$f(n) = \Omega(g(n)) \colon {\exists k&gt;0\ \exists n_0\ \forall n&gt;n_0\ |f(n)| \geq k \cdot g(n)}$$</p>
 <p>以 \(f(n) = 3n + 2\) 為例，有一組 \(k = 2;\ g(n) = n;\ n_0 = 0\) 滿足上式，因此這個演算法在輸入資料夠大時，「至少」會達到 \(\Omega(n)\) 的複雜度，也就是「該演算法的成長趨勢不會比 \(g(n)\) 來得慢」。</p>
-<a class="header" href="concepts/asymptotic-notation.html#thetabig-theta" id="thetabig-theta"><h3>\(\Theta\)：Big Theta</h3></a>
+<a class="header" href="#thetabig-theta" id="thetabig-theta"><h3>\(\Theta\)：Big Theta</h3></a>
 <p>Big Theta 則是 Big O 與 Big Omega 兩個漸進上下界所夾出的範圍，表示該演算法在輸入資料夠大時，最終的複雜度會成長到這個範圍中。其定義如下：</p>
 <p>$$f(n) = \Theta(g(n)) \colon {\exists k_1&gt;0\ \exists k_2&gt;0\ \exists n_0\ \forall n&gt;n_0\ k_1 \cdot g(n) \leq |f(n)| \leq k_2 \cdot g(n)}$$</p>
 <p>繼續以 \(f(n) = 3n + 2\) 為例，同樣有一組 \(k_1 = 1;\ k_2 = 5;\ g(n) = n;\ n_0 = 1\)，滿足</p>
 <p>$$\forall n \geq 1,\ n \leq f(n) = 3n + 2 \leq 5n$$</p>
 <p>可得知，\(f(n) = 3n + 2 \in \Theta(n)\)，表示「該演算法的成長趨勢與 \(g(n) = n\) 相同」。</p>
-<a class="header" href="concepts/asymptotic-notation.html#a常見的複雜度" id="a常見的複雜度"><h2>常見的複雜度</h2></a>
+<a class="header" href="#a常見的複雜度" id="a常見的複雜度"><h2>常見的複雜度</h2></a>
 <p>看完了讓人昏昏欲睡的數學定義，現在來認識一些常見的複雜度，從最快最有效率，到最慢最拖台錢的通通一起認識。</p>
 <ul>
 <li>\(O(1)\)：常數時間，演算法執行時間與資料量毫無瓜葛。例如讀取 array 首個元素。</li>
@@ -200,7 +199,7 @@
 <blockquote>
 <p>再次強調，漸進符號也可以代表其他執行成本如記憶體空間，並不一定代表執行時間。</p>
 </blockquote>
-<a class="header" href="concepts/asymptotic-notation.html#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Time_complexity">Wiki: Time complexity</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Big_O_notation">Wiki: Big O notation</a></li>
@@ -213,13 +212,13 @@
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="concepts/README.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../concepts/" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="concepts/master-theorem.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../concepts/master-theorem.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -231,13 +230,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="concepts/README.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../concepts/" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="concepts/master-theorem.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../concepts/master-theorem.html" class="nav-chapters next" title="Next chapter ../" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -271,17 +270,17 @@
         
 
         
-        <script src="searchindex.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searchindex.js" type="text/javascript" charset="utf-8"></script>
         
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
         
