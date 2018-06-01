@@ -5,7 +5,7 @@
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
 
-## 通用概念
+## 基礎概念
 
 - [漸進符號 Asymptotic Notation](concepts/asymptotic-notation.html)
 - 🚧 [主定理 Master Theorem](concepts/master-theorem.html)
@@ -24,7 +24,7 @@
 
 高效排序：
 
-- [堆排序 Heapsort](sorting/heapsort)
+- [堆積排序 Heapsort](sorting/heapsort)
 - [快速排序 Quicksort](sorting/quicksort)
 - [合併排序 Mergesort](sorting/mergesort)
 

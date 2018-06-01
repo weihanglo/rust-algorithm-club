@@ -1,8 +1,8 @@
-# 堆排序 Heapsort
+# 堆積排序 Heapsort
 
-Heapsort（堆排序）可以看作是 [selection sort][selection-sort] 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。
+Heapsort（堆積排序）可以看作是 [selection sort][selection-sort] 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。
 
-和 selection sort 不同之處是，heapsort 利用 [heap][wiki-heap] 這種半排序（partially sorted）的資料結構輔助並加速排序。
+和 selection sort 不同之處是，heapsort 利用[堆積（heap）][wiki-heap]這種半排序（partially sorted）的資料結構輔助並加速排序。
 
 Heapsort 的特性如下：
 

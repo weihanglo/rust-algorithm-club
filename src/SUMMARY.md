@@ -15,7 +15,7 @@
     - [氣泡排序 Bubble sort](sorting/bubble_sort/README.md)
     - [希爾排序 Shellsort](sorting/shellsort/README.md)
   - [高效排序](sorting/efficient-sorts.md)
-    - [堆排序 Heapsort](sorting/heapsort/README.md)
+    - [堆積排序 Heapsort](sorting/heapsort/README.md)
     - [快速排序 Quicksort](sorting/quicksort/README.md)
     - [合併排序 Mergesort](sorting/mergesort/README.md)
   - [混合排序](sorting/hybrid-sorts.md)
