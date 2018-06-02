@@ -28,7 +28,7 @@
 <!-- TODO: Waiting for rust-lang-nursery/mdBook/pull/603 -->
 <!-- Use absolute links as as workaround. -->
 
-![Fig. 1](concepts/fig/asymptotic-notation-1.png)
+![Fig. 1](concepts/asymptotic-notation/fig1.png)
 
 不論從圖或表，我們都可以明確看出，當 bug 數目小時，每個工程師耗時差不多；當 bug 數目成長到一定程度時，效率好與效率差的工程師差距就很明顯了。
 
@@ -53,7 +53,7 @@ $$g(x)=3x^6-2x^2$$
 <!-- TODO: Waiting for rust-lang-nursery/mdBook/pull/603 -->
 <!-- Use absolute links as as workaround. -->
 
-![Fig. 2](concepts/fig/asymptotic-notation-2.png)
+![Fig. 2](concepts/asymptotic-notation/fig2.png)
 
 若以 \\(an^2 + bn + c\\)  表示複雜度，就是當存在一個 \\(a > 0\\) 時，一定會有 \\(n\\) 符合 \\(an^2 > bn + c\\)，這個差距隨著 \\(n\\) 越大越明顯，這是因為首項（leading term），也就是帶有最高指數的那一項，隨著 輸入大小改變，執行時間變化幅度較大。因此，可捨去複雜度函數中其他較不重要的次項與常數，留下最大次項，「**透過簡單的函數來表述函數接近極限的行為**」,讓複雜度函數更易理解，這就是「漸進符號」的概念。
 
@@ -74,7 +74,7 @@ $$\forall n > 4,\ 0 \leq f(n) = 3n + 4 \leq 4n$$
 <!-- TODO: Waiting for rust-lang-nursery/mdBook/pull/603 -->
 <!-- Use absolute links as as workaround. -->
 
-![Fig. 3](concepts/fig/asymptotic-notation-3.png)
+![Fig. 3](concepts/asymptotic-notation/fig3.png)
 
 再多看一個例子，若 \\(f(n) = 4n^2 + n\\) 有一組 \\(k = 5\;\ g(n) = n^2\;\ n_0 = 5\\) 滿足
 
@@ -107,7 +107,7 @@ $$\forall n \geq 2,\ n \leq f(n) = 3n + 4 \leq 5n$$
 <!-- TODO: Waiting for rust-lang-nursery/mdBook/pull/603 -->
 <!-- Use absolute links as as workaround. -->
 
-![Fig. 4](concepts/fig/asymptotic-notation-4.png)
+![Fig. 4](concepts/asymptotic-notation/fig4.png)
 
 ## 常見的複雜度
 

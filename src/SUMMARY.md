@@ -5,9 +5,8 @@
 ------
 
 - [基礎概念](concepts/README.md)
-  - [漸進符號 Asymptotic Notation](concepts/asymptotic-notation.md)
-  - [🚧 主定理 Master Theorem](concepts/master-theorem.md)
-  - [🚧 演算法設計 Algorithm Design](concepts/algorithm-design.md)
+  - [漸進符號 Asymptotic Notation](concepts/asymptotic-notation/README.md)
+  - [🚧 主定理 Master Theorem](concepts/master-theorem/README.md)
 - [排序](sorting/README.md)
   - [簡單排序](sorting/simple-sorts.md)
     - [插入排序 Insertion sort](sorting/insertion_sort/README.md)
@@ -32,6 +31,6 @@
     - [🚧 雙向鏈結串列 Doubly linked list](collections/linked_list/README.md)
     - [🚧 循環鏈結串列 Circular linked list](collections/linked_list/README.md)
 
--------
+------
 
 [授權條款](LICENSE)

@@ -7,9 +7,8 @@
 
 ## 基礎概念
 
-- [漸進符號 Asymptotic Notation](concepts/asymptotic-notation.html)
-- 🚧 [主定理 Master Theorem](concepts/master-theorem.html)
-- 🚧 [演算法設計 Algorithm Design](concepts/algorithm-design.html)
+- [漸進符號 Asymptotic Notation](concepts/asymptotic-notation)
+- 🚧 [主定理 Master Theorem](concepts/master-theorem)
 
 ## 演算法
 
