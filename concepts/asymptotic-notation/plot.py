@@ -5,8 +5,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-OUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fig')
-os.makedirs(OUT_DIR)
+OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def plot_asymptotic_notation():
   """Generate figures for 'Asymptotic Notation' chapter."""
@@ -21,7 +20,7 @@ def plot_asymptotic_notation():
   plt.xlabel('Size of Input')
   plt.ylabel('Cost')
   plt.legend()
-  plt.savefig(os.path.join(OUT_DIR, 'asymptotic-notation-1.png'))
+  plt.savefig(os.path.join(OUT_DIR, 'fig1.png'))
   plt.clf()
 
   # Fig. 2
@@ -31,7 +30,7 @@ def plot_asymptotic_notation():
   plt.xlabel('Size of Input')
   plt.ylabel('Cost')
   plt.legend()
-  plt.savefig(os.path.join(OUT_DIR, 'asymptotic-notation-2.png'))
+  plt.savefig(os.path.join(OUT_DIR, 'fig2.png'))
   plt.clf()
 
   # Fig. 3
@@ -42,7 +41,7 @@ def plot_asymptotic_notation():
   plt.xlabel('Size of Input')
   plt.ylabel('Cost')
   plt.legend()
-  plt.savefig(os.path.join(OUT_DIR, 'asymptotic-notation-3.png'))
+  plt.savefig(os.path.join(OUT_DIR, 'fig3.png'))
   plt.clf()
 
   # Fig. 4
@@ -54,14 +53,10 @@ def plot_asymptotic_notation():
   plt.xlabel('Size of Input')
   plt.ylabel('Cost')
   plt.legend()
-  plt.savefig(os.path.join(OUT_DIR, 'asymptotic-notation-4.png'))
+  plt.savefig(os.path.join(OUT_DIR, 'fig4.png'))
   plt.clf()
 
   # Close current window
   plt.close()
 
-def main():
-    """Main"""
-    plot_asymptotic_notation()
-
-main()
+plot_asymptotic_notation()
