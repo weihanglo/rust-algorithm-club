@@ -182,7 +182,7 @@ pub fn bucket_sort<H, F, T>(arr: &mut [T], hasher: F)
 - `F`：`hasher` 函式自身，只需要一個參數 `&T`，回傳一個 `H`。
 - `T`：欲排序資料的型別。
 
-函式自身稍微複雜一點，但仍是 [Algorithm](#algorithm) 一節介紹的四步驟：Create buckets、Scatter、Inner sort，還有 Gather。
+函式自身稍微複雜一點，但仍不脫離[四步驟](#步驟)：Create buckets、Scatter、Inner sort，還有 Gather。
 
 ```rust
 pub fn bucket_sort() {
