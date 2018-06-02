@@ -276,7 +276,7 @@ pub fn bucket_sort&lt;H, F, T&gt;(arr: &amp;mut [T], hasher: F)
 <li><code>F</code>：<code>hasher</code> 函式自身，只需要一個參數 <code>&amp;T</code>，回傳一個 <code>H</code>。</li>
 <li><code>T</code>：欲排序資料的型別。</li>
 </ul>
-<p>函式自身稍微複雜一點，但仍是 <a href="#algorithm">Algorithm</a> 一節介紹的四步驟：Create buckets、Scatter、Inner sort，還有 Gather。</p>
+<p>函式自身稍微複雜一點，但仍不脫離<a href="#%E6%AD%A5%E9%A9%9F">四步驟</a>：Create buckets、Scatter、Inner sort，還有 Gather。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
