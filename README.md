@@ -12,7 +12,6 @@ This repository was originally inspired by [Swift Algorithm Club][swift-algorith
 ## General Concepts
 
 - [Asymptotic Notation](src/concepts/asymptotic-notation)
-- 🚧 [Master Theorem](src/concepts/master-theorem)
 
 ## Algorithms
 
