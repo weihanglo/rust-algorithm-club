@@ -1,6 +1,9 @@
+cargo-features = ["edition"]
+
 [package]
 name = "rust-algorithm-club"
 version = "0.0.1"
+edition = '2018'
 authors = ["Weihang Lo <weihanglotw@gmail.com>"]
 description = "Learn algorithms and data structures with Rust"
 homepage = "https://weihanglo.tw/rust-algorithm-club"
