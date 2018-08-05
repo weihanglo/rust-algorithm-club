@@ -1,4 +1,4 @@
-pub fn introsort(arr: &mut [i32]) {
-  unimplemented!()
+pub fn introsort(_arr: &mut [i32]) {
+    unimplemented!()
 }
 

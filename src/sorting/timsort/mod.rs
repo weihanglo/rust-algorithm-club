@@ -1,3 +1,3 @@
-pub fn timsort(arr: &mut [i32]) {
-  unimplemented!()
+pub fn timsort(_arr: &mut [i32]) {
+    unimplemented!()
 }
