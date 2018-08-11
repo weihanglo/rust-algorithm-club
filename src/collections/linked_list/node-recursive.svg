@@ -1,0 +1,36 @@
+<svg width="140pt" height="172pt" viewBox="0.00 0.00 140.00 172.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 168)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-168 136,-168 136,4 -4,4"></polygon>
+<!-- table0 -->
+<g id="node1" class="node">
+<title>table0</title>
+<polyline fill="none" stroke="#000000" points="8,-138 124,-138 "></polyline>
+<text text-anchor="start" x="50.8394" y="-144.4" font-family="Times,serif" font-size="14.00" fill="#000000">Node</text>
+<polygon fill="none" stroke="#000000" points="8,-4 8,-138 22,-138 22,-4 8,-4"></polygon>
+<text text-anchor="start" x="10.7237" y="-66.8" font-family="Times,serif" font-size="14.00" fill="#000000">T</text>
+<polygon fill="none" stroke="#000000" points="22,-4 22,-138 124,-138 124,-4 22,-4"></polygon>
+<polyline fill="none" stroke="#000000" points="25,-113 121,-113 "></polyline>
+<text text-anchor="start" x="57.8394" y="-119.4" font-family="Times,serif" font-size="14.00" fill="#000000">Node</text>
+<polygon fill="none" stroke="#000000" points="25,-7 25,-113 39,-113 39,-7 25,-7"></polygon>
+<text text-anchor="start" x="27.7237" y="-55.8" font-family="Times,serif" font-size="14.00" fill="#000000">T</text>
+<polygon fill="none" stroke="#000000" points="39,-7 39,-113 121,-113 121,-7 39,-7"></polygon>
+<polyline fill="none" stroke="#000000" points="42,-88 118,-88 "></polyline>
+<text text-anchor="start" x="64.8394" y="-94.4" font-family="Times,serif" font-size="14.00" fill="#000000">Node</text>
+<polygon fill="none" stroke="#000000" points="42,-10 42,-88 56,-88 56,-10 42,-10"></polygon>
+<text text-anchor="start" x="44.7237" y="-44.8" font-family="Times,serif" font-size="14.00" fill="#000000">T</text>
+<polygon fill="none" stroke="#000000" points="56,-10 56,-88 118,-88 118,-10 56,-10"></polygon>
+<polyline fill="none" stroke="#000000" points="59,-63 115,-63 "></polyline>
+<text text-anchor="start" x="71.8394" y="-69.4" font-family="Times,serif" font-size="14.00" fill="#000000">Node</text>
+<polygon fill="none" stroke="#000000" points="59,-13 59,-63 73,-63 73,-13 59,-13"></polygon>
+<text text-anchor="start" x="61.7237" y="-33.8" font-family="Times,serif" font-size="14.00" fill="#000000">T</text>
+<polygon fill="none" stroke="#000000" points="73,-13 73,-63 115,-63 115,-13 73,-13"></polygon>
+<polyline fill="none" stroke="#000000" points="76,-38 112,-38 "></polyline>
+<text text-anchor="start" x="78.8394" y="-44.4" font-family="Times,serif" font-size="14.00" fill="#000000">Node</text>
+<polygon fill="none" stroke="#000000" points="76,-16 76,-38 93,-38 93,-16 76,-16"></polygon>
+<text text-anchor="start" x="80.2237" y="-22.4" font-family="Times,serif" font-size="14.00" fill="#000000">T</text>
+<polygon fill="none" stroke="#000000" points="93,-16 93,-38 112,-38 112,-16 93,-16"></polygon>
+<text text-anchor="start" x="97.25" y="-22.4" font-family="Times,serif" font-size="14.00" fill="#000000">∞</text>
+</g>
+</g>
+</svg>

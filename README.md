@@ -46,9 +46,10 @@ Special-purpose sorts:
 
 ### Linked List
 
-- 🚧 [Singly linked list](src/collections/linkedList#singly-linked-list)
-- 🚧 [Doubly linked ilst](src/collections/linkedList#doubly-linked-list)
-- 🚧 [Circular linked ilst](src/collections/linkedList#circular-linked-list)
+- [Linked list concepts](src/collections/linked_list/)
+- [Singly linked list](src/collections/linked_list/singly.md)
+- [🚧 Doubly linked ilst](src/collections/linked_list/doubly.md)
+- [🚧 Circular linked ilst](src/collections/linked_list/circular.md)
 
 ## Learning Resources
 

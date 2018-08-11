@@ -42,9 +42,10 @@
 
 ### 鏈結串列
 
-- 🚧 [單向鏈結串列 Singly linked list](collections/linked_list/#singly-linked-list)
-- 🚧 [雙向鏈結串列 Doubly linked ilst](collections/linked_list/#doubly-linked-list)
-- 🚧 [循環鏈結串列 Circular linked ilst](collections/linked_list/#circular-linked-list)
+- [鏈結串列概述](collections/linked_list)
+- [單向鏈結串列 Singly linked list](collections/linked_list/singly.md)
+- [🚧 雙向鏈結串列 Doubly linked ilst](collections/linked_list/doubly.md)
+- [🚧 循環鏈結串列 Circular linked ilst](collections/linked_list/circular.md)
 
 ## 學習資源
 
