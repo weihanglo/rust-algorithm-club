@@ -332,11 +332,11 @@
 <p>Insertion sort 非常簡單，看動畫就能明瞭。
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif" alt="" /></p>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity    </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \) </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n) \)   </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(n^2) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
+<table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(n^2) \) </td></tr>
+<tr><td> Best         </td><td> \(O(n) \)   </td></tr>
+<tr><td> Average      </td><td> \(O(n^2) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
 </tbody></table>
 <p>最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 \(n \) 次。</p>
 <p>最差時間複雜度發生在資料完全相反時，insertion sort 每取得一個新元素是，都需將資料插入序列最前面，，因此所需的操作如下（ \(c \) 為任意常數）：</p>
@@ -437,11 +437,11 @@ pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
 <p>首先，回想一下穩定排序的定義：<strong>相同鍵值的元素，排序後相對位置不改變。</strong></p>
 <p>問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 \(O(1) \) insertion 的資料結構，不然就會多出額外 \(O(n^2) \) 的寫入成本。</p>
 <a class="header" href="#a效能-1" id="a效能-1"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity    </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \) </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n^2) \) </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(n^2) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
+<table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(n^2) \) </td></tr>
+<tr><td> Best         </td><td> \(O(n^2) \) </td></tr>
+<tr><td> Average      </td><td> \(O(n^2) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
 </tbody></table>
 <p>對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 \(n - 1 \) 次比較，第二個 \(n - 2 \) 次，總比較次數如下：</p>
 <p>$$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$</p>
@@ -554,11 +554,11 @@ pub fn selection_sort(arr: &amp;mut [i32]) {
 </code></pre>
 <p>很簡單的排序法！</p>
 <a class="header" href="#a效能-2" id="a效能-2"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity    </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \) </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n) \)   </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(n^2) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
+<table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(n^2) \) </td></tr>
+<tr><td> Best         </td><td> \(O(n) \)   </td></tr>
+<tr><td> Average      </td><td> \(O(n^2) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
 </tbody></table>
 <a class="header" href="#time-complexity" id="time-complexity"><h3>Time complexity</h3></a>
 <p>Bubble sort 總共需要 \(n - 1 \) 次迭代，每次迭代至少需要執行 \(n - 1 - i \) 置換（ \)i \) 為第幾次迭代），總共需要迭代</p>
@@ -642,10 +642,10 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 </blockquote>
 <a class="header" href="#gap-sequneces" id="gap-sequneces"><h3>Gap Sequneces</h3></a>
 <p>Shellsort 的效率取決於 gap sequence 的選擇，這邊舉幾個常見的 gap sequence：</p>
-<table><thead><tr><th align="left">              </th><th align="left"> Sequence                        </th></tr></thead><tbody>
-<tr><td align="left"> Marcin Ciura </td><td align="left"> 1, 4, 10, 23, 57, 132, 301, 701 </td></tr>
-<tr><td align="left"> \(2^{k} - 1 \)  </td><td align="left"> 1, 3, 7, 15, 31, 63,...         </td></tr>
-<tr><td align="left"> \(\lfloor {\frac {N}{2^k}} \rfloor \) </td><td align="left"> \(\lfloor {\frac {N}{2}} \rfloor \), \(\lfloor {\frac {N}{4}} \rfloor \), ..., 1</td></tr>
+<table><thead><tr><th>              </th><th> Sequence                        </th></tr></thead><tbody>
+<tr><td> Marcin Ciura </td><td> 1, 4, 10, 23, 57, 132, 301, 701 </td></tr>
+<tr><td> \(2^{k} - 1 \)  </td><td> 1, 3, 7, 15, 31, 63,...         </td></tr>
+<tr><td> \(\lfloor {\frac {N}{2^k}} \rfloor \) </td><td> \(\lfloor {\frac {N}{2}} \rfloor \), \(\lfloor {\frac {N}{4}} \rfloor \), ..., 1</td></tr>
 </tbody></table>
 <p>感受一下 gap sequence 為 23, 10, 4, 1 的 shellsort 吧。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Sorting_shellsort_anim.gif" alt="" /></p>
@@ -709,10 +709,10 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 </blockquote>
 <a class="header" href="#a效能-3" id="a效能-3"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity                                            </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \) ~  \(O(n \log^2 n) \) (Depends on gap sequence) </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n \log n) \)                                    </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> Depends on gap sequence                               </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary                                 </td></tr>
+<tr><td> Worst        </td><td> \(O(n^2) \) ~  \(O(n \log^2 n) \) (Depends on gap sequence) </td></tr>
+<tr><td> Best         </td><td> \(O(n \log n) \)                                    </td></tr>
+<tr><td> Average      </td><td> Depends on gap sequence                               </td></tr>
+<tr><td> Worst space  </td><td> \(O(1) \) auxiliary                                 </td></tr>
 </tbody></table>
 <p>Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 \(O(n \log^2 n) \)，有著不錯的表現。有興趣可以參考<a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">這篇文章</a>。</p>
 <a class="header" href="#a實作-3" id="a實作-3"><h2>實作</h2></a>
@@ -861,11 +861,11 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 </code></pre>
 <p>以上便是 heapsort 演算法的簡單流程，是不是和 selection sort 非常相似呢！</p>
 <a class="header" href="#a效能-4" id="a效能-4"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity         </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n \log n) \) </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n \log n) \) </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(n \log n) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
+<table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(n \log n) \) </td></tr>
+<tr><td> Best         </td><td> \(O(n \log n) \) </td></tr>
+<tr><td> Average      </td><td> \(O(n \log n) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
 </tbody></table>
 <p>Heapsort 最佳、最差、平均的時間複雜度皆為 \(O(n \log n) \)，同樣分為兩部分簡單解釋。</p>
 <a class="header" href="#build-heap-heapify" id="build-heap-heapify"><h3>Build heap (heapify)</h3></a>
@@ -1060,11 +1060,11 @@ swap i, j
  quicksort    quicksort
 </code></pre>
 <a class="header" href="#a效能-5" id="a效能-5"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity         </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)      </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n \log n) \) </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(n \log n) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(\log n) \) or \(O(n) \) auxiliary </td></tr>
+<table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(n^2) \)      </td></tr>
+<tr><td> Best         </td><td> \(O(n \log n) \) </td></tr>
+<tr><td> Average      </td><td> \(O(n \log n) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(\log n) \) or \(O(n) \) auxiliary </td></tr>
 </tbody></table>
 <a class="header" href="#time-complexity-1" id="time-complexity-1"><h3>Time complexity</h3></a>
 <p>Quicksort 僅有「<strong>選擇 Pivot</strong>」與「<strong>分割序列</strong>」兩步驟，不同的實作的效能各異，也影響 Quicksort 的時間複雜度。</p>
@@ -1342,11 +1342,11 @@ fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
     [1, 2, 3, 4, 5, 6, 7, 8]
 </code></pre>
 <a class="header" href="#a效能-6" id="a效能-6"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity         </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n \log n) \) </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n \log n) \) </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(n \log n) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(n) \) auxiliary   </td></tr>
+<table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(n \log n) \) </td></tr>
+<tr><td> Best         </td><td> \(O(n \log n) \) </td></tr>
+<tr><td> Average      </td><td> \(O(n \log n) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(n) \) auxiliary   </td></tr>
 </tbody></table>
 <a class="header" href="#time-complexity-2" id="time-complexity-2"><h3>Time Complexity</h3></a>
 <p>透過遞迴關係式，很容易計算 Mergesort 的時間複雜度。假設排序長度為 \(n \) 的序列最多需要 \(T(n) \) 時間。可以觀察到，如果序列只有一個元素，Mergesort 僅需要常數時間就可以完成排序，寫成 \(T(n) = 1 \)。</p>
@@ -1502,11 +1502,11 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
 <a class="header" href="#a自適應合併排序-timsort" id="a自適應合併排序-timsort"><h1>自適應合併排序 Timsort</h1></a>
 <p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
 <a class="header" href="#a效能-7" id="a效能-7"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity         </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n \log n) \) </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n) \)        </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(n \log n) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(n) \) auxiliary   </td></tr>
+<table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(n \log n) \) </td></tr>
+<tr><td> Best         </td><td> \(O(n) \)        </td></tr>
+<tr><td> Average      </td><td> \(O(n \log n) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(n) \) auxiliary   </td></tr>
 </tbody></table>
 <a class="header" href="#a實作-7" id="a實作-7"><h2>實作</h2></a>
 <a class="header" href="#a參考資料-8" id="a參考資料-8"><h2>參考資料</h2></a>
@@ -1614,11 +1614,11 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 </code></pre>
 <p>這樣就完成排序了。此外，觀察 <strong>(2, D)</strong> 與 <strong>(2, E)</strong> 排序前後的位置，會發現 counting sort 是個實實在在的穩定排序，很棒。</p>
 <a class="header" href="#a效能-8" id="a效能-8"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity      </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n + k) \) </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n + k) \) </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(n + k) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(n + k) \) auxiliary </td></tr>
+<table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(n + k) \) </td></tr>
+<tr><td> Best         </td><td> \(O(n + k) \) </td></tr>
+<tr><td> Average      </td><td> \(O(n + k) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(n + k) \) auxiliary </td></tr>
 </tbody></table>
 <blockquote>
 <p>k 為資料已知範圍上下界之差。</p>
@@ -1809,11 +1809,11 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
 +-------------------------------------------------+
 </code></pre>
 <a class="header" href="#a效能-9" id="a效能-9"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity      </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \)   </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n + k) \) </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(n + k) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(n + k) \) auxiliary </td></tr>
+<table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(n^2) \)   </td></tr>
+<tr><td> Best         </td><td> \(O(n + k) \) </td></tr>
+<tr><td> Average      </td><td> \(O(n + k) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(n + k) \) auxiliary </td></tr>
 </tbody></table>
 <blockquote>
 <p>\(k \) = 桶子的數量（number of buckets）
@@ -2015,11 +2015,11 @@ sort by leftmost digit --&gt;
 [2, 24, 45, 66, 75, 90, 170, 802]
 </code></pre>
 <a class="header" href="#a效能-10" id="a效能-10"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity   </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(dn) \) </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(dn) \) </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(dn) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(d + n) \) auxiliary </td></tr>
+<table><thead><tr><th>              </th><th> Complexity   </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(dn) \) </td></tr>
+<tr><td> Best         </td><td> \(O(dn) \) </td></tr>
+<tr><td> Average      </td><td> \(O(dn) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(d + n) \) auxiliary </td></tr>
 </tbody></table>
 <blockquote>
 <p>\(n \)：資料筆數。<br />
@@ -2569,15 +2569,15 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 }
 #}</code></pre></pre>
 <a class="header" href="#a效能-11" id="a效能-11"><h2>效能</h2></a>
-<table><thead><tr><th align="left"> Operation </th><th align="left"> Complexity                                      </th></tr></thead><tbody>
-<tr><td align="left"> get       </td><td align="left"> \(O(n)\)                                      </td></tr>
-<tr><td align="left"> insert    </td><td align="left"> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
-<tr><td align="left"> remove    </td><td align="left"> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
-<tr><td align="left"> append    </td><td align="left"> \(O(n)\)                                      </td></tr>
-<tr><td align="left"> prepend   </td><td align="left"> \(O(1)\)                                      </td></tr>
-<tr><td align="left"> pop first </td><td align="left"> \(O(1)\)                                      </td></tr>
-<tr><td align="left"> pop last  </td><td align="left"> \(O(n)\)                                      </td></tr>
-<tr><td align="left"> space     </td><td align="left"> \(O(n)\) + 各節點額外一個指標 \(n\) 個      </td></tr>
+<table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
+<tr><td> get       </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> insert    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
+<tr><td> remove    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
+<tr><td> append    </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> prepend   </td><td> \(O(1)\)                                      </td></tr>
+<tr><td> pop first </td><td> \(O(1)\)                                      </td></tr>
+<tr><td> pop last  </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> space     </td><td> \(O(n)\) + 各節點額外一個指標 \(n\) 個      </td></tr>
 </tbody></table>
 <blockquote>
 <p>\(n\)：資料筆數。<br />

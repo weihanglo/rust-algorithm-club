@@ -545,15 +545,15 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 }
 #}</code></pre></pre>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
-<table><thead><tr><th align="left"> Operation </th><th align="left"> Complexity                                      </th></tr></thead><tbody>
-<tr><td align="left"> get       </td><td align="left"> \(O(n)\)                                      </td></tr>
-<tr><td align="left"> insert    </td><td align="left"> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
-<tr><td align="left"> remove    </td><td align="left"> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
-<tr><td align="left"> append    </td><td align="left"> \(O(n)\)                                      </td></tr>
-<tr><td align="left"> prepend   </td><td align="left"> \(O(1)\)                                      </td></tr>
-<tr><td align="left"> pop first </td><td align="left"> \(O(1)\)                                      </td></tr>
-<tr><td align="left"> pop last  </td><td align="left"> \(O(n)\)                                      </td></tr>
-<tr><td align="left"> space     </td><td align="left"> \(O(n)\) + 各節點額外一個指標 \(n\) 個      </td></tr>
+<table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
+<tr><td> get       </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> insert    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
+<tr><td> remove    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
+<tr><td> append    </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> prepend   </td><td> \(O(1)\)                                      </td></tr>
+<tr><td> pop first </td><td> \(O(1)\)                                      </td></tr>
+<tr><td> pop last  </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> space     </td><td> \(O(n)\) + 各節點額外一個指標 \(n\) 個      </td></tr>
 </tbody></table>
 <blockquote>
 <p>\(n\)：資料筆數。<br />

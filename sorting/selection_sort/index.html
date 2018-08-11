@@ -179,11 +179,11 @@
 <p>首先，回想一下穩定排序的定義：<strong>相同鍵值的元素，排序後相對位置不改變。</strong></p>
 <p>問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 \(O(1) \) insertion 的資料結構，不然就會多出額外 \(O(n^2) \) 的寫入成本。</p>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
-<table><thead><tr><th align="left">              </th><th align="left"> Complexity    </th></tr></thead><tbody>
-<tr><td align="left"> Worst        </td><td align="left"> \(O(n^2) \) </td></tr>
-<tr><td align="left"> Best         </td><td align="left"> \(O(n^2) \) </td></tr>
-<tr><td align="left"> Average      </td><td align="left"> \(O(n^2) \) </td></tr>
-<tr><td align="left"> Worst space  </td><td align="left"> \(O(1) \) auxiliary </td></tr>
+<table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
+<tr><td> Worst        </td><td> \(O(n^2) \) </td></tr>
+<tr><td> Best         </td><td> \(O(n^2) \) </td></tr>
+<tr><td> Average      </td><td> \(O(n^2) \) </td></tr>
+<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
 </tbody></table>
 <p>對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 \(n - 1 \) 次比較，第二個 \(n - 2 \) 次，總比較次數如下：</p>
 <p>$$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$</p>
