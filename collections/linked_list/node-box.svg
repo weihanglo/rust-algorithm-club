@@ -1,0 +1,19 @@
+<svg width="78pt" height="88pt" viewBox="0.00 0.00 78.00 88.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 84)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-84 74,-84 74,4 -4,4"></polygon>
+<!-- table0 -->
+<g id="node1" class="node">
+<title>table0</title>
+<polyline fill="none" stroke="#000000" points="8,-54 62,-54 "></polyline>
+<text text-anchor="start" x="19.8394" y="-60.4" font-family="Times,serif" font-size="14.00" fill="#000000">Node</text>
+<polygon fill="none" stroke="#000000" points="8,-4 8,-54 22,-54 22,-4 8,-4"></polygon>
+<text text-anchor="start" x="10.7237" y="-24.8" font-family="Times,serif" font-size="14.00" fill="#000000">T</text>
+<polygon fill="none" stroke="#000000" points="22,-4 22,-54 62,-54 62,-4 22,-4"></polygon>
+<polyline fill="none" stroke="#000000" points="25,-29 59,-29 "></polyline>
+<text text-anchor="start" x="30.3317" y="-35.4" font-family="Times,serif" font-size="14.00" fill="#000000">Box</text>
+<polygon fill="none" stroke="#000000" points="25,-7 25,-29 59,-29 59,-7 25,-7"></polygon>
+<text text-anchor="start" x="27.6178" y="-13.4" font-family="Times,serif" font-size="14.00" fill="#000000">usize</text>
+</g>
+</g>
+</svg>

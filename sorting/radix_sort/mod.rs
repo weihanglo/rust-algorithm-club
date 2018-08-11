@@ -1,4 +1,4 @@
-use ::sorting::counting_sort;
+use crate::sorting::counting_sort;
 
 /// Radix sort for sorting unsigned integers.
 ///

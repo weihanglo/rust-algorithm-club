@@ -1,3 +1,3 @@
-pub fn pdqsort(arr: &mut [i32]) {
-  unimplemented!()
+pub fn pdqsort(_arr: &mut [i32]) {
+    unimplemented!()
 }

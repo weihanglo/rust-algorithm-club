@@ -9,16 +9,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
-        <link rel="stylesheet" href="../../book.css">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
 
-        <link rel="shortcut icon" href="favicon.png">
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="../../_FontAwesome/css/font-awesome.css">
-
+        <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../highlight.css">
         <link rel="stylesheet" href="../../tomorrow-night.css">
         <link rel="stylesheet" href="../../ayu-highlight.css">
@@ -30,9 +32,11 @@
         <!-- MathJax -->
         <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
-
     </head>
     <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../../";</script>
+
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
             try {
@@ -52,7 +56,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -71,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../../">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation/" class="active">漸進符號 Asymptotic Notation</a></li><li><a href="../../concepts/master-theorem/">🚧 主定理 Master Theorem</a></li></ol></li><li><a href="../../sorting/">排序</a></li><li><ol class="section"><li><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/">堆積排序 Heapsort</a></li><li><a href="../../sorting/quicksort/">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/linked_list/">🚧 單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation/index.html" class="active">漸進符號 Asymptotic Notation</a></li></ol></li><li><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li><a href="../../collections/linked_list/index.html">鏈結串列概述</a></li><li><ol class="section"><li><a href="../../collections/linked_list/singly.html">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/linked_list/doubly.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/linked_list/circular.html">🚧 循環鏈結串列 Circular linked list</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../LICENSE.html">授權條款</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -101,10 +105,10 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1>
+                        <h1 class="menu-title">Rust Algorithm Club</h1> 
 
                         <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <a href="../../print.html" title="Print this book" aria-label="Print this book">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
                         </div>
@@ -144,8 +148,7 @@
 <p><strong>「統計演算法內所需操作步驟的數目。」</strong></p>
 <p>這是最簡單，最粗淺比較不同演算法效率的作法。</p>
 <a class="header" href="#a用數學表示演算法效率" id="a用數學表示演算法效率"><h2>用數學表示演算法效率</h2></a>
-<p>「計算步驟數目」很像中小學的數學題目：某公司有六個能力相異的工程師，有的工程師一天解決一個 bug，有的工程師連續工作後效率大幅滑落。每個工程師的除蟲效率可以畫成「bug 數 - 解決 bug 所需時數」函數，橫軸為待處理的臭蟲數，縱軸為解決臭蟲所需時數，如圖一所示。</p>
-<p>這裡有一張表，分別代表三個不同能力的工程師，橫軸為 bug 數目，縱軸為工程師解 bug 花費時數：</p>
+<p>「計算步驟數目」很像中小學的數學題目：某公司有三個能力相異的工程師，有的工程師一天解決一個 bug，有的工程師連續工作後效率大幅滑落。每個工程師的除蟲效率可以畫成「bug 數 - 解決 bug 所需時數」函數，橫軸為待處理的臭蟲數，縱軸為解決臭蟲所需時數，如圖一與表所示。</p>
 <table><thead><tr><th> 時數       </th><th> \(\log N\) </th><th> \(N\) </th><th> \(N \log N\) </th></tr></thead><tbody>
 <tr><td> \(N=5\)  </td><td> 2.236        </td><td> 5       </td><td> 8.046          </td></tr>
 <tr><td> \(N=30\) </td><td> 5.477        </td><td> 30      </td><td> 102.036        </td></tr>
@@ -234,13 +237,13 @@
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../../concepts/" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../concepts/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../../concepts/master-theorem/" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../sorting/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -252,13 +255,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../../concepts/" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../../concepts/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="../../concepts/master-theorem/" class="nav-chapters next" title="Next chapter ../../" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../../sorting/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -290,11 +293,6 @@
         
 
         
-
-        
-        <script src="../../searchindex.js" type="text/javascript" charset="utf-8"></script>
-        
-        
         <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
@@ -305,6 +303,8 @@
         <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+
         
 
     </body>
