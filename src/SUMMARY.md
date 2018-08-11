@@ -25,7 +25,7 @@
     - [桶排序 Bucket sort](sorting/bucket_sort/README.md)
     - [基數排序 Radix sort](sorting/radix_sort/README.md)
 - [資料結構](collections/README.md)
-  - [鏈結串列概述](collections/linked_list/README.md)
+  - [鏈結串列](collections/linked_list/README.md)
     - [單向鏈結串列 Singly linked list](collections/linked_list/singly.md)
     - [🚧 雙向鏈結串列 Doubly linked list](collections/linked_list/doubly.md)
     - [🚧 循環鏈結串列 Circular linked list](collections/linked_list/circular.md)

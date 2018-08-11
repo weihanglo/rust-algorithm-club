@@ -423,7 +423,7 @@ impl<T: std::fmt::Debug> std::fmt::Debug for SinglyLinkedList<T> {
 
 ## 效能
 
-|           | Complexity                                      |
+| Operation | Complexity                                      |
 | :-------- | :---------------------------------------------- |
 | get       | \\(O(n)\\)                                      |
 | insert    | 節點已知：\\(O(1)\\) ；節點未知：\\(O(n - i)\\) |
@@ -433,6 +433,9 @@ impl<T: std::fmt::Debug> std::fmt::Debug for SinglyLinkedList<T> {
 | pop first | \\(O(1)\\)                                      |
 | pop last  | \\(O(n)\\)                                      |
 | space     | \\(O(n)\\) + 各節點額外一個指標 \\(n\\) 個      |
+
+> \\(n\\)：資料筆數。  
+> \\(i\\)：相對於整個容器的索引位置。
 
 值得觀察的是，許多操作因為單向鏈結串列只能從 head 開始搜索的緣故，執行時間都呈線性，使用上要特別注意。
 

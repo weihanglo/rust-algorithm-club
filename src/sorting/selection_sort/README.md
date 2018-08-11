@@ -98,7 +98,7 @@ pub fn selection_sort(arr: &mut [i32]) {
 
 [Heapsort][heapsort] 是一個高效的排序法，使用 selection sort 融合 [heap][wiki-heap] 這種半排序的資料結構，讓時間複雜度進化至 \\(O(n \log n) \\)。更多詳情可以參考[這篇介紹][heapsort]。
 
-[heapsort]: ../heapsort/README.md
+[heapsort]: ../heapsort/
 [wiki-heap]: https://en.wikipedia.org/wiki/Heap_(data_structure)
 
 ## 參考資料

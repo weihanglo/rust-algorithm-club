@@ -2,6 +2,7 @@
 
 > ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here](https://weihanglo.tw/rust-algorithm-club) if you are able to read Chinese.
 
+[![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)](https://rust-lang-nursery.github.io/edition-guide/rust-2018/index.html) 
 [![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)](https://travis-ci.com/weihanglo/rust-algorithm-club)
 
 This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
