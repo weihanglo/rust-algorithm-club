@@ -24,8 +24,7 @@ before_install:
 
 install:
   - source ~/.cargo/env || true
-  # Fetch forked `mdBook` for deployment.
-  - cargo install --git https://github.com/weihanglo/mdBook.git --branch "workaround/algo-club" mdbook | tee
+  - cargo install --git https://github.com/rust-lang-nursery/mdBook.git --tag "v0.2.0" mdbook | tee
 
 script:
   - cargo build --target $TARGET
