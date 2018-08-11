@@ -9,11 +9,8 @@
 /// - https://stackoverflow.com/questions/51134192/
 /// - https://codereview.stackexchange.com/questions/150906
 pub struct SinglyLinkedList<T> {
-    head: Link<T>,
+    head: Option<Box<Node<T>>>,
 }
-
-/// Helper type to store linkage information
-type Link<T> = Option<Box<Node<T>>>;
 
 /// An owning iterator over the elements of a `SinglyLinkedList`.
 ///
@@ -38,7 +35,7 @@ pub struct IterMut<'a, T: 'a> {
 #[derive(Debug)]
 struct Node<T> {
     elem: T,
-    next: Link<T>,
+    next: Option<Box<Node<T>>>,
 }
 
 impl<T> SinglyLinkedList<T> {
@@ -72,8 +69,7 @@ impl<T> SinglyLinkedList<T> {
     pub fn pop_front(&mut self) -> Option<T> {
         let head = self.head.take(); // Take ownership of head;
         match head {
-            Some(boxed_node) => {
-                let node = *boxed_node; // Dereference from Box.
+            Some(node) => {
                 self.head = node.next;
                 Some(node.elem)
             }
@@ -109,16 +105,17 @@ impl<T> SinglyLinkedList<T> {
 
         // Take the ownership of current node.
         match curr.take() {
-            Some(mut boxed_node) => {
-                // Insert new node and .
-                let next = boxed_node.next;
-                boxed_node.next = Some(Box::new(Node {
+            Some(mut node) => {
+                // Create new node.
+                let new_node = Box::new(Node {
                     elem,
-                    next,
-                }));
+                    next: node.next,
+                });
+                // Re-link new node and current node.
+                node.next = Some(new_node);
 
                 // Assign current node back to the list.
-                *curr = Some(boxed_node);
+                *curr = Some(node);
             }
             None => return Err(pos - pos_)
         }
@@ -148,8 +145,8 @@ impl<T> SinglyLinkedList<T> {
         }
 
         match curr.take() {
-            Some(boxed_node) => {
-                let node = *boxed_node; // Dereference from Box.
+            Some(node) => {
+                // Assign next node to previous node.next pointer.
                 *curr = node.next;
                 Some(node.elem)
             }
@@ -192,45 +189,32 @@ impl<T> SinglyLinkedList<T> {
     pub fn reverse(&mut self) {
         let mut prev = None;
         let mut curr = self.head.take();
-        while let Some(mut boxed_node) = curr {
-            let next = boxed_node.next;
-            boxed_node.next = prev.take(); // Take ownership from previous node.
-            prev = Some(boxed_node); // Transfer ownership from current node to previous.
+        while let Some(mut node) = curr {
+            let next = node.next;
+            node.next = prev.take(); // Take ownership from previous node.
+            prev = Some(node); // Transfer ownership from current node to previous.
             curr = next; // curr references to next node for next iteration.
         }
         self.head = prev.take();
     }
 
+    /// Creates a iterator that yields immutable refernce of each element.
     pub fn iter(&self) -> Iter<T> {
         Iter { next: self.head.as_ref().map(|node| &**node) }
     }
 
+    /// Creates a iterator that yields mutable refernce of each element.
     pub fn iter_mut(&mut self) -> IterMut<T> {
         IterMut { next: self.head.as_mut().map(|node| &mut **node) }
-    }
-
-    pub fn into_iter(self) -> IntoIter<T> {
-        IntoIter(self)
     }
 }
 
 impl<T> Drop for SinglyLinkedList<T> {
     fn drop(&mut self) {
         let mut link = self.head.take();
-        while let Some(mut boxed_node) = link {
-            link = boxed_node.next.take(); // Take ownership of next `link` here.
-        } // Previous `boxed_node` goes out of scope and gets dropped here.
-    }
-}
-
-impl<T> IntoIterator for &'a SinglyLinkedList<T> {
-    type Item = &'a T;
-    type IntoIter = Iter<'a, T>;
-
-    // Creates a consuming iterator, that is, one that moves each value out of
-    // the list (from start to end). The list cannot be used after calling this.
-    fn into_iter(self) -> Self::IntoIter {
-        self.iter()
+        while let Some(mut node) = link {
+            link = node.next.take(); // Take ownership of next `link` here.
+        } // Previous `node` goes out of scope and gets dropped here.
     }
 }
 
@@ -267,6 +251,17 @@ impl<T> Iterator for IntoIter<T> {
     }
 }
 
+impl<T> IntoIterator for SinglyLinkedList<T> {
+    type Item = T;
+    type IntoIter = IntoIter<T>;
+
+    /// Creates a consuming iterator, that is, one that moves each value out of
+    /// the list (from start to end). The list cannot be used after calling this.
+    fn into_iter(self) -> Self::IntoIter {
+        IntoIter(self)
+    }
+}
+
 impl<T: PartialEq> PartialEq for SinglyLinkedList<T> {
     fn eq(&self, other: &Self) -> bool {
         if self.len() != other.len() {
@@ -280,8 +275,8 @@ impl<T: PartialEq> PartialEq for SinglyLinkedList<T> {
 
 impl<T: std::fmt::Debug> std::fmt::Debug for SinglyLinkedList<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        for node in self {
-            write!(f, "{:?} ", node)?
+        for node in self.iter() {
+            write!(f, "{:?} -> ", node)?
         }
         Ok(())
     }
@@ -373,7 +368,7 @@ mod tests {
 
     #[test]
     fn iterators() {
-        // `iter`
+        // 1. `iter`
         let mut l = SinglyLinkedList::<i32>::new();
         l.push_front(1);
         l.push_front(2);
@@ -384,7 +379,7 @@ mod tests {
         assert_eq!(it.next(), Some(&2));
         assert_eq!(it.next(), Some(&1));
 
-        // `iter_mut`
+        // 2. `iter_mut`
         for elem in l.iter_mut() {
             *elem *= *elem;
         }
@@ -395,9 +390,10 @@ mod tests {
         res.push_front(9);
         assert_eq!(l, res);
 
-        // `into_iter`
+        // 3. `into_iter`
         let collected = l.into_iter().collect::<Vec<i32>>();
         assert_eq!(vec![9, 4, 1], collected);
+        // Cannot access `l`. Value moved into `collected`.
     }
 
     #[test]
