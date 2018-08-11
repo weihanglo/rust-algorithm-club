@@ -94,7 +94,7 @@ sort by leftmost digit -->
 ## 效能
 
 |              | Complexity   |
-| :----------- | :----------- |
+| ------------ | ------------ |
 | Worst        | \\(O(dn) \\) |
 | Best         | \\(O(dn) \\) |
 | Average      | \\(O(dn) \\) |

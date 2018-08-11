@@ -61,7 +61,7 @@ Recursively merge subarray respecting the order.
 ## 效能
 
 |              | Complexity         |
-| :----------- | :----------------- |
+| ------------ | ------------------ |
 | Worst        | \\(O(n \log n) \\) |
 | Best         | \\(O(n \log n) \\) |
 | Average      | \\(O(n \log n) \\) |

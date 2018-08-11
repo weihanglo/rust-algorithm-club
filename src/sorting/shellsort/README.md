@@ -25,7 +25,7 @@ Shellsort 分為兩個步驟：
 Shellsort 的效率取決於 gap sequence 的選擇，這邊舉幾個常見的 gap sequence：
 
 |              | Sequence                        |
-| :----------- | :------------------------------ |
+| ------------ | ------------------------------- |
 | Marcin Ciura | 1, 4, 10, 23, 57, 132, 301, 701 |
 | \\(2^{k} - 1 \\)  | 1, 3, 7, 15, 31, 63,...         |
 | \\(\lfloor {\frac {N}{2^k}} \rfloor \\) | \\(\lfloor {\frac {N}{2}} \rfloor \\), \\(\lfloor {\frac {N}{4}} \rfloor \\), ..., 1|
@@ -107,7 +107,7 @@ Shellsort 其實就是進行好幾次不同 gap 的 insertion sort，以下用 A
 ## 效能
 
 |              | Complexity                                            |
-| :----------- | :---------------------------------------------------- |
+| ------------ | ----------------------------------------------------- |
 | Worst        | \\(O(n^2) \\) ~  \\(O(n \log^2 n) \\) (Depends on gap sequence) |
 | Best         | \\(O(n \log n) \\)                                    |
 | Average      | Depends on gap sequence                               |
