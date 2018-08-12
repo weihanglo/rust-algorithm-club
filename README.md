@@ -45,9 +45,15 @@ Special-purpose sorts:
 
 ## Data Structures
 
+### Stack and Queue
+
+- [Stack](src/collections/stack_queue/stack.md)
+- [Queue](src/collections/stack_queue/queue.md)
+- [Deque](src/collections/stack_queue/deque.md)
+
 ### Linked List
 
-- [Linked list concepts](src/collections/linked_list/)
+- [Linked list concepts](src/collections/linked_list/README.md)
 - [Singly linked list](src/collections/linked_list/singly.md)
 - [🚧 Doubly linked ilst](src/collections/linked_list/doubly.md)
 - [🚧 Circular linked ilst](src/collections/linked_list/circular.md)

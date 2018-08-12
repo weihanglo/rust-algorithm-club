@@ -1,5 +1,8 @@
 # Rust Algorithm Club
 
+[![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)](https://rust-lang-nursery.github.io/edition-guide/rust-2018/index.html) 
+[![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)](https://travis-ci.com/weihanglo/rust-algorithm-club)
+
 本專案受 [Swift Algorithm Club][swift-algorithm-club] 啟發，專案中的演算法皆使用 [Rust 程式語言][rust]撰寫說明與實作！
 
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
@@ -40,9 +43,15 @@
 
 ## 資料結構
 
+### 堆疊與佇列
+
+- [🚧 堆疊 Stack](collections/stack_queue/stack.md)
+- [🚧 佇列 Queue](collections/stack_queue/queue.md)
+- [🚧 雙端佇列 Deque](collections/stack_queue/deque.md)
+
 ### 鏈結串列
 
-- [鏈結串列概述](collections/linked_list)
+- [鏈結串列概述](collections/linked_list/README.md)
 - [單向鏈結串列 Singly linked list](collections/linked_list/singly.md)
 - [🚧 雙向鏈結串列 Doubly linked ilst](collections/linked_list/doubly.md)
 - [🚧 循環鏈結串列 Circular linked ilst](collections/linked_list/circular.md)
