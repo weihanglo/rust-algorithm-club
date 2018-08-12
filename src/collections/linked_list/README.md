@@ -2,30 +2,34 @@
 
 鏈結串列是一種基本線性資料集合，每一個資料元素都是獨立的物件。儲存資料的方式和一般陣列配置連續物理記憶體空間不同，而是在各節點儲存額外的指標指向下一個節點。
 
-鏈結串列相較於陣列有以下優劣之處：
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Singly-linked-list.svg/612px-Singly-linked-list.svg.png)
 
-### 優點
+_(單向鏈結串列示意圖）_
+
+## 特性
+
+鏈結串列有以下特性與優點：
 
 - 不需事先知道資料型別大小，充分利用動態記憶體管理。
 - 以常數時間插入／刪除，不需重新配置記憶體（reallocation）。
 
-### 缺點
+但也因動態配置記憶體等因素，連帶產生一些缺陷：
 
 - **空間開銷大**：每個元素需儲存額外的指標空間。
 - **較差的 CPU 快取**：不連續存取的特性，不利於 [CPU 快取][wiki-cpu-cache]。
-- 不允許隨機存取（random access），導致搜尋特定節點需要線性時間。
+- **不允許隨機存取（random access）**：搜尋特定索引下的節點仍需線性時間。
 
 [wiki-cpu-cache]: https://en.wikipedia.org/wiki/CPU_cache
 
 ## 適用場景
 
-大多數的場景，其實不太常使用鏈結串列，Rust 內建的 [`LinkedList`][rust-linked-list] 文件也建議，除非肯定要用鏈結串列，還是建議先考慮其他類似的資料結構如 [`VecDeque`][rust-vec-deque]。話雖如此，鏈結串列還是有許多應用場景如下：
+大多數的場景其實不太常使用鏈結串列，Rust 內建的 [`LinkedList`][rust-linked-list] 文件也建議，除非肯定要用鏈結串列，不然建議優先考慮其他類似的資料結構如 [`VecDeque`][rust-vec-deque]。話雖如此，鏈結串列仍有不少應用場景：
 
 - 需要頻繁地插入與刪除資料。
-- 需要頻繁分開與合併（split & merge）資料。
+- 需要頻繁分離與合併（split and merge）資料。
 - 不需要隨機存取的資料。
-- 遞迴友好，因此時大多函數式語言中基本資料型別之一。
-- 常用來實作各種抽象資料型別，如堆疊（stack）與佇列（queue）等等。
+- 遞迴友好，因此成為大多函數式語言中基本資料型別之一。
+- 教學上，常用於實作抽象資料型別，如[堆疊](../stack_queue/stack.md)與[佇列](../stack_queue/queue.md)等等。
 
 [rust-linked-list]: https://doc.rust-lang.org/std/collections/struct.LinkedList.html
 [rust-vec-deque]: https://doc.rust-lang.org/std/collections/vec_deque/struct.VecDeque.html
@@ -34,11 +38,11 @@
 
 ### Node
 
-又稱「節點」，是組成鏈結串列最基本的元素，節點包含資料儲存區，以及儲存指向其他節點的指標儲存區。
+又稱「節點」，為組成鏈結串列的基本元素，節點包含資料儲存區，以及指向其他節點的指標儲存區。
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Singly-linked-list.svg/612px-Singly-linked-list.svg.png)
+![node-box](node-box.svg)
 
-(單向鏈結串列示意圖）
+_（節點示意圖）_
 
 ### Head and tail
 
@@ -96,7 +100,7 @@ NULL <--|        |<--|        |<--|        |
         +--------+   +--------+   +--------+
 ```
 
-倘若該鏈結串列末端節點的指標指向第一個的節點，形成一個循環，則我們稱之為「[循環鏈結串列](circular.md)」。
+倘若該鏈結串列末端節點的指標指向第一個的節點，形成一個循環，則稱之為「[循環鏈結串列](circular.md)」。
 
 ```
 Singly linked list as circular
