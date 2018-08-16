@@ -15,7 +15,7 @@ Shellsort 特性如下：
 
 Shellsort 分為兩個步驟：
 
-1. 決定 gap sequence，組後一個
+1. 決定一組 gap sequence。
 2. 迭代 gap sequence 進行分組排序，每次執行有間隔的 insertion sort。也就是每個元素與其相鄰 gap 的元素比較與置換。
 
 > 最後一次排序（gap = 1）會退化為 insertion sort，完成整個排序。
