@@ -4,6 +4,10 @@
 
 方便起見，本文以「**映射表**」統稱這類集合型別。
 
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Hash_table_5_0_1_1_1_1_0_LL.svg/1280px-Hash_table_5_0_1_1_1_1_0_LL.svg.png)
+
+_（雜湊表示意圖）_
+
 ## 特性
 
 一般來說，映射表有以下特性：

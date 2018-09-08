@@ -58,11 +58,11 @@ Heapsort 的演算法分為兩大步驟：
 
 <!-- TODO: Waiting for rust-lang-nursery/mdBook/pull/603 -->
 <!-- Use absolute links as as workaround. -->
-<img src="sorting/heapsort/tree.png" height="300px" />
+<img src="tree.png" height="300px" />
 
 再來就是**排序的部分**，Max-heap 會將最大的元素擺在 root 的位置，我們先將最後一個 node 與 root 進行交換，完成第一個排序步驟。
 
-> 若不熟悉 heap，可以閱讀[ Wiki 的介紹][wiki-heap]，其實 heap 就是用陣列實作的二元樹。
+> 若不熟悉 heap，可以閱讀 [Wiki 的介紹][wiki-heap]，其實 heap 就是用陣列實作的二元樹。
 
 ```
 [21, 20, 17, 1, 3, 2]
