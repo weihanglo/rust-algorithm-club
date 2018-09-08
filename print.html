@@ -2661,7 +2661,7 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 <a class="header" href="#a有序映射表-ordered-map" id="a有序映射表-ordered-map"><h3>有序映射表 Ordered Map</h3></a>
 <p><a href="ordered_map.html">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 \(O(\log n)\)。</p>
 <a class="header" href="#a多重映射表-multimap" id="a多重映射表-multimap"><h3>多重映射表 Multimap</h3></a>
-<p><a href="multimap.html">多重映射表</a>允許鍵值重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的接口操作或迭代整張映射表。</p>
+<p><a href="multimap.html">多重映射表</a>允許鍵值對重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的接口操作或迭代整張映射表。</p>
 <a class="header" href="#a集合-set" id="a集合-set"><h3>集合 Set</h3></a>
 <p><a href="set.html">集合</a>實際上並無鍵值「關聯」，可將其想像成普通的映射表。只關心鍵而值不重要。集合借用了數學<a href="https://en.wikipedia.org/wiki/Set_theory">集合論（set theory）</a>中有限集合的概念，常應用於需要操作交集、聯集、差集等集合運算場景。</p>
 <a class="header" href="#a參考資料-18" id="a參考資料-18"><h2>參考資料</h2></a>
@@ -2675,8 +2675,8 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 <p>以雜湊函數實作的映射表。</p>
 <a class="header" href="#a有序映射表-ordered-map-1" id="a有序映射表-ordered-map-1"><h1>有序映射表 Ordered Map</h1></a>
 <p>有特定排序方式的映射表。</p>
-<a class="header" href="#a多鍵映射表-multimap" id="a多鍵映射表-multimap"><h1>多鍵映射表 Multimap</h1></a>
-<p>允許鍵值重複，一個鍵可對應多個值（一對多）映射表。</p>
+<a class="header" href="#a多重映射表-multimap-1" id="a多重映射表-multimap-1"><h1>多重映射表 Multimap</h1></a>
+<p>允許鍵值對重複，一個鍵可對應多個值（一對多）映射表。</p>
 <a class="header" href="#a集合-set-1" id="a集合-set-1"><h1>集合 Set</h1></a>
 <p>只有鍵沒有值的映射表。</p>
 <p>MIT License</p>
