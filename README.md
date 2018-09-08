@@ -47,16 +47,26 @@ Special-purpose sorts:
 
 ### Stack and Queue
 
-- [Stack](src/collections/stack_queue/stack.md)
-- [Queue](src/collections/stack_queue/queue.md)
-- [Deque](src/collections/stack_queue/deque.md)
+- [🚧 Stack](src/collections/stack_queue/stack.md)
+- [🚧 Queue](src/collections/stack_queue/queue.md)
+- [🚧 Deque](src/collections/stack_queue/deque.md)
 
 ### Linked List
 
-- [Linked list concepts](src/collections/linked_list/README.md)
+[Introduction of linked list](src/collections/linked_list/README.md)
+
 - [Singly linked list](src/collections/linked_list/singly.md)
-- [🚧 Doubly linked ilst](src/collections/linked_list/doubly.md)
-- [🚧 Circular linked ilst](src/collections/linked_list/circular.md)
+- [🚧 Doubly linked list](src/collections/linked_list/doubly.md)
+- [🚧 Circular linked list](src/collections/linked_list/circular.md)
+
+### Associative Container
+
+[Introduction of associative container](src/collections/map/README.md)
+
+- [🚧 Hash map](src/collections/map/hash_map.md)
+- [🚧 Ordered map](src/collections/map/ordered_map.md)
+- [🚧 Multimap](src/collections/map/multimap.md)
+- [🚧 Set](src/collections/map/set.md)
 
 ## Learning Resources
 
@@ -73,9 +83,9 @@ For learning more, you may check out following online resources:
 
 ## License
 
-This project is licensed under:
+This project is released under different licenses based on type of the content.
 
-- Source code: [The MIT License (MIT)](LICENSE).
-- Articles and creative works: [Creative Commons 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+- Source code is licensed under [The MIT License (MIT)](LICENSE).
+- Articles and creative works are licensed under [Creative Commons 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 Copyright © 2017 - 2018 Weihang Lo
