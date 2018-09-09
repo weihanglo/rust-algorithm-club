@@ -159,7 +159,7 @@ pub fn radix_sort(arr: &mut [i32]) {
 ## 參考資料
 
 - [Wiki: Radix sort][wiki-radix-sort]
-- [Princeton Universioty DSA Course: Radix sort](https://www.cs.princeton.edu/~rs/AlgsDS07/18RadixSort.pdf)
+- [Princeton University DSA Course: Radix sort](https://www.cs.princeton.edu/~rs/AlgsDS07/18RadixSort.pdf)
 - [ByVoid: 三種線性排序算法 計數排序、桶排序與基數排序](https://www.byvoid.com/zht/blog/sort-radix)
 
 [wiki-radix-sort]: https://en.wikipedia.org/wiki/Radix_sort
