@@ -53,7 +53,7 @@ Special-purpose sorts:
 
 ### Linked List
 
-[Introduction of linked list](src/collections/linked_list/README.md)
+[Introduction of linked list](src/collections/linked_list)
 
 - [Singly linked list](src/collections/linked_list/singly.md)
 - [🚧 Doubly linked list](src/collections/linked_list/doubly.md)
@@ -61,7 +61,7 @@ Special-purpose sorts:
 
 ### Associative Container
 
-[Introduction of associative container](src/collections/map/README.md)
+[Introduction of associative container](src/collections/map)
 
 - [🚧 Hash map](src/collections/map/hash_map.md)
 - [🚧 Ordered map](src/collections/map/ordered_map.md)
