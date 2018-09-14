@@ -9,12 +9,13 @@ env:
 
 matrix:
   include:
-    # Stable channel.
-    - env: TARGET=x86_64-unknown-linux-gnu
-    # Beta channel.
-    - env: TARGET=x86_64-unknown-linux-gnu
-      rust: beta
-    # Nighly channel.
+    # NOTE: Change back to stable after 2018 Edition merged.
+    ## Stable channel.
+    #- env: TARGET=x86_64-unknown-linux-gnu
+    ## Beta channel.
+    #- env: TARGET=x86_64-unknown-linux-gnu
+    #  rust: beta
+    ## Nighly channel.
     - env: TARGET=x86_64-unknown-linux-gnu
       rust: nightly
 
@@ -55,4 +56,5 @@ deploy:
   github-token: $GITHUB_TOKEN
   keep-history: true
   on:
-    condition: "$TRAVIS_RUST_VERSION = stable"
+    # NOTE: Change back to stable after 2018 Edition merged.
+    condition: "$TRAVIS_RUST_VERSION = nightly"
