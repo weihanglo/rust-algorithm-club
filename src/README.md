@@ -3,10 +3,11 @@
 [![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)](https://rust-lang-nursery.github.io/edition-guide/rust-2018/index.html) 
 [![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)](https://travis-ci.com/weihanglo/rust-algorithm-club)
 
-本專案受 [Swift Algorithm Club][swift-algorithm-club] 啟發，專案中的演算法皆使用 [Rust 程式語言][rust]撰寫說明與實作！
+本專案受 [Swift Algorithm Club][swift-algorithm-club] 啟發，專案中的演算法皆使用 [Rust 程式語言][rust]撰寫說明與實作！專案原始碼放在 [GitHub][source-code] 上，非常期待您的貢獻。
 
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
+[source-code]: https://github.com/weihanglo/rust-algorithm-club
 
 ## 基礎概念
 
@@ -61,7 +62,7 @@
 
 [關聯容器概述](collections/map)
 
-- [🚧 雜湊表 Hash map](collections/map/hash_map.md)
+- [雜湊表 Hash map](collections/map/hash_map.md)
 - [🚧 有序映射表 Ordered map](collections/map/ordered_map.md)
 - [🚧 多重映射表 Multimap](collections/map/multimap.md)
 - [🚧 集合 Set](collections/map/set.md)

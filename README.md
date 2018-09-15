@@ -1,14 +1,15 @@
 # Rust Algorithm Club
 
-> ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here](https://weihanglo.tw/rust-algorithm-club) if you are able to read Chinese.
+> ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here](https://rust-algo.club) if you are able to read Chinese.
 
 [![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)](https://rust-lang-nursery.github.io/edition-guide/rust-2018/index.html) 
 [![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)](https://travis-ci.com/weihanglo/rust-algorithm-club)
 
-This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
+This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]! Source code is on [GitHub][source-code] and we are looking forward to your contributions.
 
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
+[source-code]: https://github.com/weihanglo/rust-algorithm-club
 
 ## General Concepts
 
@@ -63,7 +64,7 @@ Special-purpose sorts:
 
 [Introduction of associative container](src/collections/map)
 
-- [🚧 Hash map](src/collections/map/hash_map.md)
+- [Hash map](src/collections/map/hash_map.md)
 - [🚧 Ordered map](src/collections/map/ordered_map.md)
 - [🚧 Multimap](src/collections/map/multimap.md)
 - [🚧 Set](src/collections/map/set.md)
