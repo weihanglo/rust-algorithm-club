@@ -11,6 +11,4 @@ create-missing = false
 curly-quotes = true
 mathjax-support = true
 no-section-label = true
-readme-to-index = true
 google-analytics = "UA-118441906-1"
-rewrite-to-dir = ["index.html"]
