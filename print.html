@@ -182,14 +182,14 @@
 <li><a href="collections/stack_queue/deque.html">🚧 雙端佇列 Deque</a></li>
 </ul>
 <a class="header" href="#a鏈結串列" id="a鏈結串列"><h3>鏈結串列</h3></a>
-<p><a href="collections/linked_list/README.html">鏈結串列概述</a></p>
+<p><a href="collections/linked_list">鏈結串列概述</a></p>
 <ul>
 <li><a href="collections/linked_list/singly.html">單向鏈結串列 Singly linked list</a></li>
 <li><a href="collections/linked_list/doubly.html">🚧 雙向鏈結串列 Doubly linked list</a></li>
 <li><a href="collections/linked_list/circular.html">🚧 循環鏈結串列 Circular linked list</a></li>
 </ul>
 <a class="header" href="#a關聯容器" id="a關聯容器"><h3>關聯容器</h3></a>
-<p><a href="collections/map/README.html">關聯容器概述</a></p>
+<p><a href="collections/map">關聯容器概述</a></p>
 <ul>
 <li><a href="collections/map/hash_map.html">🚧 雜湊表 Hash map</a></li>
 <li><a href="collections/map/ordered_map.html">🚧 有序映射表 Ordered map</a></li>
@@ -2082,7 +2082,7 @@ pub fn radix_sort(arr: &amp;mut [i32]) {
 <a class="header" href="#a參考資料-12" id="a參考資料-12"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Radix_sort">Wiki: Radix sort</a></li>
-<li><a href="https://www.cs.princeton.edu/%7Ers/AlgsDS07/18RadixSort.pdf">Princeton Universioty DSA Course: Radix sort</a></li>
+<li><a href="https://www.cs.princeton.edu/%7Ers/AlgsDS07/18RadixSort.pdf">Princeton University DSA Course: Radix sort</a></li>
 <li><a href="https://www.byvoid.com/zht/blog/sort-radix">ByVoid: 三種線性排序算法 計數排序、桶排序與基數排序</a></li>
 </ul>
 <a class="header" href="#data-structures" id="data-structures"><h1>Data Structures</h1></a>
@@ -2646,8 +2646,8 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 </ul>
 <p>不難看出，基本操作都是透過鍵取得值。事實上，合理實作的映射表，只要透過鍵來操作，就能有良好效能，甚至上述操作能達到 \(O(1)\) 複雜度。</p>
 <a class="header" href="#a適用場景-1" id="a適用場景-1"><h2>適用場景</h2></a>
-<p>雖然映射表依實作不同，效能有所權衡。但其最大優勢仍是可「高效地透過鍵尋找值」，只要有映射關係的資料，都非常適合使用映射表。例如，快取暫存機制需透過特定鍵快速查找暫存值。此外，現代常用的 JSON、TOML 等資料交換格式，都是「鍵——值對」的形式，非常適合使用映射表處理。</p>
-<p>總的來說，只要資料有對應綁定關係，例如學號與學生，就可以考慮使用映射表處理。</p>
+<p>雖然映射表依實作不同，效能有所權衡。但其最大優勢仍是可「高效地透過鍵尋找值」，只要有映射關係的資料，都非常適合使用映射表。例如，快取暫存機制需透過特定鍵快速查找暫存值。此外，現代常用的 JSON、TOML 等資料交換格式，都是「鍵——值對」的形式，非常適合使用映射表處理。而應用映射表最有名的實際案例莫過於資料庫的索引，透過索引，我們可以大大降低搜尋的成本，從線性時間直落到對數甚至常數時間，不過相對就需要付出額外時空間建立索引。</p>
+<p>總的來說，只要資料有對應綁定關係，就可以考慮使用映射表處理。</p>
 <a class="header" href="#a種類-1" id="a種類-1"><h2>種類</h2></a>
 <p>以下簡單介紹常見的映射表，詳情請點擊各連結。</p>
 <a class="header" href="#a雜湊表-hash-map" id="a雜湊表-hash-map"><h3>雜湊表 Hash Map</h3></a>
