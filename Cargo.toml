@@ -1,5 +1,3 @@
-cargo-features = ["edition"]
-
 [package]
 name = "rust-algorithm-club"
 version = "0.0.1"

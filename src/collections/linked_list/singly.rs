@@ -20,14 +20,14 @@ pub struct IntoIter<T>(SinglyLinkedList<T>);
 /// A mutable iterator over the elements of a `SinglyLinkedList`.
 ///
 /// This struct is created by the `iter` method on `SinglyLinkedList`.
-pub struct Iter<'a, T: 'a> {
+pub struct Iter<'a, T> {
     next: Option<&'a Node<T>>,
 }
 
 /// A mutable iterator over the elements of a `SinglyLinkedList`.
 ///
 /// This struct is created by the `iter_mut` method on `SinglyLinkedList`.
-pub struct IterMut<'a, T: 'a> {
+pub struct IterMut<'a, T> {
     next: Option<&'a mut Node<T>>,
 }
 
@@ -218,7 +218,7 @@ impl<T> Drop for SinglyLinkedList<T> {
     }
 }
 
-impl<T> Iterator for Iter<'a, T> {
+impl<'a, T> Iterator for Iter<'a, T> {
     type Item = &'a T;
     fn next(&mut self) -> Option<Self::Item> {
         match self.next {
@@ -231,7 +231,7 @@ impl<T> Iterator for Iter<'a, T> {
     }
 }
 
-impl<T> Iterator for IterMut<'a, T> {
+impl<'a, T> Iterator for IterMut<'a, T> {
     type Item = &'a mut T;
     fn next(&mut self) -> Option<Self::Item> {
         match self.next.take() {
