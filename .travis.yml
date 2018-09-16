@@ -1,42 +1,56 @@
-dist: trusty
 language: rust
-services: docker
-sudo: required
+
+rust:
+  # NOTE: Change back to stable after 2018 Edition merged.
+  # - stable
+  # - beta
+  - nightly
+
+os:
+  # - osx
+  - linux
+
+cache:
+  timeout: 360
+  cargo: true
+
+before_cache:
+  # Travis can't cache files that are not readable by "others"
+  - chmod -R a+r $HOME/.cargo
 
 env:
   global:
     - RUST_BACKTRACE: full
-
-matrix:
-  include:
-    # NOTE: Change back to stable after 2018 Edition merged.
-    ## Stable channel.
-    #- env: TARGET=x86_64-unknown-linux-gnu
-    ## Beta channel.
-    #- env: TARGET=x86_64-unknown-linux-gnu
-    #  rust: beta
-    ## Nighly channel.
-    - env: TARGET=x86_64-unknown-linux-gnu
-      rust: nightly
+    - CRATE_NAME: rust_algorithm_club
+    - BOOK_DIR: .book
 
 before_install:
   - set -e
   - rustup self update
 
 install:
-  - source ~/.cargo/env || true
-  - cargo install mdbook --vers "^0.2" | tee
+  - sh ci/install.sh
 
 script:
-  - cargo build --target $TARGET
-  - cargo test --target $TARGET
+  - cargo build
+  - cargo test
 
-after_script: set +e
+after_script: 
+  - set +e
 
-cache: cargo
-before_cache:
-  # Travis can't cache files that are not readable by "others"
-  - chmod -R a+r $HOME/.cargo
+before_deploy:
+  - sh ci/before-deploy.sh
+
+deploy:
+  provider: pages
+  target-branch: gh-pages
+  local-dir: "$BOOK_DIR"
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  on:
+    # NOTE: Change back to stable after 2018 Edition merged.
+    condition: "$TRAVIS_RUST_VERSION = nightly"
 
 branches:
   only:
@@ -44,17 +58,6 @@ branches:
     - /^v?\d+\.\d+\.\d+.*$/
     - master
 
-before_deploy:
-  # Build the book!
-  - mdbook build
-
-deploy:
-  provider: pages
-  target-branch: gh-pages
-  local-dir: .book
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  keep-history: true
-  on:
-    # NOTE: Change back to stable after 2018 Edition merged.
-    condition: "$TRAVIS_RUST_VERSION = nightly"
+notifications:
+  email:
+    on_success: never
