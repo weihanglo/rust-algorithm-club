@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SinglyLinkedList","A singly-linked list with owned nodes."]]});
