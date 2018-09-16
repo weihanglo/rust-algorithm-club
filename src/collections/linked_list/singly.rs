@@ -4,10 +4,15 @@
 ///
 /// Reference:
 ///
-/// - https://doc.rust-lang.org/src/alloc/linked_list.rs.html
-/// - http://cglab.ca/~abeinges/blah/too-many-lists/book/README.html
-/// - https://stackoverflow.com/questions/51134192/
-/// - https://codereview.stackexchange.com/questions/150906
+/// - [Rust Standard Library: std::collections::LinkedList][1]
+/// - [Learning Rust With Entirely Too Many Linked Lists][2]
+/// - [Stack Overflow: Deleting a node from singly linked list ...][3]
+/// - [Stack Exchange: Reversal of a singly-linked list in Rust][4]
+///
+/// [1]: https://doc.rust-lang.org/stable/std/collections/struct.LinkedList.html
+/// [2]: http://cglab.ca/~abeinges/blah/too-many-lists/book/README.html
+/// [3]: https://stackoverflow.com/questions/51134192/
+/// [4]: https://codereview.stackexchange.com/questions/150906
 pub struct SinglyLinkedList<T> {
     head: Option<Box<Node<T>>>,
 }
@@ -131,7 +136,7 @@ impl<T> SinglyLinkedList<T> {
     /// # Complexity
     ///
     /// Search time O(n) + constant.
-    pub fn erase(&mut self, pos: usize) -> Option<T> {
+    pub fn remove(&mut self, pos: usize) -> Option<T> {
         let mut curr = &mut self.head;
         let mut pos = pos;
 
@@ -367,8 +372,7 @@ mod tests {
 
 
     #[test]
-    fn iterators() {
-        // 1. `iter`
+    fn iter() {
         let mut l = SinglyLinkedList::<i32>::new();
         l.push_front(1);
         l.push_front(2);
@@ -378,8 +382,15 @@ mod tests {
         assert_eq!(it.next(), Some(&3));
         assert_eq!(it.next(), Some(&2));
         assert_eq!(it.next(), Some(&1));
+    }
 
-        // 2. `iter_mut`
+    #[test]
+    fn iter_mut() {
+        let mut l = SinglyLinkedList::<i32>::new();
+        l.push_front(1);
+        l.push_front(2);
+        l.push_front(3);
+
         for elem in l.iter_mut() {
             *elem *= *elem;
         }
@@ -389,10 +400,18 @@ mod tests {
         res.push_front(4);
         res.push_front(9);
         assert_eq!(l, res);
+    }
+
+    #[test]
+    fn into_iter() {
+        let mut l = SinglyLinkedList::<i32>::new();
+        l.push_front(1);
+        l.push_front(2);
+        l.push_front(3);
 
         // 3. `into_iter`
         let collected = l.into_iter().collect::<Vec<i32>>();
-        assert_eq!(vec![9, 4, 1], collected);
+        assert_eq!(vec![3, 2, 1], collected);
         // Cannot access `l`. Value moved into `collected`.
     }
 
@@ -429,13 +448,13 @@ mod tests {
     }
 
     #[test]
-    fn erase() {
+    fn remove() {
         let mut l = SinglyLinkedList::<i32>::new();
         l.push_front(1);
         l.push_front(2);
         l.push_front(3);
-        assert!(l.erase(5).is_none());
-        assert_eq!(l.erase(1), Some(2));
+        assert!(l.remove(5).is_none());
+        assert_eq!(l.remove(1), Some(2));
 
         // Check remain list is in correct form.
         let mut res = SinglyLinkedList::<i32>::new();
@@ -443,8 +462,8 @@ mod tests {
         res.push_front(3);
         assert_eq!(l, res);
 
-        // Erase all elements
-        assert_eq!(l.erase(1), Some(1));
-        assert_eq!(l.erase(0), Some(3));
+        // Remove all elements
+        assert_eq!(l.remove(1), Some(1));
+        assert_eq!(l.remove(0), Some(3));
     }
 }

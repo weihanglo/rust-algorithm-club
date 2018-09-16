@@ -74,7 +74,7 @@ pub struct SinglyLinkedList<T> {
 - `push_front`：新增節點到開頭的位置。
 - `pop_front`：將開頭第一個節點移除。
 - `insert_after`：在指定索引位置後插入一個新節點。
-- `erase`：移除任意索引下的節點。
+- `remove`：移除任意索引下的節點。
 - `clear`：清除所有節點。
 - `is_empty`：檢查串列是否沒有任何節點。
 - `reverse`：反轉整個串列（head 變成 tail）。
@@ -172,10 +172,10 @@ pub fn insert_after(&mut self, pos: usize, elem: T) -> Result<(), usize> {
 4. 將新節點 B 做為節點 A 後一個節點 `next`。
 5. 把修改過的節點 A，重新賦值給指向節點 A 的指標 `curr`（可視為歸還所有權）。
 
-而實作刪除任意索引下的節點 `erase` 和插入非常相似。
+而實作刪除任意索引下的節點 `remove` 和插入非常相似。
 
 ```rust
-pub fn erase(&mut self, pos: usize) -> Option<T> {
+pub fn remove(&mut self, pos: usize) -> Option<T> {
     let mut curr = &mut self.head;
     let mut pos = pos;
 
