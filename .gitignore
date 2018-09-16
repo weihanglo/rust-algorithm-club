@@ -2,3 +2,6 @@
 **/*.rs.bk
 Cargo.lock
 .book/
+.vscode/
+.idea/
+.DS_Store
