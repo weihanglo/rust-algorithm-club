@@ -2247,7 +2247,7 @@ pub struct SinglyLinkedList&lt;T&gt; {
 <li><code>push_front</code>：新增節點到開頭的位置。</li>
 <li><code>pop_front</code>：將開頭第一個節點移除。</li>
 <li><code>insert_after</code>：在指定索引位置後插入一個新節點。</li>
-<li><code>erase</code>：移除任意索引下的節點。</li>
+<li><code>remove</code>：移除任意索引下的節點。</li>
 <li><code>clear</code>：清除所有節點。</li>
 <li><code>is_empty</code>：檢查串列是否沒有任何節點。</li>
 <li><code>reverse</code>：反轉整個串列（head 變成 tail）。</li>
@@ -2342,11 +2342,11 @@ pub fn insert_after(&amp;mut self, pos: usize, elem: T) -&gt; Result&lt;(), usiz
 <li>將新節點 B 做為節點 A 後一個節點 <code>next</code>。</li>
 <li>把修改過的節點 A，重新賦值給指向節點 A 的指標 <code>curr</code>（可視為歸還所有權）。</li>
 </ol>
-<p>而實作刪除任意索引下的節點 <code>erase</code> 和插入非常相似。</p>
+<p>而實作刪除任意索引下的節點 <code>remove</code> 和插入非常相似。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-pub fn erase(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
+pub fn remove(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
     let mut curr = &amp;mut self.head;
     let mut pos = pos;
 
@@ -2622,7 +2622,8 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 <a class="header" href="#a操作-1" id="a操作-1"><h2>操作</h2></a>
 <a class="header" href="#a效能-13" id="a效能-13"><h2>效能</h2></a>
 <a class="header" href="#a關聯容器-associative-container" id="a關聯容器-associative-container"><h1>關聯容器 Associative Container</h1></a>
-<p>關聯容器是一種抽象資料型別，儲存鍵與值的配對關係（key-value pair）的集合，並透過鍵存取元素。關聯容器有許多別名，例如字典（dictionary）、關聯陣列（associative array）、映射（map）、表（table）等。在大多數程式語言函式庫中，關聯容器通常是最基本的容器型別之一，如 Python 的 <code>dict</code>，JavaScript 的 <code>Map</code>，以及 Rust 的 <code>HashMap</code>。</p>
+<p>關聯容器是一種抽象資料型別，儲存鍵與值配對關係（key-value pair）的集合，並透過鍵存取元素，所謂「鍵值對」好比身份證字號與公民，戶政單位知道一個人證號，就可在關聯容器內，透過證號查找是否有這個公民，以及此證號對應的公民基本資訊。</p>
+<p>關聯容器有許多別名，例如字典（dictionary）、關聯陣列（associative array）、映射（map）、表（table）等。在大多數程式語言函式庫中，關聯容器通常是最基本的容器型別之一，如 Python 的 <code>dict</code>，JavaScript 的 <code>Map</code>，以及 Rust 的 <code>HashMap</code>。</p>
 <p>方便起見，本文以「<strong>映射表</strong>」統稱這類集合型別。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Hash_table_5_0_1_1_1_1_0_LL.svg/1280px-Hash_table_5_0_1_1_1_1_0_LL.svg.png" alt="" /></p>
 <p><em>（雜湊表示意圖）</em></p>
@@ -2637,21 +2638,29 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 <blockquote>
 <p>註：多重映射表為一對多的例外。</p>
 </blockquote>
-<p>映射表會有以下幾種基本操作</p>
+<p>映射表會有以下幾種基本操作：</p>
 <ul>
-<li><strong>新增 Addition</strong>：配對鍵值關聯，又稱為綁定 binding。</li>
-<li><strong>修改 Modification</strong>：修改任意鍵之下的值。</li>
-<li><strong>移除 Removal</strong>：透過任意鍵移除該鍵值對，又稱 unbinding。</li>
-<li><strong>查找 Lookup</strong>：透過任意鍵搜尋該鍵值對。</li>
+<li><strong>新增</strong>：配對鍵值關聯，又稱為綁定 binding。</li>
+<li><strong>修改</strong>：修改任意鍵之下的值。</li>
+<li><strong>移除</strong>：透過任意鍵移除該鍵值對，又稱 unbinding。</li>
+<li><strong>查找</strong>：透過任意鍵搜尋該鍵值對。</li>
 </ul>
 <p>不難看出，基本操作都是透過鍵取得值。事實上，合理實作的映射表，只要透過鍵來操作，就能有良好效能，甚至上述操作能達到 \(O(1)\) 複雜度。</p>
 <a class="header" href="#a適用場景-1" id="a適用場景-1"><h2>適用場景</h2></a>
-<p>雖然映射表依實作不同，效能有所權衡。但其最大優勢仍是可「高效地透過鍵尋找值」，只要有映射關係的資料，都非常適合使用映射表。例如，快取暫存機制需透過特定鍵快速查找暫存值。此外，現代常用的 JSON、TOML 等資料交換格式，都是「鍵——值對」的形式，非常適合使用映射表處理。而應用映射表最有名的實際案例莫過於資料庫的索引，透過索引，我們可以大大降低搜尋的成本，從線性時間直落到對數甚至常數時間，不過相對就需要付出額外時空間建立索引。</p>
+<p>雖然映射表依實作不同，效能有所權衡。但其最大優勢仍是可「高效地透過鍵尋找值」，只要有映射關係的資料，都非常適合使用映射表。例如，快取暫存機制需透過特定鍵快速查找暫存值。此外，現代常用的 JSON、TOML 等資料交換格式，都是「鍵—值對」的形式，非常適合使用映射表處理。而應用映射表最有名的實際案例莫過於資料庫的索引，透過索引，我們可以大大降低搜尋的成本，從線性時間直落到對數甚至常數時間，不過相對就需要付出額外時空間建立索引。</p>
+<p>我們再次把應用場景條列出來，方便懶人帶著走。</p>
+<ul>
+<li>有映射關係，處理「鍵—值」配對的資料結構。</li>
+<li>處理 JSON、TOML 等資料交換，資料序列化。</li>
+<li>實作快取（cache）機制。</li>
+<li>資料庫索引的實作方法之一。</li>
+<li>查找操作頻率遠高於其他操作時。</li>
+</ul>
 <p>總的來說，只要資料有對應綁定關係，就可以考慮使用映射表處理。</p>
 <a class="header" href="#a種類-1" id="a種類-1"><h2>種類</h2></a>
 <p>以下簡單介紹常見的映射表，詳情請點擊各連結。</p>
 <a class="header" href="#a雜湊表-hash-map" id="a雜湊表-hash-map"><h3>雜湊表 Hash Map</h3></a>
-<p><a href="hash_map.html">雜湊表</a>是以雜湊函數實作的映射表。透過<a href="https://en.wikipedia.org/wiki/Hash_function">雜湊函數</a>將任意資料轉換為固定長度的雜湊值，並將此鍵與一筆資料綁定，再映射到內部資料結構的某位置。理論上，只要雜湊函數品質過得去，雜湊表的基本操作都能在常數時間完成。</p>
+<p><a href="hash_map.html">雜湊表</a>是以雜湊函數實作的映射表。透過<a href="../hash">雜湊函數</a>將任意資料轉換為固定長度的雜湊值，並將此鍵與一筆資料綁定，再映射到內部資料結構的某位置。理論上，只要雜湊函數品質過得去，雜湊表的基本操作都能在常數時間完成。</p>
 <a class="header" href="#a有序映射表-ordered-map" id="a有序映射表-ordered-map"><h3>有序映射表 Ordered Map</h3></a>
 <p><a href="ordered_map.html">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 \(O(\log n)\)。</p>
 <a class="header" href="#a多重映射表-multimap" id="a多重映射表-multimap"><h3>多重映射表 Multimap</h3></a>
@@ -2664,6 +2673,7 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 <li><a href="https://en.wikipedia.org/wiki/Associative_containers">Wiki: Associative continers</a></li>
 <li><a href="https://en.cppreference.com/w/cpp/container/map">cpprefernce.com: std::map</a></li>
 <li><a href="https://doc.rust-lang.org/stable/std/collections/">Rust documentation: std::colledtion</a></li>
+<li>Map graph by Jorge Stolfi <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
 <a class="header" href="#a雜湊表-hash-map-1" id="a雜湊表-hash-map-1"><h1>雜湊表 Hash Map</h1></a>
 <p>以雜湊函數實作的映射表。</p>

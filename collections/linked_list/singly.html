@@ -200,7 +200,7 @@ pub struct SinglyLinkedList&lt;T&gt; {
 <li><code>push_front</code>：新增節點到開頭的位置。</li>
 <li><code>pop_front</code>：將開頭第一個節點移除。</li>
 <li><code>insert_after</code>：在指定索引位置後插入一個新節點。</li>
-<li><code>erase</code>：移除任意索引下的節點。</li>
+<li><code>remove</code>：移除任意索引下的節點。</li>
 <li><code>clear</code>：清除所有節點。</li>
 <li><code>is_empty</code>：檢查串列是否沒有任何節點。</li>
 <li><code>reverse</code>：反轉整個串列（head 變成 tail）。</li>
@@ -295,11 +295,11 @@ pub fn insert_after(&amp;mut self, pos: usize, elem: T) -&gt; Result&lt;(), usiz
 <li>將新節點 B 做為節點 A 後一個節點 <code>next</code>。</li>
 <li>把修改過的節點 A，重新賦值給指向節點 A 的指標 <code>curr</code>（可視為歸還所有權）。</li>
 </ol>
-<p>而實作刪除任意索引下的節點 <code>erase</code> 和插入非常相似。</p>
+<p>而實作刪除任意索引下的節點 <code>remove</code> 和插入非常相似。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-pub fn erase(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
+pub fn remove(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
     let mut curr = &amp;mut self.head;
     let mut pos = pos;
 

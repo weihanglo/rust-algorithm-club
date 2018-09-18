@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["SinglyLinkedList","A singly-linked list with owned nodes."]]});
+initSidebarItems({"struct":[["HashMap","A hash map implemented with separate chaining collision resolution strategy."],["SinglyLinkedList","A singly-linked list with owned nodes."]]});
