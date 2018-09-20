@@ -41,4 +41,6 @@
 
 ------
 
+[貢獻指南](CONTRIBUTING.md)
+
 [授權條款](LICENSE)

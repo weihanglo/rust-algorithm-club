@@ -4,12 +4,18 @@
 
 [![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)](https://rust-lang-nursery.github.io/edition-guide/rust-2018/index.html) 
 [![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)](https://travis-ci.com/weihanglo/rust-algorithm-club)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]! Source code is on [GitHub][source-code] and we are looking forward to your contributions.
+Welcome to Rust Algorithm Club! This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
+You can find out more on [Rust Algorithm Club][main-site] main site. Just pick up some algorithms you are interested in and start learning. If you are brave enough, we recommend you the auto-generated API documentation. Go and fight with the source code.
+
+This project along with its source code are on [GitHub][source-code] and we are looking forward to your contributions.
 
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
 [source-code]: https://github.com/weihanglo/rust-algorithm-club
+[main-site]: /
+[generated-doc]: /doc/rust_algorithm_club/
 
 ## General Concepts
 
@@ -54,7 +60,7 @@ Special-purpose sorts:
 
 ### Linked List
 
-[Introduction of linked list](src/collections/linked_list)
+[Introduction to linked list](src/collections/linked_list)
 
 - [Singly linked list](src/collections/linked_list/singly.md)
 - [🚧 Doubly linked list](src/collections/linked_list/doubly.md)
@@ -62,7 +68,7 @@ Special-purpose sorts:
 
 ### Associative Container
 
-[Introduction of associative container](src/collections/map)
+[Introduction to associative container](src/collections/map)
 
 - [Hash map](src/collections/map/hash_map.md)
 - [🚧 Ordered map](src/collections/map/ordered_map.md)
