@@ -4,7 +4,7 @@
 
 [![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)](https://rust-lang-nursery.github.io/edition-guide/rust-2018/index.html) 
 [![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)](https://travis-ci.com/weihanglo/rust-algorithm-club)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](src/CONTRIBUTING.md)
 
 Welcome to Rust Algorithm Club! This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
 You can find out more on [Rust Algorithm Club][main-site] main site. Just pick up some algorithms you are interested in and start learning. If you are brave enough, we recommend you the auto-generated API documentation. Go and fight with the source code.
@@ -54,26 +54,26 @@ Special-purpose sorts:
 
 ### Stack and Queue
 
-- [🚧 Stack](src/collections/stack_queue/stack.md)
-- [🚧 Queue](src/collections/stack_queue/queue.md)
-- [🚧 Deque](src/collections/stack_queue/deque.md)
+- [🚧 Stack](src/collections/stack_queue/stack)
+- [🚧 Queue](src/collections/stack_queue/queue)
+- [🚧 Deque](src/collections/stack_queue/deque)
 
 ### Linked List
 
 [Introduction to linked list](src/collections/linked_list)
 
-- [Singly linked list](src/collections/linked_list/singly.md)
-- [🚧 Doubly linked list](src/collections/linked_list/doubly.md)
-- [🚧 Circular linked list](src/collections/linked_list/circular.md)
+- [Singly linked list](src/collections/linked_list/singly)
+- [🚧 Doubly linked list](src/collections/linked_list/doubly)
+- [🚧 Circular linked list](src/collections/linked_list/circular)
 
 ### Associative Container
 
 [Introduction to associative container](src/collections/map)
 
-- [Hash map](src/collections/map/hash_map.md)
-- [🚧 Ordered map](src/collections/map/ordered_map.md)
-- [🚧 Multimap](src/collections/map/multimap.md)
-- [🚧 Set](src/collections/map/set.md)
+- [Hash map](src/collections/map/hash_map)
+- [🚧 Ordered map](src/collections/map/ordered_map)
+- [🚧 Multimap](src/collections/map/multimap)
+- [🚧 Set](src/collections/map/set)
 
 ## Learning Resources
 

@@ -152,7 +152,7 @@ index = hash_value % array_size // 2
 
 但總歸一句，欲達成上述條件，就是一種權衡取捨，例如，[加密雜湊函數（cryptographic hash function）][crypto-hash-fn]即是非常優秀的雜湊函數，但相對需付出更高的計算成本。
 
-更多雜湊函數相關的討論，會另撰[專文](../../hash)。
+更多雜湊函數相關的討論，會另撰[專文](../../../hash)。
 
 [uniform-dist]: https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)
 [crypto-hash-fn]: https://en.wikipedia.org/wiki/Cryptographic_hash_function
@@ -163,8 +163,8 @@ index = hash_value % array_size // 2
 
 **Separate chaining** 可以說是最直觀的做法，就是設法讓同一個索引下，可以儲存多個碰撞的值。依據儲存資料的形式，可分為幾種實作：
 
-- **鏈結串列**：以[鏈結串列（linked list）](../linked_list)儲存元素。發生碰撞時，新的元素串接在既有元素之後。
-- **動態陣列**：新增元素時，在該位址配置[動態陣列（dynamic array）](../dynamic_array)儲存元素。發生碰撞時，直接將新元素加在陣列尾端。
+- **鏈結串列**：以[鏈結串列（linked list）](../../linked_list)儲存元素。發生碰撞時，新的元素串接在既有元素之後。
+- **動態陣列**：新增元素時，在該位址配置[動態陣列（dynamic array）](../../dynamic_array)儲存元素。發生碰撞時，直接將新元素加在陣列尾端。
 
 不同實作方式有各自優缺點，例如串列版本容易實作，但需額外儲存指標資訊；用動態陣列，則會有更好的 CPU caching，但相對地碰撞過多則需要重配置陣列。
 
@@ -310,7 +310,7 @@ pub struct HashMap<K, V> where K: Hash + Eq {
 
 這就是 **Vector-based separate chaining HashMap** 的記憶體佈局，來看張精美的雜湊表架構佈局圖吧！
 
-![](hash_map_layout.svg)
+![](layout.svg)
 
 ## 基本操作
 

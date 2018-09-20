@@ -30,7 +30,7 @@ _(單向鏈結串列示意圖）_
 - 需要頻繁分離與合併（split and merge）資料。
 - 不需要隨機存取的資料。
 - 遞迴友好，因此成為大多函數式語言中基本資料型別之一。
-- 教學上，常用於實作抽象資料型別，如[堆疊](../stack_queue/stack.md)與[佇列](../stack_queue/queue.md)等等。
+- 教學上，常用於實作抽象資料型別，如[堆疊](../stack_queue/stack)與[佇列](../stack_queue/queue)等等。
 
 [rust-linked-list]: https://doc.rust-lang.org/std/collections/struct.LinkedList.html
 [rust-vec-deque]: https://doc.rust-lang.org/std/collections/vec_deque/struct.VecDeque.html
@@ -81,7 +81,7 @@ Sentinal node 一個特殊的節點，資料值為 NULL 的節點，用意代表
 
 依據每個節點的鏈結多寡，可分為
 
-[單向鏈結串列](singly.md)，每個節點只有一個指標，指向下一個節點。
+[單向鏈結串列](singly)，每個節點只有一個指標，指向下一個節點。
 
 ```
 +--------+   +--------+   +--------+
@@ -91,7 +91,7 @@ Sentinal node 一個特殊的節點，資料值為 NULL 的節點，用意代表
 +--------+   +--------+   +--------+
 ```
 
-[雙向鏈結串列](doubly.md)，每個節點有兩個指標，分別指向前後一個節點。
+[雙向鏈結串列](doubly)，每個節點有兩個指標，分別指向前後一個節點。
 
 ```
         +--------+   +--------+   +--------+
@@ -101,7 +101,7 @@ NULL <--|        |<--|        |<--|        |
         +--------+   +--------+   +--------+
 ```
 
-倘若該鏈結串列末端節點的指標指向第一個的節點，形成一個循環，則稱之為「[循環鏈結串列](circular.md)」。
+倘若該鏈結串列末端節點的指標指向第一個的節點，形成一個循環，則稱之為「[循環鏈結串列](circular)」。
 
 ```
 Singly linked list as circular
