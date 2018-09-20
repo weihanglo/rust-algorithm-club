@@ -63,7 +63,7 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     /// TODO: To treat owned and borrowed values in equivalent ways as other
     /// collections in std do, we should use `Borrow` trait to abstract over
     /// the type of key to hash. This concept can also applied for `get_mut`
-    /// and `remove`.
+    /// `remove`, and other operations that constrain by the type system..
     ///
     /// Some useful resources:
     ///
@@ -149,17 +149,12 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     /// # Complexity
     ///
     /// Constant. This operation won't shrink to fit automatically.
-    pub fn remove(&mut self, key: &K) -> Option<V>
-    {
+    pub fn remove(&mut self, key: &K) -> Option<V> {
         let index = self.make_hash(key);
         self.buckets.get_mut(index).and_then(|bucket| {
-            let find_result = bucket.iter_mut()
-                .enumerate()
-                .find(|(_, (k, _))| *k == *key)
-                .map(|(i, _)| i);
-            find_result
-                .map(|index| bucket.swap_remove(index))
-                .map(|(_, v)| v)
+            bucket.iter_mut()
+                .position(|(k, _)| *k == *key)
+                .map(|index| bucket.swap_remove(index).1) // Extract the pair.
         }).map(|v| {
             self.len -= 1; // Length decreases by one.
             v

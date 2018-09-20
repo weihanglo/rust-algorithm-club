@@ -1,0 +1,45 @@
+digraph {
+    rankdir=LR;
+    overlap=false;
+    node [shape="plaintext"];
+
+    hashmap[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" VALIGN="TOP">
+        <TR><TD COLSPAN="2" SIDES="B">HashMap</TD></TR>
+        <TR><TD>buckets</TD><TD PORT="to_buckets"></TD></TR>
+        <TR><TD>len</TD><TD>4</TD></TR>
+    </TABLE>>];
+    buckets[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD COLSPAN="2" SIDES="B">Vec&lt;Bucket&gt;</TD></TR>
+        <TR><TD PORT="from_hashmap">index</TD><TD>ptr</TD></TR>
+        <TR><TD>0</TD><TD PORT="to_vec0"></TD></TR>
+        <TR><TD>1</TD><TD PORT="to_vec1"></TD></TR>
+        <TR><TD>2</TD><TD PORT="to_vec2"></TD></TR>
+        <TR><TD>3</TD><TD></TD></TR>
+    </TABLE>>];
+
+    vec0[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD COLSPAN="2" SIDES="B">Bucket&lt;K, V&gt;</TD></TR>
+        <TR><TD PORT="from_buckets">index</TD><TD>pair</TD></TR>
+        <TR><TD>0</TD><TD>John, blue</TD></TR>
+        <TR><TD>1</TD><TD>Bob, green</TD></TR>
+    </TABLE>>];
+    vec1[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD COLSPAN="2" SIDES="B">Bucket&lt;K, V&gt;</TD></TR>
+        <TR><TD PORT="from_buckets">index</TD><TD>pair</TD></TR>
+        <TR><TD>0</TD><TD>Alice, red</TD></TR>
+    </TABLE>>];
+
+    vec2[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD COLSPAN="2" SIDES="B">Bucket&lt;K, V&gt;</TD></TR>
+        <TR><TD PORT="from_buckets">index</TD><TD>pair</TD></TR>
+        <TR><TD>0</TD><TD>Eve, black</TD></TR>
+    </TABLE>>];
+
+    edge[tailclip="false"];
+    hashmap:to_buckets:c -> buckets:from_hashmap;
+    buckets:to_vec0:c -> vec0:from_buckets;
+    buckets:to_vec1:c -> vec1:from_buckets;
+    buckets:to_vec2:c -> vec2:from_buckets;
+}
+
+
