@@ -1,3 +1,5 @@
+//! Sorting algorithms.
+
 #[cfg(test)]
 #[macro_use]
 mod test_cases;
@@ -26,7 +28,7 @@ pub use self::quicksort::{
     quicksort_optimized,
     quicksort_manual_tco,
     quicksort_3way,
-    quicksort_hoare, 
+    quicksort_hoare,
 };
 
 mod bucket_sort;

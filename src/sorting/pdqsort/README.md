@@ -1,4 +1,4 @@
-# 模式消除快速排序 Pattern-defeating quicksort
+# 模式消除快速排序 Pattern-defeating Quicksort
 
 🚧 🚧 🚧 TBD 🚧 🚧 🚧
 
