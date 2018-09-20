@@ -269,7 +269,7 @@ index = hash_value % array_size // 2
 <li>任意輸入資料所得之雜湊值在值域內需接近<a href="https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)">均勻分佈（uniform distribution）</a>，才能減少碰撞機率。</li>
 </ol>
 <p>但總歸一句，欲達成上述條件，就是一種權衡取捨，例如，<a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">加密雜湊函數（cryptographic hash function）</a>即是非常優秀的雜湊函數，但相對需付出更高的計算成本。</p>
-<p>更多雜湊函數相關的討論，會另撰<a href="../hash">專文</a>。</p>
+<p>更多雜湊函數相關的討論，會另撰<a href="../../hash">專文</a>。</p>
 <a class="header" href="#a處理雜湊碰撞" id="a處理雜湊碰撞"><h3>處理雜湊碰撞</h3></a>
 <p>既然雜湊函數人生在世難免碰撞，科學家也研究幾個處理雜湊碰撞的策略，分別是 separate chaining 與 open addressing。</p>
 <p><strong>Separate chaining</strong> 可以說是最直觀的做法，就是設法讓同一個索引下，可以儲存多個碰撞的值。依據儲存資料的形式，可分為幾種實作：</p>
@@ -431,16 +431,15 @@ impl&lt;K, V&gt; Default for HashMap&lt;K, V&gt;
     }
 }
 #}</code></pre></pre>
-<p>這裡為了符合人因工程，使用了 <a href="https://doc.rust-lang.org/std/default/trait.Default.html"><code>Default</code></a> trait 設定初始值。此外，由於 Rust 的容器型別慣例上沒有任何元素時，不會配置任何記憶體空間，僅有初始的 pointer。所以 HashMap 初始化後，記憶體空間僅</p>
+<p>這裡為了符合人因工程，使用了 <a href="https://doc.rust-lang.org/std/default/trait.Default.html"><code>Default</code></a> trait 設定初始值。此外，由於 Rust 的容器型別慣例上沒有任何元素時，不會配置任何記憶體空間，僅有初始的 pointer。 HashMap 初始化後，記憶體空間僅需</p>
 <ul>
 <li><code>buckets</code> 的 <code>Vec</code> 佔據 3 個 usize 大小（一個 heap 指標，兩個記錄容量與長度的 usize。</li>
 <li><code>len</code> 本身佔據 1 個 usize 大小。</li>
 </ul>
-<p>所以預設初始化的 HashMap 在 64bit machine 上僅佔 4 * usize = 32 bytes。</p>
-<p>為了後續實作 rezie 容易些，同時實作了指定 bucket 數目的建構式。</p>
+<p>所以預設初始化的 HashMap 在 64bit machine 上佔 4 * usize = 32 bytes。</p>
+<p>為了後續實作 resize 容易些，同時實作了指定 bucket 數目的建構式。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
-
 #fn main() {
 pub fn with_capacity(cap: usize) -&gt; Self {
     let mut buckets: Vec&lt;Bucket&lt;K, V&gt;&gt; =  Vec::new();
@@ -470,9 +469,13 @@ pub fn get(&amp;self, key: &amp;K) -&gt; Option&lt;&amp;V&gt; {
     )
 }
 #}</code></pre></pre>
-<p>這邊需要加強人因工程，當我們透過 <code>HashMep::get</code> 搜尋特定鍵時，必須傳入一模一樣的型別，例如 <code>HashMap&lt;&amp;str, u8&gt;</code> 就只能透過相同的 borrowed value <code>&amp;str</code> 搜索，而不能透過 owned value <code>&amp;String</code> 尋找，就算兩個型別可無痛轉換也無法。而 Rust 標準函式庫有做到這一點，因為其泛型參數 <code>K</code> 實作了 <a href="https://doc.rust-lang.org/stable/std/borrow/trait.Borrow.html">Borrow</a> trait，抽象化 owned 與 borrowed 間的型別，讓呼叫端無論傳 owned 或 borrowed 型別都可以有相同的行為。</p>
+<p>事實上，這個 <code>get</code> 不是非常方便使用，當我們透過 <code>HashMep::get</code> 搜尋特定鍵時，必須傳入一模一樣的型別，例如 <code>HashMap&lt;&amp;str, u8&gt;</code> 就只能透過相同的 borrowed value <code>&amp;str</code> 搜索，而不能透過 owned value <code>&amp;String</code> 尋找，就算兩個型別可無痛轉換也無法。而 Rust 標準函式庫有做到這一點，因為其泛型參數 <code>K</code> 實作了 <a href="https://doc.rust-lang.org/stable/std/borrow/trait.Borrow.html">Borrow</a> trait，抽象化 owned 與 borrowed 間的型別，讓呼叫端無論傳 owned 或 borrowed 型別都可以有相同的行為。</p>
 <blockquote>
-<p><code>fn get_mut()</code> 與 <code>fn get()</code> 的差異只在於呼叫了 <code>self.bucket.get_mut</code> 取得 mutable reference。</p>
+<p>歡迎直接貢獻，將這段程式改為符合人因工程，方便使用的版本。</p>
+</blockquote>
+<!--  -->
+<blockquote>
+<p><code>fn get_mut()</code> 與 <code>fn get()</code> 的差異只在於呼叫了 <code>self.bucket.get_mut</code> 取得 mutable reference，這裡就不多做說明。</p>
 </blockquote>
 <a class="header" href="#a插入與刪除元素" id="a插入與刪除元素"><h3>插入與刪除元素</h3></a>
 <p>插入與刪除比較特別，需要做些額外的功夫：</p>

@@ -264,7 +264,7 @@
 
 <span class="doccomment">/// Manual tail-call opitimized recursion helper.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Can achieve O(log n) auxiliary space complexity without any </span>
+<span class="doccomment">/// Can achieve O(log n) auxiliary space complexity without any</span>
 <span class="doccomment">/// compiler-optimization of tail-call.</span>
 <span class="kw">fn</span> <span class="ident">quicksort_helper_manual_tco</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="kw-2">mut</span> <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="kw-2">mut</span> <span class="ident">hi</span>: <span class="ident">isize</span>) {
     <span class="kw">while</span> <span class="ident">lo</span> <span class="op">&lt;</span> <span class="ident">hi</span> {
@@ -353,7 +353,7 @@
 
 <span class="doccomment">/// Quicksort with Hoare parition scheme</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quicksort_hoare</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>]) {
-    <span class="kw">if</span> <span class="ident">arr</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">arr</span>.<span class="ident">is_empty</span>() {
         <span class="kw">return</span>
     }
     <span class="kw">let</span> <span class="ident">hi</span> <span class="op">=</span> <span class="ident">arr</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>;
@@ -371,9 +371,9 @@
 
 <span class="doccomment">/// Hoare partition scheme</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Return the middle index of the two partitions. </span>
+<span class="doccomment">/// Return the middle index of the two partitions.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Note that the return value is not necessarily be the index of the pivot, </span>
+<span class="doccomment">/// Note that the return value is not necessarily be the index of the pivot,</span>
 <span class="doccomment">/// and the pivot is located somewhere of the first partition.</span>
 <span class="kw">fn</span> <span class="ident">partition_hoare</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">usize</span>, <span class="ident">hi</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
     <span class="kw">let</span> <span class="ident">pivot</span> <span class="op">=</span> <span class="ident">arr</span>[<span class="ident">lo</span>];

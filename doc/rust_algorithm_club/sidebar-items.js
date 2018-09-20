@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["collections",""],["sorting",""]]});
+initSidebarItems({"mod":[["collections","Collections."],["sorting","Sorting algorithms."]]});

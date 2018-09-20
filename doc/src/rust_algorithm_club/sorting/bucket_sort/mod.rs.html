@@ -126,7 +126,7 @@
     <span class="doccomment">/// * `value` - Value to be put in the bucket.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">hash</span>: <span class="ident">H</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Bucket</span><span class="op">&lt;</span><span class="ident">H</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Bucket</span> {
-            <span class="ident">hash</span>: <span class="ident">hash</span>,
+            <span class="ident">hash</span>,
             <span class="ident">values</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">value</span>],
         }
     }

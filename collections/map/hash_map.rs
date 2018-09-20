@@ -5,7 +5,7 @@ use std::mem;
 /// A hash map implemented with separate chaining collision resolution strategy.
 ///
 /// This implementation is focused on hash map funcionalities, so we choose to
-/// adopt Rust `DefaultHasher` to avoid avalanche of details, and vectors as 
+/// adopt Rust `DefaultHasher` to avoid avalanche of details, and vectors as
 /// the underlying data structure for separate chaining method.
 ///
 /// The interface is a simplified version of Rust `HashMap`.
@@ -29,7 +29,7 @@ type Bucket<K, V> = Vec<(K, V)>;
 const LOAD_FACTOR: f64 = 0.75;
 
 /// Computes hash for a given key and modulus.
-fn make_hash<X>(x: &X, len: usize) -> usize 
+fn make_hash<X>(x: &X, len: usize) -> usize
     where X: Hash + ?Sized,
 {
     let mut hasher = DefaultHasher::new();
@@ -51,7 +51,7 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     ///
     /// * `cap`: The number of bucket in the map.
     pub fn with_capacity(cap: usize) -> Self {
-        let mut buckets: Vec<Bucket<K, V>> =  Vec::new();
+        let mut buckets: Vec<Bucket<K, V>> =  Vec::with_capacity(cap);
         for _ in 0..cap {
             buckets.push(Bucket::new());
         }
@@ -99,7 +99,7 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
         )
     }
 
-    /// Inserts key-value pair into the map. Replaces previous value if 
+    /// Inserts key-value pair into the map. Replaces previous value if
     /// the same key exists at the same index.
     ///
     /// Returns the old value if the key presents. Otherwise returnes `None`.
@@ -212,7 +212,7 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     ///
     /// The are two situation may occur in this function. 1) The capacity is
     /// zero, and 2) the capacity reaches the limit. The reason to handle the
-    /// first situation here is to delay the actual allocation timing for 
+    /// first situation here is to delay the actual allocation timing for
     /// conforming to the lazy allocation pattern of Rust philosophy.
     fn try_resize(&mut self) {
         let entry_count = self.len();
@@ -368,6 +368,7 @@ mod separate_chaining {
 }
 
 #[cfg(test)]
+// TODO: linear probing method
 mod linear_probing {
     #[ignore]
     #[test]
