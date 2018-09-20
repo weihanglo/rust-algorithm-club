@@ -170,7 +170,7 @@
 <p>我們嘗試插入第一筆資料，記錄 Frodo 以及他的手機號碼 88-7-666。</p>
 <ol>
 <li>透過雜湊函數，計算出 Frodo 的索引值為 1。</li>
-<li>將 88-77-666 插入 table[1] 的位置上。</li>
+<li>將 88-7-666 插入 table[1] 的位置上。</li>
 </ol>
 <blockquote>
 <p>table[1] 這種 bucket array 下的個別索引空間，通常稱為一個 slot 或 bucket。</p>
@@ -227,13 +227,13 @@ Gollum -&gt; | 0: 00-0-000 |
 <pre><code>Sam: hash_function(Sam) --&gt; 2
 
           +-------------+
-          | 0:          |
+          | 0: 00-0-000 |
           +-------------+
           | 1: 88-7-666 |
           +-------------+
 Sam   --&gt; | 2: 11-2-333 | --&gt; Sam's phone number
           +-------------+
-          | 3: 00-0-000 |
+          | 3:          |
           +-------------+
 </code></pre>
 <p>這就是最基本，以陣列實作的雜湊表了。</p>
@@ -373,13 +373,16 @@ pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
 }
 #}</code></pre></pre>
 <p>可是，用單一 <code>Vec</code> 儲存所有資料，萬一雜湊碰撞，不同鍵指向同個索引值該如何？這次先挑選相對容易的方案 separate chaining 處理碰撞，並以 <code>Vec</code> 動態陣列作為每個 bucket 儲存碰撞元素的容器，因此，<code>buckets</code> 陣列裡面改存 <code>Bucket</code> 陣列，而 <code>Bucket</code> 則儲存真正的 key-value pair。</p>
-<pre><code class="language-patch">type Bucket&lt;K, V&gt; = Vec&lt;(K, V)&gt;;              // 1
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+type Bucket&lt;K, V&gt; = Vec&lt;(K, V)&gt;;              // 1
 
 pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
    buckets: Vec&lt;Bucket&lt;K, V&gt;&gt;,                // 2
    len: usize,                                // 3
 }
-</code></pre>
+#}</code></pre></pre>
 <ol>
 <li>宣告 bucket 的型別 <code>Bucket</code>，實際上是一個 type alias 指向儲存鍵值 <code>(K, V)</code> 的動態陣列。</li>
 <li>將 <code>HashMap.buckets</code> 改為儲存 <code>Bucket</code> 的動態陣列。</li>
