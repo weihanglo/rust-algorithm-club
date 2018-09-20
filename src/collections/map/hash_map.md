@@ -152,7 +152,7 @@ index = hash_value % array_size // 2
 
 但總歸一句，欲達成上述條件，就是一種權衡取捨，例如，[加密雜湊函數（cryptographic hash function）][crypto-hash-fn]即是非常優秀的雜湊函數，但相對需付出更高的計算成本。
 
-更多雜湊函數相關的討論，會另撰[專文](../hash)。
+更多雜湊函數相關的討論，會另撰[專文](../../hash)。
 
 [uniform-dist]: https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)
 [crypto-hash-fn]: https://en.wikipedia.org/wiki/Cryptographic_hash_function
@@ -355,17 +355,16 @@ impl<K, V> Default for HashMap<K, V>
 }
 ```
 
-這裡為了符合人因工程，使用了 [`Default`][trait-default] trait 設定初始值。此外，由於 Rust 的容器型別慣例上沒有任何元素時，不會配置任何記憶體空間，僅有初始的 pointer。所以 HashMap 初始化後，記憶體空間僅
+這裡為了符合人因工程，使用了 [`Default`][trait-default] trait 設定初始值。此外，由於 Rust 的容器型別慣例上沒有任何元素時，不會配置任何記憶體空間，僅有初始的 pointer。 HashMap 初始化後，記憶體空間僅需
 
 - `buckets` 的 `Vec` 佔據 3 個 usize 大小（一個 heap 指標，兩個記錄容量與長度的 usize。
 - `len` 本身佔據 1 個 usize 大小。
 
-所以預設初始化的 HashMap 在 64bit machine 上僅佔 4 * usize = 32 bytes。
+所以預設初始化的 HashMap 在 64bit machine 上佔 4 * usize = 32 bytes。
 
-為了後續實作 rezie 容易些，同時實作了指定 bucket 數目的建構式。
+為了後續實作 resize 容易些，同時實作了指定 bucket 數目的建構式。
 
 ```rust
-
 pub fn with_capacity(cap: usize) -> Self {
     let mut buckets: Vec<Bucket<K, V>> =  Vec::new();
     for _ in 0..cap {
@@ -398,9 +397,14 @@ pub fn get(&self, key: &K) -> Option<&V> {
 }
 ```
 
-這邊需要加強人因工程，當我們透過 `HashMep::get` 搜尋特定鍵時，必須傳入一模一樣的型別，例如 `HashMap<&str, u8>` 就只能透過相同的 borrowed value `&str` 搜索，而不能透過 owned value `&String` 尋找，就算兩個型別可無痛轉換也無法。而 Rust 標準函式庫有做到這一點，因為其泛型參數 `K` 實作了 [Borrow][trait-borrow] trait，抽象化 owned 與 borrowed 間的型別，讓呼叫端無論傳 owned 或 borrowed 型別都可以有相同的行為。
+事實上，這個 `get` 不是非常方便使用，當我們透過 `HashMep::get` 搜尋特定鍵時，必須傳入一模一樣的型別，例如 `HashMap<&str, u8>` 就只能透過相同的 borrowed value `&str` 搜索，而不能透過 owned value `&String` 尋找，就算兩個型別可無痛轉換也無法。而 Rust 標準函式庫有做到這一點，因為其泛型參數 `K` 實作了 [Borrow][trait-borrow] trait，抽象化 owned 與 borrowed 間的型別，讓呼叫端無論傳 owned 或 borrowed 型別都可以有相同的行為。
 
-> `fn get_mut()` 與 `fn get()` 的差異只在於呼叫了 `self.bucket.get_mut` 取得 mutable reference。
+> 歡迎直接貢獻，將這段程式改為符合人因工程，方便使用的版本。
+
+<!--  -->
+
+> `fn get_mut()` 與 `fn get()` 的差異只在於呼叫了 `self.bucket.get_mut` 取得 mutable reference，這裡就不多做說明。
+
 
 [trait-borrow]: https://doc.rust-lang.org/stable/std/borrow/trait.Borrow.html
 
