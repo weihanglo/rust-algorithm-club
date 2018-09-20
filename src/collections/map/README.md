@@ -69,7 +69,7 @@ _（雜湊表示意圖）_
 ## 參考資料
 
 - [Wiki: Associative array](https://en.wikipedia.org/wiki/Associative_array)
-- [Wiki: Associative continers](https://en.wikipedia.org/wiki/Associative_containers)
+- [Wiki: Associative containers](https://en.wikipedia.org/wiki/Associative_containers)
 - [cpprefernce.com: std::map](https://en.cppreference.com/w/cpp/container/map)
 - [Rust documentation: std::colledtion](https://doc.rust-lang.org/stable/std/collections/)
 - Map graph by Jorge Stolfi [CC-BY-SA-3.0](http://creativecommons.org/licenses/by-sa/3.0/) via Wikimedia Commons.

@@ -35,7 +35,7 @@ Create an empty phone book with some blank slots.
 我們嘗試插入第一筆資料，記錄 Frodo 以及他的手機號碼 88-7-666。
 
 1. 透過雜湊函數，計算出 Frodo 的索引值為 1。
-2. 將 88-77-666 插入 table[1] 的位置上。
+2. 將 88-7-666 插入 table[1] 的位置上。
 
 > table[1] 這種 bucket array 下的個別索引空間，通常稱為一個 slot 或 bucket。
 
@@ -96,13 +96,13 @@ Gollum -> | 0: 00-0-000 |
 Sam: hash_function(Sam) --> 2
 
           +-------------+
-          | 0:          |
+          | 0: 00-0-000 |
           +-------------+
           | 1: 88-7-666 |
           +-------------+
 Sam   --> | 2: 11-2-333 | --> Sam's phone number
           +-------------+
-          | 3: 00-0-000 |
+          | 3:          |
           +-------------+
 ```
 
@@ -293,7 +293,7 @@ pub struct HashMap<K, V> where K: Hash + Eq {
 
 可是，用單一 `Vec` 儲存所有資料，萬一雜湊碰撞，不同鍵指向同個索引值該如何？這次先挑選相對容易的方案 separate chaining 處理碰撞，並以 `Vec` 動態陣列作為每個 bucket 儲存碰撞元素的容器，因此，`buckets` 陣列裡面改存 `Bucket` 陣列，而 `Bucket` 則儲存真正的 key-value pair。
 
-```patch
+```rust
 type Bucket<K, V> = Vec<(K, V)>;              // 1
 
 pub struct HashMap<K, V> where K: Hash + Eq {
