@@ -50,7 +50,7 @@ impl<H, T> Bucket<H, T> {
     /// * `value` - Value to be put in the bucket.
     pub fn new(hash: H, value: T) -> Bucket<H, T> {
         Bucket {
-            hash: hash,
+            hash,
             values: vec![value],
         }
     }

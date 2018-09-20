@@ -48,7 +48,7 @@ pub fn quicksort_manual_tco(arr: &mut [i32]) {
 
 /// Manual tail-call opitimized recursion helper.
 ///
-/// Can achieve O(log n) auxiliary space complexity without any 
+/// Can achieve O(log n) auxiliary space complexity without any
 /// compiler-optimization of tail-call.
 fn quicksort_helper_manual_tco(arr: &mut [i32], mut lo: isize, mut hi: isize) {
     while lo < hi {
@@ -137,7 +137,7 @@ fn partition_3way(arr: &mut [i32], lo: isize, hi: isize) -> (isize, isize) {
 
 /// Quicksort with Hoare parition scheme
 pub fn quicksort_hoare(arr: &mut [i32]) {
-    if arr.len() == 0 {
+    if arr.is_empty() {
         return
     }
     let hi = arr.len() - 1;
@@ -155,9 +155,9 @@ fn quicksort_helper_hoare(arr: &mut [i32], lo: usize, hi: usize) {
 
 /// Hoare partition scheme
 ///
-/// Return the middle index of the two partitions. 
+/// Return the middle index of the two partitions.
 ///
-/// Note that the return value is not necessarily be the index of the pivot, 
+/// Note that the return value is not necessarily be the index of the pivot,
 /// and the pivot is located somewhere of the first partition.
 fn partition_hoare(arr: &mut [i32], lo: usize, hi: usize) -> usize {
     let pivot = arr[lo];

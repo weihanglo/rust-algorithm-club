@@ -17,7 +17,7 @@ pub fn heapsort(arr: &mut [i32]) {
 }
 
 /// Internal function for heap to fix itself to conform to heap definition.
-/// Precondiition: all elements below `start` are in heap order 
+/// Precondiition: all elements below `start` are in heap order
 /// expect `start` itself.
 fn sift_down(arr: &mut [i32], start: usize, end: usize) {
     let mut root = start;
@@ -26,7 +26,7 @@ fn sift_down(arr: &mut [i32], start: usize, end: usize) {
         if child > end {
             break;
         }
-        if child + 1 <= end && arr[child] < arr[child + 1] {
+        if child < end && arr[child] < arr[child + 1] {
             // Right child exists and is greater.
             child += 1;
         }
