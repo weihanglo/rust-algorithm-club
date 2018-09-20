@@ -1,8 +1,8 @@
 set -ex
 
 main() {
-    cargo clippy
     cargo build
+    cargo test
 }
 
 main
