@@ -32,10 +32,9 @@ install:
   - sh ci/install.sh
 
 script:
-  - cargo build
-  - cargo test
+  - sh ci/script.sh
 
-after_script: 
+after_script:
   - set +e
 
 before_deploy:
