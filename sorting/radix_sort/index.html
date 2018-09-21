@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -140,7 +147,7 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="#a基數排序-radix-sort" id="a基數排序-radix-sort"><h1>基數排序 Radix sort</h1></a>
-<p>如果你對 <a href="../counting_sort">Counting sort</a> 與 <a href="../bucket_sort">Bucket sort</a> 有認識，應該知道這兩個排序都能突破比較排序法複雜度 \(O(n \log n) \) 限制的特殊排序法。<a href="https://en.wikipedia.org/wiki/Radix_sort">Radix sort</a> 同樣是個特殊的<a href="https://en.wikipedia.org/wiki/Integer_sorting">整數排序法</a>，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。</p>
+<p>如果你對 <a href="../counting_sort">Counting sort</a> 與 <a href="../bucket_sort">Bucket sort</a> 有認識，應該知道這兩個排序都能突破比較排序法複雜度 $O(n \log n) $ 限制的特殊排序法。<a href="https://en.wikipedia.org/wiki/Radix_sort">Radix sort</a> 同樣是個特殊的<a href="https://en.wikipedia.org/wiki/Integer_sorting">整數排序法</a>，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。</p>
 <p>舉例來說，欲排序一群範圍在 0 - 999 的整數，若以 Counting sort 排序，則需建立一個「1000 元素的陣列」來計算每個整數的出現次數；若使用以 10 為基數的 Radix sort，則僅需以個位數、十位數、百位數作為鍵值分別排序三次。通常 Radix sort 的排序副程式（Sorting subroutine）會選用 Counting sort 或 Bucket sort，而以 10 為基數的鍵值範圍僅 0 - 9，這種小範圍整數非常適合 Counting sort 作為排序副程式，節省了配置 <code>int arr[1000]</code> 的 count array 的時空間。</p>
 <p>Radix sort 基本特性如下：</p>
 <ul>
@@ -213,23 +220,23 @@ sort by leftmost digit --&gt;
 </code></pre>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity   </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(dn) \) </td></tr>
-<tr><td> Best         </td><td> \(O(dn) \) </td></tr>
-<tr><td> Average      </td><td> \(O(dn) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(d + n) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(dn) $ </td></tr>
+<tr><td> Best         </td><td> $O(dn) $ </td></tr>
+<tr><td> Average      </td><td> $O(dn) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(d + n) $ auxiliary </td></tr>
 </tbody></table>
 <blockquote>
-<p>\(n \)：資料筆數。<br />
-\(d \)：number of digit，資料中最多有幾個位數（或鍵值）。<br />
-\(k \)：基數，就是一個位數最多有幾種可能的值。</p>
+<p>$n $：資料筆數。<br />
+$d $：number of digit，資料中最多有幾個位數（或鍵值）。<br />
+$k $：基數，就是一個位數最多有幾種可能的值。</p>
 </blockquote>
 <a class="header" href="#time-complexity" id="time-complexity"><h3>Time complexity</h3></a>
 <p>欲分析 Radix sort 的時間複雜度，我們可以逐一擊破，先從排序副程式開始分析。</p>
-<p>Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每個 subroutine 的複雜度為 \(O(n + k) \)， \(k \) 為 key 的範圍，以 10 為基數，就是 0 - 9 之間 \(k = 10 \)。</p>
-<p>再來，我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 \(d \) 位數，時間複雜度需乘上 \(d \)，為 \(O(d (n + k)) \)，那這個 \(k \) 是否可以捨去呢？</p>
-<p>分析 Counting sort 或 Bucket sort 時，範圍 \(k \) 會隨輸入資料而變化，若 \(k \) 過大，對複雜度的影響甚至會超過 \(n \)，因此分析複雜度時無法將 \(k \) 捨去。而在 Radix sort， \(k \) 通常為一個已知的常數，例如以 bytes 為基數 \(k = 8 \)， \(k \) 可以捨去。最後可得 Radix sort 的時間複雜度為 \(O(d \cdot n) \)。</p>
+<p>Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每個 subroutine 的複雜度為 $O(n + k) $， $k $ 為 key 的範圍，以 10 為基數，就是 0 - 9 之間 $k = 10 $。</p>
+<p>再來，我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 $d $ 位數，時間複雜度需乘上 $d $，為 $O(d (n + k)) $，那這個 $k $ 是否可以捨去呢？</p>
+<p>分析 Counting sort 或 Bucket sort 時，範圍 $k $ 會隨輸入資料而變化，若 $k $ 過大，對複雜度的影響甚至會超過 $n $，因此分析複雜度時無法將 $k $ 捨去。而在 Radix sort， $k $ 通常為一個已知的常數，例如以 bytes 為基數 $k = 8 $， $k $ 可以捨去。最後可得 Radix sort 的時間複雜度為 $O(d \cdot n) $。</p>
 <a class="header" href="#space-complexity" id="space-complexity"><h3>Space complexity</h3></a>
-<p>Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 \(O(n \cdot k) \)。Radix sort 的 \(k \) 是常數，予以捨去。再乘上 \(d \) 個位數，最差的空間複雜度為 \(O(d \cdot n) \)。</p>
+<p>Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 $O(n \cdot k) $。Radix sort 的 $k $ 是常數，予以捨去。再乘上 $d $ 個位數，最差的空間複雜度為 $O(d \cdot n) $。</p>
 <a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>這裡示範實作以 10 為基數，用來排序非負整數的 Radix sort。</p>
 <p>首先，我們的排序副程式使用 Counting sort。</p>
@@ -260,7 +267,7 @@ pub fn radix_sort(arr: &amp;mut [i32]) {
 <ol>
 <li>設定基數為 10。</li>
 <li>設定一個旗標，記錄當前在排序哪一位數，1 表示從最小位數（個位數）開始。</li>
-<li>先找到輸入資料的最大值，作為之後副程式迴圈結束的條件。尋找最大值的複雜度為 \(O(n)\)，因此不影響 Radix Sort 的複雜度。如果 <code>arr</code> 為空序列，則最大值設為 0，在第四步驟就會自動結束排序。</li>
+<li>先找到輸入資料的最大值，作為之後副程式迴圈結束的條件。尋找最大值的複雜度為 $O(n)$，因此不影響 Radix Sort 的複雜度。如果 <code>arr</code> 為空序列，則最大值設為 0，在第四步驟就會自動結束排序。</li>
 <li>判斷當前排序的位數是否大於最大值，例如當前排序百分位，<code>digit</code> 為 <code>100</code>，而最大值 <code>x</code> 為 26，則不需再排序百分位。</li>
 <li>使用 Counting sort 作為排序副程式，只需要有 0 - 9 十個桶子。而 <code>key</code> 參數則取出當前欲比較的位數。</li>
 <li>位數乘上基數，移至下一個位數繼續比較。</li>
@@ -315,24 +322,13 @@ pub fn radix_sort(arr: &amp;mut [i32]) {
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

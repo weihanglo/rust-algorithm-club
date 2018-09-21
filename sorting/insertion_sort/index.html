@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -144,7 +151,7 @@
 <p>Insertion sort 基本特性如下：</p>
 <ul>
 <li>實作簡單易理解。</li>
-<li>資料量少時較高效，且比其他 \(O(n^2) \) 的排序法高效（selection sort/bubble sort）。</li>
+<li>資料量少時較高效，且比其他 $O(n^2) $ 的排序法高效（selection sort/bubble sort）。</li>
 <li><strong>自適應排序</strong>：可根據當前資料排序情形加速排序，資料越接近排序完成，效率越高。</li>
 <li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
@@ -166,17 +173,17 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif" alt="" /></p>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n) \)   </td></tr>
-<tr><td> Average      </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n^2) $ </td></tr>
+<tr><td> Best         </td><td> $O(n) $   </td></tr>
+<tr><td> Average      </td><td> $O(n^2) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
 </tbody></table>
-<p>最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 \(n \) 次。</p>
-<p>最差時間複雜度發生在資料完全相反時，insertion sort 每取得一個新元素是，都需將資料插入序列最前面，，因此所需的操作如下（ \(c \) 為任意常數）：</p>
+<p>最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 $n $ 次。</p>
+<p>最差時間複雜度發生在資料完全相反時，insertion sort 每取得一個新元素是，都需將資料插入序列最前面，，因此所需的操作如下（ $c $ 為任意常數）：</p>
 <p>$$ c \cdot 1 + c \cdot 2 + c \cdot 3 \cdots + c \cdot (n - 1) = \frac{c(n - 1 + 1)(n - 1)}{2}$$</p>
 <p>最後等於</p>
 <p>$$\frac{cn^2}{2} - \frac{cn}{2}$$</p>
-<p>捨去低次項，得到時間複雜度為 \(O(n^2) \)。</p>
+<p>捨去低次項，得到時間複雜度為 $O(n^2) $。</p>
 <a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>簡單實作的程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -199,7 +206,7 @@ pub fn insertion_sort(arr: &amp;mut [i32]) {
 <a class="header" href="#a變形" id="a變形"><h2>變形</h2></a>
 <a class="header" href="#binary-insertion-sort-binsort" id="binary-insertion-sort-binsort"><h3>Binary insertion sort (binsort)</h3></a>
 <p>在一般演算法討論中，通常以簡單的型別如 <code>i32</code> 來探討並實作。在真實世界中，做哪種操作，用哪種語言，都會影響到實際效能。例如 Python 的比較操作相對於置換元素，成本高出不少，是因為每個物件在 Python 的比較需動態檢查是否實作 <code>__lt__</code> <code>__gt__</code> 等方法才能進行比較。所以 Python 排序法實作就要特別注意減少比較操作的次數。</p>
-<p>Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 <a href="https://en.wikipedia.org/wiki/Binary_search">binary search</a> 搜尋新元素應要插入哪個位置，最多僅需 \(\log_2n \) 次比較。但 binary insertion sort 的複雜度依舊是 \(O(n^2) \)，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。</p>
+<p>Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 <a href="https://en.wikipedia.org/wiki/Binary_search">binary search</a> 搜尋新元素應要插入哪個位置，最多僅需 $\log_2n $ 次比較。但 binary insertion sort 的複雜度依舊是 $O(n^2) $，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。</p>
 <p>Binary insertion sort 的程式碼和一般的 insertion sort 差不了多少，我們這裡使用 <code>slice</code> 內建的 <code>binary_search</code> 來找尋插入點。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -271,24 +278,13 @@ pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

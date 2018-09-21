@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -140,9 +147,9 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="#a合併排序-mergesort" id="a合併排序-mergesort"><h1>合併排序 Mergesort</h1></a>
-<p>Mergesort 是一個泛用且高效穩定的排序法，最佳與最差時間複雜都是 \(O(n \log n) \)。Mergesort 可謂著名「Divide and Conquer」手法的經典案例，先將序列分成更小的子序列（Divide），一個個排序後（Conquer），再合併已排序的子序列（Combine）。</p>
+<p>Mergesort 是一個泛用且高效穩定的排序法，最佳與最差時間複雜都是 $O(n \log n) $。Mergesort 可謂著名「Divide and Conquer」手法的經典案例，先將序列分成更小的子序列（Divide），一個個排序後（Conquer），再合併已排序的子序列（Combine）。</p>
 <ul>
-<li><strong>高效穩定</strong>：最佳、平均，與最差時間複雜度皆為 \(O(n \log n) \)。</li>
+<li><strong>高效穩定</strong>：最佳、平均，與最差時間複雜度皆為 $O(n \log n) $。</li>
 <li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
 <li><strong>非原地排序</strong>：除了資料本身，仍需額外花費儲存空間來排序。</li>
 <li><strong>分治演算法</strong>：將主問題化作數個子問題，各個擊破。</li>
@@ -187,15 +194,15 @@
 </code></pre>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Average      </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(n) \) auxiliary   </td></tr>
+<tr><td> Worst        </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Best         </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Average      </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(n) $ auxiliary   </td></tr>
 </tbody></table>
 <a class="header" href="#time-complexity" id="time-complexity"><h3>Time Complexity</h3></a>
-<p>透過遞迴關係式，很容易計算 Mergesort 的時間複雜度。假設排序長度為 \(n \) 的序列最多需要 \(T(n) \) 時間。可以觀察到，如果序列只有一個元素，Mergesort 僅需要常數時間就可以完成排序，寫成 \(T(n) = 1 \)。</p>
-<p>如果 \(n &gt; 2 \)，Mergesort 會將序列分為 \(\lceil \frac{n}{2} \rceil \) 部分，以及 \(\lfloor \frac{n}{2} \rfloor \) 部分。我們可以將排序前者寫成 \(T(\lceil \frac{n}{2} \rceil) \)，而後者花費時間為 \( T(\lfloor \frac{n}{2} \rfloor) \)。</p>
-<p>最後，合併兩個子序列僅需 \(n \) 個操作。可得下列遞迴關係式。<br />
+<p>透過遞迴關係式，很容易計算 Mergesort 的時間複雜度。假設排序長度為 $n $ 的序列最多需要 $T(n) $ 時間。可以觀察到，如果序列只有一個元素，Mergesort 僅需要常數時間就可以完成排序，寫成 $T(n) = 1 $。</p>
+<p>如果 $n &gt; 2 $，Mergesort 會將序列分為 $\lceil \frac{n}{2} \rceil $ 部分，以及 $\lfloor \frac{n}{2} \rfloor $ 部分。我們可以將排序前者寫成 $T(\lceil \frac{n}{2} \rceil) $，而後者花費時間為 $ T(\lfloor \frac{n}{2} \rfloor) $。</p>
+<p>最後，合併兩個子序列僅需 $n $ 個操作。可得下列遞迴關係式。<br />
 （為了方便計算，把 floor 和 ceil 捨去）</p>
 <p>$$
 T(n) =
@@ -204,9 +211,9 @@ T(n) =
 2T(\frac{n}{2}) + n &amp; \text{otherwise}.
 \end{cases}
 $$</p>
-<p>根據 <a href="master-theorem">Master Theorem</a>，可得複雜度為 \(O(n \log n) \)。</p>
+<p>根據 <a href="master-theorem">Master Theorem</a>，可得複雜度為 $O(n \log n) $。</p>
 <a class="header" href="#space-complexity" id="space-complexity"><h3>Space Complexity</h3></a>
-<p>Mergesort 的缺點之一就是在合併子序列時，需要額外的空間依序插入排序資料；若是遞迴版本的 Mergesort 還需額外加上遞迴花費的 call stack 空間，因此額外空間複雜度為 \(O(n) + O(\log n) = O(n) \)（以陣列實作）。</p>
+<p>Mergesort 的缺點之一就是在合併子序列時，需要額外的空間依序插入排序資料；若是遞迴版本的 Mergesort 還需額外加上遞迴花費的 call stack 空間，因此額外空間複雜度為 $O(n) + O(\log n) = O(n) $（以陣列實作）。</p>
 <a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>一般來說，Divide and Conquer 有兩種設計、解決問題的技巧：Top-down（自上而下）與 Buttom-up（自下而上）。前者是先對問題有整體的輪廓概念，再逐步針對細節一一處理；後者則是先準備每個問題需要的基礎步驟與元件，再將這些步驟結合，解決整體的問題。</p>
 <p>Mergesort 的實作分為兩部分：</p>
@@ -376,24 +383,13 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -149,23 +156,23 @@
 <li><strong>預期分佈</strong>：資料為<strong>均勻分佈</strong>。</li>
 </ul>
 <a class="header" href="#a步驟" id="a步驟"><h2>步驟</h2></a>
-<p>假設要排序 \(n \) 個元素的陣列，這些元素的值平均散落在某個<strong>已知的預期範圍內</strong>，例如 1 到 100。</p>
+<p>假設要排序 $n $ 個元素的陣列，這些元素的值平均散落在某個<strong>已知的預期範圍內</strong>，例如 1 到 100。</p>
 <ol>
-<li><strong>Create buckets</strong>：建立 \(k \) 個桶子（bucket）的陣列。每個桶子<strong>對應預期範圍的某區間</strong>，如第一個桶子放 1 到 10，第二個放 11 到 20。</li>
+<li><strong>Create buckets</strong>：建立 $k $ 個桶子（bucket）的陣列。每個桶子<strong>對應預期範圍的某區間</strong>，如第一個桶子放 1 到 10，第二個放 11 到 20。</li>
 <li><strong>Scatter</strong>：將每個元素依照該值放入對應的桶子中。</li>
 <li><strong>Inner sort</strong>：排序所有非空的桶子。</li>
 <li><strong>Gather</strong>：依序走訪所有桶子，將桶內的元素放回原本的陣列中。</li>
 </ol>
 <a class="header" href="#a說明" id="a說明"><h2>說明</h2></a>
 <p>以下用 ASCII diagram 視覺化解釋：</p>
-<p>這裡有一些整數，落在 1 至 100 之間。我們有 \(n = 10 \) 的陣列要排序。</p>
+<p>這裡有一些整數，落在 1 至 100 之間。我們有 $n = 10 $ 的陣列要排序。</p>
 <pre><code>Original array
 
 +-------------------------------------------------+
 |  6 | 28 | 96 | 14 | 74 | 37 |  9 | 71 | 91 | 36 |
 +-------------------------------------------------+
 </code></pre>
-<p><strong>1. Create buckets</strong>：建立一定數量的桶子，這裡我們建立與原始陣列相同數量的桶子（10）。每個桶子對應 \(n - 1 * 10 \) 到 \(n * 10 \) 的區間。</p>
+<p><strong>1. Create buckets</strong>：建立一定數量的桶子，這裡我們建立與原始陣列相同數量的桶子（10）。每個桶子對應 $n - 1 * 10 $ 到 $n * 10 $ 的區間。</p>
 <pre><code>Bucket array
 
 +-------------------------------------------------+
@@ -205,35 +212,35 @@
 </code></pre>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n^2) \)   </td></tr>
-<tr><td> Best         </td><td> \(O(n + k) \) </td></tr>
-<tr><td> Average      </td><td> \(O(n + k) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(n + k) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n^2) $   </td></tr>
+<tr><td> Best         </td><td> $O(n + k) $ </td></tr>
+<tr><td> Average      </td><td> $O(n + k) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(n + k) $ auxiliary </td></tr>
 </tbody></table>
 <blockquote>
-<p>\(k \) = 桶子的數量（number of buckets）
-\(n \) = 資料筆數</p>
+<p>$k $ = 桶子的數量（number of buckets）
+$n $ = 資料筆數</p>
 </blockquote>
 <a class="header" href="#worst-case" id="worst-case"><h3>Worst case</h3></a>
-<p>Bucket sort 是一個分配式排序法，對資料分佈有既定的預期：「<strong>所有元素平均分佈在每個 bucket 的區間內</strong>」。可想而知，最差的狀況是所有元素都聚集（clustering）在同一個 bucket 中，整個 bucket sort 的會退化成單一一個 inner sort 的複雜度。而桶內排序通常選用 insertion sort（最差 \(O(n^2) \)），所以最差的時間複雜度為「 \(O(n^2) \)」。</p>
+<p>Bucket sort 是一個分配式排序法，對資料分佈有既定的預期：「<strong>所有元素平均分佈在每個 bucket 的區間內</strong>」。可想而知，最差的狀況是所有元素都聚集（clustering）在同一個 bucket 中，整個 bucket sort 的會退化成單一一個 inner sort 的複雜度。而桶內排序通常選用 insertion sort（最差 $O(n^2) $），所以最差的時間複雜度為「 $O(n^2) $」。</p>
 <a class="header" href="#best-case" id="best-case"><h3>Best case</h3></a>
-<p>最佳的狀況則是完全符合預期的平均分佈，一個蘿蔔一個坑，每個桶內排序的最佳時間複雜度為 \(O(n / k) \)，再乘上桶子總數 \(k \)，僅需 \(O(k \cdot (n / k)) = O(n) \)。計算結果看起來非常合理，但實際上最佳時間複雜度為 \(O(n + k) \)，為什麼呢？</p>
-<p>無庸置疑，桶內排序最佳時間複雜度為 \(O(n / k) \)，但別忘了這是省略常數項過後式子，進行符號運算時，較精確的表達是 \(c_0 O(n / k) + c_1 \)，對於實作層面的常數 \(c_0 \) 和 \(c_1 \) 則予以保留。</p>
-<p>當我們乘上 \(k \)，試著算出總運算量時，</p>
+<p>最佳的狀況則是完全符合預期的平均分佈，一個蘿蔔一個坑，每個桶內排序的最佳時間複雜度為 $O(n / k) $，再乘上桶子總數 $k $，僅需 $O(k \cdot (n / k)) = O(n) $。計算結果看起來非常合理，但實際上最佳時間複雜度為 $O(n + k) $，為什麼呢？</p>
+<p>無庸置疑，桶內排序最佳時間複雜度為 $O(n / k) $，但別忘了這是省略常數項過後式子，進行符號運算時，較精確的表達是 $c_0 O(n / k) + c_1 $，對於實作層面的常數 $c_0 $ 和 $c_1 $ 則予以保留。</p>
+<p>當我們乘上 $k $，試著算出總運算量時，</p>
 <p>$$k \cdot (c_0(n / k) + c_1) $$</p>
 <p>會得到：</p>
 <p>$$ c_0n + c_1k $$</p>
-<p>可以得知，整個計算與 \(k \) 有關，所以需要耗時 \(O(n + k) \)。</p>
+<p>可以得知，整個計算與 $k $ 有關，所以需要耗時 $O(n + k) $。</p>
 <p>撇開數學，我們從 pseudo code 來看。最佳情況下，將所有元素蒐集回陣列的步驟（Gather）如下：</p>
 <pre><code>for (each bucket b in all k buckets)
   for (each element x in b)
     append x to the array
 </code></pre>
-<p>最外層的迴圈依桶子數 \(k \) 而定，至少需要執行 \(k \) 次，複雜度為 \(O(k) \)。內層的迴圈則是每個桶內的元素都會執行，而我們的資料時均勻分布，因此執行時間與元素總數 \(n \) 相關，為 \(O(n) \)。兩者加起來就是我們所說的 \(O(n + k) \) 的最佳複雜度。</p>
-<p><strong>那 \(k \) 究竟會是多少，影響會比 \(n \) 大嗎？</strong></p>
-<p>端看桶子總數而定，若桶子總數很大，比元素個數 \(n \) 大得多，則桶子總數對執行時間的影響恐較劇烈，就算大多數為空桶子，仍須挨家挨戶查看是否需要執行桶內排序。</p>
+<p>最外層的迴圈依桶子數 $k $ 而定，至少需要執行 $k $ 次，複雜度為 $O(k) $。內層的迴圈則是每個桶內的元素都會執行，而我們的資料時均勻分布，因此執行時間與元素總數 $n $ 相關，為 $O(n) $。兩者加起來就是我們所說的 $O(n + k) $ 的最佳複雜度。</p>
+<p><strong>那 $k $ 究竟會是多少，影響會比 $n $ 大嗎？</strong></p>
+<p>端看桶子總數而定，若桶子總數很大，比元素個數 $n $ 大得多，則桶子總數對執行時間的影響恐較劇烈，就算大多數為空桶子，仍須挨家挨戶查看是否需要執行桶內排序。</p>
 <a class="header" href="#space-complexity" id="space-complexity"><h3>Space Complexity</h3></a>
-<p>Bucket sort 須額外建立 \(k \) 個桶子，每個桶子需要配置長度為 \(n \) 的 array，因此空間複雜度為 \(O(n \cdot k) \)。如果以 dynamic array 實作 bucket，並考慮平攤分析（Amortized analysis），則空間複雜度降至 \(O(n + k) \)，這也是大多數人接受的分析結果，畢竟不會有人無聊到預先配置 \(n \cdot k \) 個 empty bucket。</p>
+<p>Bucket sort 須額外建立 $k $ 個桶子，每個桶子需要配置長度為 $n $ 的 array，因此空間複雜度為 $O(n \cdot k) $。如果以 dynamic array 實作 bucket，並考慮平攤分析（Amortized analysis），則空間複雜度降至 $O(n + k) $，這也是大多數人接受的分析結果，畢竟不會有人無聊到預先配置 $n \cdot k $ 個 empty bucket。</p>
 <a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <a class="header" href="#bucket" id="bucket"><h3>Bucket</h3></a>
 <p>Bucket sort 有許多種各異的實作法，差異最大之處就是桶子 bucket 這部分。</p>
@@ -329,7 +336,7 @@ pub fn bucket_sort() {
 </li>
 <li>由於要模擬 in-place 原地排序法的特性，將排序好的資料再次拷貝到 <code>arr</code> 上。這也是為什麼函式元素泛型 <code>T</code> 需要 <code>Clone</code> trait 的原因了。</li>
 </ol>
-<p>有關於步驟 2.2.，這部分可以用 <code>HashMap</code> 的變形 <a href="https://github.com/bluss/indexmap">IndexMap</a>（一個保存插入順序的有序 HashMap）保存雜湊值對應桶子的資訊，使得外界更容易依雜湊值找到桶子。但為了保持範例程式的簡潔，決定不引入第三方的 crate（Rust 語言第三方模組的代稱），且 <code>binary_search_by</code> 的複雜度為 \(O(\log n) \)，對 Bucket sort 最差複雜度並無影響。</p>
+<p>有關於步驟 2.2.，這部分可以用 <code>HashMap</code> 的變形 <a href="https://github.com/bluss/indexmap">IndexMap</a>（一個保存插入順序的有序 HashMap）保存雜湊值對應桶子的資訊，使得外界更容易依雜湊值找到桶子。但為了保持範例程式的簡潔，決定不引入第三方的 crate（Rust 語言第三方模組的代稱），且 <code>binary_search_by</code> 的複雜度為 $O(\log n) $，對 Bucket sort 最差複雜度並無影響。</p>
 <a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Bucket_sort">Wiki: Bucket sort</a></li>
@@ -378,24 +385,13 @@ pub fn bucket_sort() {
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

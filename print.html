@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -231,59 +238,59 @@
 <p>這是最簡單，最粗淺比較不同演算法效率的作法。</p>
 <a class="header" href="#a用數學表示演算法效率" id="a用數學表示演算法效率"><h2>用數學表示演算法效率</h2></a>
 <p>「計算步驟數目」很像中小學的數學題目：某公司有三個能力相異的工程師，有的工程師一天解決一個 bug，有的工程師連續工作後效率大幅滑落。每個工程師的除蟲效率可以畫成「bug 數 - 解決 bug 所需時數」函數，橫軸為待處理的臭蟲數，縱軸為解決臭蟲所需時數，如圖一與表所示。</p>
-<table><thead><tr><th> 時數       </th><th> \(\log N\) </th><th> \(N\) </th><th> \(N \log N\) </th></tr></thead><tbody>
-<tr><td> \(N=5\)  </td><td> 2.236        </td><td> 5       </td><td> 8.046          </td></tr>
-<tr><td> \(N=30\) </td><td> 5.477        </td><td> 30      </td><td> 102.036        </td></tr>
+<table><thead><tr><th> 時數       </th><th> $\log N$ </th><th> $N$ </th><th> $N \log N$ </th></tr></thead><tbody>
+<tr><td> $N=5$  </td><td> 2.236        </td><td> 5       </td><td> 8.046          </td></tr>
+<tr><td> $N=30$ </td><td> 5.477        </td><td> 30      </td><td> 102.036        </td></tr>
 </tbody></table>
 <p><img src="fig1.png" alt="Fig. 1" /></p>
 <p>不論從圖或表，我們都可以明確看出，當 bug 數目小時，每個工程師耗時差不多；當 bug 數目成長到一定程度時，效率好與效率差的工程師差距就很明顯了。</p>
-<p>我們把場景拉回演算法的範疇，再闡明一次。上述的除蟲效率函數關係，可以簡單視為為「輸入資料量 - 運算成本」關係之函數。例如 \(f(x)=x^2+3x+6\)。當輸入資料量增大時，成本也隨之上升，這個用來描述演算法執行成本與輸入資料量之關係的函數，我們稱之為該演算法的「複雜度」。</p>
+<p>我們把場景拉回演算法的範疇，再闡明一次。上述的除蟲效率函數關係，可以簡單視為為「輸入資料量 - 運算成本」關係之函數。例如 $f(x)=x^2+3x+6$。當輸入資料量增大時，成本也隨之上升，這個用來描述演算法執行成本與輸入資料量之關係的函數，我們稱之為該演算法的「複雜度」。</p>
 <a class="header" href="#a何謂漸進符號" id="a何謂漸進符號"><h2>何謂漸進符號</h2></a>
 <p>了解每個演算法的時間複雜度之後，就能比較何者效率佳。但往往天不從人願，給了我們兩個演算法進行比較。</p>
 <p>$$f(x)=\sqrt{\frac{182777}{286}}\pi x^4+5\log_{3}^{26}88x^3-e^{777^{log_2^9}}$$</p>
 <p>$$g(x)=3x^6-2x^2$$</p>
 <p>「天啊！這樣要怎麼分析執行效率呀！」</p>
 <p>為了有統一的加薪標準，我們不能假定產品只會產生特定數量的臭蟲，也不能以單一天的工作表現判定員工能力，我們知道老舊系統有無限多個 bug，因此，優秀的老闆關心的是工程師長期處理「海量臭蟲」，在極限下的<strong>成長趨勢</strong>，這些成長趨勢才是衡量 KPI 的關鍵。再次強調，優秀老闆關心如何榨出是工程師的「極限成長趨勢」，而非一時半刻賣弄學識。</p>
-<p>同樣地，有太多因素干擾影響一個演算法的複雜度，假使我們只觀察當輸入資料量 \(n\) 接近無窮大時，演算法的成長趨勢為何，就很接近所謂漸進符號（asymptotic notation）的定義。漸進符號 只關心演算法在極限下的漸進行為，不同的演算法可能使用相同的漸進符號表示。</p>
-<p>我們比較兩個簡單函數，\(f(x) = 10x + 29\) 以及 \(g(x) = x^2 + 1\)。從圖二可以看出一開始 \(g(x)\) 的執行時間比 \(f(x)\) 多了不少，但隨著輸入資料量 \(n\) 增多，\(g(x)\) 的執行時間成長愈來愈快速，最後遠遠大於 \(f(x)\)。</p>
+<p>同樣地，有太多因素干擾影響一個演算法的複雜度，假使我們只觀察當輸入資料量 $n$ 接近無窮大時，演算法的成長趨勢為何，就很接近所謂漸進符號（asymptotic notation）的定義。漸進符號 只關心演算法在極限下的漸進行為，不同的演算法可能使用相同的漸進符號表示。</p>
+<p>我們比較兩個簡單函數，$f(x) = 10x + 29$ 以及 $g(x) = x^2 + 1$。從圖二可以看出一開始 $g(x)$ 的執行時間比 $f(x)$ 多了不少，但隨著輸入資料量 $n$ 增多，$g(x)$ 的執行時間成長愈來愈快速，最後遠遠大於 $f(x)$。</p>
 <p><img src="fig2.png" alt="Fig. 2" /></p>
-<p>若以 \(an^2 + bn + c\)  表示複雜度，就是當存在一個 \(a &gt; 0\) 時，一定會有 \(n\) 符合 \(an^2 &gt; bn + c\)，這個差距隨著 \(n\) 越大越明顯，這是因為首項（leading term），也就是帶有最高指數的那一項，隨著 輸入大小改變，執行時間變化幅度較大。因此，可捨去複雜度函數中其他較不重要的次項與常數，留下最大次項，「<strong>透過簡單的函數來表述函數接近極限的行為</strong>」,讓複雜度函數更易理解，這就是「漸進符號」的概念。</p>
+<p>若以 $an^2 + bn + c$  表示複雜度，就是當存在一個 $a &gt; 0$ 時，一定會有 $n$ 符合 $an^2 &gt; bn + c$，這個差距隨著 $n$ 越大越明顯，這是因為首項（leading term），也就是帶有最高指數的那一項，隨著 輸入大小改變，執行時間變化幅度較大。因此，可捨去複雜度函數中其他較不重要的次項與常數，留下最大次項，「<strong>透過簡單的函數來表述函數接近極限的行為</strong>」,讓複雜度函數更易理解，這就是「漸進符號」的概念。</p>
 <p>這裡介紹常見的幾種漸進符號：</p>
-<a class="header" href="#obig-o" id="obig-o"><h3>\(O\)：Big O</h3></a>
-<p>當我們談論演算法複雜度時，通常關心的是演算法「最糟糕的情況下」，「最多」需要執行多久。Big O 就是描述演算法複雜度上界的漸進符號，當一個演算法「實際」的複雜度（或執行成本對輸入資料量函數）為 \(f(n)\) 時，欲以 Big O 描述其複雜度上界時，必須滿足以下定義：</p>
+<a class="header" href="#obig-o" id="obig-o"><h3>$O$：Big O</h3></a>
+<p>當我們談論演算法複雜度時，通常關心的是演算法「最糟糕的情況下」，「最多」需要執行多久。Big O 就是描述演算法複雜度上界的漸進符號，當一個演算法「實際」的複雜度（或執行成本對輸入資料量函數）為 $f(n)$ 時，欲以 Big O 描述其複雜度上界時，必須滿足以下定義：</p>
 <p>$$f(n) = O(g(n)) \colon {\exists k&gt;0\ \exists n_0\ \forall n&gt;n_0\ |f(n)| \leq k \cdot g(n)}$$</p>
-<p>假設有一演算法實際複雜度為 \(f(n) = 3n + 4\)，有一組 \(k = 4;\ g(n) = n;\ n_0 = 4\) 滿足</p>
+<p>假設有一演算法實際複雜度為 $f(n) = 3n + 4$，有一組 $k = 4;\ g(n) = n;\ n_0 = 4$ 滿足</p>
 <p>$$\forall n &gt; 4,\ 0 \leq f(n) = 3n + 4 \leq 4n$$</p>
-<p>意思是「\(f(n)\) 的複雜度上界成長趨勢最終不會超過 \(g(n) = 4n\) 」，再代入 \(O(g(n))\)，可得演算法最差複雜度為 \(f(n) = O(n)\)，也就是「該演算法的成長趨勢不會比 \(g(n)\) 來得快」（見圖三）。</p>
+<p>意思是「$f(n)$ 的複雜度上界成長趨勢最終不會超過 $g(n) = 4n$ 」，再代入 $O(g(n))$，可得演算法最差複雜度為 $f(n) = O(n)$，也就是「該演算法的成長趨勢不會比 $g(n)$ 來得快」（見圖三）。</p>
 <p><img src="fig3.png" alt="Fig. 3" /></p>
-<p>再多看一個例子，若 \(f(n) = 4n^2 + n\) 有一組 \(k = 5;\ g(n) = n^2;\ n_0 = 5\) 滿足</p>
+<p>再多看一個例子，若 $f(n) = 4n^2 + n$ 有一組 $k = 5;\ g(n) = n^2;\ n_0 = 5$ 滿足</p>
 <p>$$\forall n &gt; 5,\ 0 \leq f(n) = 4n^2 + n \leq 5n^2$$</p>
-<p>則此函數的複雜度為 \(f(n) = O(n^2)\)。</p>
+<p>則此函數的複雜度為 $f(n) = O(n^2)$。</p>
 <blockquote>
-<p>注意：也寫作 \(f(n) \in O(g(n))\)，因為實際上 \(O(g(n))\) 是所有可描述演算法成長趨勢，並滿足上述條件的函數之「集合」。</p>
+<p>注意：也寫作 $f(n) \in O(g(n))$，因為實際上 $O(g(n))$ 是所有可描述演算法成長趨勢，並滿足上述條件的函數之「集合」。</p>
 </blockquote>
-<a class="header" href="#omegabig-omega" id="omegabig-omega"><h3>\(\Omega\)：Big Omega</h3></a>
+<a class="header" href="#omegabig-omega" id="omegabig-omega"><h3>$\Omega$：Big Omega</h3></a>
 <p>相較於 Big O 描述演算法成長趨勢的上界，Big Omega 則是對應成長趨勢的「下界」，定義如下：</p>
 <p>$$f(n) = \Omega(g(n)) \colon {\exists k&gt;0\ \exists n_0\ \forall n&gt;n_0\ |f(n)| \geq k \cdot g(n)}$$</p>
-<p>以 \(f(n) = 3n + 4\) 為例，有一組 \(k = 2;\ g(n) = n;\ n_0 = 0\) 滿足上式，因此這個演算法在輸入資料夠大時，「至少」會達到 \(\Omega(n)\) 的複雜度，也就是「該演算法的成長趨勢不會比 \(g(n)\) 來得慢」。</p>
-<a class="header" href="#thetabig-theta" id="thetabig-theta"><h3>\(\Theta\)：Big Theta</h3></a>
+<p>以 $f(n) = 3n + 4$ 為例，有一組 $k = 2;\ g(n) = n;\ n_0 = 0$ 滿足上式，因此這個演算法在輸入資料夠大時，「至少」會達到 $\Omega(n)$ 的複雜度，也就是「該演算法的成長趨勢不會比 $g(n)$ 來得慢」。</p>
+<a class="header" href="#thetabig-theta" id="thetabig-theta"><h3>$\Theta$：Big Theta</h3></a>
 <p>Big Theta 則是 Big O 與 Big Omega 兩個漸進上下界所夾出的範圍，表示該演算法在輸入資料夠大時，最終的複雜度會成長到這個範圍中。其定義如下：</p>
 <p>$$f(n) = \Theta(g(n)) \colon {\exists k_1&gt;0\ \exists k_2&gt;0\ \exists n_0\ \forall n&gt;n_0\ k_1 \cdot g(n) \leq |f(n)| \leq k_2 \cdot g(n)}$$</p>
-<p>繼續以 \(f(n) = 3n + 4\) 為例，同樣有一組 \(k_1 = 1;\ k_2 = 5;\ g(n) = n;\ n_0 = 2\)，滿足</p>
+<p>繼續以 $f(n) = 3n + 4$ 為例，同樣有一組 $k_1 = 1;\ k_2 = 5;\ g(n) = n;\ n_0 = 2$，滿足</p>
 <p>$$\forall n \geq 2,\ n \leq f(n) = 3n + 4 \leq 5n$$</p>
-<p>可得知，\(f(n) = 3n + 4 \in \Theta(n)\)，表示「該演算法的成長趨勢與 \(g(n) = n\) 相同」（見圖四）。</p>
+<p>可得知，$f(n) = 3n + 4 \in \Theta(n)$，表示「該演算法的成長趨勢與 $g(n) = n$ 相同」（見圖四）。</p>
 <p><img src="fig4.png" alt="Fig. 4" /></p>
 <a class="header" href="#a常見的複雜度" id="a常見的複雜度"><h2>常見的複雜度</h2></a>
 <p>看完了讓人昏昏欲睡的數學定義，現在來認識一些常見的複雜度，從最快最有效率，到最慢最拖台錢的通通一起認識。</p>
 <ul>
-<li>\(O(1)\)：常數時間，演算法執行時間與資料量毫無瓜葛。例如讀取 array 首個元素。</li>
-<li>\(O(\log n)\)：執行時間隨資料量呈對數比例成長。常見的例子是<a href="../../searching/binary_search">二元搜索（Binary search）</a>。</li>
-<li>\(O(n)\)：執行時間隨資料量呈線性成長，例如在無序的 array 中尋找特定值。</li>
-<li>\(O(n \log n)\)：執行時間隨資料量呈線性對數成長，常見的<a href="../../sorting/mergesort">合併排序（Mergesort）</a>的複雜度即如斯。</li>
-<li>\(O(n^2)\)：執行時間隨資料量呈平方成長，例如一些效率不彰的排序法如<a href="../../sorting/bubble_sort">氣泡排序（Bubble sort）</a>。</li>
-<li>\(O(n^3)\)：執行時間隨資料量呈立方成長，常見例子為 naïve 實作的矩陣乘法。</li>
-<li>\(O(c^n)\)：執行時間隨資料量呈指數成長。</li>
-<li>\(O(n!)\)：執行時間隨資料量呈階乘成長，大部分情況下，這是非常差勁的複雜度。</li>
+<li>$O(1)$：常數時間，演算法執行時間與資料量毫無瓜葛。例如讀取 array 首個元素。</li>
+<li>$O(\log n)$：執行時間隨資料量呈對數比例成長。常見的例子是<a href="../../searching/binary_search">二元搜索（Binary search）</a>。</li>
+<li>$O(n)$：執行時間隨資料量呈線性成長，例如在無序的 array 中尋找特定值。</li>
+<li>$O(n \log n)$：執行時間隨資料量呈線性對數成長，常見的<a href="../../sorting/mergesort">合併排序（Mergesort）</a>的複雜度即如斯。</li>
+<li>$O(n^2)$：執行時間隨資料量呈平方成長，例如一些效率不彰的排序法如<a href="../../sorting/bubble_sort">氣泡排序（Bubble sort）</a>。</li>
+<li>$O(n^3)$：執行時間隨資料量呈立方成長，常見例子為 naïve 實作的矩陣乘法。</li>
+<li>$O(c^n)$：執行時間隨資料量呈指數成長。</li>
+<li>$O(n!)$：執行時間隨資料量呈階乘成長，大部分情況下，這是非常差勁的複雜度。</li>
 </ul>
 <p>若想一窺各種常見演算法的複雜度，可以參考這個最全面的 <a href="http://bigocheatsheet.com/">Big-O Cheat Sheet</a>，圖表非常精美直觀！</p>
 <blockquote>
@@ -295,7 +302,7 @@
 </blockquote>
 <a class="header" href="#a你可能不適合漸進符號" id="a你可能不適合漸進符號"><h2>你可能不適合漸進符號</h2></a>
 <p>善用漸進符號，可以讓原本複雜艱澀的實際複雜度，簡化至人類容易理解的簡單數學符號，也讓分析演算法效率更為客觀。但實際上，漸進符號省略了常數項與低次項，僅保留最高次項，這種「漸進行為下」的效能表現，在真實世界中，若輸入資料量不夠大，實際複雜度的低次項係數又比高次項大上許多，很可能這個演算法實際上根本沒辦法使用。</p>
-<p>另外，漸進符號僅考慮最差與最佳複雜度，沒有考慮到平均複雜度。舉例來說，<a href="../../sorting/quicksort">Quicksort</a> 最差複雜度為 \(O(n^2)\)，乍看之下不是很理想，但這種情況非常稀少；其平均複雜度落在 \(O(n \log n)\)，且其係數相對較低，額外開銷少，自然成為最熱門的排序法之一。</p>
+<p>另外，漸進符號僅考慮最差與最佳複雜度，沒有考慮到平均複雜度。舉例來說，<a href="../../sorting/quicksort">Quicksort</a> 最差複雜度為 $O(n^2)$，乍看之下不是很理想，但這種情況非常稀少；其平均複雜度落在 $O(n \log n)$，且其係數相對較低，額外開銷少，自然成為最熱門的排序法之一。</p>
 <p>還有，漸進符號也沒有考慮到不同語言、平台的基礎操作開銷，例如實作排序法時，有些語言「比較」兩個元素的開銷比「置換」來得大，實作上就需要盡量減少置換元素。同樣的，CPU 快取也非常容易忽略，一些快速的搜尋法很可能因為不是<a href="../../searching/linear_search">線性搜尋</a>，沒辦法充分利用 CPU cache，效能不一定理想。</p>
 <p>總之，漸進符號只能告訴你「當輸入資料量夠大時，演算法的複雜度表現如何」，並不總是適用每個情境，端看你怎麼使用他。</p>
 <a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
@@ -321,7 +328,7 @@
 <p>Insertion sort 基本特性如下：</p>
 <ul>
 <li>實作簡單易理解。</li>
-<li>資料量少時較高效，且比其他 \(O(n^2) \) 的排序法高效（selection sort/bubble sort）。</li>
+<li>資料量少時較高效，且比其他 $O(n^2) $ 的排序法高效（selection sort/bubble sort）。</li>
 <li><strong>自適應排序</strong>：可根據當前資料排序情形加速排序，資料越接近排序完成，效率越高。</li>
 <li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
@@ -343,17 +350,17 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif" alt="" /></p>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n) \)   </td></tr>
-<tr><td> Average      </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n^2) $ </td></tr>
+<tr><td> Best         </td><td> $O(n) $   </td></tr>
+<tr><td> Average      </td><td> $O(n^2) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
 </tbody></table>
-<p>最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 \(n \) 次。</p>
-<p>最差時間複雜度發生在資料完全相反時，insertion sort 每取得一個新元素是，都需將資料插入序列最前面，，因此所需的操作如下（ \(c \) 為任意常數）：</p>
+<p>最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 $n $ 次。</p>
+<p>最差時間複雜度發生在資料完全相反時，insertion sort 每取得一個新元素是，都需將資料插入序列最前面，，因此所需的操作如下（ $c $ 為任意常數）：</p>
 <p>$$ c \cdot 1 + c \cdot 2 + c \cdot 3 \cdots + c \cdot (n - 1) = \frac{c(n - 1 + 1)(n - 1)}{2}$$</p>
 <p>最後等於</p>
 <p>$$\frac{cn^2}{2} - \frac{cn}{2}$$</p>
-<p>捨去低次項，得到時間複雜度為 \(O(n^2) \)。</p>
+<p>捨去低次項，得到時間複雜度為 $O(n^2) $。</p>
 <a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>簡單實作的程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -376,7 +383,7 @@ pub fn insertion_sort(arr: &amp;mut [i32]) {
 <a class="header" href="#a變形" id="a變形"><h2>變形</h2></a>
 <a class="header" href="#binary-insertion-sort-binsort" id="binary-insertion-sort-binsort"><h3>Binary insertion sort (binsort)</h3></a>
 <p>在一般演算法討論中，通常以簡單的型別如 <code>i32</code> 來探討並實作。在真實世界中，做哪種操作，用哪種語言，都會影響到實際效能。例如 Python 的比較操作相對於置換元素，成本高出不少，是因為每個物件在 Python 的比較需動態檢查是否實作 <code>__lt__</code> <code>__gt__</code> 等方法才能進行比較。所以 Python 排序法實作就要特別注意減少比較操作的次數。</p>
-<p>Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 <a href="https://en.wikipedia.org/wiki/Binary_search">binary search</a> 搜尋新元素應要插入哪個位置，最多僅需 \(\log_2n \) 次比較。但 binary insertion sort 的複雜度依舊是 \(O(n^2) \)，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。</p>
+<p>Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 <a href="https://en.wikipedia.org/wiki/Binary_search">binary search</a> 搜尋新元素應要插入哪個位置，最多僅需 $\log_2n $ 次比較。但 binary insertion sort 的複雜度依舊是 $O(n^2) $，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。</p>
 <p>Binary insertion sort 的程式碼和一般的 insertion sort 差不了多少，我們這裡使用 <code>slice</code> 內建的 <code>binary_search</code> 來找尋插入點。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -445,17 +452,17 @@ pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
 </code></pre>
 <p>有沒有發現，<code>2a</code> 與 <code>2b</code> 的相對順序顛倒了呢？</p>
 <p>首先，回想一下穩定排序的定義：<strong>相同鍵值的元素，排序後相對位置不改變。</strong></p>
-<p>問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 \(O(1) \) insertion 的資料結構，不然就會多出額外 \(O(n^2) \) 的寫入成本。</p>
+<p>問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 $O(1) $ insertion 的資料結構，不然就會多出額外 $O(n^2) $ 的寫入成本。</p>
 <a class="header" href="#a效能-1" id="a效能-1"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Average      </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n^2) $ </td></tr>
+<tr><td> Best         </td><td> $O(n^2) $ </td></tr>
+<tr><td> Average      </td><td> $O(n^2) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
 </tbody></table>
-<p>對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 \(n - 1 \) 次比較，第二個 \(n - 2 \) 次，總比較次數如下：</p>
+<p>對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 $n - 1 $ 次比較，第二個 $n - 2 $ 次，總比較次數如下：</p>
 <p>$$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$</p>
-<p>因此無論序列是否排序完成，selection sort 仍需執行 \(n^2 \) 次比較，時間複雜度為 \(O(n^2) \)。</p>
+<p>因此無論序列是否排序完成，selection sort 仍需執行 $n^2 $ 次比較，時間複雜度為 $O(n^2) $。</p>
 <a class="header" href="#a實作-1" id="a實作-1"><h2>實作</h2></a>
 <p>簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -482,7 +489,7 @@ pub fn selection_sort(arr: &amp;mut [i32]) {
 <p>眼尖的人會發現，內外兩層迴圈的 upper bound 都是 <code>len</code>，這樣是否內側迴圈會 out of bound？Rust 的 range operator（<code>core::ops::Range</code>）實作 <a href="https://doc.rust-lang.org/core/ops/struct.Range.html#impl-Iterator"><code>Iterator</code></a> trait 時，有檢查 <code>range.start &lt; range.end</code>，因此這個寫法並不會有出界問題，但會多跑一次無意義的迭代。</p>
 <a class="header" href="#a變形-1" id="a變形-1"><h2>變形</h2></a>
 <a class="header" href="#heapsort" id="heapsort"><h3>Heapsort</h3></a>
-<p><a href="../heapsort/">Heapsort</a> 是一個高效的排序法，使用 selection sort 融合 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序的資料結構，讓時間複雜度進化至 \(O(n \log n) \)。更多詳情可以參考<a href="../heapsort/">這篇介紹</a>。</p>
+<p><a href="../heapsort/">Heapsort</a> 是一個高效的排序法，使用 selection sort 融合 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序的資料結構，讓時間複雜度進化至 $O(n \log n) $。更多詳情可以參考<a href="../heapsort/">這篇介紹</a>。</p>
 <a class="header" href="#a參考資料-2" id="a參考資料-2"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Selection_sort">Wiki: Selection sort</a></li>
@@ -565,15 +572,15 @@ pub fn selection_sort(arr: &amp;mut [i32]) {
 <p>很簡單的排序法！</p>
 <a class="header" href="#a效能-2" id="a效能-2"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n) \)   </td></tr>
-<tr><td> Average      </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n^2) $ </td></tr>
+<tr><td> Best         </td><td> $O(n) $   </td></tr>
+<tr><td> Average      </td><td> $O(n^2) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
 </tbody></table>
 <a class="header" href="#time-complexity" id="time-complexity"><h3>Time complexity</h3></a>
-<p>Bubble sort 總共需要 \(n - 1 \) 次迭代，每次迭代至少需要執行 \(n - 1 - i \) 置換（ \)i \) 為第幾次迭代），總共需要迭代</p>
+<p>Bubble sort 總共需要 $n - 1 $ 次迭代，每次迭代至少需要執行 $n - 1 - i $ 置換（ $i $ 為第幾次迭代），總共需要迭代</p>
 <p>$$\sum_{i=0}^{n-1} (n - i - 1) = n^2 - \sum_{i=0}^{n-1}i - n = n^2 - \frac{n(n - 1)}{2} - n = \frac{n^2}{2} - \frac{n}{2}$$</p>
-<p>次，因此，時間複雜度為 \(O(n^2) \)。</p>
+<p>次，因此，時間複雜度為 $O(n^2) $。</p>
 <p>Bubble sort 在已排序完成的序列上，只需要迭代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
 <a class="header" href="#a實作-2" id="a實作-2"><h2>實作</h2></a>
 <p>Bubble sort 簡單實作如下：</p>
@@ -598,7 +605,7 @@ pub fn bubble_sort(arr: &amp;mut [i32]) {
 <li>內層迴圈依序比較兩兩相鄰元素。</li>
 <li>若有任何置換動作，將旗標標誌為「已置換（<code>true</code>）」。</li>
 </ol>
-<p>倘若記錄已排好序的元素位置，雖然複雜度仍是 \(O(n^2) \)，但如此以來，每次迭代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
+<p>倘若記錄已排好序的元素位置，雖然複雜度仍是 $O(n^2) $，但如此以來，每次迭代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -654,8 +661,8 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 <p>Shellsort 的效率取決於 gap sequence 的選擇，這邊舉幾個常見的 gap sequence：</p>
 <table><thead><tr><th>              </th><th> Sequence                        </th></tr></thead><tbody>
 <tr><td> Marcin Ciura </td><td> 1, 4, 10, 23, 57, 132, 301, 701 </td></tr>
-<tr><td> \(2^{k} - 1 \)  </td><td> 1, 3, 7, 15, 31, 63,...         </td></tr>
-<tr><td> \(\lfloor {\frac {N}{2^k}} \rfloor \) </td><td> \(\lfloor {\frac {N}{2}} \rfloor \), \(\lfloor {\frac {N}{4}} \rfloor \), ..., 1</td></tr>
+<tr><td> $2^{k} - 1 $  </td><td> 1, 3, 7, 15, 31, 63,...         </td></tr>
+<tr><td> $\lfloor {\frac {N}{2^k}} \rfloor $ </td><td> $\lfloor {\frac {N}{2}} \rfloor $, $\lfloor {\frac {N}{4}} \rfloor $, ..., 1</td></tr>
 </tbody></table>
 <p>感受一下 gap sequence 為 23, 10, 4, 1 的 shellsort 吧。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Sorting_shellsort_anim.gif" alt="" /></p>
@@ -664,8 +671,8 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 <p>假定這裡有一個序列需要遞增排序。</p>
 <pre><code>[5, 3, 8, 7, 4, 9, 6, 2]
 </code></pre>
-<p>我們選擇最簡單的 \(\lfloor {\frac {N}{2^k}} \rfloor \) gap sequence 來排序。我們以<strong>星號</strong>標示出每次 insertion sort 對應排序</p>
-<p>首先算出第一個 gap 為 \(8 / 2^1 = 4 \)。開始 insertion sort。</p>
+<p>我們選擇最簡單的 $\lfloor {\frac {N}{2^k}} \rfloor $ gap sequence 來排序。我們以<strong>星號</strong>標示出每次 insertion sort 對應排序</p>
+<p>首先算出第一個 gap 為 $8 / 2^1 = 4 $。開始 insertion sort。</p>
 <pre><code> *           *
 [5, 3, 8, 7, 4, 9, 6, 2]
 
@@ -686,7 +693,7 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 
 [4, 3, 8, 2, 5, 9, 6, 7]
 </code></pre>
-<p>再來算出第二個 gap 為 \(8 / 2^2 = 2 \)。開始 insertion sort。</p>
+<p>再來算出第二個 gap 為 $8 / 2^2 = 2 $。開始 insertion sort。</p>
 <pre><code> *     *
 [4, 3, 8, 2, 5, 9, 6, 7]
 
@@ -713,18 +720,18 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 -&gt; (sort subsequence [2, 3, 9, 7])
 [4, 2, 5, 3, 6, 7, 8, 9]
 </code></pre>
-<p>再來進行第三次排序。gap 為 \(8 / 2^3 = 1 \)，shellsort 退化至 insertion sort，但前一次結果已經很接近排序完成，insertion sort 可以幾乎在 one pass 完成排序。</p>
+<p>再來進行第三次排序。gap 為 $8 / 2^3 = 1 $，shellsort 退化至 insertion sort，但前一次結果已經很接近排序完成，insertion sort 可以幾乎在 one pass 完成排序。</p>
 <blockquote>
 <p>Insertion sort 的 ASCII diagram 我們就不展示了，請參考 <a href="../insertion_sort">Insertion sort</a>。</p>
 </blockquote>
 <a class="header" href="#a效能-3" id="a效能-3"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity                                            </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n^2) \) ~  \(O(n \log^2 n) \) (Depends on gap sequence) </td></tr>
-<tr><td> Best         </td><td> \(O(n \log n) \)                                    </td></tr>
+<tr><td> Worst        </td><td> $O(n^2) $ ~  $O(n \log^2 n) $ (Depends on gap sequence) </td></tr>
+<tr><td> Best         </td><td> $O(n \log n) $                                    </td></tr>
 <tr><td> Average      </td><td> Depends on gap sequence                               </td></tr>
-<tr><td> Worst space  </td><td> \(O(1) \) auxiliary                                 </td></tr>
+<tr><td> Worst space  </td><td> $O(1) $ auxiliary                                 </td></tr>
 </tbody></table>
-<p>Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 \(O(n \log^2 n) \)，有著不錯的表現。有興趣可以參考<a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">這篇文章</a>。</p>
+<p>Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 $O(n \log^2 n) $，有著不錯的表現。有興趣可以參考<a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">這篇文章</a>。</p>
 <a class="header" href="#a實作-3" id="a實作-3"><h2>實作</h2></a>
 <p>我們這裡以 <a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Marcin 的 Paper</a> 中提到的經驗式為例，首先，先建立一個 gap sequence 的常數。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -870,24 +877,24 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <p>以上便是 heapsort 演算法的簡單流程，是不是和 selection sort 非常相似呢！</p>
 <a class="header" href="#a效能-4" id="a效能-4"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Average      </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Best         </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Average      </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
 </tbody></table>
-<p>Heapsort 最佳、最差、平均的時間複雜度皆為 \(O(n \log n) \)，同樣分為兩部分簡單解釋。</p>
+<p>Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n) $，同樣分為兩部分簡單解釋。</p>
 <a class="header" href="#build-heap-heapify" id="build-heap-heapify"><h3>Build heap (heapify)</h3></a>
 <p>建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。</p>
-<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 \(O(\lceil {\log_2(n)} \rceil) = O(\log n) \)， \(n \) 為陣列元素個數。</p>
-<p>Heapify 從最末個元素開始反向迭代，每個元素都調用 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 \(n \) 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
+<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。</p>
+<p>Heapify 從最末個元素開始反向迭代，每個元素都調用 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
 <p>$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$</p>
 <blockquote>
-<p>實際上，build heap 步驟的複雜度可達到 \(O(n) \)，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
+<p>實際上，build heap 步驟的複雜度可達到 $O(n) $，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
 </blockquote>
 <a class="header" href="#sorting-sift-down" id="sorting-sift-down"><h3>Sorting (sift down)</h3></a>
-<p>講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 <strong>sift down</strong> 修正符合 heap order。所以總共需要做 \(n \) 次 sift down，複雜度為 \(O(n \log n) \)。</p>
+<p>講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 <strong>sift down</strong> 修正符合 heap order。所以總共需要做 $n $ 次 sift down，複雜度為 $O(n \log n) $。</p>
 <a class="header" href="#sum-up" id="sum-up"><h3>Sum up</h3></a>
-<p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 \(O(n \log n) \)。</p>
+<p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 $O(n \log n) $。</p>
 <a class="header" href="#a實作-4" id="a實作-4"><h2>實作</h2></a>
 <p>Heapsort 的實作相對簡單，只需要不斷調用 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -964,7 +971,7 @@ fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
 <li>Sorting GIF by RolandH <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
 <a class="header" href="#a快速排序-quicksort" id="a快速排序-quicksort"><h1>快速排序 Quicksort</h1></a>
-<p>Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 \(O(n \log n) \) 的平均時間複雜度。雖然最差時間複雜度與 <a href="../bubble_sort">bubble sort</a> 同為 \(O(n^2) \)，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 \(O(\log n) \) 的額外儲存空間，比它的競爭對手 <a href="../mergesort">mergesort</a> 來得節省。非常適合運用在真實世界中的排序法。</p>
+<p>Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 $O(n \log n) $ 的平均時間複雜度。雖然最差時間複雜度與 <a href="../bubble_sort">bubble sort</a> 同為 $O(n^2) $，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 $O(\log n) $ 的額外儲存空間，比它的競爭對手 <a href="../mergesort">mergesort</a> 來得節省。非常適合運用在真實世界中的排序法。</p>
 <p>Quicksort 基本特性如下：</p>
 <ul>
 <li>實作簡單，速度快。</li>
@@ -1069,24 +1076,24 @@ swap i, j
 </code></pre>
 <a class="header" href="#a效能-5" id="a效能-5"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n^2) \)      </td></tr>
-<tr><td> Best         </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Average      </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(\log n) \) or \(O(n) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n^2) $      </td></tr>
+<tr><td> Best         </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Average      </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(\log n) $ or $O(n) $ auxiliary </td></tr>
 </tbody></table>
 <a class="header" href="#time-complexity-1" id="time-complexity-1"><h3>Time complexity</h3></a>
 <p>Quicksort 僅有「<strong>選擇 Pivot</strong>」與「<strong>分割序列</strong>」兩步驟，不同的實作的效能各異，也影響 Quicksort 的時間複雜度。</p>
 <a class="header" href="#a最差情況" id="a最差情況"><h4>最差情況</h4></a>
 <p>最差的分割序列狀況發生在挑選的 pivot 總是最大或最小值（或在 Lomuto partition 下，所有元素值都一樣）。由於 Lomuto 總是選擇最後一個元素作為 pivot，這種情形好發於已排序或接近排序完成的資料上。</p>
-<p>而當每次的 partition 都是最不平衡的分割序列，就會產生最差時間複雜度的狀況。遞迴在序列長度等於 1 時停止，因此整個排序法的 call stack 需要 \(n - 1 \) 的嵌套遞迴調用（nested call）；而第 \(i \) 次分割會執行 \(n - i \) 次基本操作（ \(O(n) \)），所以總共需執行</p>
+<p>而當每次的 partition 都是最不平衡的分割序列，就會產生最差時間複雜度的狀況。遞迴在序列長度等於 1 時停止，因此整個排序法的 call stack 需要 $n - 1 $ 的嵌套遞迴調用（nested call）；而第 $i $ 次分割會執行 $n - i $ 次基本操作（ $O(n) $），所以總共需執行</p>
 <p>$$\sum_{i = 0}^n (n - i) = n^2 - \frac{n(n + 1)}{2}$$</p>
-<p>次基本操作，最差時間複雜度為 \(O(n^2) \)。</p>
+<p>次基本操作，最差時間複雜度為 $O(n^2) $。</p>
 <a class="header" href="#a最佳情況" id="a最佳情況"><h4>最佳情況</h4></a>
-<p>既然最差情況發生在 pivot 總選到最大或最小值，反之，最佳情況則發生在每次 pivot 都可以順利選到序列的中位數（median），如此一來，每次遞迴分割的序列長度都會減半（ \(n / 2 \)），call stack 的嵌套遞迴總共需要 \(2 \log_2{n} \) 次，序列的長度就會減至 1，而每次分割同樣有 \(O(n) \) 的複雜度，因此最佳情況為：</p>
+<p>既然最差情況發生在 pivot 總選到最大或最小值，反之，最佳情況則發生在每次 pivot 都可以順利選到序列的中位數（median），如此一來，每次遞迴分割的序列長度都會減半（ $n / 2 $），call stack 的嵌套遞迴總共需要 $2 \log_2{n} $ 次，序列的長度就會減至 1，而每次分割同樣有 $O(n) $ 的複雜度，因此最佳情況為：</p>
 <p>$$O(n \cdot 2 \log_2{n}) = O(n \log n)$$</p>
 <a class="header" href="#space-complexity" id="space-complexity"><h3>Space complexity</h3></a>
-<p>Quicksort 的空間複雜度取決於實作細節，由於<strong>分割序列</strong>步驟需 \(O(1) \) 的空間複雜度，因此僅需分析遞迴式會在 call stack 產生多少 stack frame 即可。</p>
-<p><a href="#%E6%9C%80%E5%B7%AE%E6%83%85%E6%B3%81">前面提及</a>，最 naïve 的 Lomuto partition 最糟糕的情形下，會產生 \(n - 1 \) 個嵌套遞迴，也就是需額外使用 \(O(n) \) 的空間儲存 call stack frame，但只要 compiler 有支援 <a href="https://en.wikipedia.org/wiki/Tail_call">尾端調用</a>最佳化（tail-call optimization，TCO），Quicksort 很容易最佳化至 \(O(\log n) \)。</p>
+<p>Quicksort 的空間複雜度取決於實作細節，由於<strong>分割序列</strong>步驟需 $O(1) $ 的空間複雜度，因此僅需分析遞迴式會在 call stack 產生多少 stack frame 即可。</p>
+<p><a href="#%E6%9C%80%E5%B7%AE%E6%83%85%E6%B3%81">前面提及</a>，最 naïve 的 Lomuto partition 最糟糕的情形下，會產生 $n - 1 $ 個嵌套遞迴，也就是需額外使用 $O(n) $ 的空間儲存 call stack frame，但只要 compiler 有支援 <a href="https://en.wikipedia.org/wiki/Tail_call">尾端調用</a>最佳化（tail-call optimization，TCO），Quicksort 很容易最佳化至 $O(\log n) $。</p>
 <a class="header" href="#a實作-5" id="a實作-5"><h2>實作</h2></a>
 <p>Quicksort 實作主要分為兩部分：遞迴，以及分割序列（partition）。</p>
 <a class="header" href="#recursion" id="recursion"><h3>Recursion</h3></a>
@@ -1165,9 +1172,9 @@ fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; isize {
 <li><a href="%E9%81%B8%E6%93%87%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%86%E5%89%B2%E6%96%B9%E6%A1%88">選擇不同的分割方案</a></li>
 </ul>
 <a class="header" href="#a降低額外空間複雜度" id="a降低額外空間複雜度"><h3>降低額外空間複雜度</h3></a>
-<p>前述提到最佳情形下（每次 pivot 都選到中位數），僅需 \(\log n \) 個嵌套遞迴，額外空間複雜度僅需 \(O(\log n) \)。
-倘若編譯器有實作 <strong>尾端調用最佳化</strong>，Quicksort 可以達到 \(O(\log n) \) 對數級別的額外空間使用。</p>
-<p>實作尾端調用最佳化的思路很簡單，「<strong>先遞迴較少元素的部分，再利用 tall-call 遞迴另一部分</strong>」，如此以來，較多元素的遞迴則會直接被編譯器展開，消去遞迴時需要的 call stack 空間。剩下較少元素的部分，則與最佳情形相同，最多僅需 \(\log n \) 次嵌套遞迴。</p>
+<p>前述提到最佳情形下（每次 pivot 都選到中位數），僅需 $\log n $ 個嵌套遞迴，額外空間複雜度僅需 $O(\log n) $。
+倘若編譯器有實作 <strong>尾端調用最佳化</strong>，Quicksort 可以達到 $O(\log n) $ 對數級別的額外空間使用。</p>
+<p>實作尾端調用最佳化的思路很簡單，「<strong>先遞迴較少元素的部分，再利用 tall-call 遞迴另一部分</strong>」，如此以來，較多元素的遞迴則會直接被編譯器展開，消去遞迴時需要的 call stack 空間。剩下較少元素的部分，則與最佳情形相同，最多僅需 $\log n $ 次嵌套遞迴。</p>
 <p>簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -1228,7 +1235,7 @@ fn quicksort_helper_manual_tco(arr: &amp;mut [i32], mut lo: isize, mut hi: isize
 <li>選擇特定位置（如中位數）的元素。</li>
 <li>隨機選擇任意元素。</li>
 </ul>
-<p>選擇第一個或最後一個元素會印序列已經接近排序完成或相反排序，造成 \(O(n^2) \) 最壞的時間複雜度。隨機或選擇特定位置的方法較能避免這種情況，但實作上較困難。</p>
+<p>選擇第一個或最後一個元素會印序列已經接近排序完成或相反排序，造成 $O(n^2) $ 最壞的時間複雜度。隨機或選擇特定位置的方法較能避免這種情況，但實作上較困難。</p>
 <p>除了選擇 pivot 的方法，近幾年來多 pivot（multi-pivot）Quicksort 也愈趨流行，可以減少 20% 的元素置換。相關的討論與證明可以參考<a href="https://cs.stanford.edu/%7Erishig/courses/ref/l11a.pdf">這篇文章</a>。</p>
 <a class="header" href="#a對付重複的元素" id="a對付重複的元素"><h3>對付重複的元素</h3></a>
 <p>若輸入序列有許多重複的元素，使用原本 Lomuto scheme 實作的 Quicksort 仍然會比較置換等於 pivot 的所有元素。3-way partition scheme 就是將序列多分出「等於 pivot」部分，減少重複置換相等元素的排序法。</p>
@@ -1304,9 +1311,9 @@ fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
 <li><a href="https://github.com/raywenderlich/swift-algorithm-club/tree/master/Quicksort">Swift Algorithm Club: Quicksort</a></li>
 </ul>
 <a class="header" href="#a合併排序-mergesort" id="a合併排序-mergesort"><h1>合併排序 Mergesort</h1></a>
-<p>Mergesort 是一個泛用且高效穩定的排序法，最佳與最差時間複雜都是 \(O(n \log n) \)。Mergesort 可謂著名「Divide and Conquer」手法的經典案例，先將序列分成更小的子序列（Divide），一個個排序後（Conquer），再合併已排序的子序列（Combine）。</p>
+<p>Mergesort 是一個泛用且高效穩定的排序法，最佳與最差時間複雜都是 $O(n \log n) $。Mergesort 可謂著名「Divide and Conquer」手法的經典案例，先將序列分成更小的子序列（Divide），一個個排序後（Conquer），再合併已排序的子序列（Combine）。</p>
 <ul>
-<li><strong>高效穩定</strong>：最佳、平均，與最差時間複雜度皆為 \(O(n \log n) \)。</li>
+<li><strong>高效穩定</strong>：最佳、平均，與最差時間複雜度皆為 $O(n \log n) $。</li>
 <li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
 <li><strong>非原地排序</strong>：除了資料本身，仍需額外花費儲存空間來排序。</li>
 <li><strong>分治演算法</strong>：將主問題化作數個子問題，各個擊破。</li>
@@ -1351,15 +1358,15 @@ fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
 </code></pre>
 <a class="header" href="#a效能-6" id="a效能-6"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Average      </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(n) \) auxiliary   </td></tr>
+<tr><td> Worst        </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Best         </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Average      </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(n) $ auxiliary   </td></tr>
 </tbody></table>
 <a class="header" href="#time-complexity-2" id="time-complexity-2"><h3>Time Complexity</h3></a>
-<p>透過遞迴關係式，很容易計算 Mergesort 的時間複雜度。假設排序長度為 \(n \) 的序列最多需要 \(T(n) \) 時間。可以觀察到，如果序列只有一個元素，Mergesort 僅需要常數時間就可以完成排序，寫成 \(T(n) = 1 \)。</p>
-<p>如果 \(n &gt; 2 \)，Mergesort 會將序列分為 \(\lceil \frac{n}{2} \rceil \) 部分，以及 \(\lfloor \frac{n}{2} \rfloor \) 部分。我們可以將排序前者寫成 \(T(\lceil \frac{n}{2} \rceil) \)，而後者花費時間為 \( T(\lfloor \frac{n}{2} \rfloor) \)。</p>
-<p>最後，合併兩個子序列僅需 \(n \) 個操作。可得下列遞迴關係式。<br />
+<p>透過遞迴關係式，很容易計算 Mergesort 的時間複雜度。假設排序長度為 $n $ 的序列最多需要 $T(n) $ 時間。可以觀察到，如果序列只有一個元素，Mergesort 僅需要常數時間就可以完成排序，寫成 $T(n) = 1 $。</p>
+<p>如果 $n &gt; 2 $，Mergesort 會將序列分為 $\lceil \frac{n}{2} \rceil $ 部分，以及 $\lfloor \frac{n}{2} \rfloor $ 部分。我們可以將排序前者寫成 $T(\lceil \frac{n}{2} \rceil) $，而後者花費時間為 $ T(\lfloor \frac{n}{2} \rfloor) $。</p>
+<p>最後，合併兩個子序列僅需 $n $ 個操作。可得下列遞迴關係式。<br />
 （為了方便計算，把 floor 和 ceil 捨去）</p>
 <p>$$
 T(n) =
@@ -1368,9 +1375,9 @@ T(n) =
 2T(\frac{n}{2}) + n &amp; \text{otherwise}.
 \end{cases}
 $$</p>
-<p>根據 <a href="master-theorem">Master Theorem</a>，可得複雜度為 \(O(n \log n) \)。</p>
+<p>根據 <a href="master-theorem">Master Theorem</a>，可得複雜度為 $O(n \log n) $。</p>
 <a class="header" href="#space-complexity-1" id="space-complexity-1"><h3>Space Complexity</h3></a>
-<p>Mergesort 的缺點之一就是在合併子序列時，需要額外的空間依序插入排序資料；若是遞迴版本的 Mergesort 還需額外加上遞迴花費的 call stack 空間，因此額外空間複雜度為 \(O(n) + O(\log n) = O(n) \)（以陣列實作）。</p>
+<p>Mergesort 的缺點之一就是在合併子序列時，需要額外的空間依序插入排序資料；若是遞迴版本的 Mergesort 還需額外加上遞迴花費的 call stack 空間，因此額外空間複雜度為 $O(n) + O(\log n) = O(n) $（以陣列實作）。</p>
 <a class="header" href="#a實作-6" id="a實作-6"><h2>實作</h2></a>
 <p>一般來說，Divide and Conquer 有兩種設計、解決問題的技巧：Top-down（自上而下）與 Buttom-up（自下而上）。前者是先對問題有整體的輪廓概念，再逐步針對細節一一處理；後者則是先準備每個問題需要的基礎步驟與元件，再將這些步驟結合，解決整體的問題。</p>
 <p>Mergesort 的實作分為兩部分：</p>
@@ -1511,10 +1518,10 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
 <p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
 <a class="header" href="#a效能-7" id="a效能-7"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n) \)        </td></tr>
-<tr><td> Average      </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(n) \) auxiliary   </td></tr>
+<tr><td> Worst        </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Best         </td><td> $O(n) $        </td></tr>
+<tr><td> Average      </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(n) $ auxiliary   </td></tr>
 </tbody></table>
 <a class="header" href="#a實作-7" id="a實作-7"><h2>實作</h2></a>
 <a class="header" href="#a參考資料-8" id="a參考資料-8"><h2>參考資料</h2></a>
@@ -1623,20 +1630,20 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 <p>這樣就完成排序了。此外，觀察 <strong>(2, D)</strong> 與 <strong>(2, E)</strong> 排序前後的位置，會發現 counting sort 是個實實在在的穩定排序，很棒。</p>
 <a class="header" href="#a效能-8" id="a效能-8"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n + k) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n + k) \) </td></tr>
-<tr><td> Average      </td><td> \(O(n + k) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(n + k) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n + k) $ </td></tr>
+<tr><td> Best         </td><td> $O(n + k) $ </td></tr>
+<tr><td> Average      </td><td> $O(n + k) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(n + k) $ auxiliary </td></tr>
 </tbody></table>
 <blockquote>
 <p>k 為資料已知範圍上下界之差。</p>
 </blockquote>
 <a class="header" href="#time-complexity-3" id="time-complexity-3"><h3>Time Complexity</h3></a>
-<p>Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 \(n \) 個輸入的資料，因此複雜度為 \(O(n) \)；步驟二計算 prefix sum，，以及 count array 自身的初始化則需執行 \(k + 1 \) 次（給定的資料範圍），這部分的複雜度為 \(O(k) \)。由於 \(n \) 與 \(k \) 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 \(O(n + k) \)。</p>
+<p>Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 $n $ 個輸入的資料，因此複雜度為 $O(n) $；步驟二計算 prefix sum，，以及 count array 自身的初始化則需執行 $k + 1 $ 次（給定的資料範圍），這部分的複雜度為 $O(k) $。由於 $n $ 與 $k $ 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 $O(n + k) $。</p>
 <a class="header" href="#space-complexity-2" id="space-complexity-2"><h3>Space complexity</h3></a>
-<p>Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的記憶體空間，因此 \(O(n) \) 的額外（auxiliary）空間複雜度絕對免不了。再加上需要長度為 \(k \) 的 count array 保存每個 key 的出現次數，因此需再加上 \(O(k) \)。除了原始的輸入 array，總共需花費 \(O(n + k) \) 的額外空間複雜度。</p>
+<p>Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的記憶體空間，因此 $O(n) $ 的額外（auxiliary）空間複雜度絕對免不了。再加上需要長度為 $k $ 的 count array 保存每個 key 的出現次數，因此需再加上 $O(k) $。除了原始的輸入 array，總共需花費 $O(n + k) $ 的額外空間複雜度。</p>
 <blockquote>
-<p>如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 \(O(k) \)，但也因此成為不穩定排序法。</p>
+<p>如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 $O(k) $，但也因此成為不穩定排序法。</p>
 </blockquote>
 <a class="header" href="#a實作-8" id="a實作-8"><h2>實作</h2></a>
 <p>由於 Counting sort 屬於分布式排序（Distribution sort），這裡使用泛型，以彰顯分布式排序的特色。</p>
@@ -1762,23 +1769,23 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
 <li><strong>預期分佈</strong>：資料為<strong>均勻分佈</strong>。</li>
 </ul>
 <a class="header" href="#a步驟-8" id="a步驟-8"><h2>步驟</h2></a>
-<p>假設要排序 \(n \) 個元素的陣列，這些元素的值平均散落在某個<strong>已知的預期範圍內</strong>，例如 1 到 100。</p>
+<p>假設要排序 $n $ 個元素的陣列，這些元素的值平均散落在某個<strong>已知的預期範圍內</strong>，例如 1 到 100。</p>
 <ol>
-<li><strong>Create buckets</strong>：建立 \(k \) 個桶子（bucket）的陣列。每個桶子<strong>對應預期範圍的某區間</strong>，如第一個桶子放 1 到 10，第二個放 11 到 20。</li>
+<li><strong>Create buckets</strong>：建立 $k $ 個桶子（bucket）的陣列。每個桶子<strong>對應預期範圍的某區間</strong>，如第一個桶子放 1 到 10，第二個放 11 到 20。</li>
 <li><strong>Scatter</strong>：將每個元素依照該值放入對應的桶子中。</li>
 <li><strong>Inner sort</strong>：排序所有非空的桶子。</li>
 <li><strong>Gather</strong>：依序走訪所有桶子，將桶內的元素放回原本的陣列中。</li>
 </ol>
 <a class="header" href="#a說明-7" id="a說明-7"><h2>說明</h2></a>
 <p>以下用 ASCII diagram 視覺化解釋：</p>
-<p>這裡有一些整數，落在 1 至 100 之間。我們有 \(n = 10 \) 的陣列要排序。</p>
+<p>這裡有一些整數，落在 1 至 100 之間。我們有 $n = 10 $ 的陣列要排序。</p>
 <pre><code>Original array
 
 +-------------------------------------------------+
 |  6 | 28 | 96 | 14 | 74 | 37 |  9 | 71 | 91 | 36 |
 +-------------------------------------------------+
 </code></pre>
-<p><strong>1. Create buckets</strong>：建立一定數量的桶子，這裡我們建立與原始陣列相同數量的桶子（10）。每個桶子對應 \(n - 1 * 10 \) 到 \(n * 10 \) 的區間。</p>
+<p><strong>1. Create buckets</strong>：建立一定數量的桶子，這裡我們建立與原始陣列相同數量的桶子（10）。每個桶子對應 $n - 1 * 10 $ 到 $n * 10 $ 的區間。</p>
 <pre><code>Bucket array
 
 +-------------------------------------------------+
@@ -1818,35 +1825,35 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
 </code></pre>
 <a class="header" href="#a效能-9" id="a效能-9"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n^2) \)   </td></tr>
-<tr><td> Best         </td><td> \(O(n + k) \) </td></tr>
-<tr><td> Average      </td><td> \(O(n + k) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(n + k) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n^2) $   </td></tr>
+<tr><td> Best         </td><td> $O(n + k) $ </td></tr>
+<tr><td> Average      </td><td> $O(n + k) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(n + k) $ auxiliary </td></tr>
 </tbody></table>
 <blockquote>
-<p>\(k \) = 桶子的數量（number of buckets）
-\(n \) = 資料筆數</p>
+<p>$k $ = 桶子的數量（number of buckets）
+$n $ = 資料筆數</p>
 </blockquote>
 <a class="header" href="#worst-case" id="worst-case"><h3>Worst case</h3></a>
-<p>Bucket sort 是一個分配式排序法，對資料分佈有既定的預期：「<strong>所有元素平均分佈在每個 bucket 的區間內</strong>」。可想而知，最差的狀況是所有元素都聚集（clustering）在同一個 bucket 中，整個 bucket sort 的會退化成單一一個 inner sort 的複雜度。而桶內排序通常選用 insertion sort（最差 \(O(n^2) \)），所以最差的時間複雜度為「 \(O(n^2) \)」。</p>
+<p>Bucket sort 是一個分配式排序法，對資料分佈有既定的預期：「<strong>所有元素平均分佈在每個 bucket 的區間內</strong>」。可想而知，最差的狀況是所有元素都聚集（clustering）在同一個 bucket 中，整個 bucket sort 的會退化成單一一個 inner sort 的複雜度。而桶內排序通常選用 insertion sort（最差 $O(n^2) $），所以最差的時間複雜度為「 $O(n^2) $」。</p>
 <a class="header" href="#best-case" id="best-case"><h3>Best case</h3></a>
-<p>最佳的狀況則是完全符合預期的平均分佈，一個蘿蔔一個坑，每個桶內排序的最佳時間複雜度為 \(O(n / k) \)，再乘上桶子總數 \(k \)，僅需 \(O(k \cdot (n / k)) = O(n) \)。計算結果看起來非常合理，但實際上最佳時間複雜度為 \(O(n + k) \)，為什麼呢？</p>
-<p>無庸置疑，桶內排序最佳時間複雜度為 \(O(n / k) \)，但別忘了這是省略常數項過後式子，進行符號運算時，較精確的表達是 \(c_0 O(n / k) + c_1 \)，對於實作層面的常數 \(c_0 \) 和 \(c_1 \) 則予以保留。</p>
-<p>當我們乘上 \(k \)，試著算出總運算量時，</p>
+<p>最佳的狀況則是完全符合預期的平均分佈，一個蘿蔔一個坑，每個桶內排序的最佳時間複雜度為 $O(n / k) $，再乘上桶子總數 $k $，僅需 $O(k \cdot (n / k)) = O(n) $。計算結果看起來非常合理，但實際上最佳時間複雜度為 $O(n + k) $，為什麼呢？</p>
+<p>無庸置疑，桶內排序最佳時間複雜度為 $O(n / k) $，但別忘了這是省略常數項過後式子，進行符號運算時，較精確的表達是 $c_0 O(n / k) + c_1 $，對於實作層面的常數 $c_0 $ 和 $c_1 $ 則予以保留。</p>
+<p>當我們乘上 $k $，試著算出總運算量時，</p>
 <p>$$k \cdot (c_0(n / k) + c_1) $$</p>
 <p>會得到：</p>
 <p>$$ c_0n + c_1k $$</p>
-<p>可以得知，整個計算與 \(k \) 有關，所以需要耗時 \(O(n + k) \)。</p>
+<p>可以得知，整個計算與 $k $ 有關，所以需要耗時 $O(n + k) $。</p>
 <p>撇開數學，我們從 pseudo code 來看。最佳情況下，將所有元素蒐集回陣列的步驟（Gather）如下：</p>
 <pre><code>for (each bucket b in all k buckets)
   for (each element x in b)
     append x to the array
 </code></pre>
-<p>最外層的迴圈依桶子數 \(k \) 而定，至少需要執行 \(k \) 次，複雜度為 \(O(k) \)。內層的迴圈則是每個桶內的元素都會執行，而我們的資料時均勻分布，因此執行時間與元素總數 \(n \) 相關，為 \(O(n) \)。兩者加起來就是我們所說的 \(O(n + k) \) 的最佳複雜度。</p>
-<p><strong>那 \(k \) 究竟會是多少，影響會比 \(n \) 大嗎？</strong></p>
-<p>端看桶子總數而定，若桶子總數很大，比元素個數 \(n \) 大得多，則桶子總數對執行時間的影響恐較劇烈，就算大多數為空桶子，仍須挨家挨戶查看是否需要執行桶內排序。</p>
+<p>最外層的迴圈依桶子數 $k $ 而定，至少需要執行 $k $ 次，複雜度為 $O(k) $。內層的迴圈則是每個桶內的元素都會執行，而我們的資料時均勻分布，因此執行時間與元素總數 $n $ 相關，為 $O(n) $。兩者加起來就是我們所說的 $O(n + k) $ 的最佳複雜度。</p>
+<p><strong>那 $k $ 究竟會是多少，影響會比 $n $ 大嗎？</strong></p>
+<p>端看桶子總數而定，若桶子總數很大，比元素個數 $n $ 大得多，則桶子總數對執行時間的影響恐較劇烈，就算大多數為空桶子，仍須挨家挨戶查看是否需要執行桶內排序。</p>
 <a class="header" href="#space-complexity-3" id="space-complexity-3"><h3>Space Complexity</h3></a>
-<p>Bucket sort 須額外建立 \(k \) 個桶子，每個桶子需要配置長度為 \(n \) 的 array，因此空間複雜度為 \(O(n \cdot k) \)。如果以 dynamic array 實作 bucket，並考慮平攤分析（Amortized analysis），則空間複雜度降至 \(O(n + k) \)，這也是大多數人接受的分析結果，畢竟不會有人無聊到預先配置 \(n \cdot k \) 個 empty bucket。</p>
+<p>Bucket sort 須額外建立 $k $ 個桶子，每個桶子需要配置長度為 $n $ 的 array，因此空間複雜度為 $O(n \cdot k) $。如果以 dynamic array 實作 bucket，並考慮平攤分析（Amortized analysis），則空間複雜度降至 $O(n + k) $，這也是大多數人接受的分析結果，畢竟不會有人無聊到預先配置 $n \cdot k $ 個 empty bucket。</p>
 <a class="header" href="#a實作-9" id="a實作-9"><h2>實作</h2></a>
 <a class="header" href="#bucket" id="bucket"><h3>Bucket</h3></a>
 <p>Bucket sort 有許多種各異的實作法，差異最大之處就是桶子 bucket 這部分。</p>
@@ -1942,7 +1949,7 @@ pub fn bucket_sort() {
 </li>
 <li>由於要模擬 in-place 原地排序法的特性，將排序好的資料再次拷貝到 <code>arr</code> 上。這也是為什麼函式元素泛型 <code>T</code> 需要 <code>Clone</code> trait 的原因了。</li>
 </ol>
-<p>有關於步驟 2.2.，這部分可以用 <code>HashMap</code> 的變形 <a href="https://github.com/bluss/indexmap">IndexMap</a>（一個保存插入順序的有序 HashMap）保存雜湊值對應桶子的資訊，使得外界更容易依雜湊值找到桶子。但為了保持範例程式的簡潔，決定不引入第三方的 crate（Rust 語言第三方模組的代稱），且 <code>binary_search_by</code> 的複雜度為 \(O(\log n) \)，對 Bucket sort 最差複雜度並無影響。</p>
+<p>有關於步驟 2.2.，這部分可以用 <code>HashMap</code> 的變形 <a href="https://github.com/bluss/indexmap">IndexMap</a>（一個保存插入順序的有序 HashMap）保存雜湊值對應桶子的資訊，使得外界更容易依雜湊值找到桶子。但為了保持範例程式的簡潔，決定不引入第三方的 crate（Rust 語言第三方模組的代稱），且 <code>binary_search_by</code> 的複雜度為 $O(\log n) $，對 Bucket sort 最差複雜度並無影響。</p>
 <a class="header" href="#a參考資料-11" id="a參考資料-11"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Bucket_sort">Wiki: Bucket sort</a></li>
@@ -1951,7 +1958,7 @@ pub fn bucket_sort() {
 <li><a href="https://codereview.stackexchange.com/questions/145113/bucket-sort-in-rust">Bucket sort in Rust</a></li>
 </ul>
 <a class="header" href="#a基數排序-radix-sort" id="a基數排序-radix-sort"><h1>基數排序 Radix sort</h1></a>
-<p>如果你對 <a href="../counting_sort">Counting sort</a> 與 <a href="../bucket_sort">Bucket sort</a> 有認識，應該知道這兩個排序都能突破比較排序法複雜度 \(O(n \log n) \) 限制的特殊排序法。<a href="https://en.wikipedia.org/wiki/Radix_sort">Radix sort</a> 同樣是個特殊的<a href="https://en.wikipedia.org/wiki/Integer_sorting">整數排序法</a>，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。</p>
+<p>如果你對 <a href="../counting_sort">Counting sort</a> 與 <a href="../bucket_sort">Bucket sort</a> 有認識，應該知道這兩個排序都能突破比較排序法複雜度 $O(n \log n) $ 限制的特殊排序法。<a href="https://en.wikipedia.org/wiki/Radix_sort">Radix sort</a> 同樣是個特殊的<a href="https://en.wikipedia.org/wiki/Integer_sorting">整數排序法</a>，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。</p>
 <p>舉例來說，欲排序一群範圍在 0 - 999 的整數，若以 Counting sort 排序，則需建立一個「1000 元素的陣列」來計算每個整數的出現次數；若使用以 10 為基數的 Radix sort，則僅需以個位數、十位數、百位數作為鍵值分別排序三次。通常 Radix sort 的排序副程式（Sorting subroutine）會選用 Counting sort 或 Bucket sort，而以 10 為基數的鍵值範圍僅 0 - 9，這種小範圍整數非常適合 Counting sort 作為排序副程式，節省了配置 <code>int arr[1000]</code> 的 count array 的時空間。</p>
 <p>Radix sort 基本特性如下：</p>
 <ul>
@@ -2024,23 +2031,23 @@ sort by leftmost digit --&gt;
 </code></pre>
 <a class="header" href="#a效能-10" id="a效能-10"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity   </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(dn) \) </td></tr>
-<tr><td> Best         </td><td> \(O(dn) \) </td></tr>
-<tr><td> Average      </td><td> \(O(dn) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(d + n) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(dn) $ </td></tr>
+<tr><td> Best         </td><td> $O(dn) $ </td></tr>
+<tr><td> Average      </td><td> $O(dn) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(d + n) $ auxiliary </td></tr>
 </tbody></table>
 <blockquote>
-<p>\(n \)：資料筆數。<br />
-\(d \)：number of digit，資料中最多有幾個位數（或鍵值）。<br />
-\(k \)：基數，就是一個位數最多有幾種可能的值。</p>
+<p>$n $：資料筆數。<br />
+$d $：number of digit，資料中最多有幾個位數（或鍵值）。<br />
+$k $：基數，就是一個位數最多有幾種可能的值。</p>
 </blockquote>
 <a class="header" href="#time-complexity-4" id="time-complexity-4"><h3>Time complexity</h3></a>
 <p>欲分析 Radix sort 的時間複雜度，我們可以逐一擊破，先從排序副程式開始分析。</p>
-<p>Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每個 subroutine 的複雜度為 \(O(n + k) \)， \(k \) 為 key 的範圍，以 10 為基數，就是 0 - 9 之間 \(k = 10 \)。</p>
-<p>再來，我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 \(d \) 位數，時間複雜度需乘上 \(d \)，為 \(O(d (n + k)) \)，那這個 \(k \) 是否可以捨去呢？</p>
-<p>分析 Counting sort 或 Bucket sort 時，範圍 \(k \) 會隨輸入資料而變化，若 \(k \) 過大，對複雜度的影響甚至會超過 \(n \)，因此分析複雜度時無法將 \(k \) 捨去。而在 Radix sort， \(k \) 通常為一個已知的常數，例如以 bytes 為基數 \(k = 8 \)， \(k \) 可以捨去。最後可得 Radix sort 的時間複雜度為 \(O(d \cdot n) \)。</p>
+<p>Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每個 subroutine 的複雜度為 $O(n + k) $， $k $ 為 key 的範圍，以 10 為基數，就是 0 - 9 之間 $k = 10 $。</p>
+<p>再來，我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 $d $ 位數，時間複雜度需乘上 $d $，為 $O(d (n + k)) $，那這個 $k $ 是否可以捨去呢？</p>
+<p>分析 Counting sort 或 Bucket sort 時，範圍 $k $ 會隨輸入資料而變化，若 $k $ 過大，對複雜度的影響甚至會超過 $n $，因此分析複雜度時無法將 $k $ 捨去。而在 Radix sort， $k $ 通常為一個已知的常數，例如以 bytes 為基數 $k = 8 $， $k $ 可以捨去。最後可得 Radix sort 的時間複雜度為 $O(d \cdot n) $。</p>
 <a class="header" href="#space-complexity-4" id="space-complexity-4"><h3>Space complexity</h3></a>
-<p>Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 \(O(n \cdot k) \)。Radix sort 的 \(k \) 是常數，予以捨去。再乘上 \(d \) 個位數，最差的空間複雜度為 \(O(d \cdot n) \)。</p>
+<p>Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 $O(n \cdot k) $。Radix sort 的 $k $ 是常數，予以捨去。再乘上 $d $ 個位數，最差的空間複雜度為 $O(d \cdot n) $。</p>
 <a class="header" href="#a實作-10" id="a實作-10"><h2>實作</h2></a>
 <p>這裡示範實作以 10 為基數，用來排序非負整數的 Radix sort。</p>
 <p>首先，我們的排序副程式使用 Counting sort。</p>
@@ -2071,7 +2078,7 @@ pub fn radix_sort(arr: &amp;mut [i32]) {
 <ol>
 <li>設定基數為 10。</li>
 <li>設定一個旗標，記錄當前在排序哪一位數，1 表示從最小位數（個位數）開始。</li>
-<li>先找到輸入資料的最大值，作為之後副程式迴圈結束的條件。尋找最大值的複雜度為 \(O(n)\)，因此不影響 Radix Sort 的複雜度。如果 <code>arr</code> 為空序列，則最大值設為 0，在第四步驟就會自動結束排序。</li>
+<li>先找到輸入資料的最大值，作為之後副程式迴圈結束的條件。尋找最大值的複雜度為 $O(n)$，因此不影響 Radix Sort 的複雜度。如果 <code>arr</code> 為空序列，則最大值設為 0，在第四步驟就會自動結束排序。</li>
 <li>判斷當前排序的位數是否大於最大值，例如當前排序百分位，<code>digit</code> 為 <code>100</code>，而最大值 <code>x</code> 為 26，則不需再排序百分位。</li>
 <li>使用 Counting sort 作為排序副程式，只需要有 0 - 9 十個桶子。而 <code>key</code> 參數則取出當前欲比較的位數。</li>
 <li>位數乘上基數，移至下一個位數繼續比較。</li>
@@ -2304,7 +2311,7 @@ pub fn pop_front(&amp;mut self) -&gt; Option&lt;T&gt; {
 <li>返回即將刪除節點的資料。</li>
 </ol>
 <a class="header" href="#a插入刪除任意節點" id="a插入刪除任意節點"><h3>插入刪除任意節點</h3></a>
-<p>鏈結串列新增和刪除第一個節點都可以在 \(O(1)\) 時間內做完，那為什麼插入刪除任意節點沒有辦法呢？原因是鏈結串列不支援隨機存取（random access），就是無法透過索引在常數時間內取得資料，每次的搜尋都只能從 head 開始。因此，當我們需要在某個索引的節點後新增一筆資料，我們會需要最差 \(O(n)\) 的複雜度。</p>
+<p>鏈結串列新增和刪除第一個節點都可以在 $O(1)$ 時間內做完，那為什麼插入刪除任意節點沒有辦法呢？原因是鏈結串列不支援隨機存取（random access），就是無法透過索引在常數時間內取得資料，每次的搜尋都只能從 head 開始。因此，當我們需要在某個索引的節點後新增一筆資料，我們會需要最差 $O(n)$ 的複雜度。</p>
 <p>實作插入 <code>insert_after</code> 分為幾個步驟：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2593,18 +2600,18 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 #}</code></pre></pre>
 <a class="header" href="#a效能-11" id="a效能-11"><h2>效能</h2></a>
 <table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
-<tr><td> get       </td><td> \(O(n)\)                                      </td></tr>
-<tr><td> insert    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
-<tr><td> remove    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
-<tr><td> append    </td><td> \(O(n)\)                                      </td></tr>
-<tr><td> prepend   </td><td> \(O(1)\)                                      </td></tr>
-<tr><td> pop first </td><td> \(O(1)\)                                      </td></tr>
-<tr><td> pop last  </td><td> \(O(n)\)                                      </td></tr>
-<tr><td> space     </td><td> \(O(n)\) + 各節點額外一個指標 \(n\) 個      </td></tr>
+<tr><td> get       </td><td> $O(n)$                                      </td></tr>
+<tr><td> insert    </td><td> 節點已知：$O(1)$ ；節點未知：$O(n - i)$ </td></tr>
+<tr><td> remove    </td><td> 節點已知：$O(1)$ ；節點未知：$O(n - i)$ </td></tr>
+<tr><td> append    </td><td> $O(n)$                                      </td></tr>
+<tr><td> prepend   </td><td> $O(1)$                                      </td></tr>
+<tr><td> pop first </td><td> $O(1)$                                      </td></tr>
+<tr><td> pop last  </td><td> $O(n)$                                      </td></tr>
+<tr><td> space     </td><td> $O(n)$ + 各節點額外一個指標 $n$ 個      </td></tr>
 </tbody></table>
 <blockquote>
-<p>\(n\)：資料筆數。<br />
-\(i\)：相對於整個容器的索引位置。</p>
+<p>$n$：資料筆數。<br />
+$i$：相對於整個容器的索引位置。</p>
 </blockquote>
 <p>值得觀察的是，許多操作因為單向鏈結串列只能從 head 開始搜索的緣故，執行時間都呈線性，使用上要特別注意。</p>
 <a class="header" href="#a參考資料-17" id="a參考資料-17"><h2>參考資料</h2></a>
@@ -2645,7 +2652,7 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 <li><strong>移除</strong>：透過任意鍵移除該鍵值對，又稱 unbinding。</li>
 <li><strong>查找</strong>：透過任意鍵搜尋該鍵值對。</li>
 </ul>
-<p>不難看出，基本操作都是透過鍵取得值。事實上，合理實作的映射表，只要透過鍵來操作，就能有良好效能，甚至上述操作能達到 \(O(1)\) 複雜度。</p>
+<p>不難看出，基本操作都是透過鍵取得值。事實上，合理實作的映射表，只要透過鍵來操作，就能有良好效能，甚至上述操作能達到 $O(1)$ 複雜度。</p>
 <a class="header" href="#a適用場景-1" id="a適用場景-1"><h2>適用場景</h2></a>
 <p>雖然映射表依實作不同，效能有所權衡。但其最大優勢仍是可「高效地透過鍵尋找值」，只要有映射關係的資料，都非常適合使用映射表。例如，快取暫存機制需透過特定鍵快速查找暫存值。此外，現代常用的 JSON、TOML 等資料交換格式，都是「鍵—值對」的形式，非常適合使用映射表處理。而應用映射表最有名的實際案例莫過於資料庫的索引，透過索引，我們可以大大降低搜尋的成本，從線性時間直落到對數甚至常數時間，不過相對就需要付出額外時空間建立索引。</p>
 <p>我們再次把應用場景條列出來，方便懶人帶著走。</p>
@@ -2662,7 +2669,7 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 <a class="header" href="#a雜湊表-hash-map" id="a雜湊表-hash-map"><h3>雜湊表 Hash Map</h3></a>
 <p><a href="hash_map">雜湊表</a>是以雜湊函數實作的映射表。透過<a href="../../hash">雜湊函數</a>將任意資料轉換為固定長度的雜湊值，並將此鍵與一筆資料綁定，再映射到內部資料結構的某位置。理論上，只要雜湊函數品質過得去，雜湊表的基本操作都能在常數時間完成。</p>
 <a class="header" href="#a有序映射表-ordered-map" id="a有序映射表-ordered-map"><h3>有序映射表 Ordered Map</h3></a>
-<p><a href="ordered_map">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 \(O(\log n)\)。</p>
+<p><a href="ordered_map">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 $O(\log n)$。</p>
 <a class="header" href="#a多重映射表-multimap" id="a多重映射表-multimap"><h3>多重映射表 Multimap</h3></a>
 <p><a href="multimap">多重映射表</a>允許鍵值對重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的接口操作或迭代整張映射表。</p>
 <a class="header" href="#a集合-set" id="a集合-set"><h3>集合 Set</h3></a>
@@ -2840,11 +2847,11 @@ Sam    --&gt;|2: ptr  |--+   +---------------+
 <p>另一方面 <strong>Open addressing</strong> 則走完全不同的套路，不額外配置儲存空間給碰撞的元素，而是繼續在同個陣列內「探測」其他可用的 slot，再把資料塞進尚未被佔據的 slot 中。而 Open addressing 依據不同探測序列（probe sequence）有不同實作，常見的有：</p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Linear_probing"><strong>Linear probing</strong></a>：從發生碰撞索引開始，依序往下一個 slot 探測是否可用，因此得名「線性」。</li>
-<li><a href="https://en.wikipedia.org/wiki/Quadratic_probing"><strong>Quadratic probing</strong></a>：從碰撞索引開始，間隔以二次式增加往下探測可用 slot，如 \(i + 1^2, i + 2^2, i + 3^2\)。</li>
-<li><a href="https://en.wikipedia.org/wiki/Double_hashing"><strong>Double hashing</strong></a>：以固定間隔大小 \(k\)（probe distance），依序探測 \(i + k, i + k \cdot 2 ...\) 的 slot 是否為空。而這個間隔是以另外一個雜湊函數計算所得，因此得名「雙雜湊」。</li>
+<li><a href="https://en.wikipedia.org/wiki/Quadratic_probing"><strong>Quadratic probing</strong></a>：從碰撞索引開始，間隔以二次式增加往下探測可用 slot，如 $i + 1^2, i + 2^2, i + 3^2$。</li>
+<li><a href="https://en.wikipedia.org/wiki/Double_hashing"><strong>Double hashing</strong></a>：以固定間隔大小 $k$（probe distance），依序探測 $i + k, i + k \cdot 2 ...$ 的 slot 是否為空。而這個間隔是以另外一個雜湊函數計算所得，因此得名「雙雜湊」。</li>
 </ul>
 <blockquote>
-<p>\(i\) 為發生碰撞的索引位置。</p>
+<p>$i$ 為發生碰撞的索引位置。</p>
 </blockquote>
 <p>這些方法的差異主要在於 CPU caching 的效能，以及 HashMap 資料的群聚效應（clustering）的敏感程度。當然，論 caching 絕對非 linear probing 莫屬，但 linear probing 以線性一個挨一個探勘，效能較容易受雜湊值群聚影響。</p>
 <p>以下是 linear probing（間隔 = 1）的示意圖。</p>
@@ -2854,10 +2861,10 @@ Sam    --&gt;|2: ptr  |--+   +---------------+
 <p>動態調整大小對雜湊表來說，不同於一般動態陣列，舊的雜湊表若要對應到新雜湊表，是每個鍵都需要重新計算雜湊值（rehash），成本相對較高。因此，減少動態調整的次數，可說是調教雜湊表的重點之一。說到調教雜湊表，必定要瞭解一個重要指標：<em>load factor</em>。</p>
 <p>$$\text{load factor} = \frac{n}{k}$$</p>
 <blockquote>
-<p>\(n\)：已放入雜湊表內的資料總數。
-\(k\)：雜湊表配置的儲存空間（bucket 總數）。</p>
+<p>$n$：已放入雜湊表內的資料總數。
+$k$：雜湊表配置的儲存空間（bucket 總數）。</p>
 </blockquote>
-<p>Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 \(3/4 = 75%\)。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 <a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html"><code>HashMap</code></a> 使用了 <a href="https://doc.rust-lang.org/stable/src/std/collections/hash/map.rs.html#82-103">Robin Hood Hashing</a>，將 load factor 調教到 90%。</p>
+<p>Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 $3/4 = 75%$。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 <a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html"><code>HashMap</code></a> 使用了 <a href="https://doc.rust-lang.org/stable/src/std/collections/hash/map.rs.html#82-103">Robin Hood Hashing</a>，將 load factor 調教到 90%。</p>
 <p>重配置雜湊表與動態陣列的動態調整大小雷同，達到某個門檻值，就會將底層陣列大小翻倍。為了避免開銷過高，通常元素減少時，不會主動調整大小，而是提供一個 <code>shrink_to_fit</code> 一類的方法，讓呼叫端自行決定釋放多餘空間的時機。</p>
 <a class="header" href="#a架構設計-1" id="a架構設計-1"><h2>架構設計</h2></a>
 <p>在介紹架構設計之前，我們先來瞭解 Rust 雜湊相關的觀念與 trait。</p>
@@ -3117,25 +3124,25 @@ fn try_resize(&amp;mut self) {
 <a class="header" href="#a效能-14" id="a效能-14"><h2>效能</h2></a>
 <p>以陣列實作的雜湊表各操作複雜度如下</p>
 <table><thead><tr><th> Operation    </th><th> Best case    </th><th> Worst case </th></tr></thead><tbody>
-<tr><td> add(k, v)    </td><td> \(O(1)\)~  </td><td> \(O(n)\) </td></tr>
-<tr><td> update(k, v) </td><td> \(O(1)\)   </td><td> \(O(n)\) </td></tr>
-<tr><td> remove(k)    </td><td> \(O(1)\)~  </td><td> \(O(n)\) </td></tr>
-<tr><td> search(k)    </td><td> \(O(1)\)   </td><td> \(O(n)\) </td></tr>
+<tr><td> add(k, v)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
+<tr><td> update(k, v) </td><td> $O(1)$   </td><td> $O(n)$ </td></tr>
+<tr><td> remove(k)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
+<tr><td> search(k)    </td><td> $O(1)$   </td><td> $O(n)$ </td></tr>
 </tbody></table>
 <blockquote>
-<p>\(n\)：資料筆數。<br />
-\(k\)：欲綁定資料的鍵。<br />
-\(v\)：欲與鍵綁定的資料。<br />
+<p>$n$：資料筆數。<br />
+$k$：欲綁定資料的鍵。<br />
+$v$：欲與鍵綁定的資料。<br />
 <strong>~</strong>：平攤後的複雜度（amortized）。</p>
 </blockquote>
 <a class="header" href="#a時間複雜度" id="a時間複雜度"><h3>時間複雜度</h3></a>
 <p>在預期情況下，只要雜湊函數品質穩定，大部分操作都可達到在常數時間， 但由於部分操作，尤其是新增或刪除元素的操作，會需要調整 bucket array 的空間，重新配置記憶體空間，所以需要平攤計算複雜度。</p>
-<p>而最差複雜度出現在每個元素都發生雜湊碰撞。若使用 open addressing 處理碰撞，則會把雜湊表配置的每個位置都填滿，而所有操作都從同個位置開始，搜尋對應的鍵，複雜度與陣列的線性搜索相同為 \(O(n)\)；若使用 separate chaining，碰撞代表所有元素都會在同一個 bucket 裡面，也就是只有一個 bucket 上會有一個長度為 <em>n</em> ，被塞滿的陣列或鏈結串列，結果同樣是線性搜索的 \(O(n)\)。</p>
+<p>而最差複雜度出現在每個元素都發生雜湊碰撞。若使用 open addressing 處理碰撞，則會把雜湊表配置的每個位置都填滿，而所有操作都從同個位置開始，搜尋對應的鍵，複雜度與陣列的線性搜索相同為 $O(n)$；若使用 separate chaining，碰撞代表所有元素都會在同一個 bucket 裡面，也就是只有一個 bucket 上會有一個長度為 <em>n</em> ，被塞滿的陣列或鏈結串列，結果同樣是線性搜索的 $O(n)$。</p>
 <p>我們嘗試使用數學表示搜索的複雜度。另</p>
 <ul>
-<li>\(n\)：已放入雜湊表內的資料總數。</li>
-<li>\(k\)：雜湊表配置的儲存空間（bucket 總數）。</li>
-<li>\(\text{load factor} = \frac{n}{k}\)
+<li>$n$：已放入雜湊表內的資料總數。</li>
+<li>$k$：雜湊表配置的儲存空間（bucket 總數）。</li>
+<li>$\text{load factor} = \frac{n}{k}$
 <ul>
 <li>預期每個 bucket 儲存的資料筆數</li>
 </ul>
@@ -3143,9 +3150,9 @@ fn try_resize(&amp;mut self) {
 </ul>
 <p>則預期執行時間為</p>
 <p>$$\Theta(1+\frac{n}{k}) = O(1)  \text{ if } \frac{n}{k} = O(1)$$</p>
-<p>而 <strong>1</strong> 為計算雜湊與取得索引（random access）的執行時間，\(\frac{n}{k}\) 則是搜尋陣列的執行時間。只要 load factor 越接近 \(n\)，執行時間就相對增加。</p>
+<p>而 <strong>1</strong> 為計算雜湊與取得索引（random access）的執行時間，$\frac{n}{k}$ 則是搜尋陣列的執行時間。只要 load factor 越接近 $n$，執行時間就相對增加。</p>
 <a class="header" href="#a空間複雜度" id="a空間複雜度"><h3>空間複雜度</h3></a>
-<p>雜湊表的空間複雜度取決於實作預先配置的陣列大小，並與維持 <em>load factor</em> 息息相關。一般來說，仍與資料筆數成線性關係，因此空間複雜度只有資料本身 \(O(n)\)。而以 separate chaining 會額外配置陣列或鏈結串列儲存碰撞元素，理論上需負擔更多額外的指標儲存空間。</p>
+<p>雜湊表的空間複雜度取決於實作預先配置的陣列大小，並與維持 <em>load factor</em> 息息相關。一般來說，仍與資料筆數成線性關係，因此空間複雜度只有資料本身 $O(n)$。而以 separate chaining 會額外配置陣列或鏈結串列儲存碰撞元素，理論上需負擔更多額外的指標儲存空間。</p>
 <a class="header" href="#a參考資料-19" id="a參考資料-19"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html">Rust Documentation: HashMap</a></li>
@@ -3210,24 +3217,13 @@ SOFTWARE.</p>
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

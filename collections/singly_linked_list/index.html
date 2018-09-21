@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -257,7 +264,7 @@ pub fn pop_front(&amp;mut self) -&gt; Option&lt;T&gt; {
 <li>返回即將刪除節點的資料。</li>
 </ol>
 <a class="header" href="#a插入刪除任意節點" id="a插入刪除任意節點"><h3>插入刪除任意節點</h3></a>
-<p>鏈結串列新增和刪除第一個節點都可以在 \(O(1)\) 時間內做完，那為什麼插入刪除任意節點沒有辦法呢？原因是鏈結串列不支援隨機存取（random access），就是無法透過索引在常數時間內取得資料，每次的搜尋都只能從 head 開始。因此，當我們需要在某個索引的節點後新增一筆資料，我們會需要最差 \(O(n)\) 的複雜度。</p>
+<p>鏈結串列新增和刪除第一個節點都可以在 $O(1)$ 時間內做完，那為什麼插入刪除任意節點沒有辦法呢？原因是鏈結串列不支援隨機存取（random access），就是無法透過索引在常數時間內取得資料，每次的搜尋都只能從 head 開始。因此，當我們需要在某個索引的節點後新增一筆資料，我們會需要最差 $O(n)$ 的複雜度。</p>
 <p>實作插入 <code>insert_after</code> 分為幾個步驟：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -546,18 +553,18 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 #}</code></pre></pre>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
-<tr><td> get       </td><td> \(O(n)\)                                      </td></tr>
-<tr><td> insert    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
-<tr><td> remove    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
-<tr><td> append    </td><td> \(O(n)\)                                      </td></tr>
-<tr><td> prepend   </td><td> \(O(1)\)                                      </td></tr>
-<tr><td> pop first </td><td> \(O(1)\)                                      </td></tr>
-<tr><td> pop last  </td><td> \(O(n)\)                                      </td></tr>
-<tr><td> space     </td><td> \(O(n)\) + 各節點額外一個指標 \(n\) 個      </td></tr>
+<tr><td> get       </td><td> $O(n)$                                      </td></tr>
+<tr><td> insert    </td><td> 節點已知：$O(1)$ ；節點未知：$O(n - i)$ </td></tr>
+<tr><td> remove    </td><td> 節點已知：$O(1)$ ；節點未知：$O(n - i)$ </td></tr>
+<tr><td> append    </td><td> $O(n)$                                      </td></tr>
+<tr><td> prepend   </td><td> $O(1)$                                      </td></tr>
+<tr><td> pop first </td><td> $O(1)$                                      </td></tr>
+<tr><td> pop last  </td><td> $O(n)$                                      </td></tr>
+<tr><td> space     </td><td> $O(n)$ + 各節點額外一個指標 $n$ 個      </td></tr>
 </tbody></table>
 <blockquote>
-<p>\(n\)：資料筆數。<br />
-\(i\)：相對於整個容器的索引位置。</p>
+<p>$n$：資料筆數。<br />
+$i$：相對於整個容器的索引位置。</p>
 </blockquote>
 <p>值得觀察的是，許多操作因為單向鏈結串列只能從 head 開始搜索的緣故，執行時間都呈線性，使用上要特別注意。</p>
 <a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
@@ -609,24 +616,13 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

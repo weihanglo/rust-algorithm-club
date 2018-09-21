@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -162,8 +169,8 @@
 <p>Shellsort 的效率取決於 gap sequence 的選擇，這邊舉幾個常見的 gap sequence：</p>
 <table><thead><tr><th>              </th><th> Sequence                        </th></tr></thead><tbody>
 <tr><td> Marcin Ciura </td><td> 1, 4, 10, 23, 57, 132, 301, 701 </td></tr>
-<tr><td> \(2^{k} - 1 \)  </td><td> 1, 3, 7, 15, 31, 63,...         </td></tr>
-<tr><td> \(\lfloor {\frac {N}{2^k}} \rfloor \) </td><td> \(\lfloor {\frac {N}{2}} \rfloor \), \(\lfloor {\frac {N}{4}} \rfloor \), ..., 1</td></tr>
+<tr><td> $2^{k} - 1 $  </td><td> 1, 3, 7, 15, 31, 63,...         </td></tr>
+<tr><td> $\lfloor {\frac {N}{2^k}} \rfloor $ </td><td> $\lfloor {\frac {N}{2}} \rfloor $, $\lfloor {\frac {N}{4}} \rfloor $, ..., 1</td></tr>
 </tbody></table>
 <p>感受一下 gap sequence 為 23, 10, 4, 1 的 shellsort 吧。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Sorting_shellsort_anim.gif" alt="" /></p>
@@ -172,8 +179,8 @@
 <p>假定這裡有一個序列需要遞增排序。</p>
 <pre><code>[5, 3, 8, 7, 4, 9, 6, 2]
 </code></pre>
-<p>我們選擇最簡單的 \(\lfloor {\frac {N}{2^k}} \rfloor \) gap sequence 來排序。我們以<strong>星號</strong>標示出每次 insertion sort 對應排序</p>
-<p>首先算出第一個 gap 為 \(8 / 2^1 = 4 \)。開始 insertion sort。</p>
+<p>我們選擇最簡單的 $\lfloor {\frac {N}{2^k}} \rfloor $ gap sequence 來排序。我們以<strong>星號</strong>標示出每次 insertion sort 對應排序</p>
+<p>首先算出第一個 gap 為 $8 / 2^1 = 4 $。開始 insertion sort。</p>
 <pre><code> *           *
 [5, 3, 8, 7, 4, 9, 6, 2]
 
@@ -194,7 +201,7 @@
 
 [4, 3, 8, 2, 5, 9, 6, 7]
 </code></pre>
-<p>再來算出第二個 gap 為 \(8 / 2^2 = 2 \)。開始 insertion sort。</p>
+<p>再來算出第二個 gap 為 $8 / 2^2 = 2 $。開始 insertion sort。</p>
 <pre><code> *     *
 [4, 3, 8, 2, 5, 9, 6, 7]
 
@@ -221,18 +228,18 @@
 -&gt; (sort subsequence [2, 3, 9, 7])
 [4, 2, 5, 3, 6, 7, 8, 9]
 </code></pre>
-<p>再來進行第三次排序。gap 為 \(8 / 2^3 = 1 \)，shellsort 退化至 insertion sort，但前一次結果已經很接近排序完成，insertion sort 可以幾乎在 one pass 完成排序。</p>
+<p>再來進行第三次排序。gap 為 $8 / 2^3 = 1 $，shellsort 退化至 insertion sort，但前一次結果已經很接近排序完成，insertion sort 可以幾乎在 one pass 完成排序。</p>
 <blockquote>
 <p>Insertion sort 的 ASCII diagram 我們就不展示了，請參考 <a href="../insertion_sort">Insertion sort</a>。</p>
 </blockquote>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity                                            </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n^2) \) ~  \(O(n \log^2 n) \) (Depends on gap sequence) </td></tr>
-<tr><td> Best         </td><td> \(O(n \log n) \)                                    </td></tr>
+<tr><td> Worst        </td><td> $O(n^2) $ ~  $O(n \log^2 n) $ (Depends on gap sequence) </td></tr>
+<tr><td> Best         </td><td> $O(n \log n) $                                    </td></tr>
 <tr><td> Average      </td><td> Depends on gap sequence                               </td></tr>
-<tr><td> Worst space  </td><td> \(O(1) \) auxiliary                                 </td></tr>
+<tr><td> Worst space  </td><td> $O(1) $ auxiliary                                 </td></tr>
 </tbody></table>
-<p>Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 \(O(n \log^2 n) \)，有著不錯的表現。有興趣可以參考<a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">這篇文章</a>。</p>
+<p>Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 $O(n \log^2 n) $，有著不錯的表現。有興趣可以參考<a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">這篇文章</a>。</p>
 <a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>我們這裡以 <a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Marcin 的 Paper</a> 中提到的經驗式為例，首先，先建立一個 gap sequence 的常數。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -319,24 +326,13 @@ pub fn shellsort(arr: &amp;mut [i32]) {
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

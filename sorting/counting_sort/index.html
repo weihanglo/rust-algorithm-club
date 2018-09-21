@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -217,20 +224,20 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 <p>這樣就完成排序了。此外，觀察 <strong>(2, D)</strong> 與 <strong>(2, E)</strong> 排序前後的位置，會發現 counting sort 是個實實在在的穩定排序，很棒。</p>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n + k) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n + k) \) </td></tr>
-<tr><td> Average      </td><td> \(O(n + k) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(n + k) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n + k) $ </td></tr>
+<tr><td> Best         </td><td> $O(n + k) $ </td></tr>
+<tr><td> Average      </td><td> $O(n + k) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(n + k) $ auxiliary </td></tr>
 </tbody></table>
 <blockquote>
 <p>k 為資料已知範圍上下界之差。</p>
 </blockquote>
 <a class="header" href="#time-complexity" id="time-complexity"><h3>Time Complexity</h3></a>
-<p>Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 \(n \) 個輸入的資料，因此複雜度為 \(O(n) \)；步驟二計算 prefix sum，，以及 count array 自身的初始化則需執行 \(k + 1 \) 次（給定的資料範圍），這部分的複雜度為 \(O(k) \)。由於 \(n \) 與 \(k \) 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 \(O(n + k) \)。</p>
+<p>Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 $n $ 個輸入的資料，因此複雜度為 $O(n) $；步驟二計算 prefix sum，，以及 count array 自身的初始化則需執行 $k + 1 $ 次（給定的資料範圍），這部分的複雜度為 $O(k) $。由於 $n $ 與 $k $ 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 $O(n + k) $。</p>
 <a class="header" href="#space-complexity" id="space-complexity"><h3>Space complexity</h3></a>
-<p>Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的記憶體空間，因此 \(O(n) \) 的額外（auxiliary）空間複雜度絕對免不了。再加上需要長度為 \(k \) 的 count array 保存每個 key 的出現次數，因此需再加上 \(O(k) \)。除了原始的輸入 array，總共需花費 \(O(n + k) \) 的額外空間複雜度。</p>
+<p>Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的記憶體空間，因此 $O(n) $ 的額外（auxiliary）空間複雜度絕對免不了。再加上需要長度為 $k $ 的 count array 保存每個 key 的出現次數，因此需再加上 $O(k) $。除了原始的輸入 array，總共需花費 $O(n + k) $ 的額外空間複雜度。</p>
 <blockquote>
-<p>如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 \(O(k) \)，但也因此成為不穩定排序法。</p>
+<p>如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 $O(k) $，但也因此成為不穩定排序法。</p>
 </blockquote>
 <a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>由於 Counting sort 屬於分布式排序（Distribution sort），這裡使用泛型，以彰顯分布式排序的特色。</p>
@@ -387,24 +394,13 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -304,11 +311,11 @@ Sam    --&gt;|2: ptr  |--+   +---------------+
 <p>另一方面 <strong>Open addressing</strong> 則走完全不同的套路，不額外配置儲存空間給碰撞的元素，而是繼續在同個陣列內「探測」其他可用的 slot，再把資料塞進尚未被佔據的 slot 中。而 Open addressing 依據不同探測序列（probe sequence）有不同實作，常見的有：</p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Linear_probing"><strong>Linear probing</strong></a>：從發生碰撞索引開始，依序往下一個 slot 探測是否可用，因此得名「線性」。</li>
-<li><a href="https://en.wikipedia.org/wiki/Quadratic_probing"><strong>Quadratic probing</strong></a>：從碰撞索引開始，間隔以二次式增加往下探測可用 slot，如 \(i + 1^2, i + 2^2, i + 3^2\)。</li>
-<li><a href="https://en.wikipedia.org/wiki/Double_hashing"><strong>Double hashing</strong></a>：以固定間隔大小 \(k\)（probe distance），依序探測 \(i + k, i + k \cdot 2 ...\) 的 slot 是否為空。而這個間隔是以另外一個雜湊函數計算所得，因此得名「雙雜湊」。</li>
+<li><a href="https://en.wikipedia.org/wiki/Quadratic_probing"><strong>Quadratic probing</strong></a>：從碰撞索引開始，間隔以二次式增加往下探測可用 slot，如 $i + 1^2, i + 2^2, i + 3^2$。</li>
+<li><a href="https://en.wikipedia.org/wiki/Double_hashing"><strong>Double hashing</strong></a>：以固定間隔大小 $k$（probe distance），依序探測 $i + k, i + k \cdot 2 ...$ 的 slot 是否為空。而這個間隔是以另外一個雜湊函數計算所得，因此得名「雙雜湊」。</li>
 </ul>
 <blockquote>
-<p>\(i\) 為發生碰撞的索引位置。</p>
+<p>$i$ 為發生碰撞的索引位置。</p>
 </blockquote>
 <p>這些方法的差異主要在於 CPU caching 的效能，以及 HashMap 資料的群聚效應（clustering）的敏感程度。當然，論 caching 絕對非 linear probing 莫屬，但 linear probing 以線性一個挨一個探勘，效能較容易受雜湊值群聚影響。</p>
 <p>以下是 linear probing（間隔 = 1）的示意圖。</p>
@@ -318,10 +325,10 @@ Sam    --&gt;|2: ptr  |--+   +---------------+
 <p>動態調整大小對雜湊表來說，不同於一般動態陣列，舊的雜湊表若要對應到新雜湊表，是每個鍵都需要重新計算雜湊值（rehash），成本相對較高。因此，減少動態調整的次數，可說是調教雜湊表的重點之一。說到調教雜湊表，必定要瞭解一個重要指標：<em>load factor</em>。</p>
 <p>$$\text{load factor} = \frac{n}{k}$$</p>
 <blockquote>
-<p>\(n\)：已放入雜湊表內的資料總數。
-\(k\)：雜湊表配置的儲存空間（bucket 總數）。</p>
+<p>$n$：已放入雜湊表內的資料總數。
+$k$：雜湊表配置的儲存空間（bucket 總數）。</p>
 </blockquote>
-<p>Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 \(3/4 = 75%\)。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 <a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html"><code>HashMap</code></a> 使用了 <a href="https://doc.rust-lang.org/stable/src/std/collections/hash/map.rs.html#82-103">Robin Hood Hashing</a>，將 load factor 調教到 90%。</p>
+<p>Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 $3/4 = 75%$。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 <a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html"><code>HashMap</code></a> 使用了 <a href="https://doc.rust-lang.org/stable/src/std/collections/hash/map.rs.html#82-103">Robin Hood Hashing</a>，將 load factor 調教到 90%。</p>
 <p>重配置雜湊表與動態陣列的動態調整大小雷同，達到某個門檻值，就會將底層陣列大小翻倍。為了避免開銷過高，通常元素減少時，不會主動調整大小，而是提供一個 <code>shrink_to_fit</code> 一類的方法，讓呼叫端自行決定釋放多餘空間的時機。</p>
 <a class="header" href="#a架構設計" id="a架構設計"><h2>架構設計</h2></a>
 <p>在介紹架構設計之前，我們先來瞭解 Rust 雜湊相關的觀念與 trait。</p>
@@ -581,25 +588,25 @@ fn try_resize(&amp;mut self) {
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <p>以陣列實作的雜湊表各操作複雜度如下</p>
 <table><thead><tr><th> Operation    </th><th> Best case    </th><th> Worst case </th></tr></thead><tbody>
-<tr><td> add(k, v)    </td><td> \(O(1)\)~  </td><td> \(O(n)\) </td></tr>
-<tr><td> update(k, v) </td><td> \(O(1)\)   </td><td> \(O(n)\) </td></tr>
-<tr><td> remove(k)    </td><td> \(O(1)\)~  </td><td> \(O(n)\) </td></tr>
-<tr><td> search(k)    </td><td> \(O(1)\)   </td><td> \(O(n)\) </td></tr>
+<tr><td> add(k, v)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
+<tr><td> update(k, v) </td><td> $O(1)$   </td><td> $O(n)$ </td></tr>
+<tr><td> remove(k)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
+<tr><td> search(k)    </td><td> $O(1)$   </td><td> $O(n)$ </td></tr>
 </tbody></table>
 <blockquote>
-<p>\(n\)：資料筆數。<br />
-\(k\)：欲綁定資料的鍵。<br />
-\(v\)：欲與鍵綁定的資料。<br />
+<p>$n$：資料筆數。<br />
+$k$：欲綁定資料的鍵。<br />
+$v$：欲與鍵綁定的資料。<br />
 <strong>~</strong>：平攤後的複雜度（amortized）。</p>
 </blockquote>
 <a class="header" href="#a時間複雜度" id="a時間複雜度"><h3>時間複雜度</h3></a>
 <p>在預期情況下，只要雜湊函數品質穩定，大部分操作都可達到在常數時間， 但由於部分操作，尤其是新增或刪除元素的操作，會需要調整 bucket array 的空間，重新配置記憶體空間，所以需要平攤計算複雜度。</p>
-<p>而最差複雜度出現在每個元素都發生雜湊碰撞。若使用 open addressing 處理碰撞，則會把雜湊表配置的每個位置都填滿，而所有操作都從同個位置開始，搜尋對應的鍵，複雜度與陣列的線性搜索相同為 \(O(n)\)；若使用 separate chaining，碰撞代表所有元素都會在同一個 bucket 裡面，也就是只有一個 bucket 上會有一個長度為 <em>n</em> ，被塞滿的陣列或鏈結串列，結果同樣是線性搜索的 \(O(n)\)。</p>
+<p>而最差複雜度出現在每個元素都發生雜湊碰撞。若使用 open addressing 處理碰撞，則會把雜湊表配置的每個位置都填滿，而所有操作都從同個位置開始，搜尋對應的鍵，複雜度與陣列的線性搜索相同為 $O(n)$；若使用 separate chaining，碰撞代表所有元素都會在同一個 bucket 裡面，也就是只有一個 bucket 上會有一個長度為 <em>n</em> ，被塞滿的陣列或鏈結串列，結果同樣是線性搜索的 $O(n)$。</p>
 <p>我們嘗試使用數學表示搜索的複雜度。另</p>
 <ul>
-<li>\(n\)：已放入雜湊表內的資料總數。</li>
-<li>\(k\)：雜湊表配置的儲存空間（bucket 總數）。</li>
-<li>\(\text{load factor} = \frac{n}{k}\)
+<li>$n$：已放入雜湊表內的資料總數。</li>
+<li>$k$：雜湊表配置的儲存空間（bucket 總數）。</li>
+<li>$\text{load factor} = \frac{n}{k}$
 <ul>
 <li>預期每個 bucket 儲存的資料筆數</li>
 </ul>
@@ -607,9 +614,9 @@ fn try_resize(&amp;mut self) {
 </ul>
 <p>則預期執行時間為</p>
 <p>$$\Theta(1+\frac{n}{k}) = O(1)  \text{ if } \frac{n}{k} = O(1)$$</p>
-<p>而 <strong>1</strong> 為計算雜湊與取得索引（random access）的執行時間，\(\frac{n}{k}\) 則是搜尋陣列的執行時間。只要 load factor 越接近 \(n\)，執行時間就相對增加。</p>
+<p>而 <strong>1</strong> 為計算雜湊與取得索引（random access）的執行時間，$\frac{n}{k}$ 則是搜尋陣列的執行時間。只要 load factor 越接近 $n$，執行時間就相對增加。</p>
 <a class="header" href="#a空間複雜度" id="a空間複雜度"><h3>空間複雜度</h3></a>
-<p>雜湊表的空間複雜度取決於實作預先配置的陣列大小，並與維持 <em>load factor</em> 息息相關。一般來說，仍與資料筆數成線性關係，因此空間複雜度只有資料本身 \(O(n)\)。而以 separate chaining 會額外配置陣列或鏈結串列儲存碰撞元素，理論上需負擔更多額外的指標儲存空間。</p>
+<p>雜湊表的空間複雜度取決於實作預先配置的陣列大小，並與維持 <em>load factor</em> 息息相關。一般來說，仍與資料筆數成線性關係，因此空間複雜度只有資料本身 $O(n)$。而以 separate chaining 會額外配置陣列或鏈結串列儲存碰撞元素，理論上需負擔更多額外的指標儲存空間。</p>
 <a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html">Rust Documentation: HashMap</a></li>
@@ -660,24 +667,13 @@ fn try_resize(&amp;mut self) {
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

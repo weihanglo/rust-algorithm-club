@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -163,7 +170,7 @@
 <li><strong>移除</strong>：透過任意鍵移除該鍵值對，又稱 unbinding。</li>
 <li><strong>查找</strong>：透過任意鍵搜尋該鍵值對。</li>
 </ul>
-<p>不難看出，基本操作都是透過鍵取得值。事實上，合理實作的映射表，只要透過鍵來操作，就能有良好效能，甚至上述操作能達到 \(O(1)\) 複雜度。</p>
+<p>不難看出，基本操作都是透過鍵取得值。事實上，合理實作的映射表，只要透過鍵來操作，就能有良好效能，甚至上述操作能達到 $O(1)$ 複雜度。</p>
 <a class="header" href="#a適用場景" id="a適用場景"><h2>適用場景</h2></a>
 <p>雖然映射表依實作不同，效能有所權衡。但其最大優勢仍是可「高效地透過鍵尋找值」，只要有映射關係的資料，都非常適合使用映射表。例如，快取暫存機制需透過特定鍵快速查找暫存值。此外，現代常用的 JSON、TOML 等資料交換格式，都是「鍵—值對」的形式，非常適合使用映射表處理。而應用映射表最有名的實際案例莫過於資料庫的索引，透過索引，我們可以大大降低搜尋的成本，從線性時間直落到對數甚至常數時間，不過相對就需要付出額外時空間建立索引。</p>
 <p>我們再次把應用場景條列出來，方便懶人帶著走。</p>
@@ -180,7 +187,7 @@
 <a class="header" href="#a雜湊表-hash-map" id="a雜湊表-hash-map"><h3>雜湊表 Hash Map</h3></a>
 <p><a href="hash_map">雜湊表</a>是以雜湊函數實作的映射表。透過<a href="../../hash">雜湊函數</a>將任意資料轉換為固定長度的雜湊值，並將此鍵與一筆資料綁定，再映射到內部資料結構的某位置。理論上，只要雜湊函數品質過得去，雜湊表的基本操作都能在常數時間完成。</p>
 <a class="header" href="#a有序映射表-ordered-map" id="a有序映射表-ordered-map"><h3>有序映射表 Ordered Map</h3></a>
-<p><a href="ordered_map">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 \(O(\log n)\)。</p>
+<p><a href="ordered_map">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 $O(\log n)$。</p>
 <a class="header" href="#a多重映射表-multimap" id="a多重映射表-multimap"><h3>多重映射表 Multimap</h3></a>
 <p><a href="multimap">多重映射表</a>允許鍵值對重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的接口操作或迭代整張映射表。</p>
 <a class="header" href="#a集合-set" id="a集合-set"><h3>集合 Set</h3></a>
@@ -234,24 +241,13 @@
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

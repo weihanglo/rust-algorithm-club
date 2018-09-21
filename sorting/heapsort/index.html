@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -233,24 +240,24 @@
 <p>以上便是 heapsort 演算法的簡單流程，是不是和 selection sort 非常相似呢！</p>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Average      </td><td> \(O(n \log n) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Best         </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Average      </td><td> $O(n \log n) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
 </tbody></table>
-<p>Heapsort 最佳、最差、平均的時間複雜度皆為 \(O(n \log n) \)，同樣分為兩部分簡單解釋。</p>
+<p>Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n) $，同樣分為兩部分簡單解釋。</p>
 <a class="header" href="#build-heap-heapify" id="build-heap-heapify"><h3>Build heap (heapify)</h3></a>
 <p>建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。</p>
-<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 \(O(\lceil {\log_2(n)} \rceil) = O(\log n) \)， \(n \) 為陣列元素個數。</p>
-<p>Heapify 從最末個元素開始反向迭代，每個元素都調用 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 \(n \) 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
+<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。</p>
+<p>Heapify 從最末個元素開始反向迭代，每個元素都調用 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
 <p>$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$</p>
 <blockquote>
-<p>實際上，build heap 步驟的複雜度可達到 \(O(n) \)，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
+<p>實際上，build heap 步驟的複雜度可達到 $O(n) $，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
 </blockquote>
 <a class="header" href="#sorting-sift-down" id="sorting-sift-down"><h3>Sorting (sift down)</h3></a>
-<p>講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 <strong>sift down</strong> 修正符合 heap order。所以總共需要做 \(n \) 次 sift down，複雜度為 \(O(n \log n) \)。</p>
+<p>講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 <strong>sift down</strong> 修正符合 heap order。所以總共需要做 $n $ 次 sift down，複雜度為 $O(n \log n) $。</p>
 <a class="header" href="#sum-up" id="sum-up"><h3>Sum up</h3></a>
-<p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 \(O(n \log n) \)。</p>
+<p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 $O(n \log n) $。</p>
 <a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>Heapsort 的實作相對簡單，只需要不斷調用 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -367,24 +374,13 @@ fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

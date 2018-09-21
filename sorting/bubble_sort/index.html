@@ -30,7 +30,14 @@
 
         
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$']],
+            },
+          });
+        </script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
         
     </head>
     <body class="light">
@@ -56,7 +63,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -105,7 +112,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Rust Algorithm Club</h1> 
+                        <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
                             <a href="../../print.html" title="Print this book" aria-label="Print this book">
@@ -215,15 +222,15 @@
 <p>很簡單的排序法！</p>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Best         </td><td> \(O(n) \)   </td></tr>
-<tr><td> Average      </td><td> \(O(n^2) \) </td></tr>
-<tr><td> Worst space  </td><td> \(O(1) \) auxiliary </td></tr>
+<tr><td> Worst        </td><td> $O(n^2) $ </td></tr>
+<tr><td> Best         </td><td> $O(n) $   </td></tr>
+<tr><td> Average      </td><td> $O(n^2) $ </td></tr>
+<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
 </tbody></table>
 <a class="header" href="#time-complexity" id="time-complexity"><h3>Time complexity</h3></a>
-<p>Bubble sort 總共需要 \(n - 1 \) 次迭代，每次迭代至少需要執行 \(n - 1 - i \) 置換（ \)i \) 為第幾次迭代），總共需要迭代</p>
+<p>Bubble sort 總共需要 $n - 1 $ 次迭代，每次迭代至少需要執行 $n - 1 - i $ 置換（ $i $ 為第幾次迭代），總共需要迭代</p>
 <p>$$\sum_{i=0}^{n-1} (n - i - 1) = n^2 - \sum_{i=0}^{n-1}i - n = n^2 - \frac{n(n - 1)}{2} - n = \frac{n^2}{2} - \frac{n}{2}$$</p>
-<p>次，因此，時間複雜度為 \(O(n^2) \)。</p>
+<p>次，因此，時間複雜度為 $O(n^2) $。</p>
 <p>Bubble sort 在已排序完成的序列上，只需要迭代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
 <a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
 <p>Bubble sort 簡單實作如下：</p>
@@ -248,7 +255,7 @@ pub fn bubble_sort(arr: &amp;mut [i32]) {
 <li>內層迴圈依序比較兩兩相鄰元素。</li>
 <li>若有任何置換動作，將旗標標誌為「已置換（<code>true</code>）」。</li>
 </ol>
-<p>倘若記錄已排好序的元素位置，雖然複雜度仍是 \(O(n^2) \)，但如此以來，每次迭代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
+<p>倘若記錄已排好序的元素位置，雖然複雜度仍是 $O(n^2) $，但如此以來，每次迭代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -322,24 +329,13 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
         
 
         
-        <!-- Google Analytics Tag -->
-        <script type="text/javascript">
-            var localAddrs = ["localhost", "127.0.0.1", ""];
 
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', 'UA-118441906-1', 'auto');
-                ga('send', 'pageview');
-            }
-        </script>
         
-
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         
