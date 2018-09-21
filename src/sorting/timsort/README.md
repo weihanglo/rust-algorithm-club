@@ -6,10 +6,10 @@
 
 |              | Complexity         |
 | ------------ | ------------------ |
-| Worst        | \\(O(n \log n) \\) |
-| Best         | \\(O(n) \\)        |
-| Average      | \\(O(n \log n) \\) |
-| Worst space  | \\(O(n) \\) auxiliary   |
+| Worst        | $O(n \log n) $ |
+| Best         | $O(n) $        |
+| Average      | $O(n \log n) $ |
+| Worst space  | $O(n) $ auxiliary   |
 
 ## 實作
 

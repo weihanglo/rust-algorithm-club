@@ -9,6 +9,8 @@ create-missing = false
 
 [output.html]
 curly-quotes = true
-mathjax-support = true
 no-section-label = true
-google-analytics = "UA-118441906-1"
+mathjax-support = true # Disable it in order to add custom config.
+
+[output.html.playpen]
+editable = true

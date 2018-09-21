@@ -117,34 +117,34 @@ Heapsort 的演算法分為兩大步驟：
 
 |              | Complexity         |
 | ------------ | ------------------ |
-| Worst        | \\(O(n \log n) \\) |
-| Best         | \\(O(n \log n) \\) |
-| Average      | \\(O(n \log n) \\) |
-| Worst space  | \\(O(1) \\) auxiliary |
+| Worst        | $O(n \log n) $ |
+| Best         | $O(n \log n) $ |
+| Average      | $O(n \log n) $ |
+| Worst space  | $O(1) $ auxiliary |
 
-Heapsort 最佳、最差、平均的時間複雜度皆為 \\(O(n \log n) \\)，同樣分為兩部分簡單解釋。
+Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n) $，同樣分為兩部分簡單解釋。
 
 ### Build heap (heapify)
 
 建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。
 
-**Heapify** 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 **sift down**，在[實作](#實作)一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 \\(O(\lceil {\log_2(n)} \rceil) = O(\log n) \\)， \\(n \\) 為陣列元素個數。
+**Heapify** 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 **sift down**，在[實作](#實作)一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。
 
-Heapify 從最末個元素開始反向迭代，每個元素都調用 `sift_down` 調整 heap 符合 heap ordering。總共要做 \\(n \\) 次 `sift_down` 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為
+Heapify 從最末個元素開始反向迭代，每個元素都調用 `sift_down` 調整 heap 符合 heap ordering。總共要做 $n $ 次 `sift_down` 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為
 
 $$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$
 
-> 實際上，build heap 步驟的複雜度可達到 \\(O(n) \\)，可以看看 UMD 演算法課程 [Lecture note 的分析][umd-algo-analysis]。
+> 實際上，build heap 步驟的複雜度可達到 $O(n) $，可以看看 UMD 演算法課程 [Lecture note 的分析][umd-algo-analysis]。
 
 [umd-algo-analysis]: http://www.cs.umd.edu/~meesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf
 
 ### Sorting (sift down)
 
-講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 **sift down** 修正符合 heap order。所以總共需要做 \\(n \\) 次 sift down，複雜度為 \\(O(n \log n) \\)。
+講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 **sift down** 修正符合 heap order。所以總共需要做 $n $ 次 sift down，複雜度為 $O(n \log n) $。
 
 ### Sum up
 
-綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 \\(O(n \log n) \\)。
+綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 $O(n \log n) $。
 
 ## 實作
 

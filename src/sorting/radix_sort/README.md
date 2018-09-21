@@ -1,6 +1,6 @@
 # 基數排序 Radix sort
 
-如果你對 [Counting sort](../counting_sort) 與 [Bucket sort](../bucket_sort) 有認識，應該知道這兩個排序都能突破比較排序法複雜度 \\(O(n \log n) \\) 限制的特殊排序法。[Radix sort][wiki-radix-sort] 同樣是個特殊的[整數排序法][wiki-integer-sorting]，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。
+如果你對 [Counting sort](../counting_sort) 與 [Bucket sort](../bucket_sort) 有認識，應該知道這兩個排序都能突破比較排序法複雜度 $O(n \log n) $ 限制的特殊排序法。[Radix sort][wiki-radix-sort] 同樣是個特殊的[整數排序法][wiki-integer-sorting]，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。
 
 舉例來說，欲排序一群範圍在 0 - 999 的整數，若以 Counting sort 排序，則需建立一個「1000 元素的陣列」來計算每個整數的出現次數；若使用以 10 為基數的 Radix sort，則僅需以個位數、十位數、百位數作為鍵值分別排序三次。通常 Radix sort 的排序副程式（Sorting subroutine）會選用 Counting sort 或 Bucket sort，而以 10 為基數的鍵值範圍僅 0 - 9，這種小範圍整數非常適合 Counting sort 作為排序副程式，節省了配置 `int arr[1000]` 的 count array 的時空間。
 
@@ -95,28 +95,28 @@ sort by leftmost digit -->
 
 |              | Complexity   |
 | ------------ | ------------ |
-| Worst        | \\(O(dn) \\) |
-| Best         | \\(O(dn) \\) |
-| Average      | \\(O(dn) \\) |
-| Worst space  | \\(O(d + n) \\) auxiliary |
+| Worst        | $O(dn) $ |
+| Best         | $O(dn) $ |
+| Average      | $O(dn) $ |
+| Worst space  | $O(d + n) $ auxiliary |
 
-> \\(n \\)：資料筆數。  
-> \\(d \\)：number of digit，資料中最多有幾個位數（或鍵值）。  
-> \\(k \\)：基數，就是一個位數最多有幾種可能的值。
+> $n $：資料筆數。  
+> $d $：number of digit，資料中最多有幾個位數（或鍵值）。  
+> $k $：基數，就是一個位數最多有幾種可能的值。
 
 ### Time complexity
 
 欲分析 Radix sort 的時間複雜度，我們可以逐一擊破，先從排序副程式開始分析。
 
-Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每個 subroutine 的複雜度為 \\(O(n + k) \\)， \\(k \\) 為 key 的範圍，以 10 為基數，就是 0 - 9 之間 \\(k = 10 \\)。
+Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每個 subroutine 的複雜度為 $O(n + k) $， $k $ 為 key 的範圍，以 10 為基數，就是 0 - 9 之間 $k = 10 $。
 
-再來，我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 \\(d \\) 位數，時間複雜度需乘上 \\(d \\)，為 \\(O(d (n + k)) \\)，那這個 \\(k \\) 是否可以捨去呢？
+再來，我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 $d $ 位數，時間複雜度需乘上 $d $，為 $O(d (n + k)) $，那這個 $k $ 是否可以捨去呢？
 
-分析 Counting sort 或 Bucket sort 時，範圍 \\(k \\) 會隨輸入資料而變化，若 \\(k \\) 過大，對複雜度的影響甚至會超過 \\(n \\)，因此分析複雜度時無法將 \\(k \\) 捨去。而在 Radix sort， \\(k \\) 通常為一個已知的常數，例如以 bytes 為基數 \\(k = 8 \\)， \\(k \\) 可以捨去。最後可得 Radix sort 的時間複雜度為 \\(O(d \cdot n) \\)。
+分析 Counting sort 或 Bucket sort 時，範圍 $k $ 會隨輸入資料而變化，若 $k $ 過大，對複雜度的影響甚至會超過 $n $，因此分析複雜度時無法將 $k $ 捨去。而在 Radix sort， $k $ 通常為一個已知的常數，例如以 bytes 為基數 $k = 8 $， $k $ 可以捨去。最後可得 Radix sort 的時間複雜度為 $O(d \cdot n) $。
 
 ### Space complexity
 
-Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 \\(O(n \cdot k) \\)。Radix sort 的 \\(k \\) 是常數，予以捨去。再乘上 \\(d \\) 個位數，最差的空間複雜度為 \\(O(d \cdot n) \\)。
+Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 $O(n \cdot k) $。Radix sort 的 $k $ 是常數，予以捨去。再乘上 $d $ 個位數，最差的空間複雜度為 $O(d \cdot n) $。
 
 ## 實作
 
@@ -149,7 +149,7 @@ pub fn radix_sort(arr: &mut [i32]) {
 
 1. 設定基數為 10。
 2. 設定一個旗標，記錄當前在排序哪一位數，1 表示從最小位數（個位數）開始。
-3. 先找到輸入資料的最大值，作為之後副程式迴圈結束的條件。尋找最大值的複雜度為 \\(O(n)\\)，因此不影響 Radix Sort 的複雜度。如果 `arr` 為空序列，則最大值設為 0，在第四步驟就會自動結束排序。
+3. 先找到輸入資料的最大值，作為之後副程式迴圈結束的條件。尋找最大值的複雜度為 $O(n)$，因此不影響 Radix Sort 的複雜度。如果 `arr` 為空序列，則最大值設為 0，在第四步驟就會自動結束排序。
 4. 判斷當前排序的位數是否大於最大值，例如當前排序百分位，`digit` 為 `100`，而最大值 `x` 為 26，則不需再排序百分位。
 5. 使用 Counting sort 作為排序副程式，只需要有 0 - 9 十個桶子。而 `key` 參數則取出當前欲比較的位數。
 6. 位數乘上基數，移至下一個位數繼續比較。

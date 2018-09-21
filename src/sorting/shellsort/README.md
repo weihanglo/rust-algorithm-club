@@ -27,8 +27,8 @@ Shellsort 的效率取決於 gap sequence 的選擇，這邊舉幾個常見的 g
 |              | Sequence                        |
 | ------------ | ------------------------------- |
 | Marcin Ciura | 1, 4, 10, 23, 57, 132, 301, 701 |
-| \\(2^{k} - 1 \\)  | 1, 3, 7, 15, 31, 63,...         |
-| \\(\lfloor {\frac {N}{2^k}} \rfloor \\) | \\(\lfloor {\frac {N}{2}} \rfloor \\), \\(\lfloor {\frac {N}{4}} \rfloor \\), ..., 1|
+| $2^{k} - 1 $  | 1, 3, 7, 15, 31, 63,...         |
+| $\lfloor {\frac {N}{2^k}} \rfloor $ | $\lfloor {\frac {N}{2}} \rfloor $, $\lfloor {\frac {N}{4}} \rfloor $, ..., 1|
 
 感受一下 gap sequence 為 23, 10, 4, 1 的 shellsort 吧。
 
@@ -44,9 +44,9 @@ Shellsort 其實就是進行好幾次不同 gap 的 insertion sort，以下用 A
 [5, 3, 8, 7, 4, 9, 6, 2]
 ```
 
-我們選擇最簡單的 \\(\lfloor {\frac {N}{2^k}} \rfloor \\) gap sequence 來排序。我們以**星號**標示出每次 insertion sort 對應排序
+我們選擇最簡單的 $\lfloor {\frac {N}{2^k}} \rfloor $ gap sequence 來排序。我們以**星號**標示出每次 insertion sort 對應排序
 
-首先算出第一個 gap 為 \\(8 / 2^1 = 4 \\)。開始 insertion sort。
+首先算出第一個 gap 為 $8 / 2^1 = 4 $。開始 insertion sort。
 
 ```
  *           *
@@ -70,7 +70,7 @@ Shellsort 其實就是進行好幾次不同 gap 的 insertion sort，以下用 A
 [4, 3, 8, 2, 5, 9, 6, 7]
 ```
 
-再來算出第二個 gap 為 \\(8 / 2^2 = 2 \\)。開始 insertion sort。
+再來算出第二個 gap 為 $8 / 2^2 = 2 $。開始 insertion sort。
 
 ```
  *     *
@@ -100,7 +100,7 @@ Shellsort 其實就是進行好幾次不同 gap 的 insertion sort，以下用 A
 [4, 2, 5, 3, 6, 7, 8, 9]
 ```
 
-再來進行第三次排序。gap 為 \\(8 / 2^3 = 1 \\)，shellsort 退化至 insertion sort，但前一次結果已經很接近排序完成，insertion sort 可以幾乎在 one pass 完成排序。
+再來進行第三次排序。gap 為 $8 / 2^3 = 1 $，shellsort 退化至 insertion sort，但前一次結果已經很接近排序完成，insertion sort 可以幾乎在 one pass 完成排序。
 
 > Insertion sort 的 ASCII diagram 我們就不展示了，請參考 [Insertion sort](../insertion_sort)。
 
@@ -108,12 +108,12 @@ Shellsort 其實就是進行好幾次不同 gap 的 insertion sort，以下用 A
 
 |              | Complexity                                            |
 | ------------ | ----------------------------------------------------- |
-| Worst        | \\(O(n^2) \\) ~  \\(O(n \log^2 n) \\) (Depends on gap sequence) |
-| Best         | \\(O(n \log n) \\)                                    |
+| Worst        | $O(n^2) $ ~  $O(n \log^2 n) $ (Depends on gap sequence) |
+| Best         | $O(n \log n) $                                    |
 | Average      | Depends on gap sequence                               |
-| Worst space  | \\(O(1) \\) auxiliary                                 |
+| Worst space  | $O(1) $ auxiliary                                 |
 
-Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 \\(O(n \log^2 n) \\)，有著不錯的表現。有興趣可以參考[這篇文章][best-sequence]。
+Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 $O(n \log^2 n) $，有著不錯的表現。有興趣可以參考[這篇文章][best-sequence]。
 
 ## 實作
 

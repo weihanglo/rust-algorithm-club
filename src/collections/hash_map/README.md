@@ -200,10 +200,10 @@ _(利用 separate chaining 實作的雜湊表，並將串列第一個元素放�
 另一方面 **Open addressing** 則走完全不同的套路，不額外配置儲存空間給碰撞的元素，而是繼續在同個陣列內「探測」其他可用的 slot，再把資料塞進尚未被佔據的 slot 中。而 Open addressing 依據不同探測序列（probe sequence）有不同實作，常見的有：
 
 - [**Linear probing**][wiki-linear-probing]：從發生碰撞索引開始，依序往下一個 slot 探測是否可用，因此得名「線性」。
-- [**Quadratic probing**][wiki-quardratic-probing]：從碰撞索引開始，間隔以二次式增加往下探測可用 slot，如 \\(i + 1^2, i + 2^2, i + 3^2\\)。
-- [**Double hashing**][wiki-double-hashing]：以固定間隔大小 \\(k\\)（probe distance），依序探測 \\(i + k, i + k \cdot 2 ...\\) 的 slot 是否為空。而這個間隔是以另外一個雜湊函數計算所得，因此得名「雙雜湊」。
+- [**Quadratic probing**][wiki-quardratic-probing]：從碰撞索引開始，間隔以二次式增加往下探測可用 slot，如 $i + 1^2, i + 2^2, i + 3^2$。
+- [**Double hashing**][wiki-double-hashing]：以固定間隔大小 $k$（probe distance），依序探測 $i + k, i + k \cdot 2 ...$ 的 slot 是否為空。而這個間隔是以另外一個雜湊函數計算所得，因此得名「雙雜湊」。
 
-> \\(i\\) 為發生碰撞的索引位置。
+> $i$ 為發生碰撞的索引位置。
 
 這些方法的差異主要在於 CPU caching 的效能，以及 HashMap 資料的群聚效應（clustering）的敏感程度。當然，論 caching 絕對非 linear probing 莫屬，但 linear probing 以線性一個挨一個探勘，效能較容易受雜湊值群聚影響。
 
@@ -223,10 +223,10 @@ _(利用 separate chaining 實作的雜湊表，並將串列第一個元素放�
 
 $$\text{load factor} = \frac{n}{k}$$
 
-> \\(n\\)：已放入雜湊表內的資料總數。
-> \\(k\\)：雜湊表配置的儲存空間（bucket 總數）。
+> $n$：已放入雜湊表內的資料總數。
+> $k$：雜湊表配置的儲存空間（bucket 總數）。
 
-Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 \\(3/4 = 75%\\)。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 [`HashMap`][rust-hashmap] 使用了 [Robin Hood Hashing][rust-hashmap-code]，將 load factor 調教到 90%。
+Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 $3/4 = 75%$。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 [`HashMap`][rust-hashmap] 使用了 [Robin Hood Hashing][rust-hashmap-code]，將 load factor 調教到 90%。
 
 重配置雜湊表與動態陣列的動態調整大小雷同，達到某個門檻值，就會將底層陣列大小翻倍。為了避免開銷過高，通常元素減少時，不會主動調整大小，而是提供一個 `shrink_to_fit` 一類的方法，讓呼叫端自行決定釋放多餘空間的時機。
 
@@ -516,38 +516,38 @@ fn try_resize(&mut self) {
 
 | Operation    | Best case    | Worst case |
 | ------------ | ------------ | ---------- |
-| add(k, v)    | \\(O(1)\\)~  | \\(O(n)\\) |
-| update(k, v) | \\(O(1)\\)   | \\(O(n)\\) |
-| remove(k)    | \\(O(1)\\)~  | \\(O(n)\\) |
-| search(k)    | \\(O(1)\\)   | \\(O(n)\\) |
+| add(k, v)    | $O(1)$~  | $O(n)$ |
+| update(k, v) | $O(1)$   | $O(n)$ |
+| remove(k)    | $O(1)$~  | $O(n)$ |
+| search(k)    | $O(1)$   | $O(n)$ |
 
-> \\(n\\)：資料筆數。  
-> \\(k\\)：欲綁定資料的鍵。  
-> \\(v\\)：欲與鍵綁定的資料。  
+> $n$：資料筆數。  
+> $k$：欲綁定資料的鍵。  
+> $v$：欲與鍵綁定的資料。  
 > **~**：平攤後的複雜度（amortized）。
 
 ### 時間複雜度
 
 在預期情況下，只要雜湊函數品質穩定，大部分操作都可達到在常數時間， 但由於部分操作，尤其是新增或刪除元素的操作，會需要調整 bucket array 的空間，重新配置記憶體空間，所以需要平攤計算複雜度。
 
-而最差複雜度出現在每個元素都發生雜湊碰撞。若使用 open addressing 處理碰撞，則會把雜湊表配置的每個位置都填滿，而所有操作都從同個位置開始，搜尋對應的鍵，複雜度與陣列的線性搜索相同為 \\(O(n)\\)；若使用 separate chaining，碰撞代表所有元素都會在同一個 bucket 裡面，也就是只有一個 bucket 上會有一個長度為 _n_ ，被塞滿的陣列或鏈結串列，結果同樣是線性搜索的 \\(O(n)\\)。
+而最差複雜度出現在每個元素都發生雜湊碰撞。若使用 open addressing 處理碰撞，則會把雜湊表配置的每個位置都填滿，而所有操作都從同個位置開始，搜尋對應的鍵，複雜度與陣列的線性搜索相同為 $O(n)$；若使用 separate chaining，碰撞代表所有元素都會在同一個 bucket 裡面，也就是只有一個 bucket 上會有一個長度為 _n_ ，被塞滿的陣列或鏈結串列，結果同樣是線性搜索的 $O(n)$。
 
 我們嘗試使用數學表示搜索的複雜度。另
 
-- \\(n\\)：已放入雜湊表內的資料總數。
-- \\(k\\)：雜湊表配置的儲存空間（bucket 總數）。
-- \\(\text{load factor} = \frac{n}{k}\\)
+- $n$：已放入雜湊表內的資料總數。
+- $k$：雜湊表配置的儲存空間（bucket 總數）。
+- $\text{load factor} = \frac{n}{k}$
   - 預期每個 bucket 儲存的資料筆數
 
 則預期執行時間為 
 
 $$\Theta(1+\frac{n}{k}) = O(1)  \text{ if } \frac{n}{k} = O(1)$$
 
-而 **1** 為計算雜湊與取得索引（random access）的執行時間，\\(\frac{n}{k}\\) 則是搜尋陣列的執行時間。只要 load factor 越接近 \\(n\\)，執行時間就相對增加。
+而 **1** 為計算雜湊與取得索引（random access）的執行時間，$\frac{n}{k}$ 則是搜尋陣列的執行時間。只要 load factor 越接近 $n$，執行時間就相對增加。
 
 ### 空間複雜度
 
-雜湊表的空間複雜度取決於實作預先配置的陣列大小，並與維持 _load factor_ 息息相關。一般來說，仍與資料筆數成線性關係，因此空間複雜度只有資料本身 \\(O(n)\\)。而以 separate chaining 會額外配置陣列或鏈結串列儲存碰撞元素，理論上需負擔更多額外的指標儲存空間。
+雜湊表的空間複雜度取決於實作預先配置的陣列大小，並與維持 _load factor_ 息息相關。一般來說，仍與資料筆數成線性關係，因此空間複雜度只有資料本身 $O(n)$。而以 separate chaining 會額外配置陣列或鏈結串列儲存碰撞元素，理論上需負擔更多額外的指標儲存空間。
 
 ## 參考資料
 
