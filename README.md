@@ -54,26 +54,26 @@ Special-purpose sorts:
 
 ### Stack and Queue
 
-- [🚧 Stack](src/collections/stack_queue/stack)
-- [🚧 Queue](src/collections/stack_queue/queue)
-- [🚧 Deque](src/collections/stack_queue/deque)
+- [🚧 Stack](src/collections/stack)
+- [🚧 Queue](src/collections/queue)
+- [🚧 Deque](src/collections/deque)
 
 ### Linked List
 
 [Introduction to linked list](src/collections/linked_list)
 
-- [Singly linked list](src/collections/linked_list/singly)
-- [🚧 Doubly linked list](src/collections/linked_list/doubly)
-- [🚧 Circular linked list](src/collections/linked_list/circular)
+- [Singly linked list](src/collections/singly_linked_list)
+- [🚧 Doubly linked list](src/collections/doubly_linked_list)
+- [🚧 Circular linked list](src/collections/circular_linked_list)
 
 ### Associative Container
 
-[Introduction to associative container](src/collections/map)
+[Introduction to associative container](src/collections/associative-container)
 
-- [Hash map](src/collections/map/hash_map)
-- [🚧 Ordered map](src/collections/map/ordered_map)
-- [🚧 Multimap](src/collections/map/multimap)
-- [🚧 Set](src/collections/map/set)
+- [Hash map](src/collections/hash_map)
+- [🚧 Ordered map](src/collections/ordered_map)
+- [🚧 Multimap](src/collections/multimap)
+- [🚧 Set](src/collections/set)
 
 ## Learning Resources
 

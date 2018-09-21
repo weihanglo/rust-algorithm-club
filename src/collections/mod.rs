@@ -1,7 +1,7 @@
 //! Collections.
 
-mod linked_list;
-pub use self::linked_list::SinglyLinkedList;
+mod singly_linked_list;
+pub use self::singly_linked_list::SinglyLinkedList;
 
-mod map;
-pub use self::map::HashMap;
+mod hash_map;
+pub use self::hash_map::HashMap;

@@ -51,26 +51,26 @@
 
 ### 堆疊與佇列
 
-- [🚧 堆疊 Stack](collections/stack_queue/stack)
-- [🚧 佇列 Queue](collections/stack_queue/queue)
-- [🚧 雙端佇列 Deque](collections/stack_queue/deque)
+- [🚧 堆疊 Stack](collections/stack)
+- [🚧 佇列 Queue](collections/queue)
+- [🚧 雙端佇列 Deque](collections/deque)
 
 ### 鏈結串列
 
 [鏈結串列概述](collections/linked_list)
 
-- [單向鏈結串列 Singly linked list](collections/linked_list/singly)
-- [🚧 雙向鏈結串列 Doubly linked list](collections/linked_list/doubly)
-- [🚧 循環鏈結串列 Circular linked list](collections/linked_list/circular)
+- [單向鏈結串列 Singly linked list](collections/singly_linked_list)
+- [🚧 雙向鏈結串列 Doubly linked list](collections/doubly_linked_list)
+- [🚧 循環鏈結串列 Circular linked list](collections/circular_linked_list)
 
 ### 關聯容器
 
-[關聯容器概述](collections/map)
+[關聯容器概述](collections/associative-container)
 
-- [雜湊表 Hash map](collections/map/hash_map)
-- [🚧 有序映射表 Ordered map](collections/map/ordered_map)
-- [🚧 多重映射表 Multimap](collections/map/multimap)
-- [🚧 集合 Set](collections/map/set)
+- [雜湊表 Hash map](collections/hash_map)
+- [🚧 有序映射表 Ordered map](collections/ordered_map)
+- [🚧 多重映射表 Multimap](collections/multimap)
+- [🚧 集合 Set](collections/set)
 
 ## 學習資源
 
