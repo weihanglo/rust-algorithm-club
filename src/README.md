@@ -1,18 +1,23 @@
-# Rust Algorithm Club
+![](logo.svg)
 
-[![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)](https://rust-lang-nursery.github.io/edition-guide/rust-2018)
-[![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)](https://travis-ci.com/weihanglo/rust-algorithm-club)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+# Rust Algorithm Club
 
 歡迎來到 Rust 演算法俱樂部！本專案受 [Swift Algorithm Club][swift-algorithm-club] 啟發，專案中的演算法皆使用 [Rust 程式語言][rust]撰寫說明與實作！您可以在 [Rust Algorithm Club][main-site] 一站，依您的意願，挑選有興趣的演算法知識學習；若您夠大膽，推薦您閱讀[自動生成的 API 文件][generated-doc]，直接單挑程式原始碼。
 
 本專案原始碼放在 [GitHub][source-code] 上，非常期待您的貢獻。
 
+[![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)][edition-guide]
+[![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)][ci-status]
+[![Documentation](https://img.shields.io/badge/doc-available-blue.svg)][generated-doc]
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
 [source-code]: https://github.com/weihanglo/rust-algorithm-club
-[main-site]: /
-[generated-doc]: /doc/rust_algorithm_club/
+[main-site]: https://rust-algo.club
+[ci-status]: https://travis-ci.com/weihanglo/rust-algorithm-club
+[generated-doc]: https://rust-algo.club/doc/rust_algorithm_club/
+[edition-guide]: https://rust-lang-nursery.github.io/edition-guide/rust-2018
 
 ## 基礎概念
 

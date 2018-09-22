@@ -1,21 +1,26 @@
+![](src/logo.svg)
+
 # Rust Algorithm Club
 
 > ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here](https://rust-algo.club) if you are able to read Chinese.
-
-[![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)](https://rust-lang-nursery.github.io/edition-guide/rust-2018/index.html) 
-[![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)](https://travis-ci.com/weihanglo/rust-algorithm-club)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](src/CONTRIBUTING.md)
 
 Welcome to Rust Algorithm Club! This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
 You can find out more on [Rust Algorithm Club][main-site] main site. Just pick up some algorithms you are interested in and start learning. If you are brave enough, we recommend you the auto-generated API documentation. Go and fight with the source code.
 
 This project along with its source code are on [GitHub][source-code] and we are looking forward to your contributions.
 
+[![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)][edition-guide]
+[![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)][ci-status]
+[![Documentation](https://img.shields.io/badge/doc-available-blue.svg)][generated-doc]
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
 [source-code]: https://github.com/weihanglo/rust-algorithm-club
-[main-site]: /
-[generated-doc]: /doc/rust_algorithm_club/
+[main-site]: https://rust-algo.club
+[ci-status]: https://travis-ci.com/weihanglo/rust-algorithm-club
+[generated-doc]: https://rust-algo.club/doc/rust_algorithm_club/
+[edition-guide]: https://rust-lang-nursery.github.io/edition-guide/rust-2018
 
 ## General Concepts
 
