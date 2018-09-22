@@ -52,9 +52,9 @@ pub fn mergesort_bottom_up(arr: &mut [i32]) {
 
 /// Merge helper.
 ///
-/// * `arr1` - Left pile to be sorted.
-/// * `arr2` - Right pile to be sorted.
-/// * `ret` - Result array to be returned.
+/// * `arr1` - Left pile to sort.
+/// * `arr2` - Right pile to sort.
+/// * `ret` - Result array to return
 fn merge(arr1: &[i32], arr2: &[i32], ret: &mut [i32]) {
     let mut left = 0; // Head of left pile.
     let mut right = 0; // Head of right pile.
