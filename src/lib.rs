@@ -5,5 +5,6 @@
 #![deny(deprecated)]
 #![deny(nonstandard_style)]
 
+pub mod searching;
 pub mod sorting;
 pub mod collections;

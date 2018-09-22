@@ -5,7 +5,7 @@
 > ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here](https://rust-algo.club) if you are able to read Chinese.
 
 Welcome to Rust Algorithm Club! This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
-You can find out more on [Rust Algorithm Club][main-site] main site. Just pick up some algorithms you are interested in and start learning. If you are brave enough, we recommend you the auto-generated API documentation. Go and fight with the source code.
+You can find out more on [Rust Algorithm Club][main-site] main site. Just pick up some algorithms you are interested in and start learning. If you are brave enough, we recommend you the [auto-generated API documentation][generated-doc]. Go and fight with the source code.
 
 This project along with its source code are on [GitHub][source-code] and we are looking forward to your contributions.
 
@@ -27,6 +27,11 @@ This project along with its source code are on [GitHub][source-code] and we are 
 - [Asymptotic Notation](src/concepts/asymptotic-notation)
 
 ## Algorithms
+
+- [Linear search](src/searching/linear_search)
+- [Binary search](src/searching/binary_search)
+- [🚧 Interpolation search](src/searching/interpolation_search)
+- [🚧 Exponential search](src/searching/exponential_search)
 
 ### Sorting
 
@@ -54,6 +59,8 @@ Special-purpose sorts:
 - [Counting sort](src/sorting/counting_sort)
 - [Bucket sort](src/sorting/bucket_sort)
 - [Radix sort](src/sorting/radix_sort)
+
+### Searching
 
 ## Data Structures
 

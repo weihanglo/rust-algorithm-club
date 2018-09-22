@@ -6,6 +6,11 @@
 
 - [基礎概念](concepts/README.md)
   - [漸進符號 Asymptotic Notation](concepts/asymptotic-notation/README.md)
+- [搜尋](searching/README.md)
+  - [線性搜尋 Linear search](searching/linear_search/README.md)
+  - [二元搜尋 Binary search](searching/binary_search/README.md)
+  - [🚧 內插搜尋 Interpolation search](searching/interpolation_search/README.md)
+  - [🚧 指數搜尋 Exponential search](searching/exponential_search/README.md)
 - [排序](sorting/README.md)
   - [簡單排序](sorting/simple-sorts.md)
     - [插入排序 Insertion sort](sorting/insertion_sort/README.md)
