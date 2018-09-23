@@ -1,5 +1,5 @@
 /// Test cases for searching algorithms accepting an arbitrary i32 array.
-macro_rules! base_cases { 
+macro_rules! base_cases {
     ($algo:ident) => {
         #[test]
         fn empty() {
@@ -49,7 +49,7 @@ macro_rules! base_cases {
         }
 
         #[test]
-        fn duplicated() {
+        fn duplicate() {
             let arr = &[1, 5, 3, 3, 4];
             let target = &3;
             let expected = Some(2);
@@ -67,8 +67,8 @@ macro_rules! base_cases {
 }
 
 /// Test cases for binary search algorithm and its variants.
-/// Accepting a sorted i32 array without any duplicated elements.
-macro_rules! sorted_no_duplicated_cases { 
+/// Accepting a sorted i32 array without any duplicate elements.
+macro_rules! sorted_no_duplicate_cases {
     ($algo:ident) => {
         #[test]
         fn empty() {

@@ -1,8 +1,13 @@
-/// Binary search.
+/// Handmade binary search for a sorted sequence.
 ///
-/// Returns
+/// This version of binary search does not guarantee retrieval of the leftmost
+/// matching position if multiple elements found.
 ///
-/// The input array sequence must be sorted and contain no duplicated elements.
+/// Reference:
+///
+/// - [`std::slice::binary_search`][1]
+///
+/// [1]: https://doc.rust-lang.org/std/primitive.slice.html#method.binary_search
 pub fn binary_search<T>(arr: &[T], target: &T) -> Result<usize, usize>
     where T: PartialOrd
 {
@@ -34,5 +39,5 @@ pub fn binary_search<T>(arr: &[T], target: &T) -> Result<usize, usize>
 mod base {
     use super::*;
 
-    sorted_no_duplicated_cases!(binary_search);
+    sorted_no_duplicate_cases!(binary_search);
 }
