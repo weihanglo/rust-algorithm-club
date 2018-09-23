@@ -1,6 +1,6 @@
 # 二元搜尋 Binary Search
 
-Binary search，又稱對數搜尋（logarithmic search），是一個在已排序的序列中，快速找出特定元素的搜尋演算法。二元搜尋的步驟就像玩猜數字，先猜一個數字，告訴你你的猜測比正確答案大或小，再繼續往對的方向猜，捨棄猜錯的另一半。這樣繼續進行，每猜一次，搜尋範圍就小一半，因此稱為「二元」搜尋。
+Binary search，又稱對數搜尋（logarithmic search），是一個在已排序的序列中，快速找出特定元素的搜尋演算法。二元搜尋的步驟就像玩猜數字，先猜一個數字，告訴你你的猜測比正確答案大或小，再繼續往對的方向猜，捨棄猜錯的另一半。這樣持續進行好幾次猜測，每猜一次，搜尋範圍就縮小一半，因此稱為「二元」搜尋。
 
 二元搜尋有以下幾個特點：
 
@@ -174,15 +174,19 @@ pub fn binary_search<T>(arr: &[T], target: &T) -> Result<usize, usize>
 
 ### Interpolation Search
 
-Interpolation search 改良自二元搜尋，差別在於，二元搜尋選擇中間的元素作為二分點，而 interpolation search 人如其名，以內插法找尋二分點。在資料平均分佈時，比二元搜尋更高效。欲知後續，待下回[內插搜尋 Interpolation search](../interpolation_search) 分曉。
+[Interpolation search][interp-search] 改良自二元搜尋，差別在於，二元搜尋選擇中間的元素作為二分點，而 interpolation search 人如其名，以內插法找尋二分點。在資料平均分佈時，比二元搜尋更高效。欲知後續，待下回[內插搜尋 Interpolation search][interp-search] 分曉。
 
 ### Exponential Search
 
-Exponential search 是一種特殊的二元搜尋，主要用在無限、無邊界的已排序序列，由於邊界未知長度就未知，無法以傳統二元搜尋找尋中點。Exponential 顧名思義就是不斷比較在 $2^0$，$2^1$ 直到 $2^n$ 的位置上資料是否比目標值大，若較大，再從該位置執行二元搜尋回頭找。詳情請看[指數搜尋 Exponential search](../exponential_search)。
+[Exponential search][exp-search] 是一種特殊的二元搜尋，主要用在搜尋無限、無邊界的已排序序列，由於邊界未知長度就未知，無法以傳統二元搜尋找尋中點。Exponential 顧名思義就是不斷比較在 $2^0$，$2^1$ 直到 $2^n$ 的位置上資料是否比目標值大，若較大，再從該位置執行二元搜尋回頭找。詳情請看[指數搜尋 Exponential search][exp-search]。
 
 ### Binary Insertion Sort
 
-Insertion sort 有一個步驟是在前面已經排完序的資料中，找到適合的地方插入待排序的元素，這部分可透過二元搜尋 加快在已排序資料搜尋的速度。詳情請參考 [Binary insertion sort](../../sorting/insertion_sort/#binary-insertion-sort)。
+Insertion sort 有一個步驟是在前面已經排完序的資料中，找到適合的地方插入待排序的元素，這部分可透過二元搜尋加快在已排序資料搜尋的速度。詳情請參考 [Binary insertion sort](../../sorting/insertion_sort/#binary-insertion-sort)。
+
+[interp-search]: ../interpolation_search
+[exp-search]: ../exponential_search
+
 
 ## 參考資料
 
