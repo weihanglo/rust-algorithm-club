@@ -490,10 +490,10 @@ fn try_resize(&mut self) {
     }
 
     if entry_count as f64 / capacity as f64 > LOAD_FACTOR {     // 3
-        // Resize. Rehas. Reallocate!
+        // Resize. Rehash. Reallocate!
         let mut new_map = Self::with_capacity(capacity << 1);   // 4
         self.buckets.iter_mut()                                 // 5
-            .flat_map(|bucket| mem::replace(bucket, vec![])) 
+            .flat_map(|bucket| mem::replace(bucket, vec![]))
             .for_each(|(k, v)| { new_map.insert(k, v); });
         *self = new_map;                                        // 6
     }
