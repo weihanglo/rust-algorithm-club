@@ -1,5 +1,5 @@
 /// Common test cases for any sorting algorithms accepting i32 array as input.
-macro_rules! base_cases { 
+macro_rules! base_cases {
     ($algo:ident) => {
         fn assert(arr: &mut [i32], res: &[i32]) {
             $algo(arr);
@@ -96,7 +96,7 @@ macro_rules! base_cases {
         }
 
         #[test]
-        fn duplicated() {
+        fn duplicate() {
             let mut arr = [1, 5, 3, 3, 4, 1, 3, 4];
             let res = [1, 1, 3, 3, 3, 4, 4, 5];
             assert(&mut arr, &res);
