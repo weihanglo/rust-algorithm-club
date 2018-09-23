@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `HashMap` struct in crate `rust_algorithm_club`."><meta name="keywords" content="rust, rustlang, rust-lang, HashMap"><title>rust_algorithm_club::collections::HashMap - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc struct"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Struct HashMap</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.with_capacity">with_capacity</a><a href="#method.get">get</a><a href="#method.get_mut">get_mut</a><a href="#method.insert">insert</a><a href="#method.remove">remove</a><a href="#method.clear">clear</a><a href="#method.is_empty">is_empty</a><a href="#method.len">len</a><a href="#method.bucket_count">bucket_count</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Default">Default</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div><a class="sidebar-title" href="#blanket-implementations">Blanket Implementations</a><div class="sidebar-links"><a href="#impl-Into">Into</a><a href="#impl-From">From</a><a href="#impl-TryFrom">TryFrom</a><a href="#impl-Borrow">Borrow</a><a href="#impl-Any">Any</a><a href="#impl-TryInto">TryInto</a><a href="#impl-BorrowMut">BorrowMut</a></div></div><p class='location'><a href='../index.html'>rust_algorithm_club</a>::<wbr><a href='index.html'>collections</a></p><script>window.sidebarCurrent = {name: 'HashMap', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../src/rust_algorithm_club/collections/hash_map/mod.rs.html#20-23' title='goto source code'>[src]</a></span><span class='in-band'>Struct <a href='../index.html'>rust_algorithm_club</a>::<wbr><a href='index.html'>collections</a>::<wbr><a class="struct" href=''>HashMap</a></span></h1><div class="docblock type-decl hidden-by-usual-hider"><pre class='rust struct'>pub struct HashMap&lt;K, V&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;K: <a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html" title="trait core::hash::Hash">Hash</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html" title="trait core::cmp::Eq">Eq</a>,&nbsp;</span> { /* fields omitted */ }</pre></div><div class='docblock'><p>A hash map implemented with separate chaining collision resolution strategy.</p>
-<p>This implementation is focused on hash map funcionalities, so we choose to
+<p>This implementation is focused on hash map functionalities, so we choose to
 adopt Rust <code>DefaultHasher</code> to avoid avalanche of details, and vectors as
 the underlying data structure for separate chaining method.</p>
 <p>The interface is a simplified version of Rust <code>HashMap</code>.</p>
@@ -19,11 +19,11 @@ the underlying data structure for separate chaining method.</p>
 <p>TODO: To treat owned and borrowed values in equivalent ways as other
 collections in std do, we should use <code>Borrow</code> trait to abstract over
 the type of key to hash. This concept can also applied for <code>get_mut</code>
-<code>remove</code>, and other operations that constrain by the type system..</p>
+<code>remove</code>, and other operations that constrain by the type system.</p>
 <p>Some useful resources:</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/stable/std/borrow/trait.Borrow.html">Trait std::borrow:Borrow</a></li>
-<li><a href="https://doc.rust-lang.org/stable/book/first-edition/borrow-and-asref.html">TRPL 1st edition: Brrrow and AsRef</a></li>
+<li><a href="https://doc.rust-lang.org/stable/book/first-edition/borrow-and-asref.html">TRPL 1st edition: Borrow and AsRef</a></li>
 </ul>
 <h1 id="complexity" class="section-header"><a href="#complexity">Complexity</a></h1>
 <p>Constant (amortized).</p>
@@ -32,14 +32,14 @@ the type of key to hash. This concept can also applied for <code>get_mut</code>
 <p>Constant (amortized).</p>
 </div><h4 id='method.insert' class="method"><span id='insert.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.insert' class='fnname'>insert</a>(&amp;mut self, key: K, value: V) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;V&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rust_algorithm_club/collections/hash_map/mod.rs.html#123-138' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Inserts key-value pair into the map. Replaces previous value if
 the same key exists at the same index.</p>
-<p>Returns the old value if the key presents. Otherwise returnes <code>None</code>.</p>
+<p>Returns the old value if the key presents. Otherwise returns <code>None</code>.</p>
 <p>Steps are described as following:</p>
 <ol>
 <li>Try to resize hashmap to ensure an appropriate load factor.</li>
 <li>Compute hash of the key to get the inner bucket under certain index.</li>
 <li>Find if there is already a pair with identical key.
 <ol>
-<li>If yes, substitue for it.</li>
+<li>If yes, substitute for it.</li>
 <li>Else, push new value into the bucket.</li>
 </ol>
 </li>

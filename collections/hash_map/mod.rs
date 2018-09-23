@@ -4,7 +4,7 @@ use std::mem;
 
 /// A hash map implemented with separate chaining collision resolution strategy.
 ///
-/// This implementation is focused on hash map funcionalities, so we choose to
+/// This implementation is focused on hash map functionalities, so we choose to
 /// adopt Rust `DefaultHasher` to avoid avalanche of details, and vectors as
 /// the underlying data structure for separate chaining method.
 ///
@@ -63,12 +63,12 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     /// TODO: To treat owned and borrowed values in equivalent ways as other
     /// collections in std do, we should use `Borrow` trait to abstract over
     /// the type of key to hash. This concept can also applied for `get_mut`
-    /// `remove`, and other operations that constrain by the type system..
+    /// `remove`, and other operations that constrain by the type system.
     ///
     /// Some useful resources:
     ///
     /// - [Trait std::borrow:Borrow][1]
-    /// - [TRPL 1st edition: Brrrow and AsRef][2]
+    /// - [TRPL 1st edition: Borrow and AsRef][2]
     ///
     /// # Complexity
     ///
@@ -102,14 +102,14 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     /// Inserts key-value pair into the map. Replaces previous value if
     /// the same key exists at the same index.
     ///
-    /// Returns the old value if the key presents. Otherwise returnes `None`.
+    /// Returns the old value if the key presents. Otherwise returns `None`.
     ///
     /// Steps are described as following:
     ///
     /// 1. Try to resize hashmap to ensure an appropriate load factor.
     /// 2. Compute hash of the key to get the inner bucket under certain index.
     /// 3. Find if there is already a pair with identical key.
-    ///     1. If yes, substitue for it.
+    ///     1. If yes, substitute for it.
     ///     2. Else, push new value into the bucket.
     ///
     /// # Parameters
@@ -225,7 +225,7 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
         }
 
         if entry_count as f64 / capacity as f64 > LOAD_FACTOR {
-            // Resize. Rehas. Reallocate!
+            // Resize. Rehash. Reallocate!
             let mut new_map = Self::with_capacity(capacity << 1);
             self.buckets.iter_mut()
                 .flat_map(|bucket| mem::replace(bucket, vec![]))

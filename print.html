@@ -2136,7 +2136,7 @@ pub fn radix_sort(arr: &amp;mut [i32]) {
 <a class="header" href="#a術語" id="a術語"><h2>術語</h2></a>
 <a class="header" href="#node" id="node"><h3>Node</h3></a>
 <p>又稱「節點」，為組成鏈結串列的基本元素，節點包含資料儲存區與指標儲存區，指標儲存區用以儲存指向其他節點位址的變數。此外，最後一個節點的不指向其他節點位址的指標成為 null pointer，慣例以 NULL 表示。</p>
-<p><img src="node-box.svg" alt="node-box" /></p>
+<p><img src="../singly_linked_list/node-box.svg" alt="node-box" /></p>
 <p><em>（節點示意圖）</em></p>
 <a class="header" href="#head-and-tail" id="head-and-tail"><h3>Head and tail</h3></a>
 <p>Head 為指向整個串列第一個節點的指標。而 tail 則為指向最後一個節點的指標。用 ASCII 圖表示如下：</p>
@@ -2668,11 +2668,11 @@ $i$：相對於整個容器的索引位置。</p>
 <a class="header" href="#a種類-1" id="a種類-1"><h2>種類</h2></a>
 <p>以下簡單介紹常見的映射表，詳情請點擊各連結。</p>
 <a class="header" href="#a雜湊表-hash-map" id="a雜湊表-hash-map"><h3>雜湊表 Hash Map</h3></a>
-<p><a href="hash_map">雜湊表</a>是以雜湊函數實作的映射表。透過<a href="../../hash">雜湊函數</a>將任意資料轉換為固定長度的雜湊值，並將此鍵與一筆資料綁定，再映射到內部資料結構的某位置。理論上，只要雜湊函數品質過得去，雜湊表的基本操作都能在常數時間完成。</p>
+<p><a href="../hash_map">雜湊表</a>是以雜湊函數實作的映射表。透過<a href="../../hash">雜湊函數</a>將任意資料轉換為固定長度的雜湊值，並將此鍵與一筆資料綁定，再映射到內部資料結構的某位置。理論上，只要雜湊函數品質過得去，雜湊表的基本操作都能在常數時間完成。</p>
 <a class="header" href="#a有序映射表-ordered-map" id="a有序映射表-ordered-map"><h3>有序映射表 Ordered Map</h3></a>
-<p><a href="ordered_map">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 $O(\log n)$。</p>
+<p><a href="../ordered_map">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 $O(\log n)$。</p>
 <a class="header" href="#a多重映射表-multimap" id="a多重映射表-multimap"><h3>多重映射表 Multimap</h3></a>
-<p><a href="multimap">多重映射表</a>允許鍵值對重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的接口操作或迭代整張映射表。</p>
+<p><a href="../multimap">多重映射表</a>允許鍵值對重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的接口操作或迭代整張映射表。</p>
 <a class="header" href="#a集合-set" id="a集合-set"><h3>集合 Set</h3></a>
 <p><a href="set">集合</a>實際上並無鍵值「關聯」，可將其想像成普通的映射表。只關心鍵而值不重要。集合借用了數學<a href="https://en.wikipedia.org/wiki/Set_theory">集合論（set theory）</a>中有限集合的概念，常應用於需要操作交集、聯集、差集等集合運算場景。</p>
 <a class="header" href="#a參考資料-18" id="a參考資料-18"><h2>參考資料</h2></a>
@@ -3105,10 +3105,10 @@ fn try_resize(&amp;mut self) {
     }
 
     if entry_count as f64 / capacity as f64 &gt; LOAD_FACTOR {     // 3
-        // Resize. Rehas. Reallocate!
+        // Resize. Rehash. Reallocate!
         let mut new_map = Self::with_capacity(capacity &lt;&lt; 1);   // 4
         self.buckets.iter_mut()                                 // 5
-            .flat_map(|bucket| mem::replace(bucket, vec![])) 
+            .flat_map(|bucket| mem::replace(bucket, vec![]))
             .for_each(|(k, v)| { new_map.insert(k, v); });
         *self = new_map;                                        // 6
     }
@@ -3150,7 +3150,7 @@ $v$：欲與鍵綁定的資料。<br />
 </li>
 </ul>
 <p>則預期執行時間為</p>
-<p>$$\Theta(1+\frac{n}{k}) = O(1)  \text{ if } \frac{n}{k} = O(1)$$</p>
+<p>$$\Theta(1+\frac{n}{k}) = O(1) \ \text{ if } \frac{n}{k} = O(1)$$</p>
 <p>而 <strong>1</strong> 為計算雜湊與取得索引（random access）的執行時間，$\frac{n}{k}$ 則是搜尋陣列的執行時間。只要 load factor 越接近 $n$，執行時間就相對增加。</p>
 <a class="header" href="#a空間複雜度" id="a空間複雜度"><h3>空間複雜度</h3></a>
 <p>雜湊表的空間複雜度取決於實作預先配置的陣列大小，並與維持 <em>load factor</em> 息息相關。一般來說，仍與資料筆數成線性關係，因此空間複雜度只有資料本身 $O(n)$。而以 separate chaining 會額外配置陣列或鏈結串列儲存碰撞元素，理論上需負擔更多額外的指標儲存空間。</p>

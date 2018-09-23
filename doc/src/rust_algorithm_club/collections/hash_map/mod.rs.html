@@ -412,7 +412,7 @@
 
 <span class="doccomment">/// A hash map implemented with separate chaining collision resolution strategy.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This implementation is focused on hash map funcionalities, so we choose to</span>
+<span class="doccomment">/// This implementation is focused on hash map functionalities, so we choose to</span>
 <span class="doccomment">/// adopt Rust `DefaultHasher` to avoid avalanche of details, and vectors as</span>
 <span class="doccomment">/// the underlying data structure for separate chaining method.</span>
 <span class="doccomment">///</span>
@@ -471,12 +471,12 @@
     <span class="doccomment">/// TODO: To treat owned and borrowed values in equivalent ways as other</span>
     <span class="doccomment">/// collections in std do, we should use `Borrow` trait to abstract over</span>
     <span class="doccomment">/// the type of key to hash. This concept can also applied for `get_mut`</span>
-    <span class="doccomment">/// `remove`, and other operations that constrain by the type system..</span>
+    <span class="doccomment">/// `remove`, and other operations that constrain by the type system.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Some useful resources:</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// - [Trait std::borrow:Borrow][1]</span>
-    <span class="doccomment">/// - [TRPL 1st edition: Brrrow and AsRef][2]</span>
+    <span class="doccomment">/// - [TRPL 1st edition: Borrow and AsRef][2]</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Complexity</span>
     <span class="doccomment">///</span>
@@ -510,14 +510,14 @@
     <span class="doccomment">/// Inserts key-value pair into the map. Replaces previous value if</span>
     <span class="doccomment">/// the same key exists at the same index.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the old value if the key presents. Otherwise returnes `None`.</span>
+    <span class="doccomment">/// Returns the old value if the key presents. Otherwise returns `None`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Steps are described as following:</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 1. Try to resize hashmap to ensure an appropriate load factor.</span>
     <span class="doccomment">/// 2. Compute hash of the key to get the inner bucket under certain index.</span>
     <span class="doccomment">/// 3. Find if there is already a pair with identical key.</span>
-    <span class="doccomment">///     1. If yes, substitue for it.</span>
+    <span class="doccomment">///     1. If yes, substitute for it.</span>
     <span class="doccomment">///     2. Else, push new value into the bucket.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Parameters</span>
@@ -633,7 +633,7 @@
         }
 
         <span class="kw">if</span> <span class="ident">entry_count</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">/</span> <span class="ident">capacity</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">&gt;</span> <span class="ident">LOAD_FACTOR</span> {
-            <span class="comment">// Resize. Rehas. Reallocate!</span>
+            <span class="comment">// Resize. Rehash. Reallocate!</span>
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_map</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">with_capacity</span>(<span class="ident">capacity</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>);
             <span class="self">self</span>.<span class="ident">buckets</span>.<span class="ident">iter_mut</span>()
                 .<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">bucket</span><span class="op">|</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="ident">bucket</span>, <span class="macro">vec</span><span class="macro">!</span>[]))

@@ -567,10 +567,10 @@ fn try_resize(&amp;mut self) {
     }
 
     if entry_count as f64 / capacity as f64 &gt; LOAD_FACTOR {     // 3
-        // Resize. Rehas. Reallocate!
+        // Resize. Rehash. Reallocate!
         let mut new_map = Self::with_capacity(capacity &lt;&lt; 1);   // 4
         self.buckets.iter_mut()                                 // 5
-            .flat_map(|bucket| mem::replace(bucket, vec![])) 
+            .flat_map(|bucket| mem::replace(bucket, vec![]))
             .for_each(|(k, v)| { new_map.insert(k, v); });
         *self = new_map;                                        // 6
     }
@@ -612,7 +612,7 @@ $v$：欲與鍵綁定的資料。<br />
 </li>
 </ul>
 <p>則預期執行時間為</p>
-<p>$$\Theta(1+\frac{n}{k}) = O(1)  \text{ if } \frac{n}{k} = O(1)$$</p>
+<p>$$\Theta(1+\frac{n}{k}) = O(1) \ \text{ if } \frac{n}{k} = O(1)$$</p>
 <p>而 <strong>1</strong> 為計算雜湊與取得索引（random access）的執行時間，$\frac{n}{k}$ 則是搜尋陣列的執行時間。只要 load factor 越接近 $n$，執行時間就相對增加。</p>
 <a class="header" href="#a空間複雜度" id="a空間複雜度"><h3>空間複雜度</h3></a>
 <p>雜湊表的空間複雜度取決於實作預先配置的陣列大小，並與維持 <em>load factor</em> 息息相關。一般來說，仍與資料筆數成線性關係，因此空間複雜度只有資料本身 $O(n)$。而以 separate chaining 會額外配置陣列或鏈結串列儲存碰撞元素，理論上需負擔更多額外的指標儲存空間。</p>
