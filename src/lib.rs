@@ -1,4 +1,6 @@
-//! Rust algorithm club.
+//! ![](https://rust-algo.club/logo.svg)
+//!
+//! # Welcome to Rust algorithm club!
 
 #![deny(missing_docs)]
 #![deny(dead_code)]
