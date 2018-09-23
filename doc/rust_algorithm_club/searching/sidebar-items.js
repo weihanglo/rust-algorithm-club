@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["binary_search","Handmade binary search for a sorted sequence."],["exponential_search","Exponential search."],["interpolation_search","Interpolation search."],["linear_search","Linear search."]]});
+initSidebarItems({"fn":[["binary_search","Handmade binary search for a sorted sequence."],["exponential_search","Exponential search. An binary search variant that can perform on unbounded sequences and infinite lists."],["interpolation_search","Interpolation search."],["linear_search","Linear search."]]});
