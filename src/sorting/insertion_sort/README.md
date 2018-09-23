@@ -1,4 +1,4 @@
-# 插入排序 Insertion sort
+# 插入排序 Insertion Sort
 
 Insertion sort 是最簡單的排序法之一，比起 quicksort 等高效的排序法，對大資料的處理效能較不理想。其演算法是將欲排序元素直接插入正確位置，因而得名。
 
@@ -72,7 +72,7 @@ pub fn insertion_sort(arr: &mut [i32]) {
 
 ## 變形
 
-### Binary insertion sort (binsort)
+### Binary Insertion Sort
 
 在一般演算法討論中，通常以簡單的型別如 `i32` 來探討並實作。在真實世界中，做哪種操作，用哪種語言，都會影響到實際效能。例如 Python 的比較操作相對於置換元素，成本高出不少，是因為每個物件在 Python 的比較需動態檢查是否實作 `__lt__` `__gt__` 等方法才能進行比較。所以 Python 排序法實作就要特別注意減少比較操作的次數。
 

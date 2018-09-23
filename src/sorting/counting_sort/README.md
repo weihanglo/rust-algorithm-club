@@ -119,7 +119,7 @@ Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的�
 
 ### Function Signature
 
-首先，我們先看函式簽名（function signature）。
+首先，我們先看函式如何宣告（function signature）。
 
 ```rust
 pub fn counting_sort<F, T>(arr: &mut [T], min: usize, max: usize, key: F) 

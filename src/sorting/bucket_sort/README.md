@@ -167,7 +167,7 @@ impl<H, T> Bucket<H, T> {
 
 ### Sorting
 
-接下來就是排序主函式。依照慣例，先看看函式簽名（Function signature）。
+接下來就是排序主函式。依照慣例，先看看函式的宣告（function signature）。
 
 ```rust
 pub fn bucket_sort<H, F, T>(arr: &mut [T], hasher: F)
