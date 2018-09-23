@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.svg" alt="logo">
+  <img src="src/logo.svg" alt="logo">
 <p>
 
 # Rust Algorithm Club
