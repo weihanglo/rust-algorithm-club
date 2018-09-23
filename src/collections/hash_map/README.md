@@ -490,10 +490,10 @@ fn try_resize(&mut self) {
     }
 
     if entry_count as f64 / capacity as f64 > LOAD_FACTOR {     // 3
-        // Resize. Rehas. Reallocate!
+        // Resize. Rehash. Reallocate!
         let mut new_map = Self::with_capacity(capacity << 1);   // 4
         self.buckets.iter_mut()                                 // 5
-            .flat_map(|bucket| mem::replace(bucket, vec![])) 
+            .flat_map(|bucket| mem::replace(bucket, vec![]))
             .for_each(|(k, v)| { new_map.insert(k, v); });
         *self = new_map;                                        // 6
     }
@@ -541,7 +541,7 @@ fn try_resize(&mut self) {
 
 則預期執行時間為 
 
-$$\Theta(1+\frac{n}{k}) = O(1)  \text{ if } \frac{n}{k} = O(1)$$
+$$\Theta(1+\frac{n}{k}) = O(1) \ \text{ if } \frac{n}{k} = O(1)$$
 
 而 **1** 為計算雜湊與取得索引（random access）的執行時間，$\frac{n}{k}$ 則是搜尋陣列的執行時間。只要 load factor 越接近 $n$，執行時間就相對增加。
 
