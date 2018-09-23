@@ -541,7 +541,7 @@ fn try_resize(&mut self) {
 
 則預期執行時間為 
 
-$$\Theta(1+\frac{n}{k}) = O(1)  \text{ if } \frac{n}{k} = O(1)$$
+$$\Theta(1+\frac{n}{k}) = O(1) \ \text{ if } \frac{n}{k} = O(1)$$
 
 而 **1** 為計算雜湊與取得索引（random access）的執行時間，$\frac{n}{k}$ 則是搜尋陣列的執行時間。只要 load factor 越接近 $n$，執行時間就相對增加。
 
