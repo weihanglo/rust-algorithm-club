@@ -1,4 +1,6 @@
-![](src/logo.svg)
+<p align="center">
+  <img src="logo.svg" alt="logo">
+<p>
 
 # Rust Algorithm Club
 
@@ -12,7 +14,6 @@ This project along with its source code are on [GitHub][source-code] and we are 
 [![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)][edition-guide]
 [![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)][ci-status]
 [![Documentation](https://img.shields.io/badge/doc-available-blue.svg)][generated-doc]
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
@@ -27,6 +28,8 @@ This project along with its source code are on [GitHub][source-code] and we are 
 - [Asymptotic Notation](src/concepts/asymptotic-notation)
 
 ## Algorithms
+
+### Searching
 
 - [Linear search](src/searching/linear_search)
 - [Binary search](src/searching/binary_search)
