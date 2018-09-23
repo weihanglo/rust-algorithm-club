@@ -41,7 +41,7 @@ _(單向鏈結串列示意圖）_
 
 又稱「節點」，為組成鏈結串列的基本元素，節點包含資料儲存區與指標儲存區，指標儲存區用以儲存指向其他節點位址的變數。此外，最後一個節點的不指向其他節點位址的指標成為 null pointer，慣例以 NULL 表示。
 
-![node-box](node-box.svg)
+![node-box](../singly_linked_list/node-box.svg)
 
 _（節點示意圖）_
 
