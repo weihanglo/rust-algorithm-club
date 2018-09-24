@@ -324,7 +324,7 @@ Sam    --&gt;|2: ptr  |--+   +---------------+
 <p>動態調整大小對雜湊表來說，不同於一般動態陣列，舊的雜湊表若要對應到新雜湊表，是每個鍵都需要重新計算雜湊值（rehash），成本相對較高。因此，減少動態調整的次數，可說是調教雜湊表的重點之一。說到調教雜湊表，必定要瞭解一個重要指標：<em>load factor</em>。</p>
 <p>$$\text{load factor} = \frac{n}{k}$$</p>
 <blockquote>
-<p>$n$：已放入雜湊表內的資料總數。
+<p>$n$：已放入雜湊表內的資料總數。<br />
 $k$：雜湊表配置的儲存空間（bucket 總數）。</p>
 </blockquote>
 <p>Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 $3/4 = 75%$。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 <a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html"><code>HashMap</code></a> 使用了 <a href="https://doc.rust-lang.org/stable/src/std/collections/hash/map.rs.html#82-103">Robin Hood Hashing</a>，將 load factor 調教到 90%。</p>
@@ -605,11 +605,7 @@ $v$：欲與鍵綁定的資料。<br />
 <ul>
 <li>$n$：已放入雜湊表內的資料總數。</li>
 <li>$k$：雜湊表配置的儲存空間（bucket 總數）。</li>
-<li>$\text{load factor} = \frac{n}{k}$
-<ul>
-<li>預期每個 bucket 儲存的資料筆數</li>
-</ul>
-</li>
+<li>$\text{load factor} = \frac{n}{k}$：預期每個 bucket 儲存的資料筆數。</li>
 </ul>
 <p>則預期執行時間為</p>
 <p>$$\Theta(1+\frac{n}{k}) = O(1) \ \text{ if } \frac{n}{k} = O(1)$$</p>
