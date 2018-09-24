@@ -30,7 +30,7 @@
     - [桶排序 Bucket sort](sorting/bucket_sort/README.md)
     - [基數排序 Radix sort](sorting/radix_sort/README.md)
 - [資料結構](collections/README.md)
-  - [🚧 堆疊與佇列](collections/stack-queue.md)
+  - [堆疊與佇列](collections/stack-queue.md)
     - [🚧 堆疊 Stack](collections/stack/README.md)
     - [🚧 佇列 Queue](collections/queue/README.md)
     - [🚧 雙端佇列 Deque](collections/deque/README.md)
@@ -47,5 +47,3 @@
 ------
 
 [貢獻指南](CONTRIBUTING.md)
-
-[授權條款](LICENSE)

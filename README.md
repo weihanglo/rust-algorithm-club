@@ -6,8 +6,8 @@
 
 > ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here](https://rust-algo.club) if you are able to read Chinese.
 
-Welcome to Rust Algorithm Club! This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
-You can find out more on [Rust Algorithm Club][main-site] main site. Just pick up some algorithms you are interested in and start learning. If you are brave enough, we recommend you the [auto-generated API documentation][generated-doc]. Go and fight with the source code.
+Welcome to the Rust Algorithm Club! This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
+You can find out more on the [Rust Algorithm Club][main-site] main site. Just pick up some algorithms you are interested in and start learning. If you are brave enough, we recommend you the [auto-generated API documentation][generated-doc]. Go and fight with the source code.
 
 This project along with its source code are on [GitHub][source-code] and we are looking forward to your contributions.
 
@@ -98,6 +98,10 @@ For learning more, you may check out following online resources:
 - [Big-O Cheat Sheet](http://bigocheatsheet.com/) - Comprehensive Big-O notation cheat sheet.
 - [Rosetta Code](http://rosettacode.org) - Hundred of solutions of tasks in almost every programming languages.
 - [Competitive Programmer's Handbook](https://cses.fi/book.html) - Make you more competitive. The book itself is also competitive.
+
+## Contributing
+
+All contributions are welcome, including typo fix! Please read the [contrubuting](CONTRIBUTING.md) guideline first before starting your work.
 
 ## Maintainers
 
