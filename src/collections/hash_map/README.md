@@ -223,7 +223,7 @@ _(利用 separate chaining 實作的雜湊表，並將串列第一個元素放�
 
 $$\text{load factor} = \frac{n}{k}$$
 
-> $n$：已放入雜湊表內的資料總數。
+> $n$：已放入雜湊表內的資料總數。  
 > $k$：雜湊表配置的儲存空間（bucket 總數）。
 
 Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 $3/4 = 75%$。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 [`HashMap`][rust-hashmap] 使用了 [Robin Hood Hashing][rust-hashmap-code]，將 load factor 調教到 90%。
@@ -536,8 +536,7 @@ fn try_resize(&mut self) {
 
 - $n$：已放入雜湊表內的資料總數。
 - $k$：雜湊表配置的儲存空間（bucket 總數）。
-- $\text{load factor} = \frac{n}{k}$
-  - 預期每個 bucket 儲存的資料筆數
+- $\text{load factor} = \frac{n}{k}$：預期每個 bucket 儲存的資料筆數。
 
 則預期執行時間為 
 
