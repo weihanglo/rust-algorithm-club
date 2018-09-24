@@ -545,6 +545,27 @@ let mid = start + (end - start) / 2   // Correct
 <li>若較小，指數加一 $k^{i + 1}$ 後繼續重複步驟二比較。</li>
 <li>若較大，停止比較，得搜尋範圍為 $k^{i - 1}$ 到 $k^i$。</li>
 </ol>
+<a class="header" href="#a說明-1" id="a說明-1"><h2>說明</h2></a>
+<p>這裡有個排好序的序列，我們要尋找其中是否有 22 這個數字。</p>
+<pre><code>    *
+[2, 3, 3, 6, 6, 7, 9, 13, 15, 19, 20, 22, 23, 24, 25]
+</code></pre>
+<p>首先，先尋找 $2^0 = 1$ 位置上的數字是否超過 22。<code>3 &lt; 22</code>，很明顯沒有。</p>
+<pre><code>       *     *            *
+[2, 3, 3, 6, 6, 7, 9, 13, 15, 19, 20, 22, 23, 24, 25]
+</code></pre>
+<p>再來，連續看看</p>
+<ul>
+<li>$2^1$：<code>3 &lt; 22</code></li>
+<li>$2^2$：<code>6 &lt; 22</code></li>
+<li>$2^3$：<code>15 &lt; 22</code></li>
+</ul>
+<p>也都沒有超越 22。</p>
+<pre><code>                                                           *
+[2, 3, 3, 6, 6, 7, 9, 13, 15, 19, 20, 22, 23, 24, 25]  _,  _
+</code></pre>
+<p>最後，一口氣將指數加到 4，看看$2^4$ 上的數字是否大於 22。哎呀，$2^4 = 16$，的位置已經超出序列長度，因此取至序列最後一個數字作為比較對象。<code>25 &gt; 22</code>，找到了！</p>
+<p>得到搜尋的範圍是 $$2^{4-1} &lt; x &lt; \text{array.length} &lt; 2^{4}$$</p>
 <a class="header" href="#a效能-2" id="a效能-2"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity  </th></tr></thead><tbody>
 <tr><td> Worst        </td><td> $O(\log i)$ </td></tr>
@@ -729,7 +750,7 @@ pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
 </blockquote>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif" alt="" /></p>
 <p><em>Joestape89 - CC BY-SA 3.0</em></p>
-<a class="header" href="#a說明-1" id="a說明-1"><h2>說明</h2></a>
+<a class="header" href="#a說明-2" id="a說明-2"><h2>說明</h2></a>
 <p>為什麼 naïve 的 selection sort 會是不穩定排序？</p>
 <p>假定有一個序列要遞增排序，其中有重複的 <code>2</code> 元素，我們將其標上 <code>2a</code>、<code>2b</code> 以利辨識。</p>
 <pre><code>[2a, 3, 4, 2b, 1]
@@ -806,7 +827,7 @@ pub fn selection_sort(arr: &amp;mut [i32]) {
 </ol>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="" />
 <em>Swfung8 - CC BY-SA 3.0</em></p>
-<a class="header" href="#a說明-2" id="a說明-2"><h2>說明</h2></a>
+<a class="header" href="#a說明-3" id="a說明-3"><h2>說明</h2></a>
 <p>給定一組序列 <code>[5, 3, 8, 7, 2]</code>，以 bubble sort 遞增排序。以 ASCII diagram 表示：</p>
 <p><strong>第一次迭代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
@@ -960,7 +981,7 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 </tbody></table>
 <p>感受一下 gap sequence 為 23, 10, 4, 1 的 shellsort 吧。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Sorting_shellsort_anim.gif" alt="" /></p>
-<a class="header" href="#a說明-3" id="a說明-3"><h2>說明</h2></a>
+<a class="header" href="#a說明-4" id="a說明-4"><h2>說明</h2></a>
 <p>Shellsort 其實就是進行好幾次不同 gap 的 insertion sort，以下用 ASCII diagram 解釋。</p>
 <p>假定這裡有一個序列需要遞增排序。</p>
 <pre><code>[5, 3, 8, 7, 4, 9, 6, 2]
@@ -1101,7 +1122,7 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 </ol>
 <p>透過 GIF 動畫感受一下 heapsort 的威力吧！</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif" alt="" /></p>
-<a class="header" href="#a說明-4" id="a說明-4"><h2>說明</h2></a>
+<a class="header" href="#a說明-5" id="a說明-5"><h2>說明</h2></a>
 <p>在開始之前，定義幾個 heap 常用名詞：</p>
 <ul>
 <li><strong>Heap ordering property</strong>：一個 heap 必須要滿足的條件。以 heap 種類不同有幾種變形。
@@ -1302,7 +1323,7 @@ fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
 <li><code>arr[j...high-1]</code> 包含所有尚未迭代的元素。</li>
 <li><code>arr[high]</code> pivot 本身。</li>
 </ul>
-<a class="header" href="#a說明-5" id="a說明-5"><h2>說明</h2></a>
+<a class="header" href="#a說明-6" id="a說明-6"><h2>說明</h2></a>
 <p>以 Lomuto partition scheme 為例，使用 ASCII diagram 解釋。</p>
 <p>給定一個序列，並選擇最後一個元素作為 pivot，<code>i</code> <code>j</code> 指標則在第一個元素位置。</p>
 <pre><code>                      * -&gt; pivot
@@ -1622,7 +1643,7 @@ fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
 <p>其中，Conquer 步驟中的「排序」可以不斷遞迴 Mergesort 自身，因此需要停止遞迴的條件（base case），我們將條件設定為「子序列的長度小於 2」，因為長度為 1 的序列可視為已完成排序。</p>
 <p>將 Mergesort 視覺化排序如下：</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Merge_sort_animation2.gif" alt="mergsort" /></p>
-<a class="header" href="#a說明-6" id="a說明-6"><h2>說明</h2></a>
+<a class="header" href="#a說明-7" id="a說明-7"><h2>說明</h2></a>
 <p>以 ASCII diagram 圖解 Mergesort。</p>
 <p>先將原始序列分割成數個長度為一的子序列。</p>
 <pre><code>Split array into length 1 subarray.
@@ -1864,7 +1885,7 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
 <li><strong>Prefix sum as start index</strong>：計算前綴和（Prefix sum），並作為該元素的 start index。</li>
 <li><strong>Copy output</strong>：利用步驟二的前綴和，遍歷輸入資料，取得元素排序後的索引。</li>
 </ol>
-<a class="header" href="#a說明-7" id="a說明-7"><h2>說明</h2></a>
+<a class="header" href="#a說明-8" id="a說明-8"><h2>說明</h2></a>
 <p>這裡有資料需要透過正整數的 key 來排序。key 的範圍在 0 - 9 之間，格式為 <code>(key, value)</code>。</p>
 <pre><code>Input: (1, A) (5, B) (8, C) (2, D) (2, E) (9, F)
 </code></pre>
@@ -2070,7 +2091,7 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
 <li><strong>Inner sort</strong>：排序所有非空的桶子。</li>
 <li><strong>Gather</strong>：依序走訪所有桶子，將桶內的元素放回原本的陣列中。</li>
 </ol>
-<a class="header" href="#a說明-8" id="a說明-8"><h2>說明</h2></a>
+<a class="header" href="#a說明-9" id="a說明-9"><h2>說明</h2></a>
 <p>以下用 ASCII diagram 視覺化解釋：</p>
 <p>這裡有一些整數，落在 1 至 100 之間。我們有 $n = 10 $ 的陣列要排序。</p>
 <pre><code>Original array
@@ -2281,7 +2302,7 @@ pub fn bucket_sort() {
 <blockquote>
 <p>由於 MSD Radix sort 先排序最大位數，會出現 <strong>8 &gt; 126</strong> 的結果，這種順序通常稱為 <a href="https://en.wikipedia.org/wiki/Lexicographical_order">Lexicographical order</a>，有如字典一般，越前面的字母排序權重越重，也因此，基本版的 MSD Radix sort 並非穩定排序法。</p>
 </blockquote>
-<a class="header" href="#a說明-9" id="a說明-9"><h2>說明</h2></a>
+<a class="header" href="#a說明-10" id="a說明-10"><h2>說明</h2></a>
 <p>我們選用 LSD Radix sort 示範，並且為了增加可讀性，將基數設為 10。需注意在現實場景中，有時使用 bytes 作為基數可能更適合。</p>
 <p>待排序的數列如下。</p>
 <pre><code>[170, 45, 75, 90, 802, 2, 24, 66]
