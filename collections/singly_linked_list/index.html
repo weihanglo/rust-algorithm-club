@@ -170,7 +170,7 @@ struct Node&lt;T&gt; {
 #}</code></pre></pre>
 <p><code>Node.elem</code> 很直觀地儲存實際資料。而 <code>Node.next</code> 則是指向下個 Node。但這樣編譯不會成功，Rust 編譯時需要決定每個型別該配置多少記憶體空間，這種遞迴型別使得編譯器無限循環，無法決定配置大小。</p>
 <p><img src="node-recursive.svg" alt="node-recursive" /></p>
-<p>很簡單，我們使用 <a href="https://doc.rust-lang.org/std/boxed/index.html"><code>Box&lt;T&gt;</code></a> 這個智慧指標，直接將 Node 配置在記憶體 heap 上。如此以來，編譯器就會知道 <code>next</code> 只佔了一個指標的空間。</p>
+<p>很簡單，我們使用 <a href="https://doc.rust-lang.org/std/boxed/index.html"><code>Box&lt;T&gt;</code></a> 這個<a href="https://doc.rust-lang.org/stable/book/2018-edition/ch15-00-smart-pointers.html">智慧指標</a>，直接將 Node 配置在記憶體 heap 上。如此以來，編譯器就會知道 <code>next</code> 只佔了一個指標的空間。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
