@@ -397,11 +397,24 @@ pub fn get(&self, key: &K) -> Option<&V> {
 }
 ```
 
-事實上，這個 `get` 不是非常方便使用，當我們透過 `HashMep::get` 搜尋特定鍵時，必須傳入一模一樣的型別，例如 `HashMap<&str, u8>` 就只能透過相同的 borrowed value `&str` 搜索，而不能透過 owned value `&String` 尋找，就算兩個型別可無痛轉換也無法。而 Rust 標準函式庫有做到這一點，因為其泛型參數 `K` 實作了 [Borrow][trait-borrow] trait，抽象化 owned 與 borrowed 間的型別，讓呼叫端無論傳 owned 或 borrowed 型別都可以有相同的行為。
+事實上，這個 `get` 不是非常方便使用，當我們透過 `HashMep::get` 搜尋特定鍵時，必須傳入一模一樣的型別，例如 `HashMap<&str, u8>` 就只能透過相同的 borrowed value `&str` 搜索，而不能透過 owned value `&String` 尋找，就算兩個型別可無痛轉換也無法。
 
-> 歡迎直接貢獻，將這段程式改為符合人因工程，方便使用的版本。
+因此我們可以參考 Rust 標準函式庫為泛型參數 `K` 實作 [Borrow][trait-borrow] trait，抽象化 owned 與 borrowed 間的型別，讓呼叫端無論傳 owned 或 borrowed 型別都可以有相同的行為。
 
-<!--  -->
+```rust
+pub fn get<Q>(&self, q: &Q) -> Option<&V>
+    where
+        K: Borrow<Q>,
+        Q: Hash + Eq + ?Sized
+{
+    let index = self.make_hash(q);
+    self.buckets.get(index).and_then(|bucket|
+        bucket.iter()
+            .find(|(k, _)| q == k.borrow())
+            .map(|(_, v)| v)
+    )
+}
+```
 
 > `fn get_mut()` 與 `fn get()` 的差異只在於呼叫了 `self.bucket.get_mut` 取得 mutable reference，這裡就不多做說明。
 
@@ -418,11 +431,15 @@ pub fn get(&self, key: &K) -> Option<&V> {
 先來看看刪除怎麼實作。
 
 ```rust
-pub fn remove(&mut self, key: &K) -> Option<V> {
-    let index = self.make_hash(key);                    // 1
+pub fn remove<Q>(&mut self, q: &Q) -> Option<V>
+    where
+        K: Borrow<Q>,
+        Q: Hash + Eq + ?Sized
+{
+    let index = self.make_hash(q);                      // 1
     self.buckets.get_mut(index).and_then(|bucket| {     // 2
         bucket.iter_mut()
-            .position(|(k, _)| *k == *key)
+            .position(|(k, _)| q == (*k).borrow())
             .map(|index| bucket.swap_remove(index).1)
     }).map(|v| {                                        // 3
         self.len -= 1; // Length decreases by one.
