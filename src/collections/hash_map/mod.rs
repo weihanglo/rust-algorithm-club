@@ -11,7 +11,7 @@ use std::mem;
 ///
 /// The interface is a simplified version of Rust `HashMap`.
 ///
-/// Reference:
+/// References:
 ///
 /// - [Rust Standard Library: std::collections::HashMap][1]
 /// - [C++ Container Library: std::unordered_map][2]

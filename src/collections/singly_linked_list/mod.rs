@@ -2,7 +2,7 @@
 ///
 /// This implementation is a simplified version of `forward_list` in C++.
 ///
-/// Reference:
+/// References:
 ///
 /// - [Rust Standard Library: std::collections::LinkedList][1]
 /// - [Learning Rust With Entirely Too Many Linked Lists][2]
