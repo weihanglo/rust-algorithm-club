@@ -315,6 +315,21 @@ mod separate_chaining {
 
         m.remove(&"rat");
         assert_eq!(m.len(), 0);
+
+
+        // Use String as key
+        let mut m = HashMap::new();
+        m.insert("cat".to_string(), "cute");
+        m.insert("dog".to_string(), "loyal");
+        m.insert("rat".to_string(), "lovely");
+
+        // Query with &String
+        m.remove(&"cat".to_string());
+        assert_eq!(m.len(), 2);
+
+        // Query with &str also work
+        m.remove("dog");
+        assert_eq!(m.len(), 1);
     }
 
     #[test]
@@ -327,6 +342,17 @@ mod separate_chaining {
         assert_eq!(m.get(&"cat"), Some(&"cute"));
         assert_eq!(m.get(&"dog"), Some(&"loyal"));
         assert_eq!(m.get(&"rat"), None);
+
+
+        // Use String as key (HashMap<String, &str>)
+        let mut m = HashMap::new();
+        m.insert("cat".to_string(), "cute");
+        m.insert("dog".to_string(), "loyal");
+
+        // Query with &String
+        assert_eq!(m.get(&"cat".to_string()), Some(&"cute"));
+        // Query with &str also work
+        assert_eq!(m.get("dog"), Some(&"loyal"));
     }
 
 
@@ -339,6 +365,17 @@ mod separate_chaining {
         assert_eq!(m.get_mut(&"cat"), Some(&mut "cute"));
         assert_eq!(m.get_mut(&"dog"), Some(&mut "loyal"));
         assert_eq!(m.get_mut(&"rat"), None);
+
+
+        // Use String as key
+        let mut m = HashMap::new();
+        m.insert("cat".to_string(), "cute");
+        m.insert("dog".to_string(), "loyal");
+
+        // Query with &String
+        assert_eq!(m.get_mut(&"cat".to_string()), Some(&mut "cute"));
+        // Query with &str also work
+        assert_eq!(m.get_mut("dog"), Some(&mut "loyal"));
     }
 
     #[test]
