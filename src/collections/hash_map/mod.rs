@@ -1,5 +1,6 @@
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
+use std::borrow::Borrow;
 use std::mem;
 
 /// A hash map implemented with separate chaining collision resolution strategy.
@@ -60,12 +61,12 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
 
     /// Gets a reference to the value under the specified key.
     ///
-    /// TODO: To treat owned and borrowed values in equivalent ways as other
-    /// collections in std do, we should use `Borrow` trait to abstract over
-    /// the type of key to hash. This concept can also applied for `get_mut`
-    /// `remove`, and other operations that constrain by the type system.
+    /// We use Q here to accept any type that K can be borrowed as. For example,
+    /// given a HashMap m using String as key, both m.get(&String) and m.get(&str)
+    /// would work because String can be borrow as &str. The same technique is
+    /// applied for `get_mut` and `remove`.
     ///
-    /// Some useful resources:
+    /// Learn more about Borrow trait:
     ///
     /// - [Trait std::borrow:Borrow][1]
     /// - [TRPL 1st edition: Borrow and AsRef][2]
@@ -76,11 +77,15 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     ///
     /// [1]: https://doc.rust-lang.org/stable/std/borrow/trait.Borrow.html
     /// [2]: https://doc.rust-lang.org/stable/book/first-edition/borrow-and-asref.html
-    pub fn get(&self, key: &K) -> Option<&V> {
+    pub fn get<Q>(&self, key: &Q) -> Option<&V>
+        where
+            K: Borrow<Q>,
+            Q: Hash + Eq + ?Sized
+    {
         let index = self.make_hash(key);
         self.buckets.get(index).and_then(|bucket|
             bucket.iter()
-                .find(|(k, _)| *k == *key)
+                .find(|(k, _)| key == k.borrow())
                 .map(|(_, v)| v)
         )
     }
@@ -90,11 +95,15 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     /// # Complexity
     ///
     /// Constant (amortized).
-    pub fn get_mut(&mut self, key: &K) -> Option<&mut V> {
+    pub fn get_mut<Q>(&mut self, key: &Q) -> Option<&mut V>
+        where
+            K: Borrow<Q>,
+            Q: Hash + Eq + ?Sized
+    {
         let index = self.make_hash(key);
         self.buckets.get_mut(index).and_then(|bucket|
             bucket.iter_mut()
-                .find(|(k, _)| *k == *key)
+                .find(|(k, _)| key == k.borrow())
                 .map(|(_, v)| v)
         )
     }
@@ -149,11 +158,15 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     /// # Complexity
     ///
     /// Constant. This operation won't shrink to fit automatically.
-    pub fn remove(&mut self, key: &K) -> Option<V> {
+    pub fn remove<Q>(&mut self, key: &Q) -> Option<V>
+        where
+            K: Borrow<Q>,
+            Q: Hash + Eq + ?Sized
+    {
         let index = self.make_hash(key);
         self.buckets.get_mut(index).and_then(|bucket| {
             bucket.iter_mut()
-                .position(|(k, _)| *k == *key)
+                .position(|(k, _)| key == (*k).borrow())
                 .map(|index| bucket.swap_remove(index).1) // Extract the pair.
         }).map(|v| {
             self.len -= 1; // Length decreases by one.
@@ -302,6 +315,21 @@ mod separate_chaining {
 
         m.remove(&"rat");
         assert_eq!(m.len(), 0);
+
+
+        // Use String as key
+        let mut m = HashMap::new();
+        m.insert("cat".to_string(), "cute");
+        m.insert("dog".to_string(), "loyal");
+        m.insert("rat".to_string(), "lovely");
+
+        // Query with &String
+        m.remove(&"cat".to_string());
+        assert_eq!(m.len(), 2);
+
+        // Query with &str also work
+        m.remove("dog");
+        assert_eq!(m.len(), 1);
     }
 
     #[test]
@@ -314,6 +342,17 @@ mod separate_chaining {
         assert_eq!(m.get(&"cat"), Some(&"cute"));
         assert_eq!(m.get(&"dog"), Some(&"loyal"));
         assert_eq!(m.get(&"rat"), None);
+
+
+        // Use String as key (HashMap<String, &str>)
+        let mut m = HashMap::new();
+        m.insert("cat".to_string(), "cute");
+        m.insert("dog".to_string(), "loyal");
+
+        // Query with &String
+        assert_eq!(m.get(&"cat".to_string()), Some(&"cute"));
+        // Query with &str also work
+        assert_eq!(m.get("dog"), Some(&"loyal"));
     }
 
 
@@ -326,6 +365,17 @@ mod separate_chaining {
         assert_eq!(m.get_mut(&"cat"), Some(&mut "cute"));
         assert_eq!(m.get_mut(&"dog"), Some(&mut "loyal"));
         assert_eq!(m.get_mut(&"rat"), None);
+
+
+        // Use String as key
+        let mut m = HashMap::new();
+        m.insert("cat".to_string(), "cute");
+        m.insert("dog".to_string(), "loyal");
+
+        // Query with &String
+        assert_eq!(m.get_mut(&"cat".to_string()), Some(&mut "cute"));
+        // Query with &str also work
+        assert_eq!(m.get_mut("dog"), Some(&mut "loyal"));
     }
 
     #[test]
