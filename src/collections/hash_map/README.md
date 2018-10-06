@@ -487,7 +487,7 @@ pub fn insert(&mut self, key: K, value: V) -> Option<V> {
 
 ### 動態調整儲存空間
 
-動態調整儲存空間大概是整個實作中最 tricky 的一部分。首先，我們需要知道
+動態調整儲存空間大概是整個實作中最詭譎的一部分。首先，我們需要知道
 
 - 容器內鍵值對的總數：透過 `self.len`，我們將取得 `self.len` 的邏輯包裝在 `fn len(&self)`，以免未來長度移動至別處儲存計算。
 - 容器內 bucket 的總數：計算 `self.bucket.len()`，同樣地，將之包裝在 `fn bucket_count(&self)`，並開放給外界呼叫。
@@ -521,11 +521,65 @@ fn try_resize(&mut self) {
 2. 若當前容量為 0，表示尚未新增任何元素，我們 push 一個空 bucket 進去，讓其他操作可以正常新增鍵值對。
 3. 判斷 load factor，決定需不需要動態調整大小。
 4. 透過 `HashMap::with_capacity` 建立容量兩倍大的空雜湊表。
-5. 開始迭代舊的 bucket，並利用 [`flat_map`][rust-iterator-flat-map] 打平 nested vector，在利用 [`for_each`][rust-iterator-for-each] 將每個元素重新 insert 到新雜湊表。
+5. 開始迭代舊的 bucket，並利用 [`flat_map`][rust-iterator-flat-map] 打平 nested vector，再利用 [`for_each`][rust-iterator-for-each] 將每個元素重新 insert 到新雜湊表。
 6. 把 `self` 的值指向新雜湊表，舊雜湊表的記憶體空間會被釋放。
 
 [rust-iterator-flat-map]: https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flat_map
 [rust-iterator-for-each]: https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.for_each
+
+### 實作迭代器方法
+
+一個集合型別當然少不了簡易的產生迭代器實作。
+
+根據之前其他方法的實作，要迭代整個雜湊表非常簡單，就是迭代所有 bucket，並利用 `flat_map` 打平 nested vector。簡單實作如下：
+
+```rust
+fn iter() -> std::slice::Iter<(&k, &v)> {
+    self.buckets.iter_mut()
+        .flat_map(|b| b)
+        .map(|(k, v)| (k, v))
+}
+```
+
+但最終會發現，我們的程式完全無法編譯，也無法理解這麼長的閉包（closure）究竟要如何寫泛型型別。得了吧 Rust，老子學不動了！
+
+```
+error[E0308]: mismatched types
+   --> src/collections/hash_map/mod.rs:253:9
+    |
+253 | /         self.buckets.iter()
+254 | |             .flat_map(|b| b)
+255 | |             .map(|(k, v)| (k, v))
+    | |_________________________________^ expected struct `std::slice::Iter`, found struct `std::iter::Map`
+    |
+    = note: expected type `std::slice::Iter<'_, (&K, &V)>`
+               found type `std::iter::Map<std::iter::FlatMap<std::slice::Iter<'_, std::vec::Vec<(K, V)>>, &std::vec::Vec<(K, V)>, [closure@src/collections/hash_map/mod.rs:254:23: 254:28]>, [closure@src/collections/hash_map/mod.rs:255:18: 255:33]>`
+```
+
+幸好，在 Rust 1.26 釋出時，大家期待已久的 **impl trait** 穩定了。如同字面上的意思，impl trait 可以用在函式參數與回傳型別的宣告中。代表這個型別有 impl 對應的 trait，所以不必再寫出落落長的 Iterator 泛型型別。impl trait 有另一個特點是以靜態分派（static dispatch）來調用函式，相較於 trait object 的[動態分派（dynamic dispatch）][wiki-dynamic-dispatch]，impl trait 毫無效能損失。
+
+實作如下：
+
+```rust
+pub fn iter(&self) -> impl Iterator<Item = (&K, &V)> {
+    self.buckets.iter()
+        .flat_map(|b| b)
+        .map(|(k, v)| (k, v))
+}
+```
+
+更多 impl trait 相關資訊可以參考：
+
+- [Rust RFC: impl trait][rfc-impl-trait]
+- [Rust 1.26: impl trait][rust-1.26-impl-trait]
+- [Rust Reference: Trait objects][rust-reference-trait-object]
+- [The Rust Programming Language 2nd Edition: Trait objects][trpl-trait-object]
+
+[rfc-impl-trait]: https://github.com/rust-lang/rfcs/blob/master/text/1522-conservative-impl-trait.md
+[rust-1.26-impl-trait]: https://blog.rust-lang.org/2018/05/10/Rust-1.26.html#impl-trait
+[rust-reference-trait-object]: https://doc.rust-lang.org/reference/types.html#trait-objects
+[trpl-trait-object]: https://doc.rust-lang.org/book/second-edition/ch17-02-trait-objects.html
+[wiki-dynamic-dispatch]: https://en.wikipedia.org/wiki/Dynamic_dispatch
 
 ## 效能
 
