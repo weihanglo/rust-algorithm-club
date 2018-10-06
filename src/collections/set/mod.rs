@@ -1,13 +1,15 @@
 use super::hash_map::HashMap;
+use std::clone::Clone;
 use std::hash::Hash;
 use std::borrow::Borrow;
 
-/// A hash set implementation with HashSet
-pub struct HashSet<T> where T: Hash + Eq {
+/// A hash set implementation with HashMap
+#[derive(Clone)]
+pub struct HashSet<T> where T: Hash + Eq + Clone {
     hash_map: HashMap<T, ()>,
 }
 
-impl<T> HashSet<T> where T: Hash + Eq {
+impl<T> HashSet<T> where T: Hash + Eq + Clone {
     ///
     pub fn new() -> HashSet<T> {
         HashSet { hash_map: HashMap::new() }
@@ -53,6 +55,17 @@ impl<T> HashSet<T> where T: Hash + Eq {
             Some(_) => true,
             None => false
         }
+    }
+
+    ///
+    pub fn union(&self, other: &HashSet<T>) -> HashSet<T> {
+        let mut union: HashSet<T> = other.clone();
+
+        self.hash_map.iter().for_each(|(k, _)| {
+            union.insert(k.clone());
+        });
+
+        union
     }
 }
 
@@ -115,5 +128,39 @@ mod hash_set {
         assert!(!s2.contains("cat"), "Successfully removed value with String");
         assert!(s2.remove("dog"), "Can remove with &str");
         assert!(!s2.contains("dog"), "Successfully removed value with &str");
+    }
+
+    #[test]
+    fn union() {
+        let mut s1: HashSet<&str> = HashSet::new();
+        s1.insert("cat");
+        s1.insert("dog");
+
+        let mut s2: HashSet<&str> = HashSet::new();
+        s2.insert("rat");
+
+        let union = s1.union(&s2);
+        assert!(union.contains("cat"));
+        assert!(union.contains("dog"));
+        assert!(union.contains("rat"));
+
+        // Also works with HashSet<String>
+        let mut s1: HashSet<String> = HashSet::new();
+        s1.insert("cat".to_string());
+        s1.insert("dog".to_string());
+
+        let mut s2: HashSet<String> = HashSet::new();
+        s2.insert("rat".to_string());
+
+        let union = s1.union(&s2);
+        assert!(union.contains("cat"));
+        assert!(union.contains("dog"));
+        assert!(union.contains("rat"));
+
+        // TODO: Overload the '&' operator!
+        // let union = s1 & s2;
+        // assert!(union.contains("cat"));
+        // assert!(union.contains("dog"));
+        // assert!(union.contains("rat"));
     }
 }
