@@ -246,8 +246,30 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
             *self = new_map;
         }
     }
-}
 
+    /// Creates an iterator that yields immutable reference of each element
+    /// in arbitrary order.
+    pub fn iter(&self) -> impl Iterator<Item = (&K, &V)> {
+        self.buckets.iter()
+            .flat_map(|b| b)
+            .map(|(k, v)| (k, v))
+    }
+
+    /// Creates an iterator that yields mutable reference of each element
+    /// in arbitrary order.
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = (&K, &mut V)> {
+        self.buckets.iter_mut()
+            .flat_map(|b| b)
+            .map(|(k, v)| (&*k, v))
+    }
+
+    /// Creates a consuming iterator yielding elements in arbitrary order.
+    /// That is, one that moves each value out of the list. The list cannot be
+    /// used after calling this.
+    pub fn into_iter(self) -> impl Iterator<Item = (K, V)> {
+        self.buckets.into_iter().flat_map(|b| b)
+    }
+}
 
 impl<K, V> Default for HashMap<K, V>
     where K: Hash + Eq
@@ -366,6 +388,10 @@ mod separate_chaining {
         assert_eq!(m.get_mut(&"dog"), Some(&mut "loyal"));
         assert_eq!(m.get_mut(&"rat"), None);
 
+        // Mutate the value
+        m.get_mut(&"cat").map(|v| *v = "lazy");
+        assert_eq!(m.get_mut(&"cat"), Some(&mut "lazy"));
+
 
         // Use String as key
         let mut m = HashMap::new();
@@ -415,6 +441,42 @@ mod separate_chaining {
         assert_eq!(m.len(), 0);
         assert_eq!(m.bucket_count(), 2); // Preserve previous allocation.
     }
+
+    #[test]
+    fn iter() {
+        let mut m = Map::new();
+        m.insert("cat", "cute");
+        m.insert("dog", "loyal");
+        let mut it = m.iter();
+        it.next();
+        it.next();
+        assert_eq!(it.next(), None)
+    }
+
+    #[test]
+    fn iter_mut() {
+        let mut m = Map::new();
+        m.insert("cat", "cute");
+        m.insert("dog", "loyal");
+        m.iter_mut().for_each(|(_, v)| *v = "lazy");
+        assert_eq!(m.get("cat"), Some(&"lazy"));
+        assert_eq!(m.get("dog"), Some(&"lazy"));
+    }
+
+    #[test]
+    fn into_iter() {
+        let mut m = Map::new();
+        m.insert("cat", "cute");
+        m.insert("dog", "loyal");
+        m.insert("rat", "lovely");
+        let vec = m.into_iter().collect::<Vec<_>>();
+
+        assert_eq!(vec.len(), 3);
+        assert!(vec.contains(&("cat", "cute")));
+        assert!(vec.contains(&("dog", "loyal")));
+        assert!(vec.contains(&("rat", "lovely")));
+    }
+
 }
 
 #[cfg(test)]

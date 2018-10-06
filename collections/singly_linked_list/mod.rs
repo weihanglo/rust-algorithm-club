@@ -203,12 +203,12 @@ impl<T> SinglyLinkedList<T> {
         self.head = prev.take();
     }
 
-    /// Creates a iterator that yields immutable refernce of each element.
+    /// Creates an iterator that yields immutable reference of each element.
     pub fn iter(&self) -> Iter<T> {
         Iter { next: self.head.as_ref().map(|node| &**node) }
     }
 
-    /// Creates a iterator that yields mutable refernce of each element.
+    /// Creates an iterator that yields mutable reference of each element.
     pub fn iter_mut(&mut self) -> IterMut<T> {
         IterMut { next: self.head.as_mut().map(|node| &mut **node) }
     }

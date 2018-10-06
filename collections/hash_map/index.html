@@ -563,7 +563,7 @@ pub fn insert(&amp;mut self, key: K, value: V) -&gt; Option&lt;V&gt; {
 <li>決定是否該將長度記錄加一。若插入操作實際上是更新（update）原有鍵值對的資料，則會回傳被更新的舊資料 <code>Some((K, V))</code>；若是實際新增元素（push），我們回傳一個 <code>None</code>，<code>or_else</code> 就可以根據 <code>None</code> 判斷需要將長度加一。</li>
 </ol>
 <a class="header" href="#a動態調整儲存空間" id="a動態調整儲存空間"><h3>動態調整儲存空間</h3></a>
-<p>動態調整儲存空間大概是整個實作中最 tricky 的一部分。首先，我們需要知道</p>
+<p>動態調整儲存空間大概是整個實作中最詭譎的一部分。首先，我們需要知道</p>
 <ul>
 <li>容器內鍵值對的總數：透過 <code>self.len</code>，我們將取得 <code>self.len</code> 的邏輯包裝在 <code>fn len(&amp;self)</code>，以免未來長度移動至別處儲存計算。</li>
 <li>容器內 bucket 的總數：計算 <code>self.bucket.len()</code>，同樣地，將之包裝在 <code>fn bucket_count(&amp;self)</code>，並開放給外界呼叫。</li>
@@ -598,9 +598,51 @@ fn try_resize(&amp;mut self) {
 <li>若當前容量為 0，表示尚未新增任何元素，我們 push 一個空 bucket 進去，讓其他操作可以正常新增鍵值對。</li>
 <li>判斷 load factor，決定需不需要動態調整大小。</li>
 <li>透過 <code>HashMap::with_capacity</code> 建立容量兩倍大的空雜湊表。</li>
-<li>開始迭代舊的 bucket，並利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flat_map"><code>flat_map</code></a> 打平 nested vector，在利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.for_each"><code>for_each</code></a> 將每個元素重新 insert 到新雜湊表。</li>
+<li>開始迭代舊的 bucket，並利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flat_map"><code>flat_map</code></a> 打平 nested vector，再利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.for_each"><code>for_each</code></a> 將每個元素重新 insert 到新雜湊表。</li>
 <li>把 <code>self</code> 的值指向新雜湊表，舊雜湊表的記憶體空間會被釋放。</li>
 </ol>
+<a class="header" href="#a實作迭代器方法" id="a實作迭代器方法"><h3>實作迭代器方法</h3></a>
+<p>一個集合型別當然少不了簡易的產生迭代器實作。</p>
+<p>根據之前其他方法的實作，要迭代整個雜湊表非常簡單，就是迭代所有 bucket，並利用 <code>flat_map</code> 打平 nested vector。簡單實作如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn iter() -&gt; std::slice::Iter&lt;(&amp;k, &amp;v)&gt; {
+    self.buckets.iter_mut()
+        .flat_map(|b| b)
+        .map(|(k, v)| (k, v))
+}
+#}</code></pre></pre>
+<p>但最終會發現，我們的程式完全無法編譯，也無法理解這麼長的閉包（closure）究竟要如何寫泛型型別。得了吧 Rust，老子學不動了！</p>
+<pre><code>error[E0308]: mismatched types
+   --&gt; src/collections/hash_map/mod.rs:253:9
+    |
+253 | /         self.buckets.iter()
+254 | |             .flat_map(|b| b)
+255 | |             .map(|(k, v)| (k, v))
+    | |_________________________________^ expected struct `std::slice::Iter`, found struct `std::iter::Map`
+    |
+    = note: expected type `std::slice::Iter&lt;'_, (&amp;K, &amp;V)&gt;`
+               found type `std::iter::Map&lt;std::iter::FlatMap&lt;std::slice::Iter&lt;'_, std::vec::Vec&lt;(K, V)&gt;&gt;, &amp;std::vec::Vec&lt;(K, V)&gt;, [closure@src/collections/hash_map/mod.rs:254:23: 254:28]&gt;, [closure@src/collections/hash_map/mod.rs:255:18: 255:33]&gt;`
+</code></pre>
+<p>幸好，在 Rust 1.26 釋出時，大家期待已久的 <strong>impl trait</strong> 穩定了。如同字面上的意思，impl trait 可以用在函式參數與回傳型別的宣告中。代表這個型別有 impl 對應的 trait，所以不必再寫出落落長的 Iterator 泛型型別。impl trait 有另一個特點是以靜態分派（static dispatch）來調用函式，相較於 trait object 的<a href="https://en.wikipedia.org/wiki/Dynamic_dispatch">動態分派（dynamic dispatch）</a>，impl trait 毫無效能損失。</p>
+<p>實作如下：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn iter(&amp;self) -&gt; impl Iterator&lt;Item = (&amp;K, &amp;V)&gt; {
+    self.buckets.iter()
+        .flat_map(|b| b)
+        .map(|(k, v)| (k, v))
+}
+#}</code></pre></pre>
+<p>更多 impl trait 相關資訊可以參考：</p>
+<ul>
+<li><a href="https://github.com/rust-lang/rfcs/blob/master/text/1522-conservative-impl-trait.md">Rust RFC: impl trait</a></li>
+<li><a href="https://blog.rust-lang.org/2018/05/10/Rust-1.26.html#impl-trait">Rust 1.26: impl trait</a></li>
+<li><a href="https://doc.rust-lang.org/reference/types.html#trait-objects">Rust Reference: Trait objects</a></li>
+<li><a href="https://doc.rust-lang.org/book/second-edition/ch17-02-trait-objects.html">The Rust Programming Language 2nd Edition: Trait objects</a></li>
+</ul>
 <a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
 <p>以陣列實作的雜湊表各操作複雜度如下</p>
 <table><thead><tr><th> Operation    </th><th> Best case    </th><th> Worst case </th></tr></thead><tbody>

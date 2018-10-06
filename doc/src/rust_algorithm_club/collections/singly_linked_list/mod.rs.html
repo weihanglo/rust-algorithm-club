@@ -673,12 +673,12 @@
         <span class="self">self</span>.<span class="ident">head</span> <span class="op">=</span> <span class="ident">prev</span>.<span class="ident">take</span>();
     }
 
-    <span class="doccomment">/// Creates a iterator that yields immutable refernce of each element.</span>
+    <span class="doccomment">/// Creates an iterator that yields immutable reference of each element.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Iter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Iter</span> { <span class="ident">next</span>: <span class="self">self</span>.<span class="ident">head</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">node</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">node</span>) }
     }
 
-    <span class="doccomment">/// Creates a iterator that yields mutable refernce of each element.</span>
+    <span class="doccomment">/// Creates an iterator that yields mutable reference of each element.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">IterMut</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">IterMut</span> { <span class="ident">next</span>: <span class="self">self</span>.<span class="ident">head</span>.<span class="ident">as_mut</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">node</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">node</span>) }
     }
