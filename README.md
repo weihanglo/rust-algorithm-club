@@ -54,7 +54,7 @@ Efficient sorts:
 Hybrid sorts (more efficient):
 
 - 🚧 [Introsort](src/sorting/introsort)
-- 🚧 [Timsort](src/sorting/timsort)
+- [Timsort](src/sorting/timsort)
 - 🚧 [Pdqsort](src/sorting/pdqsort)
 
 Special-purpose sorts:

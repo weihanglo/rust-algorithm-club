@@ -51,7 +51,7 @@
 混合排序（更高效）：
 
 - 🚧 [內省排序 Introsort](sorting/introsort)
-- 🚧 [自適應的合併排序 Timsort](sorting/timsort)
+- [自適應合併排序 Timsort](sorting/timsort)
 - 🚧 [模式消除快速排序 Pdqsort](sorting/pdqsort)
 
 特殊排序：
