@@ -152,7 +152,7 @@ Quicksort 僅有「**選擇 Pivot**」與「**分割序列**」兩步驟，不�
 
 最差的分割序列狀況發生在挑選的 pivot 總是最大或最小值（或在 Lomuto partition 下，所有元素值都一樣）。由於 Lomuto 總是選擇最後一個元素作為 pivot，這種情形好發於已排序或接近排序完成的資料上。
 
-而當每次的 partition 都是最不平衡的分割序列，就會產生最差時間複雜度的狀況。遞迴在序列長度等於 1 時停止，因此整個排序法的 call stack 需要 $n - 1 $ 的嵌套遞迴調用（nested call）；而第 $i $ 次分割會執行 $n - i $ 次基本操作（ $O(n) $），所以總共需執行
+而當每次的 partition 都是最不平衡的分割序列，就會產生最差時間複雜度的狀況。遞迴在序列長度等於 1 時停止，因此整個排序法的 call stack 需要 $n - 1 $ 的嵌套遞迴呼叫（nested call）；而第 $i $ 次分割會執行 $n - i $ 次基本操作（ $O(n) $），所以總共需執行
 
 $$\sum_{i = 0}^n (n - i) = n^2 - \frac{n(n + 1)}{2}$$
 
@@ -168,7 +168,7 @@ $$O(n \cdot 2 \log_2{n}) = O(n \log n)$$
 
 Quicksort 的空間複雜度取決於實作細節，由於**分割序列**步驟需 $O(1) $ 的空間複雜度，因此僅需分析遞迴式會在 call stack 產生多少 stack frame 即可。
 
-[前面提及](#最差情況)，最 naïve 的 Lomuto partition 最糟糕的情形下，會產生 $n - 1 $ 個嵌套遞迴，也就是需額外使用 $O(n) $ 的空間儲存 call stack frame，但只要 compiler 有支援 [尾端調用][tail-call]最佳化（tail-call optimization，TCO），Quicksort 很容易最佳化至 $O(\log n) $。
+[前面提及](#最差情況)，最 naïve 的 Lomuto partition 最糟糕的情形下，會產生 $n - 1 $ 個嵌套遞迴，也就是需額外使用 $O(n) $ 的空間儲存 call stack frame，但只要 compiler 有支援 [尾端呼叫][tail-call]最佳化（tail-call optimization，TCO），Quicksort 很容易最佳化至 $O(\log n) $。
 
 [tail-call]: https://en.wikipedia.org/wiki/Tail_call
 
@@ -178,7 +178,7 @@ Quicksort 實作主要分為兩部分：遞迴，以及分割序列（partition�
 
 ### Recursion
 
-遞迴函式本身實作非常簡單，分別將小於 pivot 與大於 pivot 兩部分遞迴調用自身即可。
+遞迴函式本身實作非常簡單，分別將小於 pivot 與大於 pivot 兩部分遞迴呼叫自身即可。
 
 ```rust
 /// Recursion helper
@@ -254,9 +254,9 @@ Quicksort 有數個方向可以探討最佳化：
 ### 降低額外空間複雜度
 
 前述提到最佳情形下（每次 pivot 都選到中位數），僅需 $\log n $ 個嵌套遞迴，額外空間複雜度僅需 $O(\log n) $。
-倘若編譯器有實作 **尾端調用最佳化**，Quicksort 可以達到 $O(\log n) $ 對數級別的額外空間使用。
+倘若編譯器有實作 **尾端呼叫最佳化**，Quicksort 可以達到 $O(\log n) $ 對數級別的額外空間使用。
 
-實作尾端調用最佳化的思路很簡單，「**先遞迴較少元素的部分，再利用 tall-call 遞迴另一部分**」，如此以來，較多元素的遞迴則會直接被編譯器展開，消去遞迴時需要的 call stack 空間。剩下較少元素的部分，則與最佳情形相同，最多僅需 $\log n $ 次嵌套遞迴。
+實作尾端呼叫最佳化的思路很簡單，「**先遞迴較少元素的部分，再利用 tall-call 遞迴另一部分**」，如此以來，較多元素的遞迴則會直接被編譯器展開，消去遞迴時需要的 call stack 空間。剩下較少元素的部分，則與最佳情形相同，最多僅需 $\log n $ 次嵌套遞迴。
 
 簡單實作如下：
 
@@ -276,8 +276,8 @@ fn quicksort_helper_optimized(arr: &mut [i32], lo: isize, hi: isize) {
 ```
 
 1. 說穿了就只有這個判斷式，決定哪部分該先遞迴而已。
-2. 這是一個尾端調用，會展開。
-3. 這也是一個尾端調用。
+2. 這是一個尾端呼叫，會展開。
+3. 這也是一個尾端呼叫。
 
 實際上，截至 2018.2，Rust Core Team 決定暫緩 TCO 的實作，目前 Rust 並沒有支援 TCO。但我們還是可以手動實作 TCO，減少 call stack。
 
@@ -296,7 +296,7 @@ fn quicksort_helper_optimized(arr: &mut [i32], lo: isize, hi: isize) {
   }
 ```
 
-再來，選擇性遞迴較小的部分。Iterative 版本的尾端調用消除（tail-call eliminate）就做完了！
+再來，選擇性遞迴較小的部分。Iterative 版本的尾端呼叫消除（tail-call eliminate）就做完了！
 
 ```rust
 fn quicksort_helper_manual_tco(arr: &mut [i32], mut lo: isize, mut hi: isize) {

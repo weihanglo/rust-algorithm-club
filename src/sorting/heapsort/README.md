@@ -130,7 +130,7 @@ Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n) $，同�
 
 **Heapify** 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 **sift down**，在[實作](#實作)一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。
 
-Heapify 從最末個元素開始反向迭代，每個元素都調用 `sift_down` 調整 heap 符合 heap ordering。總共要做 $n $ 次 `sift_down` 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為
+Heapify 從最末個元素開始反向迭代，每個元素都呼叫 `sift_down` 調整 heap 符合 heap ordering。總共要做 $n $ 次 `sift_down` 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為
 
 $$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$
 
@@ -148,7 +148,7 @@ $$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$
 
 ## 實作
 
-Heapsort 的實作相對簡單，只需要不斷調用 heap 內部的 `sift_down` 方法就可以完成排序。整個演算法架構如下：
+Heapsort 的實作相對簡單，只需要不斷呼叫 heap 內部的 `sift_down` 方法就可以完成排序。整個演算法架構如下：
 
 ```rust
 pub fn heapsort(arr: &mut [i32]) {

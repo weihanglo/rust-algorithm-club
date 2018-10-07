@@ -556,7 +556,7 @@ error[E0308]: mismatched types
                found type `std::iter::Map<std::iter::FlatMap<std::slice::Iter<'_, std::vec::Vec<(K, V)>>, &std::vec::Vec<(K, V)>, [closure@src/collections/hash_map/mod.rs:254:23: 254:28]>, [closure@src/collections/hash_map/mod.rs:255:18: 255:33]>`
 ```
 
-幸好，在 Rust 1.26 釋出時，大家期待已久的 **impl trait** 穩定了。如同字面上的意思，impl trait 可以用在函式參數與回傳型別的宣告中。代表這個型別有 impl 對應的 trait，所以不必再寫出落落長的 Iterator 泛型型別。impl trait 有另一個特點是以靜態分派（static dispatch）來調用函式，相較於 trait object 的[動態分派（dynamic dispatch）][wiki-dynamic-dispatch]，impl trait 毫無效能損失。
+幸好，在 Rust 1.26 釋出時，大家期待已久的 **impl trait** 穩定了。如同字面上的意思，impl trait 可以用在函式參數與回傳型別的宣告中。代表這個型別有 impl 對應的 trait，所以不必再寫出落落長的 Iterator 泛型型別。impl trait 有另一個特點是以靜態分派（static dispatch）來呼叫函式，相較於 trait object 的[動態分派（dynamic dispatch）][wiki-dynamic-dispatch]，impl trait 毫無效能損失。
 
 實作如下：
 
