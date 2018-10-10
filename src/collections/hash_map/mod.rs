@@ -18,7 +18,6 @@ use std::mem;
 ///
 /// [1]: https://doc.rust-lang.org/stable/std/collections/struct.HashMap.html
 /// [2]: https://en.cppreference.com/w/cpp/container/unordered_map
-#[derive(Clone)]
 pub struct HashMap<K, V> where K: Hash + Eq {
     buckets: Vec<Bucket<K, V>>,
     len: usize,
