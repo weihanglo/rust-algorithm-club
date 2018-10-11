@@ -54,6 +54,20 @@ impl<T> HashSet<T> where T: Hash + Eq {
             None => false
         }
     }
+    /// Creates an iterator that yields immutable reference of each element
+    /// in arbitrary order.
+    pub fn iter(&self) -> impl Iterator<Item = &T> {
+        self.hash_map.iter()
+            .map(|(k, _)| k)
+    }
+
+    /// T=&str, &T=&&str
+    pub fn union<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> + 'a {
+        let other_without_dup = other.iter().filter(|&item| !self.contains(&item));
+        self.iter()
+            .chain(other_without_dup)
+        //     // .map(|&item| -> item)
+    }
 }
 
 #[cfg(test)]
@@ -115,5 +129,39 @@ mod hash_set {
         assert!(!s2.contains("cat"), "Successfully removed value with String");
         assert!(s2.remove("dog"), "Can remove with &str");
         assert!(!s2.contains("dog"), "Successfully removed value with &str");
+    }
+
+    #[test]
+    fn union() {
+        let mut s1: HashSet<&str> = HashSet::new();
+        s1.insert("cat");
+        s1.insert("dog");
+
+        let mut s2: HashSet<&str> = HashSet::new();
+        s2.insert("rat");
+
+        let union: HashSet<&str> = s1.union(&s2).collect();
+        assert!(union.contains("cat"));
+        assert!(union.contains("dog"));
+        assert!(union.contains("rat"));
+
+        // // Also works with HashSet<String>
+        // let mut s1: HashSet<String> = HashSet::new();
+        // s1.insert("cat".to_string());
+        // s1.insert("dog".to_string());
+
+        // let mut s2: HashSet<String> = HashSet::new();
+        // s2.insert("rat".to_string());
+
+        // let union = s1.union(&s2).collect();
+        // assert!(union.contains("cat"));
+        // assert!(union.contains("dog"));
+        // assert!(union.contains("rat"));
+
+        // TODO: Overload the '&' operator!
+        // let union = s1 & s2;
+        // assert!(union.contains("cat"));
+        // assert!(union.contains("dog"));
+        // assert!(union.contains("rat"));
     }
 }
