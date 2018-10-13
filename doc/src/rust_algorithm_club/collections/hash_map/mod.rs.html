@@ -817,7 +817,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">Map</span>::<span class="ident">new</span>();
 
         <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">insert</span>(<span class="string">&quot;cat&quot;</span>, <span class="string">&quot;cute&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ret</span>, <span class="prelude-val">None</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">ret</span>.<span class="ident">is_none</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">m</span>.<span class="ident">len</span>(), <span class="number">1</span>);
 
         <span class="ident">m</span>.<span class="ident">insert</span>(<span class="string">&quot;dog&quot;</span>, <span class="string">&quot;loyal&quot;</span>);
@@ -906,7 +906,7 @@
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">m</span>.<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="string">&quot;cat&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="string">&quot;cute&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">m</span>.<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="string">&quot;dog&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="string">&quot;loyal&quot;</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">m</span>.<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="string">&quot;rat&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">m</span>.<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="string">&quot;rat&quot;</span>).<span class="ident">is_none</span>());
 
         <span class="comment">// Mutate the value</span>
         <span class="ident">m</span>.<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="string">&quot;cat&quot;</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="string">&quot;lazy&quot;</span>);
@@ -968,9 +968,9 @@
         <span class="ident">m</span>.<span class="ident">insert</span>(<span class="string">&quot;cat&quot;</span>, <span class="string">&quot;cute&quot;</span>);
         <span class="ident">m</span>.<span class="ident">insert</span>(<span class="string">&quot;dog&quot;</span>, <span class="string">&quot;loyal&quot;</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">it</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">iter</span>();
-        <span class="ident">it</span>.<span class="ident">next</span>();
-        <span class="ident">it</span>.<span class="ident">next</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">it</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>)
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">is_some</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">is_some</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">is_none</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

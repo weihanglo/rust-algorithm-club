@@ -625,7 +625,7 @@ fn iter() -&gt; std::slice::Iter&lt;(&amp;k, &amp;v)&gt; {
     = note: expected type `std::slice::Iter&lt;'_, (&amp;K, &amp;V)&gt;`
                found type `std::iter::Map&lt;std::iter::FlatMap&lt;std::slice::Iter&lt;'_, std::vec::Vec&lt;(K, V)&gt;&gt;, &amp;std::vec::Vec&lt;(K, V)&gt;, [closure@src/collections/hash_map/mod.rs:254:23: 254:28]&gt;, [closure@src/collections/hash_map/mod.rs:255:18: 255:33]&gt;`
 </code></pre>
-<p>幸好，在 Rust 1.26 釋出時，大家期待已久的 <strong>impl trait</strong> 穩定了。如同字面上的意思，impl trait 可以用在函式參數與回傳型別的宣告中。代表這個型別有 impl 對應的 trait，所以不必再寫出落落長的 Iterator 泛型型別。impl trait 有另一個特點是以靜態分派（static dispatch）來調用函式，相較於 trait object 的<a href="https://en.wikipedia.org/wiki/Dynamic_dispatch">動態分派（dynamic dispatch）</a>，impl trait 毫無效能損失。</p>
+<p>幸好，在 Rust 1.26 釋出時，大家期待已久的 <strong>impl trait</strong> 穩定了。如同字面上的意思，impl trait 可以用在函式參數與回傳型別的宣告中。代表這個型別有 impl 對應的 trait，所以不必再寫出落落長的 Iterator 泛型型別。impl trait 有另一個特點是以靜態分派（static dispatch）來呼叫函式，相較於 trait object 的<a href="https://en.wikipedia.org/wiki/Dynamic_dispatch">動態分派（dynamic dispatch）</a>，impl trait 毫無效能損失。</p>
 <p>實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]

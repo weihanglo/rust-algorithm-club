@@ -248,7 +248,7 @@
 <a class="header" href="#build-heap-heapify" id="build-heap-heapify"><h3>Build heap (heapify)</h3></a>
 <p>建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。</p>
 <p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。</p>
-<p>Heapify 從最末個元素開始反向迭代，每個元素都調用 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
+<p>Heapify 從最末個元素開始反向迭代，每個元素都呼叫 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
 <p>$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$</p>
 <blockquote>
 <p>實際上，build heap 步驟的複雜度可達到 $O(n) $，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
@@ -258,7 +258,7 @@
 <a class="header" href="#sum-up" id="sum-up"><h3>Sum up</h3></a>
 <p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 $O(n \log n) $。</p>
 <a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
-<p>Heapsort 的實作相對簡單，只需要不斷調用 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
+<p>Heapsort 的實作相對簡單，只需要不斷呼叫 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
