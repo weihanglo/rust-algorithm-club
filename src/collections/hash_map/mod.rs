@@ -297,7 +297,7 @@ mod separate_chaining {
         let mut m = Map::new();
 
         let ret = m.insert("cat", "cute");
-        assert_eq!(ret, None);
+        assert!(ret.is_none());
         assert_eq!(m.len(), 1);
 
         m.insert("dog", "loyal");
@@ -386,7 +386,7 @@ mod separate_chaining {
 
         assert_eq!(m.get_mut(&"cat"), Some(&mut "cute"));
         assert_eq!(m.get_mut(&"dog"), Some(&mut "loyal"));
-        assert_eq!(m.get_mut(&"rat"), None);
+        assert!(m.get_mut(&"rat").is_none());
 
         // Mutate the value
         m.get_mut(&"cat").map(|v| *v = "lazy");
@@ -448,9 +448,9 @@ mod separate_chaining {
         m.insert("cat", "cute");
         m.insert("dog", "loyal");
         let mut it = m.iter();
-        it.next();
-        it.next();
-        assert_eq!(it.next(), None)
+        assert!(it.next().is_some());
+        assert!(it.next().is_some());
+        assert!(it.next().is_none());
     }
 
     #[test]
