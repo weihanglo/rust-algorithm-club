@@ -33,7 +33,7 @@ This project along with its source code are on [GitHub][source-code] and we are 
 
 - [Linear search](src/searching/linear_search)
 - [Binary search](src/searching/binary_search)
-- [🚧 Interpolation search](src/searching/interpolation_search)
+- [Interpolation search](src/searching/interpolation_search)
 - [Exponential search](src/searching/exponential_search)
 
 ### Sorting
