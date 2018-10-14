@@ -1,6 +1,6 @@
 # 指數搜尋 Exponential Search
 
-指數搜尋，又稱為 galloping search，是一種特殊的[二元搜尋](../binary_search)，主要用在搜尋無限、無邊界的已排序序列。由於邊界未知長度就未知，無法以傳統二元搜尋來找中點。而 Exponential 顧名思義就是從底數為 2，指數為 0 的索引（$2^0$ ）開始，不斷比較在 $2^1$、$2^2$ 直到 $2^k$ 位置上的值，若比目標值大，則停止指數成長，直接從該位置執行二元搜尋，回頭尋找目標值。
+指數搜尋，又稱為 galloping search，是一種特殊的[二元搜尋][binary-search]，主要用在搜尋無限、無邊界的已排序序列。由於邊界未知長度就未知，無法以傳統二元搜尋來找中點。而 Exponential 顧名思義就是從底數為 2，指數為 0 的索引（$2^0$ ）開始，不斷比較在 $2^1$、$2^2$ 直到 $2^k$ 位置上的值，若比目標值大，則停止指數成長，直接從該位置執行二元搜尋，回頭尋找目標值。
 
 指數搜尋的特點如下：
 
@@ -125,6 +125,11 @@ pub fn exponential_search<T>(arr: &[T], target: &T) -> Result<usize, usize>
 3. 確定範圍後，利用上下界切序列的 sub slice 作為引數，傳遞給二元搜尋。要注意的是，為了避免 sub slice 超出邊界，上界需在 `size` 與 `hi + 1` 之間找最小值。  
     由於回傳結果的位置是以 sub slice 起始，需加上位移量（下界 `lo`）才會對應原始 slice 的位置。
 
+> 由於內部使用[二元搜尋][binary-search]，若該二元搜尋沒有處理重複元素的狀況，指數搜尋連帶無法預期這個行為。
+
 ## 參考資料
 
 [Wiki: Exponential search](https://en.wikipedia.org/wiki/Exponential_search)
+
+
+[binary-search]: ../binary_search
