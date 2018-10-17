@@ -228,8 +228,6 @@ pub fn interpolation_search(
 }
 ```
 
-注意，這次實作的內插搜尋只有支援需提及的是，
-
 > 如同[二元搜尋][binary-search]與[指數搜尋
 ](../exponential_search)，未特別處理重複元素的內插搜尋，並無法預期會選擇哪一個元素。
 
