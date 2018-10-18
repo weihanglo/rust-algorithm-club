@@ -63,7 +63,7 @@ impl<T> HashSet<T> where T: Hash + Eq {
 
     /// T=&str, &T=&&str
     pub fn union<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> + 'a {
-        let other_without_dup = other.iter().filter(|&item| !self.contains(&item));
+        let other_without_dup = other.iter().filter(|item| !self.contains(item));
         self.iter()
             .chain(other_without_dup)
         //     // .map(|&item| -> item)
