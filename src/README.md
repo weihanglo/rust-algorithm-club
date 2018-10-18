@@ -30,7 +30,7 @@
 
 - [線性搜尋 Linear search](searching/linear_search)
 - [二元搜尋 Binary search](searching/binary_search)
-- [🚧 內插搜尋 Interpolation search](searching/interpolation_search)
+- [內插搜尋 Interpolation search](searching/interpolation_search)
 - [指數搜尋 Exponential search](searching/exponential_search)
 
 ### 排序
