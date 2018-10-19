@@ -626,6 +626,6 @@ $$\Theta(1+\frac{n}{k}) = O(1) \ \text{ if } \frac{n}{k} = O(1)$$
 - [Wiki: Open addressing](https://en.wikipedia.org/wiki/Open_addressing)
 - [Algorithms, 4th Edition by R. Sedgewick and K. Wayne: 3.4 Hash Tables](https://algs4.cs.princeton.edu/34hash/)
 - [MIT 6.006: Introduction to Algorithms, fall 2011: Unit 3 Hashing](https://courses.csail.mit.edu/6.006/fall11/notes.shtml)
-- Map graph by Jorge Stolfi [CC-BY-SA-3.0](http://creativecommons.org/licenses/by-sa/3.0/) via Wikimedia Commons.
+- Map graph by Jorge Stolfi [CC BY-SA-3.0](http://creativecommons.org/licenses/by-sa/3.0/) via Wikimedia Commons.
 
 [rust-hashmap]: https://doc.rust-lang.org/stable/std/collections/hash_map/index.html

@@ -221,6 +221,6 @@ fn sift_down(arr: &mut [i32], start: usize, end: usize) {
 - [Wiki: Heap][wiki-heap]
 - [Wiki: Heapsort](https://en.wikipedia.org/wiki/Heapsort)
 - [CMSC 351 Algorithms, Fall, 2011, University of Maryland.](www.cs.umd.edu/~meesh/)
-- Sorting GIF by RolandH [CC-BY-SA-3.0](http://creativecommons.org/licenses/by-sa/3.0/) via Wikimedia Commons.
+- Sorting GIF by RolandH [CC BY-SA-3.0](http://creativecommons.org/licenses/by-sa/3.0/) via Wikimedia Commons.
 
 [wiki-heap]: https://en.wikipedia.org/wiki/Heap_(data_structure)

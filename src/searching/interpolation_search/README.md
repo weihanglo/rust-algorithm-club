@@ -249,8 +249,8 @@ Interpolation search tree（IST），姑且稱它「內插搜尋樹」，是一�
 - [Wiki: Interpolation search](https://en.wikipedia.org/wiki/Interpolation_search)
 - [Perl, Y., Itai, A., & Avni, H. (1978). Interpolation search—a log log N search. Communications of the ACM, 21(7), 550-553.][perl-interp-paper]
 - [Andersson, A. (1996, October). Faster deterministic sorting and searching in linear space. In Foundations of Computer Science, 1996. Proceedings., 37th Annual Symposium on (pp. 135-141). IEEE.][andersson-paper]
-- Linear interpolation visualisation SVG By Cmglee [CC-BY-SA 3.0], via Wikimedia Commons.
-- Probability density function of uniform distribution SVG By IkamusumeFan [CC BY-SA 3.0], via Wikimedia Commons.
+- Linear interpolation visualisation SVG By Cmglee [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0), via Wikimedia Commons.
+- Probability density function of uniform distribution SVG By IkamusumeFan [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0), via Wikimedia Commons.
 
 [andersson-paper]: https://people.mpi-inf.mpg.de/~mehlhorn/ftp/DynamicInterpolationSearch.pdf
 [perl-interp-paper]: http://www.cs.technion.ac.il/~itai/publications/Algorithms/p550-perl.pdf
