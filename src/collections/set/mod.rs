@@ -62,12 +62,12 @@ impl<T> HashSet<T> where T: Hash + Eq {
             .map(|(k, _)| k)
     }
 
-    /// T=&str, &T=&&str
+    /// Returns an iterator visiting all items present in `self` and `other`
+    /// 
+    /// The union of set `self` and set `other` is composed by chaining `self.iter()` with items
+    /// that are only present in `other` (i.e. `other.difference(self)`)
     pub fn union<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> + 'a {
-        let other_without_dup = other.iter().filter(|item| !self.contains(item));
-        self.iter()
-            .chain(other_without_dup)
-        //     // .map(|&item| -> item)
+        self.iter().chain(other.difference(self))
     }
 
     /// Returns an iterator visiting items present in `self` but not in `other`
@@ -186,9 +186,9 @@ mod hash_set {
         s2.insert("rat");
 
         let union: HashSet<_> = s1.union(&s2).collect();
-        assert!(union.contains("cat"));
-        assert!(union.contains("dog"));
-        assert!(union.contains("rat"));
+        assert_eq!(union.contains(&"cat"), true, "union of s1 and s2 contains cat (from s1)");
+        assert_eq!(union.contains(&"dog"), true, "union of s1 and s2 contains dog (from s1)");
+        assert_eq!(union.contains(&"rat"), true, "union of s1 and s2 contains rat (from s2)");
 
         // // Also works with HashSet<String>
         // let mut s1: HashSet<String> = HashSet::new();
