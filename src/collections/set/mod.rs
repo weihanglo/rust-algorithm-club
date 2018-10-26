@@ -116,13 +116,13 @@ impl<'a, T, I> Iterator for Difference<'a, T, I>
     }
 }
 
-impl<T> BitAnd for HashSet<T>
+impl<'a, 'b, T,> BitAnd<&'b HashSet<T>> for &'a HashSet<T>
     where
         T: Hash + Eq + Clone,
 {
     type Output = HashSet<T>;
 
-    fn bitand(self, rhs: Self) -> HashSet<T> {
+    fn bitand(self, rhs: &'b HashSet<T>) -> HashSet<T> {
         self.union(&rhs).cloned().collect()
     }
 }
@@ -213,12 +213,14 @@ mod hash_set {
         let mut s2: HashSet<&str> = HashSet::new();
         s2.insert("rat");
 
-        // TODO: Overload the '&' operator!
-        let union = s1 & s2;
+        let union = &s1 & &s2;
         assert!(union.contains("cat"), "union of s1 and s2 contains cat (from s1)");
         assert!(union.contains("dog"), "union of s1 and s2 contains dog (from s1)");
         assert!(union.contains("rat"), "union of s1 and s2 contains rat (from s2)");
         assert_eq!(union.len(), 3, "length of union is 3");
+
+        assert_eq!(s1.len(), 2, "s1 is still available");
+        assert_eq!(s2.len(), 1, "s2 is still available");
     }
 
 
