@@ -3,6 +3,7 @@ use std::hash::Hash;
 use std::borrow::Borrow;
 use std::iter::FromIterator;
 use std::ops::BitAnd;
+use std::ops::Sub;
 
 /// A hash set implementation with HashSet
 pub struct HashSet<T> where T: Hash + Eq {
@@ -127,6 +128,17 @@ impl<'a, 'b, T,> BitAnd<&'b HashSet<T>> for &'a HashSet<T>
     }
 }
 
+impl<'a, 'b, T,> Sub<&'b HashSet<T>> for &'a HashSet<T>
+    where
+        T: Hash + Eq + Clone,
+{
+    type Output = HashSet<T>;
+
+    fn sub(self, rhs: &'b HashSet<T>) -> HashSet<T> {
+        self.difference(&rhs).cloned().collect()
+    }
+}
+
 #[cfg(test)]
 mod hash_set {
     use super::HashSet;
@@ -235,6 +247,24 @@ mod hash_set {
         s2.insert("rat");
 
         let difference: HashSet<_> = s1.difference(&s2).collect();
+        assert_eq!(difference.contains(&"dog"), true, "dog is in s1 but not in s2, therefore included in difference");
+        assert_eq!(difference.contains(&"cat"), false, "cat is in both s1 and s2, therefore not included in difference");
+        assert_eq!(difference.contains(&"rat"), false, "rat is from s2, therefore not included in difference");
+        assert_eq!(difference.len(), 1, "length of difference is 1");
+    }
+
+
+    #[test]
+    fn sub() {
+        let mut s1 = HashSet::new();
+        s1.insert("cat");
+        s1.insert("dog");
+
+        let mut s2 = HashSet::new();
+        s2.insert("cat");
+        s2.insert("rat");
+
+        let difference = &s1 - &s2;
         assert_eq!(difference.contains(&"dog"), true, "dog is in s1 but not in s2, therefore included in difference");
         assert_eq!(difference.contains(&"cat"), false, "cat is in both s1 and s2, therefore not included in difference");
         assert_eq!(difference.contains(&"rat"), false, "rat is from s2, therefore not included in difference");
