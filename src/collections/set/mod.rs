@@ -2,6 +2,7 @@ use super::hash_map::HashMap;
 use std::hash::Hash;
 use std::borrow::Borrow;
 use std::iter::FromIterator;
+use std::ops::BitAnd;
 
 /// A hash set implementation with HashSet
 pub struct HashSet<T> where T: Hash + Eq {
@@ -63,7 +64,7 @@ impl<T> HashSet<T> where T: Hash + Eq {
     }
 
     /// Returns an iterator visiting all items present in `self` and `other`
-    /// 
+    ///
     /// The union of set `self` and set `other` is composed by chaining `self.iter()` with items
     /// that are only present in `other` (i.e. `other.difference(self)`)
     pub fn union<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> + 'a {
@@ -71,8 +72,8 @@ impl<T> HashSet<T> where T: Hash + Eq {
     }
 
     /// Returns an iterator visiting items present in `self` but not in `other`
-    /// 
-    /// 
+    ///
+    ///
     pub fn difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
         Difference { iter: self.iter(), other }
     }
@@ -112,6 +113,17 @@ impl<'a, T, I> Iterator for Difference<'a, T, I>
                 return Some(item);
             }
         }
+    }
+}
+
+impl<T> BitAnd for HashSet<T>
+    where
+        T: Hash + Eq + Clone,
+{
+    type Output = HashSet<T>;
+
+    fn bitand(self, rhs: Self) -> HashSet<T> {
+        self.union(&rhs).cloned().collect()
     }
 }
 
@@ -189,28 +201,27 @@ mod hash_set {
         assert_eq!(union.contains(&"cat"), true, "union of s1 and s2 contains cat (from s1)");
         assert_eq!(union.contains(&"dog"), true, "union of s1 and s2 contains dog (from s1)");
         assert_eq!(union.contains(&"rat"), true, "union of s1 and s2 contains rat (from s2)");
+        assert_eq!(union.len(), 3, "length of union is 3");
+    }
 
-        // // Also works with HashSet<String>
-        // let mut s1: HashSet<String> = HashSet::new();
-        // s1.insert("cat".to_string());
-        // s1.insert("dog".to_string());
+    #[test]
+    fn bitand() {
+        let mut s1: HashSet<&str> = HashSet::new();
+        s1.insert("cat");
+        s1.insert("dog");
 
-        // let mut s2: HashSet<String> = HashSet::new();
-        // s2.insert("rat".to_string());
-
-        // let union = s1.union(&s2).collect();
-        // assert!(union.contains("cat"));
-        // assert!(union.contains("dog"));
-        // assert!(union.contains("rat"));
+        let mut s2: HashSet<&str> = HashSet::new();
+        s2.insert("rat");
 
         // TODO: Overload the '&' operator!
-        // let union = s1 & s2;
-        // assert!(union.contains("cat"));
-        // assert!(union.contains("dog"));
-        // assert!(union.contains("rat"));
+        let union = s1 & s2;
+        assert!(union.contains("cat"), "union of s1 and s2 contains cat (from s1)");
+        assert!(union.contains("dog"), "union of s1 and s2 contains dog (from s1)");
+        assert!(union.contains("rat"), "union of s1 and s2 contains rat (from s2)");
+        assert_eq!(union.len(), 3, "length of union is 3");
     }
-    
-    
+
+
     #[test]
     fn difference() {
         let mut s1 = HashSet::new();
@@ -225,5 +236,6 @@ mod hash_set {
         assert_eq!(difference.contains(&"dog"), true, "dog is in s1 but not in s2, therefore included in difference");
         assert_eq!(difference.contains(&"cat"), false, "cat is in both s1 and s2, therefore not included in difference");
         assert_eq!(difference.contains(&"rat"), false, "rat is from s2, therefore not included in difference");
+        assert_eq!(difference.len(), 1, "length of difference is 1");
     }
 }
