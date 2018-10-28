@@ -745,8 +745,8 @@ pub fn interpolation_search(
 <li><a href="https://en.wikipedia.org/wiki/Interpolation_search">Wiki: Interpolation search</a></li>
 <li><a href="http://www.cs.technion.ac.il/%7Eitai/publications/Algorithms/p550-perl.pdf">Perl, Y., Itai, A., &amp; Avni, H. (1978). Interpolation search—a log log N search. Communications of the ACM, 21(7), 550-553.</a></li>
 <li><a href="https://people.mpi-inf.mpg.de/%7Emehlhorn/ftp/DynamicInterpolationSearch.pdf">Andersson, A. (1996, October). Faster deterministic sorting and searching in linear space. In Foundations of Computer Science, 1996. Proceedings., 37th Annual Symposium on (pp. 135-141). IEEE.</a></li>
-<li>Linear interpolation visualisation SVG By Cmglee [CC-BY-SA 3.0], via Wikimedia Commons.</li>
-<li>Probability density function of uniform distribution SVG By IkamusumeFan [CC BY-SA 3.0], via Wikimedia Commons.</li>
+<li>Linear interpolation visualisation SVG By Cmglee <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons.</li>
+<li>Probability density function of uniform distribution SVG By IkamusumeFan <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons.</li>
 </ul>
 <a class="header" href="#a指數搜尋-exponential-search" id="a指數搜尋-exponential-search"><h1>指數搜尋 Exponential Search</h1></a>
 <p>指數搜尋，又稱為 galloping search，是一種特殊的<a href="../binary_search">二元搜尋</a>，主要用在搜尋無限、無邊界的已排序序列。由於邊界未知長度就未知，無法以傳統二元搜尋來找中點。而 Exponential 顧名思義就是從底數為 2，指數為 0 的索引（$2^0$ ）開始，不斷比較在 $2^1$、$2^2$ 直到 $2^k$ 位置上的值，若比目標值大，則停止指數成長，直接從該位置執行二元搜尋，回頭尋找目標值。</p>
@@ -1036,7 +1036,7 @@ pub fn selection_sort(arr: &amp;mut [i32]) {
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Selection_sort">Wiki: Selection sort</a></li>
 <li><a href="https://stackoverflow.com/questions/20761396/">Why Selection sort can be stable or unstable</a></li>
-<li>Sorting GIF by Joestape89 <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> via Wikimedia Commons.</li>
+<li>Sorting GIF by Joestape89 <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
 <a class="header" href="#a氣泡排序-bubble-sort" id="a氣泡排序-bubble-sort"><h1>氣泡排序 Bubble sort</h1></a>
 <p>Bubble sort 是最簡單的排序法之一，由於排序時每個元素會如同泡泡般，一個一個浮出序列頂部，因而得名。由於其簡單好理解，名稱又有趣，常作為第一個學習的入門排序法。不過其效率不彰，甚至不如同為 quardratic time 的 insertion sort。Bubble sort 的原理很平凡，就是相鄰兩兩元素互相比較，如果大小順序錯了，就置換位置。再往下一個 pair 比較。</p>
@@ -1510,7 +1510,7 @@ fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
 <li><a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">Wiki: Heap</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Heapsort">Wiki: Heapsort</a></li>
 <li><a href="www.cs..html">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
-<li>Sorting GIF by RolandH <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> via Wikimedia Commons.</li>
+<li>Sorting GIF by RolandH <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
 <a class="header" href="#a快速排序-quicksort" id="a快速排序-quicksort"><h1>快速排序 Quicksort</h1></a>
 <p>Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 $O(n \log n) $ 的平均時間複雜度。雖然最差時間複雜度與 <a href="../bubble_sort">bubble sort</a> 同為 $O(n^2) $，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 $O(\log n) $ 的額外儲存空間，比它的競爭對手 <a href="../mergesort">mergesort</a> 來得節省。非常適合運用在真實世界中的排序法。</p>
@@ -3222,7 +3222,7 @@ $i$：相對於整個容器的索引位置。</p>
 <li><a href="https://en.wikipedia.org/wiki/Associative_containers">Wiki: Associative containers</a></li>
 <li><a href="https://en.cppreference.com/w/cpp/container/map">cpprefernce.com: std::map</a></li>
 <li><a href="https://doc.rust-lang.org/stable/std/collections/">Rust documentation: std::colledtion</a></li>
-<li>Map graph by Jorge Stolfi <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> via Wikimedia Commons.</li>
+<li>Map graph by Jorge Stolfi <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
 <a class="header" href="#a雜湊表-hash-map-1" id="a雜湊表-hash-map-1"><h1>雜湊表 Hash Map</h1></a>
 <p>雜湊表是以雜湊函數實作的關聯容器。透過雜湊函數，計算鍵（key）對應到容器內部的索引位置，進而找到對應的值（value）。一般來說，雜湊表最常見的實作是以一個簡單陣列儲存資料。</p>
@@ -3757,7 +3757,7 @@ $v$：欲與鍵綁定的資料。<br />
 <li><a href="https://en.wikipedia.org/wiki/Open_addressing">Wiki: Open addressing</a></li>
 <li><a href="https://algs4.cs.princeton.edu/34hash/">Algorithms, 4th Edition by R. Sedgewick and K. Wayne: 3.4 Hash Tables</a></li>
 <li><a href="https://courses.csail.mit.edu/6.006/fall11/notes.shtml">MIT 6.006: Introduction to Algorithms, fall 2011: Unit 3 Hashing</a></li>
-<li>Map graph by Jorge Stolfi <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> via Wikimedia Commons.</li>
+<li>Map graph by Jorge Stolfi <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
 <a class="header" href="#a有序映射表-ordered-map-1" id="a有序映射表-ordered-map-1"><h1>有序映射表 Ordered Map</h1></a>
 <p>有特定排序方式的映射表。</p>
