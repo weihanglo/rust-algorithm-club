@@ -169,7 +169,7 @@ fn counting_sort() {
 
 1. 建立一個長度為上下界之差的 count array。注意，這裡使用了 `Vec.resize`，因為 Rust initialize 空的 `Vec` 時並不會插入 0 或其他預設值。
 2. 遍歷整個輸入資料，利用 `key` function 取出每筆資料的鍵值，出現一次就 +1。
-3. 利用 Iterator 上的 `scan` method 計算每個鍵值的 prefix sum。需要注意的是，每個元素對應的 prefix sum 不包含自身，例如 key 3 的計算結果就是 1 與 2 的出現總次數，如此一來，prefix sum 才會直接對應到排序後的位置。
+3. 利用 Iterator 上的 `scan` method 計算每個鍵值的 prefix sum。需要注意的是，每個元素對應的 prefix sum 不包含自身，例如 key 3 的計算結果就是 key 1 與 key 2 的出現總次數，如此一來，prefix sum 才會直接對應到排序後的位置。
 
 ### Prefix Sums as Start Index
 
