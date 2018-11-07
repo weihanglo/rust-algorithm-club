@@ -105,7 +105,7 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 
 ### Time Complexity
 
-Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 $n $ 個輸入的資料，因此複雜度為 $O(n) $；步驟二計算 prefix sum，，以及 count array 自身的初始化則需執行 $k + 1 $ 次（給定的資料範圍），這部分的複雜度為 $O(k) $。由於 $n $ 與 $k $ 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 $O(n + k) $。
+Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 $n $ 個輸入的資料，因此複雜度為 $O(n) $；步驟二計算 prefix sum，以及 count array 自身的初始化則需執行 $k + 1 $ 次（給定的資料範圍），這部分的複雜度為 $O(k) $。由於 $n $ 與 $k $ 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 $O(n + k) $。
 
 ### Space complexity
 
@@ -131,7 +131,7 @@ pub fn counting_sort<F, T>(arr: &mut [T], min: usize, max: usize, key: F)
 
 - `arr`：待排序陣列。
 - `min`、`max`：整數排序的上下界。
-- `key`：由於資料不一定是整數，需要一個 function 從資料擷取鍵值做排
+- `key`：由於資料不一定是整數，需要一個 function 從資料擷取鍵值做排序。
 
 另外，也使用兩個泛型型別：
 
