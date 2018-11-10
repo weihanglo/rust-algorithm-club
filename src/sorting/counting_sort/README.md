@@ -105,7 +105,7 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 
 ### Time Complexity
 
-Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 $n $ 個輸入的資料，因此複雜度為 $O(n) $；步驟二計算 prefix sum，，以及 count array 自身的初始化則需執行 $k + 1 $ 次（給定的資料範圍），這部分的複雜度為 $O(k) $。由於 $n $ 與 $k $ 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 $O(n + k) $。
+Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 $n $ 個輸入的資料，因此複雜度為 $O(n) $；步驟二計算 prefix sum，以及 count array 自身的初始化則需執行 $k + 1 $ 次（給定的資料範圍），這部分的複雜度為 $O(k) $。由於 $n $ 與 $k $ 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 $O(n + k) $。
 
 ### Space complexity
 
@@ -131,7 +131,7 @@ pub fn counting_sort<F, T>(arr: &mut [T], min: usize, max: usize, key: F)
 
 - `arr`：待排序陣列。
 - `min`、`max`：整數排序的上下界。
-- `key`：由於資料不一定是整數，需要一個 function 從資料擷取鍵值做排
+- `key`：由於資料不一定是整數，需要一個 function 從資料擷取鍵值做排序。
 
 另外，也使用兩個泛型型別：
 
@@ -169,7 +169,7 @@ fn counting_sort() {
 
 1. 建立一個長度為上下界之差的 count array。注意，這裡使用了 `Vec.resize`，因為 Rust initialize 空的 `Vec` 時並不會插入 0 或其他預設值。
 2. 遍歷整個輸入資料，利用 `key` function 取出每筆資料的鍵值，出現一次就 +1。
-3. 利用 Iterator 上的 `scan` method 計算每個鍵值的 prefix sum。需要注意的是，每個元素對應的 prefix sum 不包含自身，例如 key 3 的計算結果就是 1 與 2 的出現總次數，如此一來，prefix sum 才會直接對應到排序後的位置。
+3. 利用 Iterator 上的 `scan` method 計算每個鍵值的 prefix sum。需要注意的是，每個元素對應的 prefix sum 不包含自身，例如 key 3 的計算結果就是 key 1 與 key 2 的出現總次數，如此一來，prefix sum 才會直接對應到排序後的位置。
 
 ### Prefix Sums as Start Index
 
