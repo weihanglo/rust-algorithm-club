@@ -2999,6 +2999,16 @@ impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
 <blockquote>
 <p>詳細思路過程可查看 Learning Rust With Entirely Too Many Linked Lists 的 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/first-drop.html">Drop</a> 章節，該章完整闡述為什麼不能用 tail recursive 來實作，但最大的原因是 Rust core team 暫時延緩實踐 <a href="https://github.com/rust-lang/rfcs/pull/1888">tail call optimization</a>。</p>
 </blockquote>
+<p>但實際上，透過呼叫 <code>pop_front()</code>，不斷移除第一個節點，並透過 <code>is_some()</code> 檢查是否仍有節點，完全可以達到同樣的 drop 效果，而且更簡潔易懂。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
+    fn drop(&amp;mut self) {
+        while self.pop_front().is_some() {}
+    }
+}
+#}</code></pre></pre>
 <a class="header" href="#iterator-and-intoiterator-traits" id="iterator-and-intoiterator-traits"><h3>Iterator and IntoIterator traits</h3></a>
 <p>既然鏈結串列是一種序列（sequence，有序的資料結構），少不了實作 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html">Iterator</a>、<a href="https://doc.rust-lang.org/std/iter/trait.IntoIterator.html">IntoIterator</a> 等 trait，使串列可以輕鬆使用 for-in loop 遍歷（traverse）。</p>
 <p>首先，先定義幾個迭代器的 struct。</p>

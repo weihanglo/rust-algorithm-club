@@ -216,10 +216,7 @@ impl<T> SinglyLinkedList<T> {
 
 impl<T> Drop for SinglyLinkedList<T> {
     fn drop(&mut self) {
-        let mut link = self.head.take();
-        while let Some(mut node) = link {
-            link = node.next.take(); // Take ownership of next `link` here.
-        } // Previous `node` goes out of scope and gets dropped here.
+        while self.pop_front().is_some() {}
     }
 }
 

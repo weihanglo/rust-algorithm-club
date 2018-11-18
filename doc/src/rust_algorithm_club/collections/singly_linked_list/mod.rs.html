@@ -464,9 +464,6 @@
 <span id="464">464</span>
 <span id="465">465</span>
 <span id="466">466</span>
-<span id="467">467</span>
-<span id="468">468</span>
-<span id="469">469</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">/// A singly-linked list with owned nodes.</span>
 <span class="doccomment">///</span>
@@ -686,10 +683,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">SinglyLinkedList</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">link</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">head</span>.<span class="ident">take</span>();
-        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">node</span>) <span class="op">=</span> <span class="ident">link</span> {
-            <span class="ident">link</span> <span class="op">=</span> <span class="ident">node</span>.<span class="ident">next</span>.<span class="ident">take</span>(); <span class="comment">// Take ownership of next `link` here.</span>
-        } <span class="comment">// Previous `node` goes out of scope and gets dropped here.</span>
+        <span class="kw">while</span> <span class="self">self</span>.<span class="ident">pop_front</span>().<span class="ident">is_some</span>() {}
     }
 }
 
