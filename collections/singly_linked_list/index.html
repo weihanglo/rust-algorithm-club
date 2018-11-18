@@ -409,7 +409,7 @@ impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
 <blockquote>
 <p>詳細思路過程可查看 Learning Rust With Entirely Too Many Linked Lists 的 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/first-drop.html">Drop</a> 章節，該章完整闡述為什麼不能用 tail recursive 來實作，但最大的原因是 Rust core team 暫時延緩實踐 <a href="https://github.com/rust-lang/rfcs/pull/1888">tail call optimization</a>。</p>
 </blockquote>
-<p>但實際上，透過呼叫 <code>pop_front()</code>，不斷移除第一個節點，並透過 <code>is_some()</code> 檢查是否仍有節點，完全可以達到同樣的 drop 效果，而且更簡潔易懂。</p>
+<p>實際上，透過呼叫 <code>pop_front()</code>，不斷移除第一個節點，並使用 <code>is_some()</code> 檢查是否仍有節點，幾乎可以達到同樣的 drop 效果，而且更簡潔易懂。差別僅在於，相較於前個實作自己處理 call stack，這個實作每次移除元素都需要 <code>pop_front()</code> 與 <code>is_some()</code> 的 stack，多了些微小的開銷。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
