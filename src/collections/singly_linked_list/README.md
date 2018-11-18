@@ -281,6 +281,16 @@ impl<T> Drop for SinglyLinkedList<T> {
 
 > 詳細思路過程可查看 Learning Rust With Entirely Too Many Linked Lists 的 [Drop](http://cglab.ca/~abeinges/blah/too-many-lists/book/first-drop.html) 章節，該章完整闡述為什麼不能用 tail recursive 來實作，但最大的原因是 Rust core team 暫時延緩實踐 [tail call optimization](https://github.com/rust-lang/rfcs/pull/1888)。
 
+實際上，透過呼叫 `pop_front()`，不斷移除第一個節點，並使用 `is_some()` 檢查是否仍有節點，幾乎可以達到同樣的 drop 效果，而且更簡潔易懂。差別僅在於，相較於前個實作自己處理 call stack，這個實作每次移除元素都需要 `pop_front()` 與 `is_some()` 的 stack，多了些微小的開銷。
+
+```rust
+impl<T> Drop for SinglyLinkedList<T> {
+    fn drop(&mut self) {
+        while self.pop_front().is_some() {}
+    }
+}
+```
+
 ### Iterator and IntoIterator traits
 
 既然鏈結串列是一種序列（sequence，有序的資料結構），少不了實作 [Iterator](https://doc.rust-lang.org/std/iter/trait.Iterator.html)、[IntoIterator](https://doc.rust-lang.org/std/iter/trait.IntoIterator.html) 等 trait，使串列可以輕鬆使用 for-in loop 遍歷（traverse）。
