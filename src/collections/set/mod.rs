@@ -304,13 +304,18 @@ mod hash_set {
     }
 
     #[test]
-    fn union() {
-        let mut s1: HashSet<&str> = HashSet::new();
-        s1.insert("cat");
-        s1.insert("dog");
+    fn from_iter() {
+        let s1: HashSet<_> = ["cat", "dog", "rat"].iter().cloned().collect();
+        assert!(s1.contains("cat"));
+        assert!(s1.contains("dog"));
+        assert!(s1.contains("rat"));
+        assert_eq!(s1.len(), 3);
+    }
 
-        let mut s2: HashSet<&str> = HashSet::new();
-        s2.insert("rat");
+    #[test]
+    fn union() {
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
 
         let union: HashSet<_> = s1.union(&s2).collect();
         assert_eq!(
@@ -333,12 +338,8 @@ mod hash_set {
 
     #[test]
     fn bitor() {
-        let mut s1: HashSet<&str> = HashSet::new();
-        s1.insert("cat");
-        s1.insert("dog");
-
-        let mut s2: HashSet<&str> = HashSet::new();
-        s2.insert("rat");
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
 
         let union = &s1 | &s2;
         assert!(
@@ -356,18 +357,13 @@ mod hash_set {
         assert_eq!(union.len(), 3, "length of union is 3");
 
         assert_eq!(s1.len(), 2, "s1 is still available");
-        assert_eq!(s2.len(), 1, "s2 is still available");
+        assert_eq!(s2.len(), 2, "s2 is still available");
     }
 
     #[test]
     fn difference() {
-        let mut s1 = HashSet::new();
-        s1.insert("cat");
-        s1.insert("dog");
-
-        let mut s2 = HashSet::new();
-        s2.insert("cat");
-        s2.insert("rat");
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
 
         let difference: HashSet<_> = s1.difference(&s2).collect();
         assert_eq!(
@@ -390,13 +386,8 @@ mod hash_set {
 
     #[test]
     fn sub() {
-        let mut s1 = HashSet::new();
-        s1.insert("cat");
-        s1.insert("dog");
-
-        let mut s2 = HashSet::new();
-        s2.insert("cat");
-        s2.insert("rat");
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
 
         let difference = &s1 - &s2;
         assert_eq!(
@@ -419,13 +410,8 @@ mod hash_set {
 
     #[test]
     fn symmetric_difference() {
-        let mut s1 = HashSet::new();
-        s1.insert("cat");
-        s1.insert("dog");
-
-        let mut s2 = HashSet::new();
-        s2.insert("cat");
-        s2.insert("rat");
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
 
         let symmetric_difference: HashSet<_> = s1.symmetric_difference(&s2).collect();
         assert_eq!(
@@ -452,13 +438,8 @@ mod hash_set {
 
     #[test]
     fn bitxor() {
-        let mut s1 = HashSet::new();
-        s1.insert("cat");
-        s1.insert("dog");
-
-        let mut s2 = HashSet::new();
-        s2.insert("cat");
-        s2.insert("rat");
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
 
         let symmetric_difference: HashSet<_> = &s1 ^ &s2;
         assert_eq!(
@@ -485,13 +466,8 @@ mod hash_set {
 
     #[test]
     fn intersection() {
-        let mut s1 = HashSet::new();
-        s1.insert("cat");
-        s1.insert("dog");
-
-        let mut s2 = HashSet::new();
-        s2.insert("cat");
-        s2.insert("rat");
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
 
         let intersection: HashSet<_> = s1.intersection(&s2).collect();
         assert_eq!(
@@ -514,13 +490,8 @@ mod hash_set {
 
     #[test]
     fn bitand() {
-        let mut s1 = HashSet::new();
-        s1.insert("cat");
-        s1.insert("dog");
-
-        let mut s2 = HashSet::new();
-        s2.insert("cat");
-        s2.insert("rat");
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
 
         let intersection: HashSet<_> = &s1 & &s2;
         assert_eq!(
