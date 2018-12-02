@@ -1,19 +1,27 @@
 use super::hash_map::HashMap;
-use std::hash::Hash;
 use std::borrow::Borrow;
+use std::hash::Hash;
 use std::iter::FromIterator;
 use std::ops::BitAnd;
 use std::ops::Sub;
 
 /// A hash set implementation with HashSet
-pub struct HashSet<T> where T: Hash + Eq {
+pub struct HashSet<T>
+where
+    T: Hash + Eq,
+{
     hash_map: HashMap<T, ()>,
 }
 
-impl<T> HashSet<T> where T: Hash + Eq {
+impl<T> HashSet<T>
+where
+    T: Hash + Eq,
+{
     ///
     pub fn new() -> HashSet<T> {
-        HashSet { hash_map: HashMap::new() }
+        HashSet {
+            hash_map: HashMap::new(),
+        }
     }
 
     ///
@@ -42,7 +50,7 @@ impl<T> HashSet<T> where T: Hash + Eq {
     {
         match self.hash_map.get(value) {
             Some(_) => true,
-            None => false
+            None => false,
         }
     }
 
@@ -54,14 +62,13 @@ impl<T> HashSet<T> where T: Hash + Eq {
     {
         match self.hash_map.remove(value) {
             Some(_) => true,
-            None => false
+            None => false,
         }
     }
     /// Creates an iterator that yields immutable reference of each element
     /// in arbitrary order.
     pub fn iter(&self) -> impl Iterator<Item = &T> {
-        self.hash_map.iter()
-            .map(|(k, _)| k)
+        self.hash_map.iter().map(|(k, _)| k)
     }
 
     /// Returns an iterator visiting all items present in `self` and `other`
@@ -76,7 +83,10 @@ impl<T> HashSet<T> where T: Hash + Eq {
     ///
     ///
     pub fn difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
-        Difference { iter: self.iter(), other }
+        Difference {
+            iter: self.iter(),
+            other,
+        }
     }
 
     /// Returns an iterator visiting items which only preset in either self or other
@@ -88,30 +98,34 @@ impl<T> HashSet<T> where T: Hash + Eq {
 }
 
 impl<T> FromIterator<T> for HashSet<T>
-    where T: Hash + Eq
+where
+    T: Hash + Eq,
 {
     fn from_iter<I>(iter: I) -> Self
-        where I: IntoIterator<Item = T>
+    where
+        I: IntoIterator<Item = T>,
     {
         let mut s = Self::new();
-        iter.into_iter().for_each(|i| { s.insert(i); });
+        iter.into_iter().for_each(|i| {
+            s.insert(i);
+        });
         s
     }
 }
 
 struct Difference<'a, T, I>
-    where
-        T: Hash + Eq,
-        I: Iterator<Item = &'a T>,
+where
+    T: Hash + Eq,
+    I: Iterator<Item = &'a T>,
 {
     iter: I,
     other: &'a HashSet<T>,
 }
 
 impl<'a, T, I> Iterator for Difference<'a, T, I>
-    where
-        T: Hash + Eq,
-        I: Iterator<Item = &'a T>,
+where
+    T: Hash + Eq,
+    I: Iterator<Item = &'a T>,
 {
     type Item = &'a T;
     fn next(&mut self) -> Option<Self::Item> {
@@ -124,9 +138,9 @@ impl<'a, T, I> Iterator for Difference<'a, T, I>
     }
 }
 
-impl<'a, 'b, T,> BitAnd<&'b HashSet<T>> for &'a HashSet<T>
-    where
-        T: Hash + Eq + Clone,
+impl<'a, 'b, T> BitAnd<&'b HashSet<T>> for &'a HashSet<T>
+where
+    T: Hash + Eq + Clone,
 {
     type Output = HashSet<T>;
 
@@ -135,9 +149,9 @@ impl<'a, 'b, T,> BitAnd<&'b HashSet<T>> for &'a HashSet<T>
     }
 }
 
-impl<'a, 'b, T,> Sub<&'b HashSet<T>> for &'a HashSet<T>
-    where
-        T: Hash + Eq + Clone,
+impl<'a, 'b, T> Sub<&'b HashSet<T>> for &'a HashSet<T>
+where
+    T: Hash + Eq + Clone,
 {
     type Output = HashSet<T>;
 
@@ -169,7 +183,10 @@ mod hash_set {
 
         // dog already exist!
         let ok = s.insert("dog");
-        assert_eq!(ok, false, "Attempting to insert present value returns false");
+        assert_eq!(
+            ok, false,
+            "Attempting to insert present value returns false"
+        );
         assert_eq!(s.len(), 2, "Certain value can only be inserted to set once");
     }
 
@@ -177,12 +194,24 @@ mod hash_set {
     fn contains() {
         let mut s1: HashSet<&str> = HashSet::new();
         s1.insert("cat");
-        assert_eq!(s1.contains("cat"), true, "contains() returns true for present value");
-        assert_eq!(s1.contains("dog"), false, "contains() returns false for absent value");
+        assert_eq!(
+            s1.contains("cat"),
+            true,
+            "contains() returns true for present value"
+        );
+        assert_eq!(
+            s1.contains("dog"),
+            false,
+            "contains() returns false for absent value"
+        );
 
         let mut s2: HashSet<String> = HashSet::new();
         s2.insert("cat".to_string());
-        assert_eq!(s2.contains(&"cat".to_string()), true, "Can query with String");
+        assert_eq!(
+            s2.contains(&"cat".to_string()),
+            true,
+            "Can query with String"
+        );
         assert_eq!(s2.contains("cat"), true, "Can query with &str");
     }
 
@@ -196,13 +225,19 @@ mod hash_set {
         assert!(!s1.contains("cat"), "'cat' is gone after remove()");
 
         let ok = s1.remove("elephant");
-        assert_eq!(ok, false, "Trying to remove non-existing value returns false");
+        assert_eq!(
+            ok, false,
+            "Trying to remove non-existing value returns false"
+        );
 
         let mut s2: HashSet<String> = HashSet::new();
         s2.insert("cat".to_string());
         s2.insert("dog".to_string());
         assert!(s2.remove(&"cat".to_string()), "Can remove with String");
-        assert!(!s2.contains("cat"), "Successfully removed value with String");
+        assert!(
+            !s2.contains("cat"),
+            "Successfully removed value with String"
+        );
         assert!(s2.remove("dog"), "Can remove with &str");
         assert!(!s2.contains("dog"), "Successfully removed value with &str");
     }
@@ -217,9 +252,21 @@ mod hash_set {
         s2.insert("rat");
 
         let union: HashSet<_> = s1.union(&s2).collect();
-        assert_eq!(union.contains(&"cat"), true, "union of s1 and s2 contains cat (from s1)");
-        assert_eq!(union.contains(&"dog"), true, "union of s1 and s2 contains dog (from s1)");
-        assert_eq!(union.contains(&"rat"), true, "union of s1 and s2 contains rat (from s2)");
+        assert_eq!(
+            union.contains(&"cat"),
+            true,
+            "union of s1 and s2 contains cat (from s1)"
+        );
+        assert_eq!(
+            union.contains(&"dog"),
+            true,
+            "union of s1 and s2 contains dog (from s1)"
+        );
+        assert_eq!(
+            union.contains(&"rat"),
+            true,
+            "union of s1 and s2 contains rat (from s2)"
+        );
         assert_eq!(union.len(), 3, "length of union is 3");
     }
 
@@ -233,15 +280,23 @@ mod hash_set {
         s2.insert("rat");
 
         let union = &s1 & &s2;
-        assert!(union.contains("cat"), "union of s1 and s2 contains cat (from s1)");
-        assert!(union.contains("dog"), "union of s1 and s2 contains dog (from s1)");
-        assert!(union.contains("rat"), "union of s1 and s2 contains rat (from s2)");
+        assert!(
+            union.contains("cat"),
+            "union of s1 and s2 contains cat (from s1)"
+        );
+        assert!(
+            union.contains("dog"),
+            "union of s1 and s2 contains dog (from s1)"
+        );
+        assert!(
+            union.contains("rat"),
+            "union of s1 and s2 contains rat (from s2)"
+        );
         assert_eq!(union.len(), 3, "length of union is 3");
 
         assert_eq!(s1.len(), 2, "s1 is still available");
         assert_eq!(s2.len(), 1, "s2 is still available");
     }
-
 
     #[test]
     fn difference() {
@@ -254,9 +309,21 @@ mod hash_set {
         s2.insert("rat");
 
         let difference: HashSet<_> = s1.difference(&s2).collect();
-        assert_eq!(difference.contains(&"dog"), true, "dog is in s1 but not in s2, therefore included in difference");
-        assert_eq!(difference.contains(&"cat"), false, "cat is in both s1 and s2, therefore not included in difference");
-        assert_eq!(difference.contains(&"rat"), false, "rat is from s2, therefore not included in difference");
+        assert_eq!(
+            difference.contains(&"dog"),
+            true,
+            "dog is in s1 but not in s2, therefore included in difference"
+        );
+        assert_eq!(
+            difference.contains(&"cat"),
+            false,
+            "cat is in both s1 and s2, therefore not included in difference"
+        );
+        assert_eq!(
+            difference.contains(&"rat"),
+            false,
+            "rat is from s2, therefore not included in difference"
+        );
         assert_eq!(difference.len(), 1, "length of difference is 1");
     }
 
@@ -271,9 +338,21 @@ mod hash_set {
         s2.insert("rat");
 
         let difference = &s1 - &s2;
-        assert_eq!(difference.contains(&"dog"), true, "dog is in s1 but not in s2, therefore included in difference");
-        assert_eq!(difference.contains(&"cat"), false, "cat is in both s1 and s2, therefore not included in difference");
-        assert_eq!(difference.contains(&"rat"), false, "rat is from s2, therefore not included in difference");
+        assert_eq!(
+            difference.contains(&"dog"),
+            true,
+            "dog is in s1 but not in s2, therefore included in difference"
+        );
+        assert_eq!(
+            difference.contains(&"cat"),
+            false,
+            "cat is in both s1 and s2, therefore not included in difference"
+        );
+        assert_eq!(
+            difference.contains(&"rat"),
+            false,
+            "rat is from s2, therefore not included in difference"
+        );
         assert_eq!(difference.len(), 1, "length of difference is 1");
     }
 
