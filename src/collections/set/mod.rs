@@ -2,9 +2,7 @@ use super::hash_map::HashMap;
 use std::borrow::Borrow;
 use std::hash::Hash;
 use std::iter::FromIterator;
-use std::ops::BitOr;
-use std::ops::BitXor;
-use std::ops::Sub;
+use std::ops::{BitAnd, BitOr, BitXor, Sub};
 
 /// A hash set implementation based on HashMap
 pub struct HashSet<T>
@@ -208,6 +206,18 @@ where
 
     fn bitxor(self, rhs: &'b HashSet<T>) -> HashSet<T> {
         self.symmetric_difference(&rhs).cloned().collect()
+    }
+}
+
+// The bit_and operator `&`, as an alias of intersection().
+impl<'a, 'b, T> BitAnd<&'b HashSet<T>> for &'a HashSet<T>
+where
+    T: Hash + Eq + Clone,
+{
+    type Output = HashSet<T>;
+
+    fn bitand(self, rhs: &'b HashSet<T>) -> HashSet<T> {
+        self.intersection(&rhs).cloned().collect()
     }
 }
 
@@ -484,6 +494,35 @@ mod hash_set {
         s2.insert("rat");
 
         let intersection: HashSet<_> = s1.intersection(&s2).collect();
+        assert_eq!(
+            intersection.contains(&"cat"),
+            true,
+            "cat is in both s1 and s2, therefore included in intersection"
+        );
+        assert_eq!(
+            intersection.contains(&"dog"),
+            false,
+            "dog is in s1 but not in s2, therefore not included in intersection"
+        );
+        assert_eq!(
+            intersection.contains(&"rat"),
+            false,
+            "rat is s2 but not in s1, therefore not included in intersection"
+        );
+        assert_eq!(intersection.len(), 1, "length of intersection is 2 ([cat])");
+    }
+
+    #[test]
+    fn bitand() {
+        let mut s1 = HashSet::new();
+        s1.insert("cat");
+        s1.insert("dog");
+
+        let mut s2 = HashSet::new();
+        s2.insert("cat");
+        s2.insert("rat");
+
+        let intersection: HashSet<_> = &s1 & &s2;
         assert_eq!(
             intersection.contains(&"cat"),
             true,
