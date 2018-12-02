@@ -6,7 +6,7 @@ use std::ops::BitAnd;
 use std::ops::BitXor;
 use std::ops::Sub;
 
-/// A hash set implementation with HashSet
+/// A hash set implementation based on HashMap
 pub struct HashSet<T>
 where
     T: Hash + Eq,
@@ -19,10 +19,8 @@ where
     T: Hash + Eq,
 {
     ///
-    pub fn new() -> HashSet<T> {
-        HashSet {
-            hash_map: HashMap::new(),
-        }
+    pub fn new() -> Self {
+        Default::default()
     }
 
     ///
@@ -95,6 +93,17 @@ where
     ///
     pub fn symmetric_difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
         self.difference(other).chain(other.difference(self))
+    }
+}
+
+impl<T> Default for HashSet<T>
+where
+    T: Hash + Eq,
+{
+    fn default() -> Self {
+        Self {
+            hash_map: HashMap::new(),
+        }
     }
 }
 
