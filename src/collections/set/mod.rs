@@ -35,10 +35,7 @@ where
 
     ///
     pub fn insert(&mut self, value: T) -> bool {
-        match self.hash_map.insert(value, ()) {
-            None => true,
-            Some(_) => false,
-        }
+        self.hash_map.insert(value, ()).is_none()
     }
 
     ///
@@ -47,10 +44,7 @@ where
         T: Borrow<Q>,
         Q: Hash + Eq + ?Sized,
     {
-        match self.hash_map.get(value) {
-            Some(_) => true,
-            None => false,
-        }
+        self.hash_map.get(value).is_some()
     }
 
     ///
@@ -59,10 +53,7 @@ where
         T: Borrow<Q>,
         Q: Hash + Eq + ?Sized,
     {
-        match self.hash_map.remove(value) {
-            Some(_) => true,
-            None => false,
-        }
+        self.hash_map.remove(value).is_some()
     }
     /// Creates an iterator that yields immutable reference of each element
     /// in arbitrary order.
