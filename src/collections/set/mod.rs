@@ -3,6 +3,7 @@ use std::borrow::Borrow;
 use std::hash::Hash;
 use std::iter::FromIterator;
 use std::ops::BitAnd;
+use std::ops::BitXor;
 use std::ops::Sub;
 
 /// A hash set implementation with HashSet
@@ -157,6 +158,17 @@ where
 
     fn sub(self, rhs: &'b HashSet<T>) -> HashSet<T> {
         self.difference(&rhs).cloned().collect()
+    }
+}
+
+impl<'a, 'b, T> BitXor<&'b HashSet<T>> for &'a HashSet<T>
+where
+    T: Hash + Eq + Clone,
+{
+    type Output = HashSet<T>;
+
+    fn bitxor(self, rhs: &'b HashSet<T>) -> HashSet<T> {
+        self.symmetric_difference(&rhs).cloned().collect()
     }
 }
 
@@ -367,6 +379,39 @@ mod hash_set {
         s2.insert("rat");
 
         let symmetric_difference: HashSet<_> = s1.symmetric_difference(&s2).collect();
+        assert_eq!(
+            symmetric_difference.contains(&"cat"),
+            false,
+            "cat is in both s1 and s2, therefore not included in symmetric_difference"
+        );
+        assert_eq!(
+            symmetric_difference.contains(&"dog"),
+            true,
+            "dog is in s1 but not in s2, therefore included in symmetric_difference"
+        );
+        assert_eq!(
+            symmetric_difference.contains(&"rat"),
+            true,
+            "rat is s2 but not in s1, therefore included in symmetric_difference"
+        );
+        assert_eq!(
+            symmetric_difference.len(),
+            2,
+            "length of symmetric_difference is 2"
+        );
+    }
+
+    #[test]
+    fn bitxor() {
+        let mut s1 = HashSet::new();
+        s1.insert("cat");
+        s1.insert("dog");
+
+        let mut s2 = HashSet::new();
+        s2.insert("cat");
+        s2.insert("rat");
+
+        let symmetric_difference: HashSet<_> = &s1 ^ &s2;
         assert_eq!(
             symmetric_difference.contains(&"cat"),
             false,
