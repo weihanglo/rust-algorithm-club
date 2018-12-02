@@ -78,6 +78,13 @@ impl<T> HashSet<T> where T: Hash + Eq {
     pub fn difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
         Difference { iter: self.iter(), other }
     }
+
+    /// Returns an iterator visiting items which only preset in either self or other
+    ///
+    ///
+    pub fn symmetric_difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
+        self.difference(other).chain(other.difference(self))
+    }
 }
 
 impl<T> FromIterator<T> for HashSet<T>
@@ -253,7 +260,6 @@ mod hash_set {
         assert_eq!(difference.len(), 1, "length of difference is 1");
     }
 
-
     #[test]
     fn sub() {
         let mut s1 = HashSet::new();
@@ -269,5 +275,38 @@ mod hash_set {
         assert_eq!(difference.contains(&"cat"), false, "cat is in both s1 and s2, therefore not included in difference");
         assert_eq!(difference.contains(&"rat"), false, "rat is from s2, therefore not included in difference");
         assert_eq!(difference.len(), 1, "length of difference is 1");
+    }
+
+    #[test]
+    fn symmetric_difference() {
+        let mut s1 = HashSet::new();
+        s1.insert("cat");
+        s1.insert("dog");
+
+        let mut s2 = HashSet::new();
+        s2.insert("cat");
+        s2.insert("rat");
+
+        let symmetric_difference: HashSet<_> = s1.symmetric_difference(&s2).collect();
+        assert_eq!(
+            symmetric_difference.contains(&"cat"),
+            false,
+            "cat is in both s1 and s2, therefore not included in symmetric_difference"
+        );
+        assert_eq!(
+            symmetric_difference.contains(&"dog"),
+            true,
+            "dog is in s1 but not in s2, therefore included in symmetric_difference"
+        );
+        assert_eq!(
+            symmetric_difference.contains(&"rat"),
+            true,
+            "rat is s2 but not in s1, therefore included in symmetric_difference"
+        );
+        assert_eq!(
+            symmetric_difference.len(),
+            2,
+            "length of symmetric_difference is 2"
+        );
     }
 }
