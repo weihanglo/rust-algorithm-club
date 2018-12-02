@@ -101,6 +101,20 @@ where
     }
 }
 
+// Check equality of sets. Two sets are considered same if they have the same items (regardless of
+// stored order)
+impl<T> PartialEq for HashSet<T>
+where
+    T: Hash + Eq,
+{
+    fn eq(&self, other: &HashSet<T>) -> bool {
+        if self.len() != other.len() {
+            return false;
+        }
+        self.iter().all(|item| other.contains(&item))
+    }
+}
+
 impl<T> FromIterator<T> for HashSet<T>
 where
     T: Hash + Eq,
@@ -310,6 +324,26 @@ mod hash_set {
         assert!(s1.contains("dog"));
         assert!(s1.contains("rat"));
         assert_eq!(s1.len(), 3);
+    }
+
+    #[test]
+    fn eq() {
+        let set: HashSet<_> = ["cat", "dog", "rat"].iter().cloned().collect();
+
+        let identical: HashSet<_> = ["cat", "dog", "rat"].iter().cloned().collect();
+        assert!(set == identical, "sets of identical elements are equal");
+
+        let reordered: HashSet<_> = ["rat", "cat", "dog"].iter().cloned().collect();
+        assert!(set == reordered, "order of elements doesn't matter");
+
+        let different: HashSet<_> = ["cat", "dog", "elephant"].iter().cloned().collect();
+        assert!(set != different);
+
+        let superset: HashSet<_> = ["cat", "dog", "rat", "elephant"].iter().cloned().collect();
+        assert!(set != superset);
+
+        let subset: HashSet<_> = ["cat"].iter().cloned().collect();
+        assert!(set != subset);
     }
 
     #[test]
