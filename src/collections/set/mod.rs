@@ -18,27 +18,28 @@ impl<T> HashSet<T>
 where
     T: Hash + Eq,
 {
-    ///
+    /// Create an empty set.
     pub fn new() -> Self {
         Default::default()
     }
 
-    ///
+    /// Get the number of non-repetitive items.
     pub fn len(&self) -> usize {
         self.hash_map.len()
     }
 
-    ///
+    /// Return whether there is no any item in the set.
     pub fn is_empty(&self) -> bool {
         self.hash_map.is_empty()
     }
 
-    ///
+    /// Try to insert an item. Returns `true` if there were no such item in the set, returns `false`
+    /// if an identical item is already in the set.
     pub fn insert(&mut self, value: T) -> bool {
         self.hash_map.insert(value, ()).is_none()
     }
 
-    ///
+    /// Returns whether an item is present in the set.
     pub fn contains<Q>(&self, value: &Q) -> bool
     where
         T: Borrow<Q>,
@@ -47,7 +48,8 @@ where
         self.hash_map.get(value).is_some()
     }
 
-    ///
+    /// Try to remove an item from the set. Returns `true` if such item was present and removed,
+    /// returns `false` if no such item was found in the set.
     pub fn remove<Q>(&mut self, value: &Q) -> bool
     where
         T: Borrow<Q>,
@@ -55,23 +57,20 @@ where
     {
         self.hash_map.remove(value).is_some()
     }
-    /// Creates an iterator that yields immutable reference of each element
+
+    /// Creates an iterator that yields immutable reference of each item
     /// in arbitrary order.
     pub fn iter(&self) -> impl Iterator<Item = &T> {
         self.hash_map.iter().map(|(k, _)| k)
     }
 
-    /// Returns an iterator visiting all items present in `self` and `other`
-    ///
-    /// The union of set `self` and set `other` is composed by chaining `self.iter()` with items
-    /// that are only present in `other` (i.e. `other.difference(self)`)
+    /// Returns an iterator visiting every item(s) that exists in `self`, in `other`, or in both
+    /// `self` and `other`
     pub fn union<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> + 'a {
         self.iter().chain(other.difference(self))
     }
 
-    /// Returns an iterator visiting items present in `self` but not in `other`
-    ///
-    ///
+    /// Returns an iterator visiting every item(s) that exists in `self` but not in `other`.
     pub fn difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
         Difference {
             iter: self.iter(),
@@ -79,9 +78,7 @@ where
         }
     }
 
-    /// Returns an iterator visiting items which only preset in either self or other
-    ///
-    ///
+    /// Returns an iterator visiting every item(s) that only exists in either `self` or `other`.
     pub fn symmetric_difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
         self.difference(other).chain(other.difference(self))
     }
@@ -114,6 +111,9 @@ where
     }
 }
 
+// An iterable struct that represent the `difference` of two sets.
+// It holds an iterator over `self` and a reference of `other`. While iterated, it returns each item(s)
+// that exists in `self` but not in `other`.
 struct Difference<'a, T, I>
 where
     T: Hash + Eq,
@@ -139,6 +139,7 @@ where
     }
 }
 
+// The bit_and operator `&`, as an alias of union().
 impl<'a, 'b, T> BitAnd<&'b HashSet<T>> for &'a HashSet<T>
 where
     T: Hash + Eq + Clone,
@@ -150,6 +151,7 @@ where
     }
 }
 
+// The sub operator `-`, as an alias of difference().
 impl<'a, 'b, T> Sub<&'b HashSet<T>> for &'a HashSet<T>
 where
     T: Hash + Eq + Clone,
@@ -161,6 +163,7 @@ where
     }
 }
 
+// The bit_xor operator `^`, as an alias of symmetric_difference().
 impl<'a, 'b, T> BitXor<&'b HashSet<T>> for &'a HashSet<T>
 where
     T: Hash + Eq + Clone,
