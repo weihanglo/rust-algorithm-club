@@ -82,6 +82,14 @@ where
     pub fn symmetric_difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
         self.difference(other).chain(other.difference(self))
     }
+
+    /// Returns an iterator visiting every item(s) that exists in both `self` and `other`.
+    pub fn intersection<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
+        Intersection {
+            iter: self.iter(),
+            other,
+        }
+    }
 }
 
 impl<T> Default for HashSet<T>
@@ -133,6 +141,34 @@ where
         loop {
             let item = self.iter.next()?;
             if !self.other.contains(item) {
+                return Some(item);
+            }
+        }
+    }
+}
+
+// An iterable struct that represent the `intersection` of two sets.
+// It holds an iterator over `self` and a reference of `other`. While iterated, it returns each
+// item(s) that exists in both `self` and `other`
+struct Intersection<'a, T, I>
+where
+    T: Hash + Eq,
+    I: Iterator<Item = &'a T>,
+{
+    iter: I,
+    other: &'a HashSet<T>,
+}
+
+impl<'a, T, I> Iterator for Intersection<'a, T, I>
+where
+    T: Hash + Eq,
+    I: Iterator<Item = &'a T>,
+{
+    type Item = &'a T;
+    fn next(&mut self) -> Option<Self::Item> {
+        loop {
+            let item = self.iter.next()?;
+            if self.other.contains(item) {
                 return Some(item);
             }
         }
@@ -435,5 +471,34 @@ mod hash_set {
             2,
             "length of symmetric_difference is 2"
         );
+    }
+
+    #[test]
+    fn intersection() {
+        let mut s1 = HashSet::new();
+        s1.insert("cat");
+        s1.insert("dog");
+
+        let mut s2 = HashSet::new();
+        s2.insert("cat");
+        s2.insert("rat");
+
+        let intersection: HashSet<_> = s1.intersection(&s2).collect();
+        assert_eq!(
+            intersection.contains(&"cat"),
+            true,
+            "cat is in both s1 and s2, therefore included in intersection"
+        );
+        assert_eq!(
+            intersection.contains(&"dog"),
+            false,
+            "dog is in s1 but not in s2, therefore not included in intersection"
+        );
+        assert_eq!(
+            intersection.contains(&"rat"),
+            false,
+            "rat is s2 but not in s1, therefore not included in intersection"
+        );
+        assert_eq!(intersection.len(), 1, "length of intersection is 2 ([cat])");
     }
 }
