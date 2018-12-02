@@ -350,45 +350,22 @@ mod hash_set {
     fn union() {
         let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
         let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
+        let union: HashSet<_> = s1.union(&s2).cloned().collect();
 
-        let union: HashSet<_> = s1.union(&s2).collect();
-        assert_eq!(
-            union.contains(&"cat"),
-            true,
-            "union of s1 and s2 contains cat (from s1)"
-        );
-        assert_eq!(
-            union.contains(&"dog"),
-            true,
-            "union of s1 and s2 contains dog (from s1)"
-        );
-        assert_eq!(
-            union.contains(&"rat"),
-            true,
-            "union of s1 and s2 contains rat (from s2)"
-        );
-        assert_eq!(union.len(), 3, "length of union is 3");
+        let expect: HashSet<&str> = ["cat", "dog", "rat"].iter().cloned().collect();
+
+        assert!(union == expect);
     }
 
     #[test]
     fn bitor() {
         let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
         let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
-
         let union = &s1 | &s2;
-        assert!(
-            union.contains("cat"),
-            "union of s1 and s2 contains cat (from s1)"
-        );
-        assert!(
-            union.contains("dog"),
-            "union of s1 and s2 contains dog (from s1)"
-        );
-        assert!(
-            union.contains("rat"),
-            "union of s1 and s2 contains rat (from s2)"
-        );
-        assert_eq!(union.len(), 3, "length of union is 3");
+
+        let expect: HashSet<&str> = ["cat", "dog", "rat"].iter().cloned().collect();
+
+        assert!(union == expect);
 
         assert_eq!(s1.len(), 2, "s1 is still available");
         assert_eq!(s2.len(), 2, "s2 is still available");
@@ -398,151 +375,65 @@ mod hash_set {
     fn difference() {
         let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
         let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
+        let difference: HashSet<_> = s1.difference(&s2).cloned().collect();
 
-        let difference: HashSet<_> = s1.difference(&s2).collect();
-        assert_eq!(
-            difference.contains(&"dog"),
-            true,
-            "dog is in s1 but not in s2, therefore included in difference"
-        );
-        assert_eq!(
-            difference.contains(&"cat"),
-            false,
-            "cat is in both s1 and s2, therefore not included in difference"
-        );
-        assert_eq!(
-            difference.contains(&"rat"),
-            false,
-            "rat is from s2, therefore not included in difference"
-        );
-        assert_eq!(difference.len(), 1, "length of difference is 1");
+        let expect: HashSet<&str> = ["dog"].iter().cloned().collect();
+
+        assert!(difference == expect);
     }
 
     #[test]
     fn sub() {
         let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
         let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
-
         let difference = &s1 - &s2;
-        assert_eq!(
-            difference.contains(&"dog"),
-            true,
-            "dog is in s1 but not in s2, therefore included in difference"
-        );
-        assert_eq!(
-            difference.contains(&"cat"),
-            false,
-            "cat is in both s1 and s2, therefore not included in difference"
-        );
-        assert_eq!(
-            difference.contains(&"rat"),
-            false,
-            "rat is from s2, therefore not included in difference"
-        );
-        assert_eq!(difference.len(), 1, "length of difference is 1");
+
+        let expect: HashSet<&str> = ["dog"].iter().cloned().collect();
+
+        assert!(difference == expect);
     }
 
     #[test]
     fn symmetric_difference() {
         let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
         let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
+        let symmetric_difference: HashSet<_> = s1.symmetric_difference(&s2).cloned().collect();
 
-        let symmetric_difference: HashSet<_> = s1.symmetric_difference(&s2).collect();
-        assert_eq!(
-            symmetric_difference.contains(&"cat"),
-            false,
-            "cat is in both s1 and s2, therefore not included in symmetric_difference"
-        );
-        assert_eq!(
-            symmetric_difference.contains(&"dog"),
-            true,
-            "dog is in s1 but not in s2, therefore included in symmetric_difference"
-        );
-        assert_eq!(
-            symmetric_difference.contains(&"rat"),
-            true,
-            "rat is s2 but not in s1, therefore included in symmetric_difference"
-        );
-        assert_eq!(
-            symmetric_difference.len(),
-            2,
-            "length of symmetric_difference is 2"
-        );
+        let expect: HashSet<&str> = ["dog", "rat"].iter().cloned().collect();
+
+        assert!(symmetric_difference == expect);
     }
 
     #[test]
     fn bitxor() {
         let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
         let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
-
         let symmetric_difference: HashSet<_> = &s1 ^ &s2;
-        assert_eq!(
-            symmetric_difference.contains(&"cat"),
-            false,
-            "cat is in both s1 and s2, therefore not included in symmetric_difference"
-        );
-        assert_eq!(
-            symmetric_difference.contains(&"dog"),
-            true,
-            "dog is in s1 but not in s2, therefore included in symmetric_difference"
-        );
-        assert_eq!(
-            symmetric_difference.contains(&"rat"),
-            true,
-            "rat is s2 but not in s1, therefore included in symmetric_difference"
-        );
-        assert_eq!(
-            symmetric_difference.len(),
-            2,
-            "length of symmetric_difference is 2"
-        );
+
+        let expect: HashSet<&str> = ["dog", "rat"].iter().cloned().collect();
+
+        assert!(symmetric_difference == expect);
     }
 
     #[test]
     fn intersection() {
         let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
         let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
+        let intersection: HashSet<_> = s1.intersection(&s2).cloned().collect();
 
-        let intersection: HashSet<_> = s1.intersection(&s2).collect();
-        assert_eq!(
-            intersection.contains(&"cat"),
-            true,
-            "cat is in both s1 and s2, therefore included in intersection"
-        );
-        assert_eq!(
-            intersection.contains(&"dog"),
-            false,
-            "dog is in s1 but not in s2, therefore not included in intersection"
-        );
-        assert_eq!(
-            intersection.contains(&"rat"),
-            false,
-            "rat is s2 but not in s1, therefore not included in intersection"
-        );
-        assert_eq!(intersection.len(), 1, "length of intersection is 2 ([cat])");
+        let expect: HashSet<&str> = ["cat"].iter().cloned().collect();
+
+        assert!(intersection == expect);
     }
 
     #[test]
     fn bitand() {
         let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
         let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
-
         let intersection: HashSet<_> = &s1 & &s2;
-        assert_eq!(
-            intersection.contains(&"cat"),
-            true,
-            "cat is in both s1 and s2, therefore included in intersection"
-        );
-        assert_eq!(
-            intersection.contains(&"dog"),
-            false,
-            "dog is in s1 but not in s2, therefore not included in intersection"
-        );
-        assert_eq!(
-            intersection.contains(&"rat"),
-            false,
-            "rat is s2 but not in s1, therefore not included in intersection"
-        );
-        assert_eq!(intersection.len(), 1, "length of intersection is 2 ([cat])");
+
+        let expect: HashSet<&str> = ["cat"].iter().cloned().collect();
+
+        assert!(intersection == expect);
     }
 }
