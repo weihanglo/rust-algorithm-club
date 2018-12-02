@@ -2,7 +2,7 @@ use super::hash_map::HashMap;
 use std::borrow::Borrow;
 use std::hash::Hash;
 use std::iter::FromIterator;
-use std::ops::BitAnd;
+use std::ops::BitOr;
 use std::ops::BitXor;
 use std::ops::Sub;
 
@@ -139,14 +139,14 @@ where
     }
 }
 
-// The bit_and operator `&`, as an alias of union().
-impl<'a, 'b, T> BitAnd<&'b HashSet<T>> for &'a HashSet<T>
+// The bit_and operator `|`, as an alias of union().
+impl<'a, 'b, T> BitOr<&'b HashSet<T>> for &'a HashSet<T>
 where
     T: Hash + Eq + Clone,
 {
     type Output = HashSet<T>;
 
-    fn bitand(self, rhs: &'b HashSet<T>) -> HashSet<T> {
+    fn bitor(self, rhs: &'b HashSet<T>) -> HashSet<T> {
         self.union(&rhs).cloned().collect()
     }
 }
@@ -286,7 +286,7 @@ mod hash_set {
     }
 
     #[test]
-    fn bitand() {
+    fn bitor() {
         let mut s1: HashSet<&str> = HashSet::new();
         s1.insert("cat");
         s1.insert("dog");
@@ -294,7 +294,7 @@ mod hash_set {
         let mut s2: HashSet<&str> = HashSet::new();
         s2.insert("rat");
 
-        let union = &s1 & &s2;
+        let union = &s1 | &s2;
         assert!(
             union.contains("cat"),
             "union of s1 and s2 contains cat (from s1)"
