@@ -2,9 +2,9 @@ language: rust
 
 rust:
   # NOTE: Change back to stable after 2018 Edition merged.
-  # - stable
+  - stable
   # - beta
-  - nightly
+  # - nightly
 
 os:
   # - osx
