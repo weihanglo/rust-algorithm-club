@@ -48,8 +48,7 @@ deploy:
   github-token: $GITHUB_TOKEN
   keep-history: true
   on:
-    # NOTE: Change back to stable after 2018 Edition merged.
-    condition: "$TRAVIS_RUST_VERSION = nightly"
+    condition: "$TRAVIS_RUST_VERSION = stable"
 
 branches:
   only:
