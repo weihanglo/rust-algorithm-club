@@ -354,20 +354,22 @@ impl Hash for Car {
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-fn make_hash&lt;X&gt;(x: &amp;X, len: usize) -&gt; usize
+fn make_hash&lt;X&gt;(x: &amp;X, len: usize) -&gt; Option&lt;usize&gt;
     where X: Hash + ?Sized,                   // 1
 {
-    let mut hasher = DefaultHasher::new();    // 2
+    if len == 0 { return None; }              // 2
+    let mut hasher = DefaultHasher::new();    // 3
     x.hash(&amp;mut hasher);
-    hasher.finish() as usize % len
+    Some(hasher.finish() as usize % len)
 }
 #}</code></pre></pre>
 <ol>
-<li><code>X</code> 泛型參數除了 <code>Hash</code>，還必須是 <a href="https://doc.rust-lang.org/book/2018-edition/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait">Dynamically sized type</a>（DSTs，型別記作 <code>?Sized</code>）</li>
+<li><code>X</code> 泛型參數除了 <code>Hash</code>，還必須是 <a href="https://doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait">Dynamically Sized Type</a>（DST，型別記作 <code>?Sized</code>）</li>
+<li>防止以 0 取模（<code>%</code> modulo），除數不能為 0。</li>
 <li>Rust 的 hasher 是一狀態機，每餵他吃資料，<code>hasher.finish()</code> 產生的雜湊值就不同，為了確保雜湊相同，這裡每次呼叫就建立一個全新的 hasher。</li>
 </ol>
 <blockquote>
-<p>所謂 <strong>Dynamically sized type</strong> 是指無法靜態得知大小的型別，例如 slice，或是一個函式的參數接受實作某個 trait 型別（<a href="https://doc.rust-lang.org/book/2018-edition/ch17-02-trait-objects.html">trait object</a>），而在 Rust 幾乎所有基礎型別預設都是 <code>Sized</code> 編譯期就可得知大小。而在這裡我們不關心知道實作該型別可否靜態決定大小，只需知道它是否實作 <code>Hash</code>，所以明確添加 <code>?Sized</code> 表示接受 DST。</p>
+<p>所謂 <strong>Dynamically Sized Types（DSTs）</strong> 是指無法靜態得知大小的型別，例如 slice，或是一個函式的參數接受實作某個 trait 型別（<a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html">trait object</a>），而在 Rust 幾乎所有基礎型別預設都是 <code>Sized</code> 編譯期就可得知大小。而在這裡我們不關心知道實作該型別可否靜態決定大小，只需知道它是否實作 <code>Hash</code>，所以明確添加 <code>?Sized</code> 表示接受 DSTs。</p>
 </blockquote>
 <a class="header" href="#a記憶體佈局" id="a記憶體佈局"><h3>記憶體佈局</h3></a>
 <p>我們嘗試建立可以儲存 key-value pair 的結構體，裡面配置一個 bucket array <code>buckets</code>。其中 <code>K</code> 泛型參數是準備計算雜湊的鍵，而 <code>V</code> 則是與鍵配對的資料。</p>
@@ -467,7 +469,7 @@ pub fn with_capacity(cap: usize) -&gt; Self {
 # #![allow(unused_variables)]
 #fn main() {
 pub fn get(&amp;self, key: &amp;K) -&gt; Option&lt;&amp;V&gt; {
-    let index = self.make_hash(key);
+    let index = self.make_hash(key)?;
     self.buckets.get(index).and_then(|bucket|
         bucket.iter()
             .find(|(k, _)| *k == *key)
@@ -485,7 +487,7 @@ pub fn get&lt;Q&gt;(&amp;self, q: &amp;Q) -&gt; Option&lt;&amp;V&gt;
         K: Borrow&lt;Q&gt;,
         Q: Hash + Eq + ?Sized
 {
-    let index = self.make_hash(q);
+    let index = self.make_hash(q)?;
     self.buckets.get(index).and_then(|bucket|
         bucket.iter()
             .find(|(k, _)| q == k.borrow())
@@ -511,7 +513,7 @@ pub fn remove&lt;Q&gt;(&amp;mut self, q: &amp;Q) -&gt; Option&lt;V&gt;
         K: Borrow&lt;Q&gt;,
         Q: Hash + Eq + ?Sized
 {
-    let index = self.make_hash(q);                      // 1
+    let index = self.make_hash(q)?;                     // 1
     self.buckets.get_mut(index).and_then(|bucket| {     // 2
         bucket.iter_mut()
             .position(|(k, _)| q == (*k).borrow())
@@ -536,19 +538,20 @@ pub fn remove&lt;Q&gt;(&amp;mut self, q: &amp;Q) -&gt; Option&lt;V&gt;
 #fn main() {
 pub fn insert(&amp;mut self, key: K, value: V) -&gt; Option&lt;V&gt; {
     self.try_resize();                                      // 1
-    let index = self.make_hash(&amp;key);                       // 2
-    self.buckets.get_mut(index).and_then(|bucket|
-        match bucket.iter_mut().find(|(k, _)| *k == key) {  // 3
-            Some((_ , v)) =&gt;  Some(mem::replace(v, value)), // 3.1
-            None =&gt; {                                       // 3.2
-                bucket.push((key , value));
-                None
-            }
+    let index = self                                        // 2
+        .make_hash(&amp;key)
+        .expect(&quot;Failed to make a hash while insertion&quot;);
+    let bucket = self.buckets
+        .get_mut(index)
+        .expect(&amp;format!(&quot;Failed to get bucket[{}] while insetion&quot;, index));
+    match bucket.iter_mut().find(|(k, _)| *k == key) {      // 3
+        Some((_ , v)) =&gt;  Some(mem::replace(v, value)),     // 3.1
+        None =&gt; {
+            bucket.push((key , value));                     // 3.2
+            self.len += 1;
+            None
         }
-    ).or_else(|| { //  Length increase by one.              // 4
-        self.len += 1;
-        None
-    })
+    }                                                       // 4
 }
 #}</code></pre></pre>
 <ol>
@@ -556,12 +559,18 @@ pub fn insert(&amp;mut self, key: K, value: V) -&gt; Option&lt;V&gt; {
 <li>同樣地，根據鍵計算雜湊值，以取得對應的內部 bucket 位置。</li>
 <li>迭代整個 bucket 尋找鍵相同的鍵值對。
 <ol>
-<li>若找到，使用 <a href="https://doc.rust-lang.org/stable/std/mem/fn.replace.html"><code>mem::replace</code></a> 取代資料部分，不需取代整個鍵值對。</li>
-<li>若找無，則新增一組新鍵值對到該 bucket 中。</li>
+<li>若找到，使用 <a href="https://doc.rust-lang.org/stable/std/mem/fn.replace.html"><code>mem::replace</code></a> 資料部分，不需取代整個鍵值對。</li>
+<li>若找無，則新增一組新鍵值對到該 bucket 中，並將長度加一。</li>
 </ol>
 </li>
-<li>決定是否該將長度記錄加一。若插入操作實際上是更新（update）原有鍵值對的資料，則會回傳被更新的舊資料 <code>Some((K, V))</code>；若是實際新增元素（push），我們回傳一個 <code>None</code>，<code>or_else</code> 就可以根據 <code>None</code> 判斷需要將長度加一。</li>
+<li>若插入操作實際上是更新原有資料，則回傳被更新前的舊資料 <code>Some((K, V))</code>，反之則回傳 <code>None</code>。</li>
 </ol>
+<blockquote>
+<ul>
+<li>原則上「動態調整儲存空間」正確實作下，步驟二的 <code>expect</code> 不會發生 panic。</li>
+<li><code>mem::replace</code> 可當作將同型別兩變數的記憶體位置互換，也就同時更新了原始資料。</li>
+</ul>
+</blockquote>
 <a class="header" href="#a動態調整儲存空間" id="a動態調整儲存空間"><h3>動態調整儲存空間</h3></a>
 <p>動態調整儲存空間大概是整個實作中最詭譎的一部分。首先，我們需要知道</p>
 <ul>
