@@ -261,25 +261,27 @@ impl Hash for Car {
 為了方便計算雜湊值，我們寫了一個輔助函式，以達成雜湊兩步驟：**計算雜湊值﹢取模**。其中，我們使用了 Rust 預設的雜湊演算法 [DefaultHasher][rust-default-hasher]，省下實作雜湊函數的功夫。
 
 ```rust
-fn make_hash<X>(x: &X, len: usize) -> usize
+fn make_hash<X>(x: &X, len: usize) -> Option<usize>
     where X: Hash + ?Sized,                   // 1
 {
-    let mut hasher = DefaultHasher::new();    // 2
+    if len == 0 { return None; }              // 2
+    let mut hasher = DefaultHasher::new();    // 3
     x.hash(&mut hasher);
-    hasher.finish() as usize % len
+    Some(hasher.finish() as usize % len)
 }
 ```
 
-1. `X` 泛型參數除了 `Hash`，還必須是 [Dynamically sized type][rust-dst]（DSTs，型別記作 `?Sized`）
-2. Rust 的 hasher 是一狀態機，每餵他吃資料，`hasher.finish()` 產生的雜湊值就不同，為了確保雜湊相同，這裡每次呼叫就建立一個全新的 hasher。
+1. `X` 泛型參數除了 `Hash`，還必須是 [Dynamically Sized Type][rust-dst]（DST，型別記作 `?Sized`）
+2. 防止以 0 取模（`%` modulo），除數不能為 0。
+3. Rust 的 hasher 是一狀態機，每餵他吃資料，`hasher.finish()` 產生的雜湊值就不同，為了確保雜湊相同，這裡每次呼叫就建立一個全新的 hasher。
 
-> 所謂 **Dynamically sized type** 是指無法靜態得知大小的型別，例如 slice，或是一個函式的參數接受實作某個 trait 型別（[trait object][trait-object]），而在 Rust 幾乎所有基礎型別預設都是 `Sized` 編譯期就可得知大小。而在這裡我們不關心知道實作該型別可否靜態決定大小，只需知道它是否實作 `Hash`，所以明確添加 `?Sized` 表示接受 DST。
+> 所謂 **Dynamically Sized Types（DSTs）** 是指無法靜態得知大小的型別，例如 slice，或是一個函式的參數接受實作某個 trait 型別（[trait object][trait-object]），而在 Rust 幾乎所有基礎型別預設都是 `Sized` 編譯期就可得知大小。而在這裡我們不關心知道實作該型別可否靜態決定大小，只需知道它是否實作 `Hash`，所以明確添加 `?Sized` 表示接受 DSTs。
 
 [trait-hash]: https://doc.rust-lang.org/std/hash/trait.Hash.html
 [trait-eq]: https://doc.rust-lang.org/std/cmp/trait.Eq.html
 [rust-default-hasher]: https://doc.rust-lang.org/std/collections/hash_map/struct.DefaultHasher.html
-[rust-dst]: https://doc.rust-lang.org/book/2018-edition/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait
-[trait-object]: https://doc.rust-lang.org/book/2018-edition/ch17-02-trait-objects.html
+[rust-dst]: https://doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait
+[trait-object]: https://doc.rust-lang.org/book/ch17-02-trait-objects.html
 
 ### 記憶體佈局
 
@@ -388,7 +390,7 @@ pub fn with_capacity(cap: usize) -> Self {
 
 ```rust
 pub fn get(&self, key: &K) -> Option<&V> {
-    let index = self.make_hash(key);
+    let index = self.make_hash(key)?;
     self.buckets.get(index).and_then(|bucket|
         bucket.iter()
             .find(|(k, _)| *k == *key)
@@ -407,7 +409,7 @@ pub fn get<Q>(&self, q: &Q) -> Option<&V>
         K: Borrow<Q>,
         Q: Hash + Eq + ?Sized
 {
-    let index = self.make_hash(q);
+    let index = self.make_hash(q)?;
     self.buckets.get(index).and_then(|bucket|
         bucket.iter()
             .find(|(k, _)| q == k.borrow())
@@ -436,7 +438,7 @@ pub fn remove<Q>(&mut self, q: &Q) -> Option<V>
         K: Borrow<Q>,
         Q: Hash + Eq + ?Sized
 {
-    let index = self.make_hash(q);                      // 1
+    let index = self.make_hash(q)?;                     // 1
     self.buckets.get_mut(index).and_then(|bucket| {     // 2
         bucket.iter_mut()
             .position(|(k, _)| q == (*k).borrow())
@@ -459,28 +461,33 @@ pub fn remove<Q>(&mut self, q: &Q) -> Option<V>
 ```rust
 pub fn insert(&mut self, key: K, value: V) -> Option<V> {
     self.try_resize();                                      // 1
-    let index = self.make_hash(&key);                       // 2
-    self.buckets.get_mut(index).and_then(|bucket|
-        match bucket.iter_mut().find(|(k, _)| *k == key) {  // 3
-            Some((_ , v)) =>  Some(mem::replace(v, value)), // 3.1
-            None => {                                       // 3.2
-                bucket.push((key , value));
-                None
-            }
+    let index = self                                        // 2
+        .make_hash(&key)
+        .expect("Failed to make a hash while insertion");
+    let bucket = self.buckets
+        .get_mut(index)
+        .expect(&format!("Failed to get bucket[{}] while insetion", index));
+    match bucket.iter_mut().find(|(k, _)| *k == key) {      // 3
+        Some((_ , v)) =>  Some(mem::replace(v, value)),     // 3.1
+        None => {
+            bucket.push((key , value));                     // 3.2
+            self.len += 1;
+            None
         }
-    ).or_else(|| { //  Length increase by one.              // 4
-        self.len += 1;
-        None
-    })
+    }                                                       // 4
 }
 ```
 
 1. 嘗試調整雜湊表大小，以確保 load factor 在閾值之間。
 2. 同樣地，根據鍵計算雜湊值，以取得對應的內部 bucket 位置。
 3. 迭代整個 bucket 尋找鍵相同的鍵值對。
-    1. 若找到，使用 [`mem::replace`][rust-mem-replace] 取代資料部分，不需取代整個鍵值對。
-    2. 若找無，則新增一組新鍵值對到該 bucket 中。
-4.  決定是否該將長度記錄加一。若插入操作實際上是更新（update）原有鍵值對的資料，則會回傳被更新的舊資料 `Some((K, V))`；若是實際新增元素（push），我們回傳一個 `None`，`or_else` 就可以根據 `None` 判斷需要將長度加一。
+    1. 若找到，使用 [`mem::replace`][rust-mem-replace] 資料部分，不需取代整個鍵值對。
+    2. 若找無，則新增一組新鍵值對到該 bucket 中，並將長度加一。
+4. 若插入操作實際上是更新原有資料，則回傳被更新前的舊資料 `Some((K, V))`，反之則回傳 `None`。
+
+> - 原則上「動態調整儲存空間」正確實作下，步驟二的 `expect` 不會發生 panic。
+> - `mem::replace` 可當作將同型別兩變數的記憶體位置互換，也就同時更新了原始資料。
+
 
 [rust-iterator-position]: https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.position
 [rust-mem-replace]: https://doc.rust-lang.org/stable/std/mem/fn.replace.html
@@ -573,12 +580,12 @@ pub fn iter(&self) -> impl Iterator<Item = (&K, &V)> {
 - [Rust RFC: impl trait][rfc-impl-trait]
 - [Rust 1.26: impl trait][rust-1.26-impl-trait]
 - [Rust Reference: Trait objects][rust-reference-trait-object]
-- [The Rust Programming Language 2nd Edition: Trait objects][trpl-trait-object]
+- [The Rust Programming Language: Trait objects][trpl-trait-object]
 
 [rfc-impl-trait]: https://github.com/rust-lang/rfcs/blob/master/text/1522-conservative-impl-trait.md
 [rust-1.26-impl-trait]: https://blog.rust-lang.org/2018/05/10/Rust-1.26.html#impl-trait
 [rust-reference-trait-object]: https://doc.rust-lang.org/reference/types.html#trait-objects
-[trpl-trait-object]: https://doc.rust-lang.org/book/second-edition/ch17-02-trait-objects.html
+[trpl-trait-object]: https://doc.rust-lang.org/book/ch17-02-trait-objects.html
 [wiki-dynamic-dispatch]: https://en.wikipedia.org/wiki/Dynamic_dispatch
 
 ## 效能

@@ -31,7 +31,7 @@ struct Node<T> {
 
 ![node-recursive](node-recursive.svg)
 
-很簡單，我們使用 [`Box<T>`][rust-box] 這個[智慧指標](https://doc.rust-lang.org/stable/book/2018-edition/ch15-00-smart-pointers.html)，直接將 Node 配置在記憶體 heap 上。如此以來，編譯器就會知道 `next` 只佔了一個指標的空間。
+很簡單，我們使用 [`Box<T>`][rust-box] 這個[智慧指標](https://doc.rust-lang.org/book/ch15-00-smart-pointers.html)，直接將 Node 配置在記憶體 heap 上。如此以來，編譯器就會知道 `next` 只佔了一個指標的空間。
 
 ```rust
 struct Node<T> {
@@ -458,4 +458,4 @@ impl<T: std::fmt::Debug> std::fmt::Debug for SinglyLinkedList<T> {
 - [Learning Rust With Entirely Too Many Linked Lists](http://cglab.ca/~abeinges/blah/too-many-lists/book/README.html)
 - [Duscussions at Stackoverflow](https://stackoverflow.com/questions/51134192/)
 - [StackExchange: Reversal of a singly-linked list in Rust](https://codereview.stackexchange.com/questions/150906)
-- SVG of node memory representation modified from [The Rust Programming Language](https://doc.rust-lang.org/book/2018-edition)
+- SVG of node memory representation modified from [The Rust Programming Language](https://doc.rust-lang.org/book)
