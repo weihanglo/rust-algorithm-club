@@ -30,12 +30,15 @@ type Bucket<K, V> = Vec<(K, V)>;
 const LOAD_FACTOR: f64 = 0.75;
 
 /// Computes hash for a given key and modulus.
-fn make_hash<X>(x: &X, len: usize) -> usize
+///
+/// Would fail if `len` equals to zero.
+fn make_hash<X>(x: &X, len: usize) -> Option<usize>
     where X: Hash + ?Sized,
 {
+    if len == 0 { return None; }
     let mut hasher = DefaultHasher::new();
     x.hash(&mut hasher);
-    hasher.finish() as usize % len
+    Some(hasher.finish() as usize % len)
 }
 
 impl<K, V> HashMap<K, V> where K: Hash + Eq {
@@ -82,7 +85,7 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
             K: Borrow<Q>,
             Q: Hash + Eq + ?Sized
     {
-        let index = self.make_hash(key);
+        let index = self.make_hash(key)?;
         self.buckets.get(index).and_then(|bucket|
             bucket.iter()
                 .find(|(k, _)| key == k.borrow())
@@ -100,7 +103,7 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
             K: Borrow<Q>,
             Q: Hash + Eq + ?Sized
     {
-        let index = self.make_hash(key);
+        let index = self.make_hash(key)?;
         self.buckets.get_mut(index).and_then(|bucket|
             bucket.iter_mut()
                 .find(|(k, _)| key == k.borrow())
@@ -129,21 +132,28 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     /// # Complexity
     ///
     /// Constant (amortized).
+    ///
+    /// # Panics
+    ///
+    /// Panics when either hash map cannot make a hash, or cannot access any
+    /// available bucket to insert new value. These cases shall not happend
+    /// under a well-implemented resize policy.
     pub fn insert(&mut self, key: K, value: V) -> Option<V> {
         self.try_resize();
-        let index = self.make_hash(&key);
-        self.buckets.get_mut(index).and_then(|bucket|
-            match bucket.iter_mut().find(|(k, _)| *k == key) {
-                Some((_ , v)) =>  Some(mem::replace(v, value)),
-                None => {
-                    bucket.push((key , value));
-                    None
-                }
+        let index = self
+            .make_hash(&key)
+            .expect("Failed to make a hash while insertion");
+        let bucket = self.buckets
+            .get_mut(index)
+            .expect(&format!("Failed to get bucket[{}] while insetion", index));
+        match bucket.iter_mut().find(|(k, _)| *k == key) {
+            Some((_ , v)) =>  Some(mem::replace(v, value)),
+            None => {
+                bucket.push((key , value));
+                self.len += 1; //  Length increase by one.
+                None
             }
-        ).or_else(|| { //  Length increase by one.
-            self.len += 1;
-            None
-        })
+        }
     }
 
     /// Removes a pair with specified key.
@@ -163,7 +173,7 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
             K: Borrow<Q>,
             Q: Hash + Eq + ?Sized
     {
-        let index = self.make_hash(key);
+        let index = self.make_hash(key)?;
         self.buckets.get_mut(index).and_then(|bucket| {
             bucket.iter_mut()
                 .position(|(k, _)| key == (*k).borrow())
@@ -216,7 +226,7 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     /// Computes hash for a given key.
     ///
     /// This is an internal function which calls a private module function.
-    fn make_hash<X: Hash + ?Sized>(&self, x: &X) -> usize {
+    fn make_hash<X: Hash + ?Sized>(&self, x: &X) -> Option<usize> {
         make_hash(x, self.bucket_count())
     }
 
