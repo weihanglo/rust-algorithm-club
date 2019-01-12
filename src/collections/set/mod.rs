@@ -1,4 +1,4 @@
-use super::hash_map::HashMap;
+use crate::collections::HashMap;
 use std::borrow::Borrow;
 use std::hash::Hash;
 use std::iter::FromIterator;
