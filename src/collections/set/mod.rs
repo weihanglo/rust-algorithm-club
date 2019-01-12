@@ -4,7 +4,13 @@ use std::hash::Hash;
 use std::iter::FromIterator;
 use std::ops::{BitAnd, BitOr, BitXor, Sub};
 
-/// A hash set implementation based on HashMap
+/// A hash set implementation based on `HashMap`.
+///
+/// References:
+///
+/// - [Rust Standard Library: std::collections::HashSet][1]
+///
+/// [1]: https://doc.rust-lang.org/stable/std/collections/struct.HashMap.html
 pub struct HashSet<T>
 where
     T: Hash + Eq,
@@ -16,28 +22,56 @@ impl<T> HashSet<T>
 where
     T: Hash + Eq,
 {
-    /// Create an empty set.
+    /// Creates an empty set.
     pub fn new() -> Self {
         Default::default()
     }
 
-    /// Get the number of non-repetitive items.
+    /// Gets the number of non-repetitive elements, equivalently to the cardinality of a set.
+    ///
+    /// # Complexity
+    ///
+    /// Constant.
     pub fn len(&self) -> usize {
         self.hash_map.len()
     }
 
-    /// Return whether there is no any item in the set.
+    /// Returns whether there is no any element in the set.
+    ///
+    /// # Complexity
+    ///
+    /// Constant.
     pub fn is_empty(&self) -> bool {
         self.hash_map.is_empty()
     }
 
-    /// Try to insert an item. Returns `true` if there were no such item in the set, returns `false`
-    /// if an identical item is already in the set.
+    /// Inserts an element into the set.
+    ///
+    /// Returns `true` if there were no such element in the set; returns `false`
+    /// if an identical element is already in the set.
+    ///
+    /// # Parameters
+    ///
+    /// * `value` - Element to be inserted.
+    ///
+    /// # Complexity
+    ///
+    /// Constant.
     pub fn insert(&mut self, value: T) -> bool {
         self.hash_map.insert(value, ()).is_none()
     }
 
-    /// Returns whether an item is present in the set.
+    /// Returns whether an element is present in the set.
+    ///
+    /// This is equivalent to "belongs to ∈" relation in mathematics.
+    ///
+    /// # Parameters
+    ///
+    /// * `value` - Element to be checked whether is in the set.
+    ///
+    /// # Complexity
+    ///
+    /// Constant.
     pub fn contains<Q>(&self, value: &Q) -> bool
     where
         T: Borrow<Q>,
@@ -46,8 +80,18 @@ where
         self.hash_map.get(value).is_some()
     }
 
-    /// Try to remove an item from the set. Returns `true` if such item was present and removed,
-    /// returns `false` if no such item was found in the set.
+    /// Removes an element from the set.
+    ///
+    /// Returns `true` if such item was present and removed; returns `false`
+    /// if no such item was found in the set.
+    ///
+    /// # Parameters
+    ///
+    /// * `value` - Element to be removed.
+    ///
+    /// # Complexity
+    ///
+    /// Constant.
     pub fn remove<Q>(&mut self, value: &Q) -> bool
     where
         T: Borrow<Q>,
@@ -56,19 +100,31 @@ where
         self.hash_map.remove(value).is_some()
     }
 
-    /// Creates an iterator that yields immutable reference of each item
-    /// in arbitrary order.
+    /// Creates an iterator yielding immutable reference of each item in arbitrary order.
     pub fn iter(&self) -> impl Iterator<Item = &T> {
         self.hash_map.iter().map(|(k, _)| k)
     }
 
-    /// Returns an iterator visiting every item(s) that exists in `self`, in `other`, or in both
-    /// `self` and `other`
     pub fn union<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> + 'a {
+    /// Returns an iterator visiting items that exists in `self`, in `other`,
+    /// or in both `self` and `other`
+    ///
+    /// This is equivalent to `self ∪ other` in mathematics.
+    ///
+    /// # Parameters
+    ///
+    /// * `other` - The other set.
+        // self ∪ (other \ self)
         self.iter().chain(other.difference(self))
     }
 
-    /// Returns an iterator visiting every item(s) that exists in `self` but not in `other`.
+    /// Returns an iterator visiting items that exists in `self` but not in `other`.
+    ///
+    /// This is equivalent to `self \ other` in mathematics.
+    ///
+    /// # Parameters
+    ///
+    /// * `other` - The other set.
     pub fn difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
         Difference {
             iter: self.iter(),
@@ -76,12 +132,26 @@ where
         }
     }
 
-    /// Returns an iterator visiting every item(s) that only exists in either `self` or `other`.
+    /// Returns an iterator visiting items that only exists in either `self` or
+    /// `other` but not in their intersection.
+    ///
+    /// This is equivalent to `self △ other` in mathematics.
+    ///
+    /// # Parameters
+    ///
+    /// * `other` - The other set.
     pub fn symmetric_difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
+        // (self \ other) ∪ (other \ self)
         self.difference(other).chain(other.difference(self))
     }
 
-    /// Returns an iterator visiting every item(s) that exists in both `self` and `other`.
+    /// Returns an iterator visiting items that exists in both `self` and `other`.
+    ///
+    /// This is equivalent to `self ∩ other` in mathematics.
+    ///
+    /// # Parameters
+    ///
+    /// * `other` - The other set.
     pub fn intersection<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
         Intersection {
             iter: self.iter(),
@@ -101,12 +171,24 @@ where
     }
 }
 
-// Check equality of sets. Two sets are considered same if they have the same items (regardless of
-// stored order)
 impl<T> PartialEq for HashSet<T>
 where
     T: Hash + Eq,
 {
+    /// Checks the equality of sets.
+    ///
+    /// Two sets are defined to be equal if they contain the same elements and
+    /// their cardinality are equal.
+    ///
+    /// Set theory definition: x = y ⇒ ∀z, (z ∈ x ⇔ z ∈ y)
+    ///
+    /// # Parameters
+    ///
+    /// * `other` - The other set.
+    ///
+    /// # Complexity
+    ///
+    /// Linear in the size of `self`.
     fn eq(&self, other: &HashSet<T>) -> bool {
         if self.len() != other.len() {
             return false;
@@ -187,7 +269,7 @@ where
     }
 }
 
-// The bit_and operator `|`, as an alias of union().
+/// The bitor operator `|`, as an alias of `union()`.
 impl<'a, 'b, T> BitOr<&'b HashSet<T>> for &'a HashSet<T>
 where
     T: Hash + Eq + Clone,
@@ -199,7 +281,7 @@ where
     }
 }
 
-// The sub operator `-`, as an alias of difference().
+/// The sub operator `-`, as an alias of `difference()`.
 impl<'a, 'b, T> Sub<&'b HashSet<T>> for &'a HashSet<T>
 where
     T: Hash + Eq + Clone,
@@ -211,7 +293,7 @@ where
     }
 }
 
-// The bit_xor operator `^`, as an alias of symmetric_difference().
+/// The bitxor operator `^`, as an alias of `symmetric_difference()`.
 impl<'a, 'b, T> BitXor<&'b HashSet<T>> for &'a HashSet<T>
 where
     T: Hash + Eq + Clone,
@@ -223,7 +305,7 @@ where
     }
 }
 
-// The bit_and operator `&`, as an alias of intersection().
+/// The bit_and operator `&`, as an alias of intersection().
 impl<'a, 'b, T> BitAnd<&'b HashSet<T>> for &'a HashSet<T>
 where
     T: Hash + Eq + Clone,
