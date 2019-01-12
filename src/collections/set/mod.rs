@@ -105,7 +105,6 @@ where
         self.hash_map.iter().map(|(k, _)| k)
     }
 
-    pub fn union<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> + 'a {
     /// Returns an iterator visiting items that exists in `self`, in `other`,
     /// or in both `self` and `other`
     ///
@@ -114,6 +113,7 @@ where
     /// # Parameters
     ///
     /// * `other` - The other set.
+    pub fn union<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
         // self ∪ (other \ self)
         self.iter().chain(other.difference(self))
     }
@@ -126,10 +126,7 @@ where
     ///
     /// * `other` - The other set.
     pub fn difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
-        Difference {
-            iter: self.iter(),
-            other,
-        }
+        self.iter().filter(move |item| !other.contains(item))
     }
 
     /// Returns an iterator visiting items that only exists in either `self` or
@@ -153,9 +150,8 @@ where
     ///
     /// * `other` - The other set.
     pub fn intersection<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
-        Intersection {
-            iter: self.iter(),
-            other,
+        self.iter().filter(move |item| other.contains(item))
+    }
         }
     }
 }
@@ -210,62 +206,6 @@ where
             s.insert(i);
         });
         s
-    }
-}
-
-// An iterable struct that represent the `difference` of two sets.
-// It holds an iterator over `self` and a reference of `other`. While iterated, it returns each item(s)
-// that exists in `self` but not in `other`.
-struct Difference<'a, T, I>
-where
-    T: Hash + Eq,
-    I: Iterator<Item = &'a T>,
-{
-    iter: I,
-    other: &'a HashSet<T>,
-}
-
-impl<'a, T, I> Iterator for Difference<'a, T, I>
-where
-    T: Hash + Eq,
-    I: Iterator<Item = &'a T>,
-{
-    type Item = &'a T;
-    fn next(&mut self) -> Option<Self::Item> {
-        loop {
-            let item = self.iter.next()?;
-            if !self.other.contains(item) {
-                return Some(item);
-            }
-        }
-    }
-}
-
-// An iterable struct that represent the `intersection` of two sets.
-// It holds an iterator over `self` and a reference of `other`. While iterated, it returns each
-// item(s) that exists in both `self` and `other`
-struct Intersection<'a, T, I>
-where
-    T: Hash + Eq,
-    I: Iterator<Item = &'a T>,
-{
-    iter: I,
-    other: &'a HashSet<T>,
-}
-
-impl<'a, T, I> Iterator for Intersection<'a, T, I>
-where
-    T: Hash + Eq,
-    I: Iterator<Item = &'a T>,
-{
-    type Item = &'a T;
-    fn next(&mut self) -> Option<Self::Item> {
-        loop {
-            let item = self.iter.next()?;
-            if self.other.contains(item) {
-                return Some(item);
-            }
-        }
     }
 }
 
