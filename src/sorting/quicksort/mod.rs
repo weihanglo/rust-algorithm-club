@@ -30,12 +30,13 @@ pub fn quicksort_optimized(arr: &mut [i32]) {
 fn quicksort_helper_optimized(arr: &mut [i32], lo: isize, hi: isize) {
     if lo <= hi {
         let pivot = partition(arr, lo, hi);
-        if pivot - lo < hi - pivot {                      // 1
-          quicksort_helper_optimized(arr, lo, pivot - 1);
-          quicksort_helper_optimized(arr, pivot + 1, hi);
+        if pivot - lo < hi - pivot {
+            // 1
+            quicksort_helper_optimized(arr, lo, pivot - 1);
+            quicksort_helper_optimized(arr, pivot + 1, hi);
         } else {
-          quicksort_helper_optimized(arr, pivot + 1, hi);
-          quicksort_helper_optimized(arr, lo, pivot - 1);
+            quicksort_helper_optimized(arr, pivot + 1, hi);
+            quicksort_helper_optimized(arr, lo, pivot - 1);
         }
     }
 }
@@ -109,9 +110,9 @@ fn quicksort_helper_3way(arr: &mut [i32], lo: isize, hi: isize) {
 /// Return smaller and larger index. (to avoid redundant work on identical elements)
 fn partition_3way(arr: &mut [i32], lo: isize, hi: isize) -> (isize, isize) {
     let pivot = arr[hi as usize];
-    let mut i = lo;         // smaller
-    let mut j = lo;         // equal
-    let mut k = hi;         // large
+    let mut i = lo; // smaller
+    let mut j = lo; // equal
+    let mut k = hi; // large
 
     while j <= k {
         if arr[j as usize] < pivot {
@@ -138,7 +139,7 @@ fn partition_3way(arr: &mut [i32], lo: isize, hi: isize) -> (isize, isize) {
 /// Quicksort with Hoare parition scheme
 pub fn quicksort_hoare(arr: &mut [i32]) {
     if arr.is_empty() {
-        return
+        return;
     }
     let hi = arr.len() - 1;
     quicksort_helper_hoare(arr, 0, hi);
@@ -200,7 +201,6 @@ mod manual_tco {
     use super::*;
     base_cases!(quicksort_manual_tco);
 }
-
 
 #[cfg(test)]
 mod three_way {

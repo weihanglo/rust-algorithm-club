@@ -4,7 +4,8 @@ pub fn heapsort(arr: &mut [i32]) {
     // This procedure would build a valid max-heap.
     // (or min-heap for sorting descendantly)
     let end = arr.len();
-    for start in (0..end / 2).rev() { // Skip leaf nodes (end / 2).
+    for start in (0..end / 2).rev() {
+        // Skip leaf nodes (end / 2).
         sift_down(arr, start, end - 1);
     }
 

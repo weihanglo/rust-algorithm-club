@@ -9,7 +9,8 @@
 ///
 /// [1]: https://doc.rust-lang.org/std/primitive.slice.html#method.binary_search
 pub fn binary_search<T>(arr: &[T], target: &T) -> Result<usize, usize>
-    where T: PartialOrd
+where
+    T: PartialOrd,
 {
     let mut size = arr.len();
     if size == 0 {

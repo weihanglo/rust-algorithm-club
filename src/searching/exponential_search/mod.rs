@@ -7,7 +7,8 @@ use crate::searching::binary_search;
 ///
 /// [1]: ./fn.binary_search.html
 pub fn exponential_search<T>(arr: &[T], target: &T) -> Result<usize, usize>
-    where T: PartialOrd
+where
+    T: PartialOrd,
 {
     let size = arr.len();
     if size == 0 {

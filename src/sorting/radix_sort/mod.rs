@@ -9,11 +9,11 @@ pub fn radix_sort(arr: &mut [i32]) {
     // 2. Started from least significant digit (rightmost).
     let mut digit = 1;
     // 3. Find the maximum value to determine break point of the loop.
-    let max_value = arr         // 3
-      .iter()
-      .max()
-      .unwrap_or(&0)
-      .clone();
+    let max_value = arr // 3
+        .iter()
+        .max()
+        .unwrap_or(&0)
+        .clone();
     // 4. Sorting subroutine (use counting sort).
     while digit <= max_value {
         counting_sort(arr, 0, 9, |t| (t / digit % radix) as usize);

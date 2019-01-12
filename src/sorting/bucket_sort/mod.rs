@@ -5,9 +5,10 @@
 ///
 /// Ref: https://codereview.stackexchange.com/a/145124
 pub fn bucket_sort<H, F, T>(arr: &mut [T], hasher: F)
-    where H: Ord,
-          F: Fn(&T) -> H,
-          T: Ord + Clone,
+where
+    H: Ord,
+    F: Fn(&T) -> H,
+    T: Ord + Clone,
 {
     // 1. Create buckets.
     let mut buckets: Vec<Bucket<H, T>> = Vec::new();
@@ -28,10 +29,13 @@ pub fn bucket_sort<H, F, T>(arr: &mut [T], hasher: F)
     }
 
     // 3. Iterate all buckets and flatten their internal collections.
-    let ret = buckets.into_iter().flat_map(|mut bucket| {
-        bucket.values.sort(); // We use built-in sorting here.
-        bucket.values
-    }).collect::<Vec<T>>();
+    let ret = buckets
+        .into_iter()
+        .flat_map(|mut bucket| {
+            bucket.values.sort(); // We use built-in sorting here.
+            bucket.values
+        })
+        .collect::<Vec<T>>();
 
     // 4. Clone back to original array.
     arr.clone_from_slice(&ret);
