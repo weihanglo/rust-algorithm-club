@@ -216,7 +216,7 @@ where
 {
     type Output = HashSet<T>;
 
-    fn bitor(self, rhs: &'b HashSet<T>) -> HashSet<T> {
+    fn bitor(self, rhs: &'b HashSet<T>) -> Self::Output {
         self.union(&rhs).cloned().collect()
     }
 }
@@ -228,7 +228,7 @@ where
 {
     type Output = HashSet<T>;
 
-    fn sub(self, rhs: &'b HashSet<T>) -> HashSet<T> {
+    fn sub(self, rhs: &'b HashSet<T>) -> Self::Output {
         self.difference(&rhs).cloned().collect()
     }
 }
@@ -240,7 +240,7 @@ where
 {
     type Output = HashSet<T>;
 
-    fn bitxor(self, rhs: &'b HashSet<T>) -> HashSet<T> {
+    fn bitxor(self, rhs: &'b HashSet<T>) -> Self::Output {
         self.symmetric_difference(&rhs).cloned().collect()
     }
 }
@@ -252,7 +252,7 @@ where
 {
     type Output = HashSet<T>;
 
-    fn bitand(self, rhs: &'b HashSet<T>) -> HashSet<T> {
+    fn bitand(self, rhs: &'b HashSet<T>) -> Self::Output {
         self.intersection(&rhs).cloned().collect()
     }
 }
