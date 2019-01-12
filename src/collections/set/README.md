@@ -9,7 +9,7 @@
 
 > 本次實作的程式碼置於在 [rust_algorithm_club::collections::HashSet][doc-hash-set] API 文件中。
 
-[doc-hash-set]: /doc/rust_algorithm_club/collections/struct.HashSet.html
+[doc-hash-set]: https://rust-algo.club/doc/rust_algorithm_club/collections/struct.HashSet.html
 
 ## 架構設計
 
@@ -319,7 +319,7 @@ pub fn is_subset(&self, other: &HashSet<T>) -> bool {
 }
 ```
 
-`is_spuerset` 檢查 `self` 是否為 `other` 的超集就更簡單了，只要把 `is_subset` 反過來使用就行了。
+`is_superset` 檢查 `self` 是否為 `other` 的超集就更簡單了，只要把 `is_subset` 反過來使用就行了。
 
 ```rust
 pub fn is_superset(&self, other: &HashSet<T>) -> bool {
@@ -383,7 +383,7 @@ where
 - `A >= B`：效果同 `is_superset`，A 是否為 B 的超集 A ⊇ B。
 - `A > B`：A 是否為 B 的超集且不等於 B，等同於 A ⊃ B。
 
-但眼尖的 Rustacean 肯定會發現，[`std::ops`][rust-ops] 裡面根本沒有 `lt`、`le`、`gt`、`ge` 這些比較運算子。Rust 的「比較」是透過實作幾個 Trait 後，自動推導生成的方法，這些 trait 放在 [`std::cmp`][rust-cmp] module 中，分別是[`Eq`][rust-eq]、[`ParitalEq`][rust-partialeq]、[`Ord`][rust-ord]，以及 [`ParitalOrd`][rust-partialord]。
+但眼尖的 Rustacean 肯定會發現，[`std::ops`][rust-ops] 裡面根本沒有 `lt`、`gt` 等比較運算子。Rust 的「比較」是透過實作幾個 Trait 後，自動推導生成的方法，這些 trait 放在 [`std::cmp`][rust-cmp] module 中，分別是[`Eq`][rust-eq]、[`ParitalEq`][rust-partialeq]、[`Ord`][rust-ord]，以及 [`ParitalOrd`][rust-partialord]。
 
 在開始介紹如何實作比較前，先讓複習一下離散數學學到的二元關係：
 
@@ -394,7 +394,7 @@ where
 - 傳遞性（Transitive）：對所有 x, y, z ∈ A ，若 x ∼ y 且 y ∼ z 則 x ∼ z。
 - 反對稱（Antisymmetric）：對所有 x, y ∈ A，若 x ∼ y 且 x ≠ y 則 y ∼ x 不成立。
 
-Rust 中的相等關係有其理論背景，`Eq` 就是數學上的 [Equivalance relation][wiki-total-eq]，須符合自反性、對稱性，及傳遞性；與之對應的是 `PartialEq`，[Partial equivalance][wiki-partial-eq] 具有對稱性和傳遞性，但並無自反性，有名的例子是 [IEEE754 的浮點數][ieee-754] 定義了 `NaN == NaN -> false`，浮點數因此不符合自反性定義。
+Rust 中的相等關係有其理論背景，`Eq` 就是數學上的 [Equivalence relation][wiki-total-eq]，須符合自反性、對稱性，及傳遞性；與之對應的是 `PartialEq`，[Partial equivalence][wiki-partial-eq] 具有對稱性和傳遞性，但並無自反性，有名的例子是 [IEEE754 的浮點數][ieee-754] 定義了 `NaN == NaN -> false`，浮點數因此不符合自反性定義。
 
 回到集合，集合論中的集合相等（set equality）定義為：x = y ⇒ ∀z, (z ∈ x ⇔ z ∈ y)，也就所有屬於集合 x 的元素必屬於集合 y，反之亦然。因此，集合相等具有自反性、對稱性、傳遞性。實作 `==` 運算子，我們會
 
