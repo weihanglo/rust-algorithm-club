@@ -152,7 +152,54 @@ where
     pub fn intersection<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
         self.iter().filter(move |item| other.contains(item))
     }
+
+    /// Returns true if `self` has no elements in common with `other`.
+    ///
+    /// This is equivalent to checking for an empty intersection, which means
+    /// their intersection is the empty set ∅.
+    ///
+    /// # Parameters
+    ///
+    /// * `other` - The other set.
+    ///
+    /// # Complexity
+    ///
+    /// Linear in the size of `self`.
+    pub fn is_disjoint(&self, other: &HashSet<T>) -> bool {
+        self.intersection(other).count() == 0
+    }
+
+    /// Returns true if `other` contains at least all elements in `self`.
+    ///
+    /// This is equivalent to `self ⊆ other` in mathematics.
+    ///
+    /// # Parameters
+    ///
+    /// * `other` - The other set.
+    ///
+    /// # Complexity
+    ///
+    /// Linear in the size of `self`.
+    pub fn is_subset(&self, other: &HashSet<T>) -> bool {
+        if self.len() > other.len() {
+            return false;
         }
+        self.iter().all(|item| other.contains(&item))
+    }
+
+    /// Returns true if `self` contains at least all elements in `other`.
+    ///
+    /// This is equivalent to `self ⊇ other` in mathematics.
+    ///
+    /// # Parameters
+    ///
+    /// * `other` - The other set.
+    ///
+    /// # Complexity
+    ///
+    /// Linear in the size of `other`.
+    pub fn is_superset(&self, other: &HashSet<T>) -> bool {
+        other.is_subset(self)
     }
 }
 
