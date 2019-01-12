@@ -334,8 +334,9 @@ where
 }
 
 #[cfg(test)]
-mod hash_set {
-    use super::HashSet;
+mod basics {
+    use super::*;
+
     #[test]
     fn basic() {
         let s: HashSet<String> = HashSet::new();
@@ -423,36 +424,228 @@ mod hash_set {
         assert!(s1.contains("rat"));
         assert_eq!(s1.len(), 3);
     }
+}
 
-    #[test]
-    fn eq() {
-        let set: HashSet<_> = ["cat", "dog", "rat"].iter().cloned().collect();
-
-        let identical: HashSet<_> = ["cat", "dog", "rat"].iter().cloned().collect();
-        assert!(set == identical, "sets of identical elements are equal");
-
-        let reordered: HashSet<_> = ["rat", "cat", "dog"].iter().cloned().collect();
-        assert!(set == reordered, "order of elements doesn't matter");
-
-        let different: HashSet<_> = ["cat", "dog", "elephant"].iter().cloned().collect();
-        assert!(set != different);
-
-        let superset: HashSet<_> = ["cat", "dog", "rat", "elephant"].iter().cloned().collect();
-        assert!(set != superset);
-
-        let subset: HashSet<_> = ["cat"].iter().cloned().collect();
-        assert!(set != subset);
-    }
+#[cfg(test)]
+mod set_relations {
+    use super::*;
 
     #[test]
     fn union() {
+        // ∅ ∪ ∅ = ∅
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        let union = s1.union(&s2);
+        assert_eq!(union.count(), 0, "∅ ∪ ∅ = ∅");
+
+        // ∅ ∪ {cat} = {cat}
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let union: HashSet<_> = s1.union(&s2).cloned().collect();
+        let expect: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(union == expect);
+
+        // {cat} ∪ ∅ = {cat}
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        let union: HashSet<_> = s1.union(&s2).cloned().collect();
+        let expect: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(union == expect);
+
+        // {cat,dog} ∪ {cat,rat} = {cat,dot,rat}
         let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
         let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
         let union: HashSet<_> = s1.union(&s2).cloned().collect();
-
         let expect: HashSet<&str> = ["cat", "dog", "rat"].iter().cloned().collect();
-
         assert!(union == expect);
+    }
+
+    #[test]
+    fn intersection() {
+        // ∅ ∩ ∅ = ∅
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        let intersection = s1.intersection(&s2);
+        assert_eq!(intersection.count(), 0, "∅ ∩ ∅ = ∅");
+
+        // ∅ ∩ {cat} = ∅
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let intersection = s1.intersection(&s2);
+        assert_eq!(intersection.count(), 0);
+
+        // {cat} ∩ ∅ = ∅
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        let intersection = s1.intersection(&s2);
+        assert_eq!(intersection.count(), 0);
+
+        // {cat,dog} ∩ {cat,rat} = {cat}
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
+        let intersection: HashSet<_> = s1.intersection(&s2).cloned().collect();
+        let expect: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(intersection == expect);
+    }
+
+    #[test]
+    fn difference() {
+        // ∅ \ ∅ = ∅
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        let difference = s1.difference(&s2);
+        assert_eq!(difference.count(), 0, r"∅ \ ∅ = ∅");
+
+        // ∅ \ {cat} = ∅
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let difference = s1.difference(&s2);
+        assert_eq!(difference.count(), 0);
+
+        // {cat} \ ∅  = {cat}
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        let difference: HashSet<_> = s1.difference(&s2).cloned().collect();
+        let expect: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(difference == expect);
+
+        // {cat,dog} \ {cat,rat} = {dog}
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
+        let difference: HashSet<_> = s1.difference(&s2).cloned().collect();
+        let expect: HashSet<&str> = ["dog"].iter().cloned().collect();
+        assert!(difference == expect);
+    }
+
+    #[test]
+    fn symmetric_difference() {
+        // ∅ △ ∅ = ∅
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        let symmetric_difference = s1.symmetric_difference(&s2);
+        assert_eq!(symmetric_difference.count(), 0, "∅ △ ∅ = ∅");
+
+        // ∅ △ {cat} = {cat}
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let symmetric_difference: HashSet<_> = s1.symmetric_difference(&s2).cloned().collect();
+        let expect: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(symmetric_difference == expect);
+
+        // {cat} △ ∅ = {cat}
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        let symmetric_difference: HashSet<_> = s1.symmetric_difference(&s2).cloned().collect();
+        let expect: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(symmetric_difference == expect);
+
+        // {cat,dog} △ {cat,rat} = {dog, rat}
+        let s1: HashSet<_> = ["cat", "dog"].iter().cloned().collect();
+        let s2: HashSet<_> = ["cat", "rat"].iter().cloned().collect();
+        let symmetric_difference: HashSet<_> = s1.symmetric_difference(&s2).cloned().collect();
+        let expect: HashSet<&str> = ["dog", "rat"].iter().cloned().collect();
+        assert!(symmetric_difference == expect);
+    }
+
+    #[test]
+    fn is_disjoint() {
+        // ∅, ∅ are disjoint.
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        assert!(s1.is_disjoint(&s2), "∅, ∅ are disjoint");
+
+        // ∅, {cat} are disjoint.
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(s1.is_disjoint(&s2), "∅, {cat} are disjoint");
+        assert!(s2.is_disjoint(&s1), "∅, {cat} are disjoint");
+
+        // {rat}, {cat} are disjoint.
+        let s1: HashSet<&str> = ["rat"].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(s1.is_disjoint(&s2));
+
+        // {cat}, {cat} are not disjoint.
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert_eq!(s1.is_disjoint(&s2), false);
+        assert_eq!(s2.is_disjoint(&s1), false);
+    }
+
+    #[test]
+    fn is_subset() {
+        // ∅ ⊆ ∅
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        assert!(s1.is_subset(&s2), "∅ ⊆ ∅");
+        assert!(s2.is_subset(&s1), "∅ ⊆ ∅");
+
+        // ∀𝑨: ∅ ⊆ 𝑨
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(s1.is_subset(&s2), "∀𝑨: ∅ ⊆ 𝑨");
+
+        // ∀𝑨, 𝑨 ≠ ∅: 𝑨 ⊈ ∅
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        assert_eq!(
+            s1.is_subset(&s2),
+            false,
+            "∀𝑨, 𝑨 ≠ ∅: 𝑨 ⊈ ∅"
+        );
+
+        // {cat} ⊆ {cat}
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(s1.is_subset(&s2));
+
+        // {cat} ⊆ {cat,rat}
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat", "rat"].iter().cloned().collect();
+        assert!(s1.is_subset(&s2));
+
+        // {cat,rat} ⊈ {cat}
+        let s1: HashSet<&str> = ["cat", "rat"].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert_eq!(s1.is_subset(&s2), false);
+    }
+
+    #[test]
+    fn is_superset() {
+        // ∅ ⊇ ∅
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        assert!(s1.is_superset(&s2), "∅ ⊇ ∅");
+        assert!(s2.is_superset(&s1), "∅ ⊇ ∅");
+
+        // ∀𝑨, 𝑨 ≠ ∅: ∅ ⊉ 𝑨
+        let s1: HashSet<&str> = [].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert_eq!(
+            s1.is_superset(&s2),
+            false,
+            "∀𝑨, 𝑨 ≠ ∅: ∅ ⊉ 𝑨"
+        );
+
+        // ∀𝑨: 𝑨 ⊇ ∅
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = [].iter().cloned().collect();
+        assert_eq!(s1.is_superset(&s2), true, "∀𝑨: 𝑨 ⊇ ∅");
+
+        // {cat} ⊇ {cat}
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(s1.is_superset(&s2));
+
+        // {cat} ⊉ {cat,rat}
+        let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat", "rat"].iter().cloned().collect();
+        assert_eq!(s1.is_superset(&s2), false);
+
+        // {cat,rat} ⊇ {cat}
+        let s1: HashSet<&str> = ["cat", "rat"].iter().cloned().collect();
+        let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
+        assert!(s1.is_superset(&s2));
     }
 
     #[test]
