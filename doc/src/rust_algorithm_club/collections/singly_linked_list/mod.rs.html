@@ -467,6 +467,7 @@
 <span id="467">467</span>
 <span id="468">468</span>
 <span id="469">469</span>
+<span id="470">470</span>
 </pre><pre class="rust ">
 <span class="doccomment">/// A singly-linked list with owned nodes.</span>
 <span class="doccomment">///</span>
@@ -592,7 +593,7 @@
                 <span class="comment">// Assign current node back to the list.</span>
                 <span class="kw-2">*</span><span class="ident">curr</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">node</span>);
             }
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">pos</span> <span class="op">-</span> <span class="ident">pos_</span>)
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">pos</span> <span class="op">-</span> <span class="ident">pos_</span>),
         }
         <span class="prelude-val">Ok</span>(())
     }
@@ -625,7 +626,7 @@
                 <span class="kw-2">*</span><span class="ident">curr</span> <span class="op">=</span> <span class="ident">node</span>.<span class="ident">next</span>;
                 <span class="prelude-val">Some</span>(<span class="ident">node</span>.<span class="ident">elem</span>)
             }
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 
@@ -675,12 +676,16 @@
 
     <span class="doccomment">/// Creates an iterator that yields immutable reference of each element.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Iter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Iter</span> { <span class="ident">next</span>: <span class="self">self</span>.<span class="ident">head</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">node</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">node</span>) }
+        <span class="ident">Iter</span> {
+            <span class="ident">next</span>: <span class="self">self</span>.<span class="ident">head</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">node</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">node</span>),
+        }
     }
 
     <span class="doccomment">/// Creates an iterator that yields mutable reference of each element.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">IterMut</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">IterMut</span> { <span class="ident">next</span>: <span class="self">self</span>.<span class="ident">head</span>.<span class="ident">as_mut</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">node</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">node</span>) }
+        <span class="ident">IterMut</span> {
+            <span class="ident">next</span>: <span class="self">self</span>.<span class="ident">head</span>.<span class="ident">as_mut</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">node</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">node</span>),
+        }
     }
 }
 
@@ -742,9 +747,7 @@
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">len</span>() <span class="op">!=</span> <span class="ident">other</span>.<span class="ident">len</span>() {
             <span class="kw">return</span> <span class="bool-val">false</span>;
         }
-        <span class="self">self</span>.<span class="ident">iter</span>()
-            .<span class="ident">zip</span>(<span class="ident">other</span>.<span class="ident">iter</span>())
-            .<span class="ident">all</span>(<span class="op">|</span><span class="ident">pair</span><span class="op">|</span> <span class="ident">pair</span>.<span class="number">0</span> <span class="op">==</span> <span class="ident">pair</span>.<span class="number">1</span>)
+        <span class="self">self</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">other</span>.<span class="ident">iter</span>()).<span class="ident">all</span>(<span class="op">|</span><span class="ident">pair</span><span class="op">|</span> <span class="ident">pair</span>.<span class="number">0</span> <span class="op">==</span> <span class="ident">pair</span>.<span class="number">1</span>)
     }
 }
 
@@ -839,7 +842,6 @@
         <span class="ident">res</span>.<span class="ident">push_front</span>(<span class="number">1</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">l</span> <span class="op">==</span> <span class="ident">res</span>);
     }
-
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">iter</span>() {

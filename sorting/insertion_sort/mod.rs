@@ -17,9 +17,7 @@ pub fn binary_insertion_sort(arr: &mut [i32]) {
     for i in 1..arr.len() {
         let val = arr[i];
         let mut j = i;
-        let pos = arr[..i]
-            .binary_search(&val)
-            .unwrap_or_else(|pos| pos);
+        let pos = arr[..i].binary_search(&val).unwrap_or_else(|pos| pos);
         // Swap all elements until specific position.
         while j > pos {
             arr.swap(j - 1, j);
@@ -39,4 +37,3 @@ mod binary_insertion {
     use super::*;
     base_cases!(binary_insertion_sort);
 }
-

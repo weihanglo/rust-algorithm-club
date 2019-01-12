@@ -77,22 +77,17 @@ macro_rules! base_cases {
 
             for _ in 0..100 {
                 let len = rand::random::<usize>() % 500;
-                let mut arr: Vec<_> = (0..len)
-                    .map(|_| rand::random::<i32>() % 2000)
-                    .collect();
+                let mut arr: Vec<_> = (0..len).map(|_| rand::random::<i32>() % 2000).collect();
                 arr.sort_unstable();
                 arr.dedup();
 
                 (0..50).for_each(|_| {
                     let target = rand::random::<i32>() % 4000 - 1000;
-                    assert_eq!(
-                        arr.binary_search(&target).ok(),
-                        $algo(&arr, &target),
-                    )
+                    assert_eq!(arr.binary_search(&target).ok(), $algo(&arr, &target),)
                 })
             }
         }
-    }
+    };
 }
 
 /// Test cases for binary search algorithm and its variants.
@@ -138,10 +133,7 @@ macro_rules! sorted_no_duplicate_cases {
 
         #[test]
         fn multiple() {
-            let arr = &[
-                0, 2, 4, 6, 8,
-                10, 12, 14, 16 ,18,
-            ];
+            let arr = &[0, 2, 4, 6, 8, 10, 12, 14, 16, 18];
             let target = &0;
             let expected = Ok(0);
             assert_eq!($algo(arr, target), expected);
@@ -157,7 +149,6 @@ macro_rules! sorted_no_duplicate_cases {
             let target = &6;
             let expected = Ok(3);
             assert_eq!($algo(arr, target), expected);
-
 
             let target = &1;
             let expected = Err(1);
@@ -205,20 +196,15 @@ macro_rules! sorted_no_duplicate_cases {
 
             for _ in 0..100 {
                 let len = rand::random::<usize>() % 500;
-                let mut arr: Vec<_> = (0..len)
-                    .map(|_| rand::random::<i32>() % 2000)
-                    .collect();
+                let mut arr: Vec<_> = (0..len).map(|_| rand::random::<i32>() % 2000).collect();
                 arr.sort_unstable();
                 arr.dedup();
 
                 (0..50).for_each(|_| {
                     let target = rand::random::<i32>() % 4000 - 1000;
-                    assert_eq!(
-                        arr.binary_search(&target),
-                        $algo(&arr, &target),
-                    )
+                    assert_eq!(arr.binary_search(&target), $algo(&arr, &target),)
                 })
             }
         }
-    }
+    };
 }

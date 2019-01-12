@@ -38,11 +38,11 @@
     <span class="comment">// 2. Started from least significant digit (rightmost).</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">digit</span> <span class="op">=</span> <span class="number">1</span>;
     <span class="comment">// 3. Find the maximum value to determine break point of the loop.</span>
-    <span class="kw">let</span> <span class="ident">max_value</span> <span class="op">=</span> <span class="ident">arr</span>         <span class="comment">// 3</span>
-      .<span class="ident">iter</span>()
-      .<span class="ident">max</span>()
-      .<span class="ident">unwrap_or</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
-      .<span class="ident">clone</span>();
+    <span class="kw">let</span> <span class="ident">max_value</span> <span class="op">=</span> <span class="ident">arr</span> <span class="comment">// 3</span>
+        .<span class="ident">iter</span>()
+        .<span class="ident">max</span>()
+        .<span class="ident">unwrap_or</span>(<span class="kw-2">&amp;</span><span class="number">0</span>)
+        .<span class="ident">clone</span>();
     <span class="comment">// 4. Sorting subroutine (use counting sort).</span>
     <span class="kw">while</span> <span class="ident">digit</span> <span class="op">&lt;=</span> <span class="ident">max_value</span> {
         <span class="ident">counting_sort</span>(<span class="ident">arr</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="op">|</span><span class="ident">t</span><span class="op">|</span> (<span class="ident">t</span> <span class="op">/</span> <span class="ident">digit</span> <span class="op">%</span> <span class="ident">radix</span>) <span class="kw">as</span> <span class="ident">usize</span>);

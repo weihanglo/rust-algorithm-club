@@ -1,6 +1,6 @@
+use std::borrow::Borrow;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
-use std::borrow::Borrow;
 use std::mem;
 
 /// A hash map implemented with separate chaining collision resolution strategy.
@@ -18,7 +18,10 @@ use std::mem;
 ///
 /// [1]: https://doc.rust-lang.org/stable/std/collections/struct.HashMap.html
 /// [2]: https://en.cppreference.com/w/cpp/container/unordered_map
-pub struct HashMap<K, V> where K: Hash + Eq {
+pub struct HashMap<K, V>
+where
+    K: Hash + Eq,
+{
     buckets: Vec<Bucket<K, V>>,
     len: usize,
 }
@@ -33,15 +36,21 @@ const LOAD_FACTOR: f64 = 0.75;
 ///
 /// Would fail if `len` equals to zero.
 fn make_hash<X>(x: &X, len: usize) -> Option<usize>
-    where X: Hash + ?Sized,
+where
+    X: Hash + ?Sized,
 {
-    if len == 0 { return None; }
+    if len == 0 {
+        return None;
+    }
     let mut hasher = DefaultHasher::new();
     x.hash(&mut hasher);
     Some(hasher.finish() as usize % len)
 }
 
-impl<K, V> HashMap<K, V> where K: Hash + Eq {
+impl<K, V> HashMap<K, V>
+where
+    K: Hash + Eq,
+{
     /// Creates an empty map with capacity 0.
     ///
     /// The allocation is triggered at the first insertion occurs.
@@ -55,7 +64,7 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     ///
     /// * `cap`: The number of bucket in the map.
     pub fn with_capacity(cap: usize) -> Self {
-        let mut buckets: Vec<Bucket<K, V>> =  Vec::with_capacity(cap);
+        let mut buckets: Vec<Bucket<K, V>> = Vec::with_capacity(cap);
         for _ in 0..cap {
             buckets.push(Bucket::new());
         }
@@ -81,16 +90,17 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     /// [1]: https://doc.rust-lang.org/stable/std/borrow/trait.Borrow.html
     /// [2]: https://doc.rust-lang.org/stable/book/first-edition/borrow-and-asref.html
     pub fn get<Q>(&self, key: &Q) -> Option<&V>
-        where
-            K: Borrow<Q>,
-            Q: Hash + Eq + ?Sized
+    where
+        K: Borrow<Q>,
+        Q: Hash + Eq + ?Sized,
     {
         let index = self.make_hash(key)?;
-        self.buckets.get(index).and_then(|bucket|
-            bucket.iter()
+        self.buckets.get(index).and_then(|bucket| {
+            bucket
+                .iter()
                 .find(|(k, _)| key == k.borrow())
                 .map(|(_, v)| v)
-        )
+        })
     }
 
     /// Gets a mutable reference to the value under the specified key.
@@ -99,16 +109,17 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     ///
     /// Constant (amortized).
     pub fn get_mut<Q>(&mut self, key: &Q) -> Option<&mut V>
-        where
-            K: Borrow<Q>,
-            Q: Hash + Eq + ?Sized
+    where
+        K: Borrow<Q>,
+        Q: Hash + Eq + ?Sized,
     {
         let index = self.make_hash(key)?;
-        self.buckets.get_mut(index).and_then(|bucket|
-            bucket.iter_mut()
+        self.buckets.get_mut(index).and_then(|bucket| {
+            bucket
+                .iter_mut()
                 .find(|(k, _)| key == k.borrow())
                 .map(|(_, v)| v)
-        )
+        })
     }
 
     /// Inserts key-value pair into the map. Replaces previous value if
@@ -143,13 +154,14 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
         let index = self
             .make_hash(&key)
             .expect("Failed to make a hash while insertion");
-        let bucket = self.buckets
+        let bucket = self
+            .buckets
             .get_mut(index)
             .expect(&format!("Failed to get bucket[{}] while insetion", index));
         match bucket.iter_mut().find(|(k, _)| *k == key) {
-            Some((_ , v)) =>  Some(mem::replace(v, value)),
+            Some((_, v)) => Some(mem::replace(v, value)),
             None => {
-                bucket.push((key , value));
+                bucket.push((key, value));
                 self.len += 1; //  Length increase by one.
                 None
             }
@@ -169,19 +181,23 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     ///
     /// Constant. This operation won't shrink to fit automatically.
     pub fn remove<Q>(&mut self, key: &Q) -> Option<V>
-        where
-            K: Borrow<Q>,
-            Q: Hash + Eq + ?Sized
+    where
+        K: Borrow<Q>,
+        Q: Hash + Eq + ?Sized,
     {
         let index = self.make_hash(key)?;
-        self.buckets.get_mut(index).and_then(|bucket| {
-            bucket.iter_mut()
-                .position(|(k, _)| key == (*k).borrow())
-                .map(|index| bucket.swap_remove(index).1) // Extract the pair.
-        }).map(|v| {
-            self.len -= 1; // Length decreases by one.
-            v
-        })
+        self.buckets
+            .get_mut(index)
+            .and_then(|bucket| {
+                bucket
+                    .iter_mut()
+                    .position(|(k, _)| key == (*k).borrow())
+                    .map(|index| bucket.swap_remove(index).1) // Extract the pair.
+            })
+            .map(|v| {
+                self.len -= 1; // Length decreases by one.
+                v
+            })
     }
 
     /// Removes all key-value pairs but keeps the allocated memory for reuse.
@@ -244,15 +260,18 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
         // Initialization.
         if capacity == 0 {
             self.buckets.push(Bucket::new());
-            return
+            return;
         }
 
         if entry_count as f64 / capacity as f64 > LOAD_FACTOR {
             // Resize. Rehash. Reallocate!
             let mut new_map = Self::with_capacity(capacity << 1);
-            self.buckets.iter_mut()
+            self.buckets
+                .iter_mut()
                 .flat_map(|bucket| mem::replace(bucket, vec![]))
-                .for_each(|(k, v)| { new_map.insert(k, v); });
+                .for_each(|(k, v)| {
+                    new_map.insert(k, v);
+                });
             *self = new_map;
         }
     }
@@ -260,15 +279,14 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
     /// Creates an iterator that yields immutable reference of each element
     /// in arbitrary order.
     pub fn iter(&self) -> impl Iterator<Item = (&K, &V)> {
-        self.buckets.iter()
-            .flat_map(|b| b)
-            .map(|(k, v)| (k, v))
+        self.buckets.iter().flat_map(|b| b).map(|(k, v)| (k, v))
     }
 
     /// Creates an iterator that yields mutable reference of each element
     /// in arbitrary order.
     pub fn iter_mut(&mut self) -> impl Iterator<Item = (&K, &mut V)> {
-        self.buckets.iter_mut()
+        self.buckets
+            .iter_mut()
             .flat_map(|b| b)
             .map(|(k, v)| (&*k, v))
     }
@@ -282,10 +300,14 @@ impl<K, V> HashMap<K, V> where K: Hash + Eq {
 }
 
 impl<K, V> Default for HashMap<K, V>
-    where K: Hash + Eq
+where
+    K: Hash + Eq,
 {
     fn default() -> Self {
-        Self { buckets: Vec::<Bucket<K, V>>::new(), len: 0 }
+        Self {
+            buckets: Vec::<Bucket<K, V>>::new(),
+            len: 0,
+        }
     }
 }
 
@@ -348,7 +370,6 @@ mod separate_chaining {
         m.remove(&"rat");
         assert_eq!(m.len(), 0);
 
-
         // Use String as key
         let mut m = HashMap::new();
         m.insert("cat".to_string(), "cute");
@@ -375,7 +396,6 @@ mod separate_chaining {
         assert_eq!(m.get(&"dog"), Some(&"loyal"));
         assert_eq!(m.get(&"rat"), None);
 
-
         // Use String as key (HashMap<String, &str>)
         let mut m = HashMap::new();
         m.insert("cat".to_string(), "cute");
@@ -386,7 +406,6 @@ mod separate_chaining {
         // Query with &str also work
         assert_eq!(m.get("dog"), Some(&"loyal"));
     }
-
 
     #[test]
     fn get_mut() {
@@ -401,7 +420,6 @@ mod separate_chaining {
         // Mutate the value
         m.get_mut(&"cat").map(|v| *v = "lazy");
         assert_eq!(m.get_mut(&"cat"), Some(&mut "lazy"));
-
 
         // Use String as key
         let mut m = HashMap::new();
@@ -494,36 +512,29 @@ mod separate_chaining {
 mod linear_probing {
     #[ignore]
     #[test]
-    fn basics() {
-    }
+    fn basics() {}
 
     #[ignore]
     #[test]
-    fn insert() {
-    }
+    fn insert() {}
 
     #[ignore]
     #[test]
-    fn remove() {
-    }
+    fn remove() {}
 
     #[ignore]
     #[test]
-    fn get() {
-    }
+    fn get() {}
 
     #[ignore]
     #[test]
-    fn get_mut() {
-    }
+    fn get_mut() {}
 
     #[ignore]
     #[test]
-    fn resize() {
-    }
+    fn resize() {}
 
     #[ignore]
     #[test]
-    fn clear() {
-    }
+    fn clear() {}
 }

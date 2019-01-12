@@ -122,7 +122,7 @@ impl<T> SinglyLinkedList<T> {
                 // Assign current node back to the list.
                 *curr = Some(node);
             }
-            None => return Err(pos - pos_)
+            None => return Err(pos - pos_),
         }
         Ok(())
     }
@@ -155,7 +155,7 @@ impl<T> SinglyLinkedList<T> {
                 *curr = node.next;
                 Some(node.elem)
             }
-            None => None
+            None => None,
         }
     }
 
@@ -205,12 +205,16 @@ impl<T> SinglyLinkedList<T> {
 
     /// Creates an iterator that yields immutable reference of each element.
     pub fn iter(&self) -> Iter<T> {
-        Iter { next: self.head.as_ref().map(|node| &**node) }
+        Iter {
+            next: self.head.as_ref().map(|node| &**node),
+        }
     }
 
     /// Creates an iterator that yields mutable reference of each element.
     pub fn iter_mut(&mut self) -> IterMut<T> {
-        IterMut { next: self.head.as_mut().map(|node| &mut **node) }
+        IterMut {
+            next: self.head.as_mut().map(|node| &mut **node),
+        }
     }
 }
 
@@ -272,9 +276,7 @@ impl<T: PartialEq> PartialEq for SinglyLinkedList<T> {
         if self.len() != other.len() {
             return false;
         }
-        self.iter()
-            .zip(other.iter())
-            .all(|pair| pair.0 == pair.1)
+        self.iter().zip(other.iter()).all(|pair| pair.0 == pair.1)
     }
 }
 
@@ -369,7 +371,6 @@ mod tests {
         res.push_front(1);
         assert!(l == res);
     }
-
 
     #[test]
     fn iter() {

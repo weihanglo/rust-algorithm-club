@@ -13,13 +13,10 @@
 /// [num][1] crate would meet your needs.
 ///
 /// [1]: https://github.com/rust-num/num
-pub fn interpolation_search(
-    arr: &[i32],
-    target: &i32,
-) -> Result<usize, usize> {
+pub fn interpolation_search(arr: &[i32], target: &i32) -> Result<usize, usize> {
     // 1. Handle empty sequence.
     if arr.is_empty() {
-        return Err(0)
+        return Err(0);
     }
 
     // 2. Setup variable storing iteration informaion.
@@ -40,7 +37,7 @@ pub fn interpolation_search(
         //   b. target value is less than the lowest value
         //   c. target value exceeds the highest value
         if hi <= lo || *target < lo_val || *target > hi_val {
-            break
+            break;
         }
 
         // 3.2. The linear interpolation part
@@ -56,7 +53,7 @@ pub fn interpolation_search(
         } else if mid_val < *target {
             lo = interpolant + 1;
         } else {
-            break
+            break;
         }
     }
 

@@ -45,4 +45,3 @@ mod optimized {
     use super::*;
     base_cases!(bubble_sort_optimized);
 }
-

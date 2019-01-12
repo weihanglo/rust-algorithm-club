@@ -94,4 +94,3 @@ mod bottom_up {
     use super::*;
     base_cases!(mergesort_bottom_up);
 }
-
