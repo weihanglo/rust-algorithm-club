@@ -1,5 +1,6 @@
 use crate::collections::HashMap;
 use std::borrow::Borrow;
+use std::cmp::Ordering;
 use std::hash::Hash;
 use std::iter::FromIterator;
 use std::ops::{BitAnd, BitOr, BitXor, Sub};
@@ -237,6 +238,34 @@ where
             return false;
         }
         self.iter().all(|item| other.contains(&item))
+    }
+}
+
+/// A set is reflecxively equal to itself.
+impl<T> Eq for HashSet<T> where T: Hash + Eq {}
+
+impl<T> PartialOrd for HashSet<T>
+where
+    T: Hash + Eq,
+{
+    /// Compares sets to determine whether one is a subset of the other or not.
+    ///
+    /// # Parameters
+    ///
+    /// * `other` - The other set.
+    ///
+    /// # Complexity
+    ///
+    /// Linear in the size of `max(self, other)`.
+    fn partial_cmp(&self, other: &HashSet<T>) -> Option<Ordering> {
+        let is_subset = self.is_subset(other);
+        let same_size = self.len() == other.len();
+        match (is_subset, same_size) {
+            (true, true) => Some(Ordering::Equal),
+            (true, false) => Some(Ordering::Less),
+            (false, true) => None,
+            _ => Some(Ordering::Greater).filter(|_| self.is_superset(other)),
+        }
     }
 }
 
