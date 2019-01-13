@@ -92,7 +92,7 @@ Special-purpose sorts:
 - [Hash map](src/collections/hash_map)
 - [🚧 Ordered map](src/collections/ordered_map)
 - [🚧 Multimap](src/collections/multimap)
-- [🚧 Set](src/collections/set)
+- [Set](src/collections/set)
 
 ## Learning Resources
 

@@ -83,7 +83,7 @@
 - [雜湊表 Hash map](collections/hash_map)
 - [🚧 有序映射表 Ordered map](collections/ordered_map)
 - [🚧 多重映射表 Multimap](collections/multimap)
-- [🚧 集合 Set](collections/set)
+- [集合 Set](collections/set)
 
 ## 學習資源
 
