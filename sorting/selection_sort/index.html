@@ -145,7 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#a選擇排序-selection-sort" id="a選擇排序-selection-sort"><h1>選擇排序 Selection sort</h1></a>
+                        <a class="header" href="#選擇排序-selection-sort" id="選擇排序-selection-sort"><h1>選擇排序 Selection sort</h1></a>
 <p>Selection sort 是最易實作的入門排序法之一，會將資料分為 sorted pile 與 unsorted pile，每次從 unsorted pile 尋找最大／最小值，加入 sorted pile 中。</p>
 <p>Selection sort 的特性如下：</p>
 <ul>
@@ -154,7 +154,7 @@
 <li><strong>不穩定排序</strong>：排序後，相同鍵值的元素相對位置可能改變。</li>
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 </ul>
-<a class="header" href="#a步驟" id="a步驟"><h2>步驟</h2></a>
+<a class="header" href="#步驟" id="步驟"><h2>步驟</h2></a>
 <ol>
 <li>將資料分為 sorted pile 與 unsorted pile。</li>
 <li>從 unsorted pile 尋找最小值。</li>
@@ -166,7 +166,7 @@
 </blockquote>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif" alt="" /></p>
 <p><em>Joestape89 - CC BY-SA 3.0</em></p>
-<a class="header" href="#a說明" id="a說明"><h2>說明</h2></a>
+<a class="header" href="#說明" id="說明"><h2>說明</h2></a>
 <p>為什麼 naïve 的 selection sort 會是不穩定排序？</p>
 <p>假定有一個序列要遞增排序，其中有重複的 <code>2</code> 元素，我們將其標上 <code>2a</code>、<code>2b</code> 以利辨識。</p>
 <pre><code>[2a, 3, 4, 2b, 1]
@@ -184,7 +184,7 @@
 <p>有沒有發現，<code>2a</code> 與 <code>2b</code> 的相對順序顛倒了呢？</p>
 <p>首先，回想一下穩定排序的定義：<strong>相同鍵值的元素，排序後相對位置不改變。</strong></p>
 <p>問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 $O(1) $ insertion 的資料結構，不然就會多出額外 $O(n^2) $ 的寫入成本。</p>
-<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
+<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
 <tr><td> Worst        </td><td> $O(n^2) $ </td></tr>
 <tr><td> Best         </td><td> $O(n^2) $ </td></tr>
@@ -194,7 +194,7 @@
 <p>對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 $n - 1 $ 次比較，第二個 $n - 2 $ 次，總比較次數如下：</p>
 <p>$$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$</p>
 <p>因此無論序列是否排序完成，selection sort 仍需執行 $n^2 $ 次比較，時間複雜度為 $O(n^2) $。</p>
-<a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
+<a class="header" href="#實作" id="實作"><h2>實作</h2></a>
 <p>簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -218,10 +218,10 @@ pub fn selection_sort(arr: &amp;mut [i32]) {
 <li>外層迴圈在找到最小值之後，置換兩元素。</li>
 </ol>
 <p>眼尖的人會發現，內外兩層迴圈的 upper bound 都是 <code>len</code>，這樣是否內側迴圈會 out of bound？Rust 的 range operator（<code>core::ops::Range</code>）實作 <a href="https://doc.rust-lang.org/core/ops/struct.Range.html#impl-Iterator"><code>Iterator</code></a> trait 時，有檢查 <code>range.start &lt; range.end</code>，因此這個寫法並不會有出界問題，但會多跑一次無意義的迭代。</p>
-<a class="header" href="#a變形" id="a變形"><h2>變形</h2></a>
+<a class="header" href="#變形" id="變形"><h2>變形</h2></a>
 <a class="header" href="#heapsort" id="heapsort"><h3>Heapsort</h3></a>
 <p><a href="../heapsort/">Heapsort</a> 是一個高效的排序法，使用 selection sort 融合 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序的資料結構，讓時間複雜度進化至 $O(n \log n) $。更多詳情可以參考<a href="../heapsort/">這篇介紹</a>。</p>
-<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Selection_sort">Wiki: Selection sort</a></li>
 <li><a href="https://stackoverflow.com/questions/20761396/">Why Selection sort can be stable or unstable</a></li>

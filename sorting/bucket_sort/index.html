@@ -145,7 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#a桶排序-bucket-sort" id="a桶排序-bucket-sort"><h1>桶排序 Bucket sort</h1></a>
+                        <a class="header" href="#桶排序-bucket-sort" id="桶排序-bucket-sort"><h1>桶排序 Bucket sort</h1></a>
 <p><a href="https://en.wikipedia.org/wiki/Bucket_sort">Bucket sort</a>，是一個非比較排序。原理是建立一些桶子，每個桶子對應一資料區間，在將待排序資料分配到不同的桶中，桶子內部各自排序。由於並非<a href="https://en.wikipedia.org/wiki/Comparison_sort">比較排序</a>，使用 Bucket sort 需要事先知道資料的範圍與分佈，才能決定桶子對應的區間。</p>
 <p>Bucket sort 基本特性如下：</p>
 <ul>
@@ -154,7 +154,7 @@
 <li><strong>分配式排序</strong>：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。</li>
 <li><strong>預期分佈</strong>：資料為<strong>均勻分佈</strong>。</li>
 </ul>
-<a class="header" href="#a步驟" id="a步驟"><h2>步驟</h2></a>
+<a class="header" href="#步驟" id="步驟"><h2>步驟</h2></a>
 <p>假設要排序 $n $ 個元素的陣列，這些元素的值平均散落在某個<strong>已知的預期範圍內</strong>，例如 1 到 100。</p>
 <ol>
 <li><strong>Create buckets</strong>：建立 $k $ 個桶子（bucket）的陣列。每個桶子<strong>對應預期範圍的某區間</strong>，如第一個桶子放 1 到 10，第二個放 11 到 20。</li>
@@ -162,7 +162,7 @@
 <li><strong>Inner sort</strong>：排序所有非空的桶子。</li>
 <li><strong>Gather</strong>：依序走訪所有桶子，將桶內的元素放回原本的陣列中。</li>
 </ol>
-<a class="header" href="#a說明" id="a說明"><h2>說明</h2></a>
+<a class="header" href="#說明" id="說明"><h2>說明</h2></a>
 <p>以下用 ASCII diagram 視覺化解釋：</p>
 <p>這裡有一些整數，落在 1 至 100 之間。我們有 $n = 10 $ 的陣列要排序。</p>
 <pre><code>Original array
@@ -209,7 +209,7 @@
 |  6 |  9 | 14 | 28 | 36 | 37 | 71 | 74 | 91 | 96 |
 +-------------------------------------------------+
 </code></pre>
-<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
+<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
 <tr><td> Worst        </td><td> $O(n^2) $   </td></tr>
 <tr><td> Best         </td><td> $O(n + k) $ </td></tr>
@@ -240,7 +240,7 @@ $n $ = 資料筆數</p>
 <p>端看桶子總數而定，若桶子總數很大，比元素個數 $n $ 大得多，則桶子總數對執行時間的影響恐較劇烈，就算大多數為空桶子，仍須挨家挨戶查看是否需要執行桶內排序。</p>
 <a class="header" href="#space-complexity" id="space-complexity"><h3>Space Complexity</h3></a>
 <p>Bucket sort 須額外建立 $k $ 個桶子，每個桶子需要配置長度為 $n $ 的 array，因此空間複雜度為 $O(n \cdot k) $。如果以 dynamic array 實作 bucket，並考慮平攤分析（Amortized analysis），則空間複雜度降至 $O(n + k) $，這也是大多數人接受的分析結果，畢竟不會有人無聊到預先配置 $n \cdot k $ 個 empty bucket。</p>
-<a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
+<a class="header" href="#實作" id="實作"><h2>實作</h2></a>
 <a class="header" href="#bucket" id="bucket"><h3>Bucket</h3></a>
 <p>Bucket sort 有許多種各異的實作法，差異最大之處就是桶子 bucket 這部分。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -336,7 +336,7 @@ pub fn bucket_sort() {
 <li>由於要模擬 in-place 原地排序法的特性，將排序好的資料再次拷貝到 <code>arr</code> 上。這也是為什麼函式元素泛型 <code>T</code> 需要 <code>Clone</code> trait 的原因了。</li>
 </ol>
 <p>有關於步驟 2.2.，這部分可以用 <code>HashMap</code> 的變形 <a href="https://github.com/bluss/indexmap">IndexMap</a>（一個保存插入順序的有序 HashMap）保存雜湊值對應桶子的資訊，使得外界更容易依雜湊值找到桶子。但為了保持範例程式的簡潔，決定不引入第三方的 crate（Rust 語言第三方模組的代稱），且 <code>binary_search_by</code> 的複雜度為 $O(\log n) $，對 Bucket sort 最差複雜度並無影響。</p>
-<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Bucket_sort">Wiki: Bucket sort</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Amortized_analysis">Wiki: Amortized analysis</a></li>

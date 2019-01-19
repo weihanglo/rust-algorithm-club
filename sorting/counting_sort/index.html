@@ -145,7 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#a計數排序-counting-sort" id="a計數排序-counting-sort"><h1>計數排序 Counting sort</h1></a>
+                        <a class="header" href="#計數排序-counting-sort" id="計數排序-counting-sort"><h1>計數排序 Counting sort</h1></a>
 <p><a href="https://en.wikipedia.org/wiki/Counting_sort">Counting sort</a> 是一個特殊的整數排序法，被視為 <a href="../bucket_sort">Bucket sort</a> 的特例。原理是在已知整數範圍內，計算每個鍵值出現次數，並用額外的陣列保存（Count array）。最後將 Count array 的元素值作為排序資料的新 index。</p>
 <p>Counting sort 基本特性如下：</p>
 <ul>
@@ -157,13 +157,13 @@
 <li><strong>預期分佈</strong>：預期輸入資料是落在已知範圍內的整數（例如 0 到 k）。</li>
 <li><strong>適用範圍</strong>：僅適用於小範圍整數（額外空間需求大）。</li>
 </ul>
-<a class="header" href="#a步驟" id="a步驟"><h2>步驟</h2></a>
+<a class="header" href="#步驟" id="步驟"><h2>步驟</h2></a>
 <ol>
 <li><strong>Count occurrence</strong>：計算每個 key 的出現次數。</li>
 <li><strong>Prefix sum as start index</strong>：計算前綴和（Prefix sum），並作為該元素的 start index。</li>
 <li><strong>Copy output</strong>：利用步驟二的前綴和，遍歷輸入資料，取得元素排序後的索引。</li>
 </ol>
-<a class="header" href="#a說明" id="a說明"><h2>說明</h2></a>
+<a class="header" href="#說明" id="說明"><h2>說明</h2></a>
 <p>這裡有資料需要透過正整數的 key 來排序。key 的範圍在 0 - 9 之間，格式為 <code>(key, value)</code>。</p>
 <pre><code>Input: (1, A) (5, B) (8, C) (2, D) (2, E) (9, F)
 </code></pre>
@@ -221,7 +221,7 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 +--------+--------+--------+--------+--------+--------+
 </code></pre>
 <p>這樣就完成排序了。此外，觀察 <strong>(2, D)</strong> 與 <strong>(2, E)</strong> 排序前後的位置，會發現 counting sort 是個實實在在的穩定排序，很棒。</p>
-<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
+<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
 <tr><td> Worst        </td><td> $O(n + k) $ </td></tr>
 <tr><td> Best         </td><td> $O(n + k) $ </td></tr>
@@ -238,7 +238,7 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 <blockquote>
 <p>如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 $O(k) $，但也因此成為不穩定排序法。</p>
 </blockquote>
-<a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
+<a class="header" href="#實作" id="實作"><h2>實作</h2></a>
 <p>由於 Counting sort 屬於分布式排序（Distribution sort），這裡使用泛型，以彰顯分布式排序的特色。</p>
 <a class="header" href="#function-signature" id="function-signature"><h3>Function Signature</h3></a>
 <p>首先，我們先看函式如何宣告（function signature）。</p>
@@ -347,7 +347,7 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Counting_sort">Wiki: Counting sort</a></li>
 <li><a href="http://www.growingwiththeweb.com/2014/05/counting-sort.html">Growing with the web: Counting sort</a></li>

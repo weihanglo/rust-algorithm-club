@@ -145,11 +145,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#a鏈結串列-linked-list" id="a鏈結串列-linked-list"><h1>鏈結串列 Linked list</h1></a>
+                        <a class="header" href="#鏈結串列-linked-list" id="鏈結串列-linked-list"><h1>鏈結串列 Linked list</h1></a>
 <p>鏈結串列是一種基本線性資料集合，每一個資料元素都是獨立的物件。儲存資料的方式和一般陣列配置連續物理記憶體空間不同，而是在各節點儲存額外的指標指向下一個節點。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Singly-linked-list.svg/612px-Singly-linked-list.svg.png" alt="" /></p>
 <p><em>(單向鏈結串列示意圖）</em></p>
-<a class="header" href="#a特性" id="a特性"><h2>特性</h2></a>
+<a class="header" href="#特性" id="特性"><h2>特性</h2></a>
 <p>鏈結串列有以下特性與優點：</p>
 <ul>
 <li>不需事先知道資料型別大小，充分利用動態記憶體管理。</li>
@@ -162,7 +162,7 @@
 <li><strong>較差的 CPU 快取</strong>：不連續存取的特性，不利於 <a href="https://en.wikipedia.org/wiki/CPU_cache">CPU 快取</a>。</li>
 <li><strong>不允許隨機存取（random access）</strong>：搜尋特定索引下的節點仍需線性時間。</li>
 </ul>
-<a class="header" href="#a適用場景" id="a適用場景"><h2>適用場景</h2></a>
+<a class="header" href="#適用場景" id="適用場景"><h2>適用場景</h2></a>
 <p>大多數的場景其實不太常使用鏈結串列，Rust 內建的 <a href="https://doc.rust-lang.org/std/collections/struct.LinkedList.html"><code>LinkedList</code></a> 文件也建議，除非肯定要用鏈結串列，不然建議優先考慮其他類似的資料結構如 <a href="https://doc.rust-lang.org/std/collections/vec_deque/struct.VecDeque.html"><code>VecDeque</code></a>。話雖如此，鏈結串列仍有不少應用場景：</p>
 <ul>
 <li>需要頻繁地插入與刪除資料。</li>
@@ -171,7 +171,7 @@
 <li>遞迴友好，因此成為大多函數式語言中基本資料型別之一。</li>
 <li>教學上，常用於實作抽象資料型別，如<a href="../stack">堆疊</a>與<a href="../queue">佇列</a>等等。</li>
 </ul>
-<a class="header" href="#a術語" id="a術語"><h2>術語</h2></a>
+<a class="header" href="#術語" id="術語"><h2>術語</h2></a>
 <a class="header" href="#node" id="node"><h3>Node</h3></a>
 <p>又稱「節點」，為組成鏈結串列的基本元素，節點包含資料儲存區與指標儲存區，指標儲存區用以儲存指向其他節點位址的變數。此外，最後一個節點的不指向其他節點位址的指標成為 null pointer，慣例以 NULL 表示。</p>
 <p><img src="../singly_linked_list/node-box.svg" alt="node-box" /></p>
@@ -199,7 +199,7 @@
 |  node   |   |        |   |        |   |        |
 +---------+   +--------+   +--------+   +--------+
 </code></pre>
-<a class="header" href="#a種類" id="a種類"><h2>種類</h2></a>
+<a class="header" href="#種類" id="種類"><h2>種類</h2></a>
 <p>依據每個節點的鏈結多寡，可分為</p>
 <p><a href="../singly_linked_list">單向鏈結串列</a>，每個節點只有一個指標，指向下一個節點。</p>
 <pre><code>+--------+   +--------+   +--------+
@@ -227,7 +227,7 @@ NULL &lt;--|        |&lt;--|        |&lt;--|        |
     +--------+   +--------+   +--------+
 </code></pre>
 <p>詳細說明與實作請點選各個連結。</p>
-<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Linked_list">Wiki: Linked list</a></li>
 <li>Singly linked list SVG By Lasindi [Public domain], via Wikimedia Commons.</li>

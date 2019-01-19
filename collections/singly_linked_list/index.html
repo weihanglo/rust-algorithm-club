@@ -145,7 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#a單向鏈結串列-singly-linked-list" id="a單向鏈結串列-singly-linked-list"><h1>單向鏈結串列 Singly linked list</h1></a>
+                        <a class="header" href="#單向鏈結串列-singly-linked-list" id="單向鏈結串列-singly-linked-list"><h1>單向鏈結串列 Singly linked list</h1></a>
 <p>單向鏈結串列是鏈結串列家族中最簡單的版本，特色是每兩個節點間只有一個單向的鏈結。</p>
 <pre><code>   head
     |
@@ -156,7 +156,7 @@
 |        |   |        |   |        |
 +--------+   +--------+   +--------+
 </code></pre>
-<a class="header" href="#a架構設計" id="a架構設計"><h2>架構設計</h2></a>
+<a class="header" href="#架構設計" id="架構設計"><h2>架構設計</h2></a>
 <a class="header" href="#node" id="node"><h3>Node</h3></a>
 <p>先建立最基本的節點 Node。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -199,7 +199,7 @@ pub struct SinglyLinkedList&lt;T&gt; {
 }
 #}</code></pre></pre>
 <p>選擇把操作串列的函式寫在另一個 struct 而非 Node 上有幾個原因，1）外部並不需知道串列內部如何實作，公開 Node 會暴露實作。2）每個 Node 都帶有成員函式的話，函式指標會佔用太多額外資源。</p>
-<a class="header" href="#a基本操作" id="a基本操作"><h2>基本操作</h2></a>
+<a class="header" href="#基本操作" id="基本操作"><h2>基本操作</h2></a>
 <p>串列的基本操作如下：</p>
 <ul>
 <li><code>new</code>：初始化一個空串列。</li>
@@ -211,7 +211,7 @@ pub struct SinglyLinkedList&lt;T&gt; {
 <li><code>is_empty</code>：檢查串列是否沒有任何節點。</li>
 <li><code>reverse</code>：反轉整個串列（head 變成 tail）。</li>
 </ul>
-<a class="header" href="#a初始化與清除資料" id="a初始化與清除資料"><h3>初始化與清除資料</h3></a>
+<a class="header" href="#初始化與清除資料" id="初始化與清除資料"><h3>初始化與清除資料</h3></a>
 <p>實做初始化與清除資料非常直觀。其中清除其實就只是將 <code>self</code> 指向新的串列實例。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -228,7 +228,7 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 #}</code></pre></pre>
 <p>你可能會想，在清除所有資料時，資源需不需要手動釋放？</p>
 <p>和 C++ 的 RAII 一樣，Rust 有一個名叫 <code>drop</code> 的解構式，只要程式執行離開了資源擁有者的可視範圍（out of scope），就會自動呼叫 <code>drop</code>。我們在 <a href="#drop-trait">Drop trait</a> 一節會再深入探討。</p>
-<a class="header" href="#a增刪首個節點" id="a增刪首個節點"><h3>增刪首個節點</h3></a>
+<a class="header" href="#增刪首個節點" id="增刪首個節點"><h3>增刪首個節點</h3></a>
 <p>單向鏈結串列在第一個節點前增加新節點，或是刪除第一個節點，都可以在常數時間完成。新增節點 <code>push_front</code> 的概念很簡單，1）建立新的節點，並把新節點 <code>next</code> 指標指向串列第一個節點。2）把串列的 head 指向新建立的節點。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -262,7 +262,7 @@ pub fn pop_front(&amp;mut self) -&gt; Option&lt;T&gt; {
 <li>將 head 指向下一個節點。</li>
 <li>返回即將刪除節點的資料。</li>
 </ol>
-<a class="header" href="#a插入刪除任意節點" id="a插入刪除任意節點"><h3>插入刪除任意節點</h3></a>
+<a class="header" href="#插入刪除任意節點" id="插入刪除任意節點"><h3>插入刪除任意節點</h3></a>
 <p>鏈結串列新增和刪除第一個節點都可以在 $O(1)$ 時間內做完，那為什麼插入刪除任意節點沒有辦法呢？原因是鏈結串列不支援隨機存取（random access），就是無法透過索引在常數時間內取得資料，每次的搜尋都只能從 head 開始。因此，當我們需要在某個索引的節點後新增一筆資料，我們會需要最差 $O(n)$ 的複雜度。</p>
 <p>實作插入 <code>insert_after</code> 分為幾個步驟：</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -332,7 +332,7 @@ pub fn remove(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
 <li>把節點 A 的後一個節點 B 賦值給原本指向節點 A 的指標 <code>curr</code>。</li>
 <li>回傳節點 A 的值。</li>
 </ol>
-<a class="header" href="#a反轉" id="a反轉"><h3>反轉</h3></a>
+<a class="header" href="#反轉" id="反轉"><h3>反轉</h3></a>
 <p>反轉鏈結串列是工作面試時很常見的考題，這裡來實作看看。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -560,7 +560,7 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
+<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
 <table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
 <tr><td> get       </td><td> $O(n)$                                      </td></tr>
 <tr><td> insert    </td><td> 節點已知：$O(1)$ ；節點未知：$O(n - i)$ </td></tr>
@@ -576,7 +576,7 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
 $i$：相對於整個容器的索引位置。</p>
 </blockquote>
 <p>值得觀察的是，許多操作因為單向鏈結串列只能從 head 開始搜索的緣故，執行時間都呈線性，使用上要特別注意。</p>
-<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://doc.rust-lang.org/src/alloc/linked_list.rs.html">Rust Documentation: LinkedList</a></li>
 <li><a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/README.html">Learning Rust With Entirely Too Many Linked Lists</a></li>

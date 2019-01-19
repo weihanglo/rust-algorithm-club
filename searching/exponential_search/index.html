@@ -145,7 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#a指數搜尋-exponential-search" id="a指數搜尋-exponential-search"><h1>指數搜尋 Exponential Search</h1></a>
+                        <a class="header" href="#指數搜尋-exponential-search" id="指數搜尋-exponential-search"><h1>指數搜尋 Exponential Search</h1></a>
 <p>指數搜尋，又稱為 galloping search，是一種特殊的<a href="../binary_search">二元搜尋</a>，主要用在搜尋無限、無邊界的已排序序列。由於邊界未知長度就未知，無法以傳統二元搜尋來找中點。而 Exponential 顧名思義就是從底數為 2，指數為 0 的索引（$2^0$ ）開始，不斷比較在 $2^1$、$2^2$ 直到 $2^k$ 位置上的值，若比目標值大，則停止指數成長，直接從該位置執行二元搜尋，回頭尋找目標值。</p>
 <p>指數搜尋的特點如下：</p>
 <ul>
@@ -153,7 +153,7 @@
 <li>縮小搜尋範圍，可比 naïve 的二元搜尋效率高些。</li>
 <li>若目標值實際位置很靠近序列前端，效率會非常棒。</li>
 </ul>
-<a class="header" href="#a步驟" id="a步驟"><h2>步驟</h2></a>
+<a class="header" href="#步驟" id="步驟"><h2>步驟</h2></a>
 <p>指數搜尋的步驟只有非常簡單的兩步驟：</p>
 <ol>
 <li>依照目標值大小，劃出搜尋範圍。</li>
@@ -166,7 +166,7 @@
 <li>若較小，指數加一 $k^{i + 1}$ 後繼續重複步驟二比較。</li>
 <li>若較大，停止比較，得搜尋範圍為 $k^{i - 1}$ 到 $k^i$。</li>
 </ol>
-<a class="header" href="#a說明" id="a說明"><h2>說明</h2></a>
+<a class="header" href="#說明" id="說明"><h2>說明</h2></a>
 <p>這裡有個排好序的序列，我們要尋找其中是否有 22 這個數字。</p>
 <pre><code>    *
 [2, 3, 3, 6, 6, 7, 9, 13, 15, 19, 20, 22, 23, 24, 25]
@@ -187,7 +187,7 @@
 </code></pre>
 <p>最後，一口氣將指數加到 4，看看$2^4$ 上的數字是否大於 22。哎呀，$2^4 = 16$，的位置已經超出序列長度，因此取至序列最後一個數字作為比較對象。<code>25 &gt; 22</code>，找到了！</p>
 <p>得到搜尋的範圍是 $$2^{4-1} &lt; x &lt; \text{array.length} &lt; 2^{4}$$</p>
-<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
+<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
 <table><thead><tr><th>              </th><th> Complexity  </th></tr></thead><tbody>
 <tr><td> Worst        </td><td> $O(\log i)$ </td></tr>
 <tr><td> Best         </td><td> $O(1)$      </td></tr>
@@ -198,13 +198,13 @@
 <p>$i$：目標值在序列中實際的索引位置。</p>
 </blockquote>
 <p>指數搜尋的複雜度分為兩部分分析：</p>
-<a class="header" href="#a劃定搜尋範圍" id="a劃定搜尋範圍"><h3>劃定搜尋範圍</h3></a>
+<a class="header" href="#劃定搜尋範圍" id="劃定搜尋範圍"><h3>劃定搜尋範圍</h3></a>
 <p>設 $i$ 為目標值在序列中實際的索引位置，則搜尋上界，指數增加的操作需執行 $\lceil \log(i) \rceil$ 次，例如匹配目標值的搜尋結果位於序列第 9 個，則指數需增加 $\lceil \log(9) \rceil = 4$ 次，上界才會超過目標值。我們設這部分的複雜度為 $O(log i)$。</p>
-<a class="header" href="#a執行二元搜尋" id="a執行二元搜尋"><h3>執行二元搜尋</h3></a>
+<a class="header" href="#執行二元搜尋" id="執行二元搜尋"><h3>執行二元搜尋</h3></a>
 <p>第二部分就是二元搜尋，複雜度為 $O(log n)$，$n$ 為搜尋範圍的長度。根據第一部分，可以得知範圍長度為 $2^{\log i} - 2^{\log{i - 1}} = 2^{log{i - 1}}$ 個元素，帶入二元搜尋的複雜度，計算出第二部分的複雜度為 $log (2^{\log{i - 1}}) = \log{(i)} - 1 = O(\log i)$。</p>
 <p>最後，將兩部分的複雜度合起來，就是指數搜尋的時間複雜度了。</p>
 <p>$$O(\log i) + O(\log i) = 2 O(\log i) = O(\log i)$$</p>
-<a class="header" href="#a實作" id="a實作"><h2>實作</h2></a>
+<a class="header" href="#實作" id="實作"><h2>實作</h2></a>
 <p>本次實作有邊界的指數搜尋，主要分為三個部分：</p>
 <ol>
 <li>處理空序列的狀況。</li>
@@ -249,7 +249,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <blockquote>
 <p>由於內部使用<a href="../binary_search">二元搜尋</a>，若該二元搜尋沒有處理重複元素的狀況，指數搜尋連帶無法預期這個行為。</p>
 </blockquote>
-<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
 <p><a href="https://en.wikipedia.org/wiki/Exponential_search">Wiki: Exponential search</a></p>
 
                     </main>

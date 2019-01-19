@@ -145,7 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#a集合-set" id="a集合-set"><h1>集合 Set</h1></a>
+                        <a class="header" href="#集合-set" id="集合-set"><h1>集合 Set</h1></a>
 <p>集合是一種抽象資料型別（Abstract data type），概念衍生自數學的<a href="https://en.wikipedia.org/wiki/Set_theory">集合論</a>，和陣列類似，為不同元素所組成的資料結構，不同在於集合有些重要的特性：</p>
 <ul>
 <li>無序性：集合內各元素無特定排序或排序不重要。</li>
@@ -155,8 +155,8 @@
 <blockquote>
 <p>本次實作的程式碼置於在 <a href="https://rust-algo.club/doc/rust_algorithm_club/collections/struct.HashSet.html">rust_algorithm_club::collections::HashSet</a> API 文件中。</p>
 </blockquote>
-<a class="header" href="#a架構設計" id="a架構設計"><h2>架構設計</h2></a>
-<a class="header" href="#a以雜湊表為底層容器" id="a以雜湊表為底層容器"><h3>以雜湊表為底層容器</h3></a>
+<a class="header" href="#架構設計" id="架構設計"><h2>架構設計</h2></a>
+<a class="header" href="#以雜湊表為底層容器" id="以雜湊表為底層容器"><h3>以雜湊表為底層容器</h3></a>
 <p>集合能以許多不同的資料結構實現，通用的集合實作多會最佳化取得、增加、移除元素等運算，這讓我們想到了「<a href="../hash_map">雜湊表</a>」，雜湊表正是能將集合運算最佳化的一種資料結構，我們將借用<strong>雜湊表作為底層儲存容器</strong>，進一步實作集合。</p>
 <p>你可能好奇，集合明明只有元素，並沒有<strong>鍵值對</strong>，跟雜湊表有啥關係？讓我們回想雜湊表一個重要的特性：每一個鍵（key）只會出現一次，利用雜湊表這個特性，即可達成上述集合兩大特性。</p>
 <p>既然選用雜湊表作為底層容器，集合的結構體就非常簡單了，我們可以將集合想像為在 HashMap 薄薄的一層封裝。</p>
@@ -171,9 +171,9 @@ where
 }
 #}</code></pre></pre>
 <p>比較特別的是雜湊表的鍵值，這裡使用空的 tuple <code>()</code>，也就是以 <a href="https://doc.rust-lang.org/std/primitive.unit.html">unit type</a> 作為雜湊表之值，只要將集合的元素作為雜湊表鍵，忽略對應的值，就是貨真價實的集合結構。</p>
-<a class="header" href="#a不佔空間的-unit-type" id="a不佔空間的-unit-type"><h3>不佔空間的 Unit Type</h3></a>
+<a class="header" href="#不佔空間的-unit-type" id="不佔空間的-unit-type"><h3>不佔空間的 Unit Type</h3></a>
 <p>這樣多儲存一個 <code>()</code> 會不會造成額外的儲存空間負擔？事實上，Unit type <code>()</code> 在 Rust 語言中是一種 <a href="https://doc.rust-lang.org/nomicon/exotic-sizes.html#zero-sized-types-zsts">Zero Sized Types (ZSTs)</a>，在編譯時期 Rust 會將 ZST 當作一種型別來操作，但真正輸出的機器碼中，ZST 並不會佔用任何運算空間。<code>Set = HashMap&lt;T, ()&gt;</code> 完全體現了 Rust 零成本抽象的語言特性。</p>
-<a class="header" href="#a基本操作" id="a基本操作"><h2>基本操作</h2></a>
+<a class="header" href="#基本操作" id="基本操作"><h2>基本操作</h2></a>
 <p>身為一個容器，集合有以下幾個基本操作：</p>
 <ul>
 <li><code>new</code>：初始化一個集合。</li>
@@ -231,7 +231,7 @@ where
 <li><code>remove</code> 同樣直接呼叫 <code>HashMap::remove</code>，並透過回傳 <code>Option&lt;()&gt;</code> 判斷實際上是否有移除任何元素。</li>
 <li><code>iter</code> 則直接利用 <code>HashMap::iter</code> 並捨棄 value。</li>
 </ol>
-<a class="header" href="#a集合運算" id="a集合運算"><h2>集合運算</h2></a>
+<a class="header" href="#集合運算" id="集合運算"><h2>集合運算</h2></a>
 <p>電腦科學的集合型別衍生自<a href="https://en.wikipedia.org/wiki/Set_theory">集合論</a>，當然也得符合<a href="https://en.wikipedia.org/wiki/Algebra_of_sets">集合代數（set algebra）</a>的特性，和算術的加減乘除，集合也有自己的二元運算，我們會實作以下幾個基本方法：</p>
 <ul>
 <li><code>intersection</code>：交集，A ∩ B 定義為 A 與 B 共有的元素。</li>
@@ -247,8 +247,8 @@ where
 <li><code>is_superset</code>：包含 ⊇，是否為超集。</li>
 </ul>
 <p>哇！好多方法要實作。那就事不宜遲！</p>
-<a class="header" href="#a實作聯集" id="a實作聯集"><h3>實作聯集</h3></a>
-<a class="header" href="#a第一次嘗試---建立新的聯集集合" id="a第一次嘗試---建立新的聯集集合"><h4>第一次嘗試 - 建立新的聯集集合</h4></a>
+<a class="header" href="#實作聯集" id="實作聯集"><h3>實作聯集</h3></a>
+<a class="header" href="#第一次嘗試---建立新的聯集集合" id="第一次嘗試---建立新的聯集集合"><h4>第一次嘗試 - 建立新的聯集集合</h4></a>
 <p>要取得兩個集合的聯集，最直覺的想法可能是創造一個新的集合，再把 A 和 B 兩個集合的元素通通 <code>insert</code> 進去，就像這樣：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -276,7 +276,7 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; HashSet&lt;T&gt; {
 <blockquote>
 <p>更多詳情可參考實作過程的<a href="https://github.com/weihanglo/rust-algorithm-club/pull/15#issuecomment-427587785">討論串</a>與<a href="https://github.com/weihanglo/rust-algorithm-club/pull/15/commits/caab7fbc5323e09eb1e30ea374eb21a59f955bad">第一次嘗試的完整實作</a>。</p>
 </blockquote>
-<a class="header" href="#a第二次嘗試---lazy-iterator" id="a第二次嘗試---lazy-iterator"><h4>第二次嘗試 - Lazy Iterator</h4></a>
+<a class="header" href="#第二次嘗試---lazy-iterator" id="第二次嘗試---lazy-iterator"><h4>第二次嘗試 - Lazy Iterator</h4></a>
 <p>有了第一次嘗試的經驗，第二次決定讓 <code>union()</code> 回傳一個 lazy iterator，會迭代聯集的元素，必要才從迭代器收集所有元素，再建立新的集合，如此可以節省許多運算資源。</p>
 <p>至於實作步驟，我們可以：</p>
 <ol>
@@ -361,7 +361,7 @@ pub fn union&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl
     self.iter().chain(other_but_not_self)
 }
 #}</code></pre></pre>
-<a class="header" href="#a實作交集差集與對稱差集" id="a實作交集差集與對稱差集"><h3>實作交集、差集與對稱差集</h3></a>
+<a class="header" href="#實作交集差集與對稱差集" id="實作交集差集與對稱差集"><h3>實作交集、差集與對稱差集</h3></a>
 <p>呼，上面解決了最困難的生命週期和 borrow checker 問題，接下來的實作只要關注數學上的集合定義就能輕鬆解決了。</p>
 <p>首先，交集的定義為「你有，而且我也有的」，簡單，迭代 <code>self</code> 並過濾出 <code>other</code> 也有的元素就好，秒殺！</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -398,7 +398,7 @@ pub fn symmetric_difference&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&
 }
 #}</code></pre></pre>
 <p>整個集合的基礎在這邊大功告成了！</p>
-<a class="header" href="#a子集超集與不交集" id="a子集超集與不交集"><h3>子集、超集與不交集</h3></a>
+<a class="header" href="#子集超集與不交集" id="子集超集與不交集"><h3>子集、超集與不交集</h3></a>
 <p>經歷 Rust 編譯器的摧殘，來實作比較簡單的方法吧。集合運算常要比較兩個集合的關係，例如 A ⊆ B 代表 A 是 B 的子集，定義是 A 裡面的元素 B 都有。</p>
 <p>我們先來實作 <code>is_subset</code> 檢查 <code>self</code> 是否為 <code>other</code> 的子集。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -431,9 +431,9 @@ pub fn is_disjoint(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; bool {
     self.intersection(other).count() == 0
 }
 #}</code></pre></pre>
-<a class="header" href="#a二元運算與運算子" id="a二元運算與運算子"><h2>二元運算與運算子</h2></a>
+<a class="header" href="#二元運算與運算子" id="二元運算與運算子"><h2>二元運算與運算子</h2></a>
 <p>上面的方法好冗，能不能和 <a href="https://docs.python.org/3/library/stdtypes.html#set">Python</a> 一樣，用簡單明瞭的語法操作集合的二元運算？當然行，Rust 的表達性很強，完全不輸 Python，透過<a href="https://en.wikipedia.org/wiki/Operator_overloading">運算子多載（operator overloading）</a>。</p>
-<a class="header" href="#a運算子多載" id="a運算子多載"><h3>運算子多載</h3></a>
+<a class="header" href="#運算子多載" id="運算子多載"><h3>運算子多載</h3></a>
 <p>Rust 提供許多 trait 供使用者多載運算子，可以簡化集合的二元運算：</p>
 <ul>
 <li><code>set | other</code>：bitwise or 運算子，效果同 <code>union</code> 聯集。</li>
@@ -466,7 +466,7 @@ where
 <blockquote>
 <p>多載運算子，可以參考 <a href="https://doc.rust-lang.org/beta/std/ops/index.html">Overloadable operators</a> 一頁的說明。</p>
 </blockquote>
-<a class="header" href="#a比較運算子" id="a比較運算子"><h3>比較運算子</h3></a>
+<a class="header" href="#比較運算子" id="比較運算子"><h3>比較運算子</h3></a>
 <p>除了交集、聯集等運算，我們還可以實作集合間的比較，作為檢查是否為子集或超集的運算子。</p>
 <ul>
 <li><code>A &lt;= B</code>：效果同 <code>is_subset</code>，A 是否為 B 的子集 A ⊆ B。</li>
@@ -555,7 +555,24 @@ where
 <blockquote>
 <p>有人可能會認為，比較運算還要透過 <code>partial_cmp</code> 判斷 <code>Option</code> 多麻煩，事實上，C++ 20 也帶來了 <code>&lt;=&gt;</code> 運算子以及 <a href="https://en.cppreference.com/w/cpp/language/operator_comparison#Three-way_comparison">three way comparison</a> 衍生的各種型別，partial order 或 parital equal 可說是更精確且必要的比較運算，也是一種趨勢。</p>
 </blockquote>
-<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
+<p>以雜湊表為底層儲存容器的集合，各操作複雜度如下</p>
+<table><thead><tr><th> Operation    </th><th> Best case    </th><th> Worst case </th></tr></thead><tbody>
+<tr><td> insert(v)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
+<tr><td> remove(v)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
+<tr><td> contains(v)  </td><td> $O(1)$   </td><td> $O(n)$ </td></tr>
+<tr><td> union        </td><td> $O(n)$   </td><td> $O(n)$ </td></tr>
+<tr><td> intersection </td><td> $O(n)$   </td><td> $O(n)$ </td></tr>
+<tr><td> difference   </td><td> $O(n)$   </td><td> $O(n)$ </td></tr>
+<tr><td> symmetric difference </td><td> $O(n)$   </td><td> $O(n)$ </td></tr>
+</tbody></table>
+<blockquote>
+<p>$n$：資料筆數。<br />
+$v$：資料值。<br />
+<strong>~</strong>：平攤後的複雜度（amortized）。</p>
+</blockquote>
+<p>操作的時間與空間複雜度，與其底層儲存容器的實作有關，本次集合實作只是對雜湊表的簡單封裝，詳細演算法複雜度可以參考 <a href="../hash_map#%E6%95%88%E8%83%BD">HashMap</a>。</p>
+<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/collections/hash_set/struct.HashSet.html">Rust Documentation: HashSet</a></li>
 <li><a href="https://docs.python.org/3/library/stdtypes.html#set">Python 3: Set</a></li>

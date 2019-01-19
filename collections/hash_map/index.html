@@ -145,7 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#a雜湊表-hash-map" id="a雜湊表-hash-map"><h1>雜湊表 Hash Map</h1></a>
+                        <a class="header" href="#雜湊表-hash-map" id="雜湊表-hash-map"><h1>雜湊表 Hash Map</h1></a>
 <p>雜湊表是以雜湊函數實作的關聯容器。透過雜湊函數，計算鍵（key）對應到容器內部的索引位置，進而找到對應的值（value）。一般來說，雜湊表最常見的實作是以一個簡單陣列儲存資料。</p>
 <p>雜湊表的優勢是：</p>
 <ul>
@@ -159,7 +159,7 @@
 <li>效能與雜湊函數息息相關，較差的函數容易雜湊碰撞，較佳函數計算成本通常較高。</li>
 <li>只能以某種偽隨機的順序迭代雜湊表。</li>
 </ul>
-<a class="header" href="#a概念" id="a概念"><h2>概念</h2></a>
+<a class="header" href="#概念" id="概念"><h2>概念</h2></a>
 <p>建立雜湊表的第一步，就是配置一定大小的陣列（通常稱為 bucket array），來儲存對應索引的鍵值對。我們以建立電話簿為例，儲存人名與號碼的對應關係。</p>
 <pre><code>Create an empty phone book with some blank slots.
 
@@ -253,7 +253,7 @@ Sam   --&gt; | 2: 11-2-333 | --&gt; Sam's phone number
 <blockquote>
 <p>註：雜湊表也可以搜尋樹等其他資料結構實作，在此不深入討論。</p>
 </blockquote>
-<a class="header" href="#a雜湊" id="a雜湊"><h3>雜湊</h3></a>
+<a class="header" href="#雜湊" id="雜湊"><h3>雜湊</h3></a>
 <p>所謂的雜湊函數，就是一種將「較寬的定義域映射到較窄值域」的函數。簡單來說，就是輸入任意值到此函數，則輸出值會落在一已知範圍。再白話一點，雜湊函數就是用來「化繁為簡」，把複雜多變的東西，透過函數生成簡化版本。此外，相同的輸入鍵，必須得到相同的輸出雜湊值，這是雜湊函數很重要的一個特性，以虛擬碼表示：</p>
 <pre><code>key1 == key2 -&gt; hash(key1) == hash(key2)
 </code></pre>
@@ -265,7 +265,7 @@ hash_value = hash_function(key) // 1
 index = hash_value % array_size // 2
 </code></pre>
 <p>如此一來，所有可能的值都會落在陣列內，這就是最簡單普遍的雜湊兩步驟：計算雜湊值﹢取模。</p>
-<a class="header" href="#a選擇雜湊函數" id="a選擇雜湊函數"><h3>選擇雜湊函數</h3></a>
+<a class="header" href="#選擇雜湊函數" id="選擇雜湊函數"><h3>選擇雜湊函數</h3></a>
 <p>接下來，你會緊接著向問第二個問題「函數計算出相同索引值該怎麼辦？」不同輸入產生相同雜湊值，多個值映射到同個索引上，這種狀況科學家稱之<strong>雜湊碰撞（hash collision）</strong>。</p>
 <p>首先，要瞭解雜湊函數本身就是時空間的權衡，如果記憶體空間夠多，那讓輸入值與雜湊值呈一對一的完美關係，就不會出現碰撞；大多數情況，尤其是實作泛用的雜湊函式庫，無法預期輸入資料的範圍，實務上會鎖定一個輸出雜湊值的範圍，僧多粥少，難免碰撞。</p>
 <p>好的雜湊函數還必須符合一些條件：</p>
@@ -276,7 +276,7 @@ index = hash_value % array_size // 2
 </ol>
 <p>但總歸一句，欲達成上述條件，就是一種權衡取捨，例如，<a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">加密雜湊函數（cryptographic hash function）</a>即是非常優秀的雜湊函數，但相對需付出更高的計算成本。</p>
 <p>更多雜湊函數相關的討論，會另撰<a href="../../hash">專文</a>。</p>
-<a class="header" href="#a處理雜湊碰撞" id="a處理雜湊碰撞"><h3>處理雜湊碰撞</h3></a>
+<a class="header" href="#處理雜湊碰撞" id="處理雜湊碰撞"><h3>處理雜湊碰撞</h3></a>
 <p>既然雜湊函數人生在世難免碰撞，科學家也研究幾個處理雜湊碰撞的策略，分別是 separate chaining 與 open addressing。</p>
 <p><strong>Separate chaining</strong> 可以說是最直觀的做法，就是設法讓同一個索引下，可以儲存多個碰撞的值。依據儲存資料的形式，可分為幾種實作：</p>
 <ul>
@@ -319,7 +319,7 @@ Sam    --&gt;|2: ptr  |--+   +---------------+
 <p>這些方法的差異主要在於 CPU caching 的效能，以及 HashMap 資料的群聚效應（clustering）的敏感程度。當然，論 caching 絕對非 linear probing 莫屬，但 linear probing 以線性一個挨一個探勘，效能較容易受雜湊值群聚影響。</p>
 <p>以下是 linear probing（間隔 = 1）的示意圖。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/HASHTB12.svg/1280px-HASHTB12.svg.png" alt="" /></p>
-<a class="header" href="#a動態調整雜湊表大小" id="a動態調整雜湊表大小"><h3>動態調整雜湊表大小</h3></a>
+<a class="header" href="#動態調整雜湊表大小" id="動態調整雜湊表大小"><h3>動態調整雜湊表大小</h3></a>
 <p>若資料的筆數已知，那初始配置的陣列大小設定與資料筆數成比例，就不必擔心雜湊表空間不夠，需要重新配置（reallocate）儲存空間的困擾。倘若資料量未知，而最初配置的 bucket array 滿了，該如何重新配置呢？</p>
 <p>動態調整大小對雜湊表來說，不同於一般動態陣列，舊的雜湊表若要對應到新雜湊表，是每個鍵都需要重新計算雜湊值（rehash），成本相對較高。因此，減少動態調整的次數，可說是調教雜湊表的重點之一。說到調教雜湊表，必定要瞭解一個重要指標：<em>load factor</em>。</p>
 <p>$$\text{load factor} = \frac{n}{k}$$</p>
@@ -329,7 +329,7 @@ $k$：雜湊表配置的儲存空間（bucket 總數）。</p>
 </blockquote>
 <p>Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 $3/4 = 75%$。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 <a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html"><code>HashMap</code></a> 使用了 <a href="https://doc.rust-lang.org/stable/src/std/collections/hash/map.rs.html#82-103">Robin Hood Hashing</a>，將 load factor 調教到 90%。</p>
 <p>重配置雜湊表與動態陣列的動態調整大小雷同，達到某個門檻值，就會將底層陣列大小翻倍。為了避免開銷過高，通常元素減少時，不會主動調整大小，而是提供一個 <code>shrink_to_fit</code> 一類的方法，讓呼叫端自行決定釋放多餘空間的時機。</p>
-<a class="header" href="#a架構設計" id="a架構設計"><h2>架構設計</h2></a>
+<a class="header" href="#架構設計" id="架構設計"><h2>架構設計</h2></a>
 <p>在介紹架構設計之前，我們先來瞭解 Rust 雜湊相關的觀念與 trait。</p>
 <a class="header" href="#hash-and-eq" id="hash-and-eq"><h3>Hash and Eq</h3></a>
 <p>要實作雜湊函數，當然可以自幹計算雜湊值的函式來用，那為什麼還要使用 Rust 定義好的 <a href="https://doc.rust-lang.org/std/hash/trait.Hash.html"><code>Hash</code></a> 呢？當然是希望將雜湊的介面抽象化，只要型別宣告符合 <code>Hash</code> trait，任何人都可以輕鬆計算雜湊值。而實作 <a href="https://doc.rust-lang.org/std/hash/trait.Hash.html"><code>Hash</code></a> 很簡單，只要寫一個 <code>fn hash()</code>，呼叫端就能透過它計算雜湊，例如：</p>
@@ -371,7 +371,7 @@ fn make_hash&lt;X&gt;(x: &amp;X, len: usize) -&gt; Option&lt;usize&gt;
 <blockquote>
 <p>所謂 <strong>Dynamically Sized Types（DSTs）</strong> 是指無法靜態得知大小的型別，例如 slice，或是一個函式的參數接受實作某個 trait 型別（<a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html">trait object</a>），而在 Rust 幾乎所有基礎型別預設都是 <code>Sized</code> 編譯期就可得知大小。而在這裡我們不關心知道實作該型別可否靜態決定大小，只需知道它是否實作 <code>Hash</code>，所以明確添加 <code>?Sized</code> 表示接受 DSTs。</p>
 </blockquote>
-<a class="header" href="#a記憶體佈局" id="a記憶體佈局"><h3>記憶體佈局</h3></a>
+<a class="header" href="#記憶體佈局" id="記憶體佈局"><h3>記憶體佈局</h3></a>
 <p>我們嘗試建立可以儲存 key-value pair 的結構體，裡面配置一個 bucket array <code>buckets</code>。其中 <code>K</code> 泛型參數是準備計算雜湊的鍵，而 <code>V</code> 則是與鍵配對的資料。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -399,7 +399,7 @@ pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
 <p>之所以使用額外的成員記錄資料數目，是為了計算數目能在 O(1) 時間內完成，nested array 動態迭代每個 <code>Bucket</code> 計算的成本太高。</p>
 <p>這就是 <strong>Vector-based separate chaining HashMap</strong> 的記憶體佈局，來看張精美的雜湊表架構佈局圖吧！</p>
 <p><img src="layout.svg" alt="" /></p>
-<a class="header" href="#a基本操作" id="a基本操作"><h2>基本操作</h2></a>
+<a class="header" href="#基本操作" id="基本操作"><h2>基本操作</h2></a>
 <p>雜湊表有以下幾個基本操作：</p>
 <ul>
 <li><code>new</code>：初始化一個空雜湊表。</li>
@@ -419,7 +419,7 @@ pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
 <li><code>make_hash</code>：從輸入資料產生雜湊值，再模除 bucket 數，得到輸入資料對應的索引位置。</li>
 </ul>
 <p>接下來解釋實作的重點。</p>
-<a class="header" href="#a初始化與預設值" id="a初始化與預設值"><h3>初始化與預設值</h3></a>
+<a class="header" href="#初始化與預設值" id="初始化與預設值"><h3>初始化與預設值</h3></a>
 <p>雜湊表初始化相對容易，一樣慣例使用 <code>new</code>。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -458,7 +458,7 @@ pub fn with_capacity(cap: usize) -&gt; Self {
 } 
 #}</code></pre></pre>
 <p>很清楚地，同樣建立一個空的 bucket array，再預先配置給定數量的 <code>Bucket</code> 。<code>len</code> 則因為沒有開始增加新值，而設定為 0。</p>
-<a class="header" href="#a存取單一元素" id="a存取單一元素"><h3>存取單一元素</h3></a>
+<a class="header" href="#存取單一元素" id="存取單一元素"><h3>存取單一元素</h3></a>
 <p>存取元素的實作也非常直觀，</p>
 <ol>
 <li>使用 <code>make_hash</code> 計算出 key 對應的索引位置，</li>
@@ -498,7 +498,7 @@ pub fn get&lt;Q&gt;(&amp;self, q: &amp;Q) -&gt; Option&lt;&amp;V&gt;
 <blockquote>
 <p><code>fn get_mut()</code> 與 <code>fn get()</code> 的差異只在於呼叫了 <code>self.bucket.get_mut</code> 取得 mutable reference，這裡就不多做說明。</p>
 </blockquote>
-<a class="header" href="#a插入與刪除元素" id="a插入與刪除元素"><h3>插入與刪除元素</h3></a>
+<a class="header" href="#插入與刪除元素" id="插入與刪除元素"><h3>插入與刪除元素</h3></a>
 <p>插入與刪除比較特別，需要做些額外的功夫：</p>
 <ul>
 <li>在操作完成之後需依據操作結果增減 <code>HashMap.len</code>，確保 <code>len</code> 永遠記錄正確的鍵值對數目。</li>
@@ -571,7 +571,7 @@ pub fn insert(&amp;mut self, key: K, value: V) -&gt; Option&lt;V&gt; {
 <li><code>mem::replace</code> 可當作將同型別兩變數的記憶體位置互換，也就同時更新了原始資料。</li>
 </ul>
 </blockquote>
-<a class="header" href="#a動態調整儲存空間" id="a動態調整儲存空間"><h3>動態調整儲存空間</h3></a>
+<a class="header" href="#動態調整儲存空間" id="動態調整儲存空間"><h3>動態調整儲存空間</h3></a>
 <p>動態調整儲存空間大概是整個實作中最詭譎的一部分。首先，我們需要知道</p>
 <ul>
 <li>容器內鍵值對的總數：透過 <code>self.len</code>，我們將取得 <code>self.len</code> 的邏輯包裝在 <code>fn len(&amp;self)</code>，以免未來長度移動至別處儲存計算。</li>
@@ -610,7 +610,7 @@ fn try_resize(&amp;mut self) {
 <li>開始迭代舊的 bucket，並利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flat_map"><code>flat_map</code></a> 打平 nested vector，再利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.for_each"><code>for_each</code></a> 將每個元素重新 insert 到新雜湊表。</li>
 <li>把 <code>self</code> 的值指向新雜湊表，舊雜湊表的記憶體空間會被釋放。</li>
 </ol>
-<a class="header" href="#a實作迭代器方法" id="a實作迭代器方法"><h3>實作迭代器方法</h3></a>
+<a class="header" href="#實作迭代器方法" id="實作迭代器方法"><h3>實作迭代器方法</h3></a>
 <p>一個集合型別當然少不了簡易的產生迭代器實作。</p>
 <p>根據之前其他方法的實作，要迭代整個雜湊表非常簡單，就是迭代所有 bucket，並利用 <code>flat_map</code> 打平 nested vector。簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -652,7 +652,7 @@ pub fn iter(&amp;self) -&gt; impl Iterator&lt;Item = (&amp;K, &amp;V)&gt; {
 <li><a href="https://doc.rust-lang.org/reference/types.html#trait-objects">Rust Reference: Trait objects</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html">The Rust Programming Language: Trait objects</a></li>
 </ul>
-<a class="header" href="#a效能" id="a效能"><h2>效能</h2></a>
+<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
 <p>以陣列實作的雜湊表各操作複雜度如下</p>
 <table><thead><tr><th> Operation    </th><th> Best case    </th><th> Worst case </th></tr></thead><tbody>
 <tr><td> add(k, v)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
@@ -666,7 +666,7 @@ $k$：欲綁定資料的鍵。<br />
 $v$：欲與鍵綁定的資料。<br />
 <strong>~</strong>：平攤後的複雜度（amortized）。</p>
 </blockquote>
-<a class="header" href="#a時間複雜度" id="a時間複雜度"><h3>時間複雜度</h3></a>
+<a class="header" href="#時間複雜度" id="時間複雜度"><h3>時間複雜度</h3></a>
 <p>在預期情況下，只要雜湊函數品質穩定，大部分操作都可達到在常數時間， 但由於部分操作，尤其是新增或刪除元素的操作，會需要調整 bucket array 的空間，重新配置記憶體空間，所以需要平攤計算複雜度。</p>
 <p>而最差複雜度出現在每個元素都發生雜湊碰撞。若使用 open addressing 處理碰撞，則會把雜湊表配置的每個位置都填滿，而所有操作都從同個位置開始，搜尋對應的鍵，複雜度與陣列的線性搜索相同為 $O(n)$；若使用 separate chaining，碰撞代表所有元素都會在同一個 bucket 裡面，也就是只有一個 bucket 上會有一個長度為 <em>n</em> ，被塞滿的陣列或鏈結串列，結果同樣是線性搜索的 $O(n)$。</p>
 <p>我們嘗試使用數學表示搜索的複雜度。另</p>
@@ -678,9 +678,9 @@ $v$：欲與鍵綁定的資料。<br />
 <p>則預期執行時間為</p>
 <p>$$\Theta(1+\frac{n}{k}) = O(1) \ \text{ if } \frac{n}{k} = O(1)$$</p>
 <p>而 <strong>1</strong> 為計算雜湊與取得索引（random access）的執行時間，$\frac{n}{k}$ 則是搜尋陣列的執行時間。只要 load factor 越接近 $n$，執行時間就相對增加。</p>
-<a class="header" href="#a空間複雜度" id="a空間複雜度"><h3>空間複雜度</h3></a>
+<a class="header" href="#空間複雜度" id="空間複雜度"><h3>空間複雜度</h3></a>
 <p>雜湊表的空間複雜度取決於實作預先配置的陣列大小，並與維持 <em>load factor</em> 息息相關。一般來說，仍與資料筆數成線性關係，因此空間複雜度只有資料本身 $O(n)$。而以 separate chaining 會額外配置陣列或鏈結串列儲存碰撞元素，理論上需負擔更多額外的指標儲存空間。</p>
-<a class="header" href="#a參考資料" id="a參考資料"><h2>參考資料</h2></a>
+<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
 <ul>
 <li><a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html">Rust Documentation: HashMap</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Hash_table">Wiki: Hash table</a></li>
