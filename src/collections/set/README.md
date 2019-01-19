@@ -475,6 +475,26 @@ where
 [rust-option-filter]: https://doc.rust-lang.org/std/option/enum.Option.html#method.filter
 [cpp-3way-cmp]: https://en.cppreference.com/w/cpp/language/operator_comparison#Three-way_comparison
 
+## 效能
+
+以雜湊表為底層儲存容器的集合，各操作複雜度如下
+
+| Operation    | Best case    | Worst case |
+| ------------ | ------------ | ---------- |
+| insert(v)    | $O(1)$~  | $O(n)$ |
+| remove(v)    | $O(1)$~  | $O(n)$ |
+| contains(v)  | $O(1)$   | $O(n)$ |
+| union        | $O(n)$   | $O(n)$ |
+| intersection | $O(n)$   | $O(n)$ |
+| difference   | $O(n)$   | $O(n)$ |
+| symmetric difference | $O(n)$   | $O(n)$ |
+
+> $n$：資料筆數。  
+> $v$：資料值。  
+> **~**：平攤後的複雜度（amortized）。
+
+操作的時間與空間複雜度，與其底層儲存容器的實作有關，本次集合實作只是對雜湊表的簡單封裝，詳細演算法複雜度可以參考 [HashMap](../hash_map#效能)。
+
 ## 參考資料
 
 - [Rust Documentation: HashSet](https://doc.rust-lang.org/std/collections/hash_set/struct.HashSet.html)
