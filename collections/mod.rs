@@ -8,3 +8,6 @@ pub use self::hash_map::HashMap;
 
 mod set;
 pub use self::set::HashSet;
+
+mod stack;
+pub use self::stack::Stack;
