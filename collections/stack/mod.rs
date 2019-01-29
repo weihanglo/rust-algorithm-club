@@ -1,6 +1,13 @@
-/// The name "stack" for this type of structure comes from the analogy to a set of physical items stacked on top of each other, which makes it easy to take an item off the top of the stack, while getting to an item deeper in the stack may require taking off multiple other items first.
+/// A stack-like data structure implemented through a `Vec`.
 ///
-/// Considered as a linear data structure, or more abstractly a sequential collection, the push and pop operations occur only at one end of the structure, referred to as the top of the stack.
+/// The name "stack" for this type of structure comes from the analogy to a set
+/// of physical items stacked on top of each other, which makes it easy to take
+/// an item off the top of the stack, while getting to an item deeper in the
+/// stack may require taking off multiple other items first.
+///
+/// Considered as a linear data structure, or more abstractly a sequential
+/// collection, the push and pop operations occur only at one end of the
+/// structure, referred to as the top of the stack.
 ///
 /// References:
 ///
@@ -17,8 +24,8 @@ impl<T> Stack<T> {
     /// # Parameters
     ///
     /// * `maxsize`: Capacity of the collection. It limits how many items can be stored.
-    pub fn with_capacity(maxsize: usize) -> Stack<T> {
-        Stack {
+    pub fn with_capacity(maxsize: usize) -> Self {
+        Self {
             maxsize,
             items: Vec::with_capacity(maxsize),
         }

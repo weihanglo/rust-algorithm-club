@@ -125,10 +125,24 @@
 <span id="125">125</span>
 <span id="126">126</span>
 <span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">/// The name &quot;stack&quot; for this type of structure comes from the analogy to a set of physical items stacked on top of each other, which makes it easy to take an item off the top of the stack, while getting to an item deeper in the stack may require taking off multiple other items first.</span>
+<span class="doccomment">/// A stack-like data structure implemented through a `Vec`.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Considered as a linear data structure, or more abstractly a sequential collection, the push and pop operations occur only at one end of the structure, referred to as the top of the stack.</span>
+<span class="doccomment">/// The name &quot;stack&quot; for this type of structure comes from the analogy to a set</span>
+<span class="doccomment">/// of physical items stacked on top of each other, which makes it easy to take</span>
+<span class="doccomment">/// an item off the top of the stack, while getting to an item deeper in the</span>
+<span class="doccomment">/// stack may require taking off multiple other items first.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Considered as a linear data structure, or more abstractly a sequential</span>
+<span class="doccomment">/// collection, the push and pop operations occur only at one end of the</span>
+<span class="doccomment">/// structure, referred to as the top of the stack.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// References:</span>
 <span class="doccomment">///</span>
@@ -145,8 +159,8 @@
     <span class="doccomment">/// # Parameters</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `maxsize`: Capacity of the collection. It limits how many items can be stored.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_capacity</span>(<span class="ident">maxsize</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Stack</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Stack</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_capacity</span>(<span class="ident">maxsize</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> {
             <span class="ident">maxsize</span>,
             <span class="ident">items</span>: <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">maxsize</span>),
         }
