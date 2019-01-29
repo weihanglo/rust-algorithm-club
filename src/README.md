@@ -64,7 +64,7 @@
 
 ### 堆疊與佇列
 
-- [🚧 堆疊 Stack](collections/stack)
+- [堆疊 Stack](collections/stack)
 - [🚧 佇列 Queue](collections/queue)
 - [🚧 雙端佇列 Deque](collections/deque)
 
