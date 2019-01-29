@@ -24,8 +24,8 @@ impl<T> Stack<T> {
     /// # Parameters
     ///
     /// * `maxsize`: Capacity of the collection. It limits how many items can be stored.
-    pub fn with_capacity(maxsize: usize) -> Stack<T> {
-        Stack {
+    pub fn with_capacity(maxsize: usize) -> Self {
+        Self {
             maxsize,
             items: Vec::with_capacity(maxsize),
         }
