@@ -98,9 +98,11 @@
 
 歡迎各式各樣的貢獻，修正錯字也行！開始動手之前，請先閱讀[貢獻指南](CONTRIBUTING.md)。
 
-## 維護者
+## 貢獻者
 
 - [@weihanglo](https://github.com/weihanglo)
+- [@choznerol](https://github.com/choznerol)
+- [@henry40408](https://github.com/henry40408)
 
 ## 授權條款
 

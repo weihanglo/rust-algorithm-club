@@ -107,9 +107,11 @@ For learning more, you may check out following online resources:
 
 All contributions are welcome, including typo fix! Please read the [contrubuting](CONTRIBUTING.md) guideline first before starting your work.
 
-## Maintainers
+## Contributors
 
 - [@weihanglo](https://github.com/weihanglo)
+- [@choznerol](https://github.com/choznerol)
+- [@henry40408](https://github.com/henry40408)
 
 ## License
 
