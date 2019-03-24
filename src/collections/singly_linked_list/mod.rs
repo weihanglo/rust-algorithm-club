@@ -1,6 +1,6 @@
 /// A singly-linked list with owned nodes.
 ///
-/// This implementation is a simplified version of `forward_list` in C++.
+/// This implementation is a simplified version of `std::forward_list` in C++.
 ///
 /// References:
 ///
@@ -90,7 +90,7 @@ impl<T> SinglyLinkedList<T> {
     /// # Parameters
     ///
     /// * `pos` - The index after which the element will be inserted.
-    /// * `elem` - The element to insert.
+    /// * `elem` - The element to be inserted.
     ///
     /// # Complexity
     ///
