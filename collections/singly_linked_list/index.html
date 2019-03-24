@@ -156,7 +156,25 @@
 |        |   |        |   |        |
 +--------+   +--------+   +--------+
 </code></pre>
-<a class="header" href="#架構設計" id="架構設計"><h2>架構設計</h2></a>
+<p>比起 <a href="doubly.html">雙向鏈結串列</a>，單向鏈結串列少了一個額外的指標開銷，在基本操作的花費也較低。在不需要雙向迭代情形下單向鏈結串列很適用。</p>
+<p>此外，單向鏈結串列也支援 tail-sharing，也就是共享 sublist。藉由共享 sublist，單向鏈結串列很容易實作 <a href="https://en.wikipedia.org/wiki/Persistent_data_structure">persistent data structure</a>，再配合 immutable 特性，使得單向鏈結串列幾乎成為函數式程式語言最常見的集合型別之一。可以參考這篇 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/third.html">persistent immutable stack 實作</a>文章。</p>
+<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
+<table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
+<tr><td> get       </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> insert    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
+<tr><td> remove    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
+<tr><td> append    </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> prepend   </td><td> \(O(1)\)                                      </td></tr>
+<tr><td> pop first </td><td> \(O(1)\)                                      </td></tr>
+<tr><td> pop last  </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> space     </td><td> \(O(n)\) + 各節點額外一個指標 \(n\) 個      </td></tr>
+</tbody></table>
+<blockquote>
+<p>\(n\)：資料筆數。<br />
+\(i\)：相對於整個容器的索引位置。</p>
+</blockquote>
+<p>值得注意的是，許多操作因為單向鏈結串列只能從 head 開始搜索的緣故，執行時間都呈線性，使用上要特別小心。</p>
+<a class="header" href="#實作設計" id="實作設計"><h2>實作設計</h2></a>
 <a class="header" href="#node" id="node"><h3>Node</h3></a>
 <p>先建立最基本的節點 Node。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -560,7 +578,7 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
+<a class="header" href="#效能-1" id="效能-1"><h2>效能</h2></a>
 <table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
 <tr><td> get       </td><td> $O(n)$                                      </td></tr>
 <tr><td> insert    </td><td> 節點已知：$O(1)$ ；節點未知：$O(n - i)$ </td></tr>

@@ -1,2 +1,2 @@
 var ALIASES = {};
-ALIASES['rust_algorithm_club'] = {};
+ALIASES["rust_algorithm_club"] = {};

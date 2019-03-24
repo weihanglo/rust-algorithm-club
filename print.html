@@ -2746,13 +2746,12 @@ pub fn peek(&amp;self) -&gt; Option&lt;&amp;T&gt; {
 <ul>
 <li>不需事先知道資料型別大小，充分利用動態記憶體管理。</li>
 <li>以常數時間插入／刪除，不需重新配置記憶體（reallocation）。</li>
-<li>不同的串列若有資料相同時，可以共享節點或資料，節省空間。</li>
 </ul>
 <p>但也因動態配置記憶體等因素，連帶產生一些缺陷：</p>
 <ul>
 <li><strong>空間開銷大</strong>：每個元素需儲存額外的指標空間。</li>
 <li><strong>較差的 CPU 快取</strong>：不連續存取的特性，不利於 <a href="https://en.wikipedia.org/wiki/CPU_cache">CPU 快取</a>。</li>
-<li><strong>不允許隨機存取（random access）</strong>：搜尋特定索引下的節點仍需線性時間。</li>
+<li><strong>不允許隨機存取（random access）</strong>：搜尋特定節點仍需線性時間循序存取。</li>
 </ul>
 <a class="header" href="#適用場景" id="適用場景"><h2>適用場景</h2></a>
 <p>大多數的場景其實不太常使用鏈結串列，Rust 內建的 <a href="https://doc.rust-lang.org/std/collections/struct.LinkedList.html"><code>LinkedList</code></a> 文件也建議，除非肯定要用鏈結串列，不然建議優先考慮其他類似的資料結構如 <a href="https://doc.rust-lang.org/std/collections/vec_deque/struct.VecDeque.html"><code>VecDeque</code></a>。話雖如此，鏈結串列仍有不少應用場景：</p>
@@ -2835,7 +2834,25 @@ NULL &lt;--|        |&lt;--|        |&lt;--|        |
 |        |   |        |   |        |
 +--------+   +--------+   +--------+
 </code></pre>
-<a class="header" href="#架構設計-1" id="架構設計-1"><h2>架構設計</h2></a>
+<p>比起 <a href="collections/singly_linked_list/doubly.html">雙向鏈結串列</a>，單向鏈結串列少了一個額外的指標開銷，在基本操作的花費也較低。在不需要雙向迭代情形下單向鏈結串列很適用。</p>
+<p>此外，單向鏈結串列也支援 tail-sharing，也就是共享 sublist。藉由共享 sublist，單向鏈結串列很容易實作 <a href="https://en.wikipedia.org/wiki/Persistent_data_structure">persistent data structure</a>，再配合 immutable 特性，使得單向鏈結串列幾乎成為函數式程式語言最常見的集合型別之一。可以參考這篇 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/third.html">persistent immutable stack 實作</a>文章。</p>
+<a class="header" href="#效能-16" id="效能-16"><h2>效能</h2></a>
+<table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
+<tr><td> get       </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> insert    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
+<tr><td> remove    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
+<tr><td> append    </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> prepend   </td><td> \(O(1)\)                                      </td></tr>
+<tr><td> pop first </td><td> \(O(1)\)                                      </td></tr>
+<tr><td> pop last  </td><td> \(O(n)\)                                      </td></tr>
+<tr><td> space     </td><td> \(O(n)\) + 各節點額外一個指標 \(n\) 個      </td></tr>
+</tbody></table>
+<blockquote>
+<p>\(n\)：資料筆數。<br />
+\(i\)：相對於整個容器的索引位置。</p>
+</blockquote>
+<p>值得注意的是，許多操作因為單向鏈結串列只能從 head 開始搜索的緣故，執行時間都呈線性，使用上要特別小心。</p>
+<a class="header" href="#實作設計" id="實作設計"><h2>實作設計</h2></a>
 <a class="header" href="#node-1" id="node-1"><h3>Node</h3></a>
 <p>先建立最基本的節點 Node。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -3239,7 +3256,7 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#效能-16" id="效能-16"><h2>效能</h2></a>
+<a class="header" href="#效能-17" id="效能-17"><h2>效能</h2></a>
 <table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
 <tr><td> get       </td><td> $O(n)$                                      </td></tr>
 <tr><td> insert    </td><td> 節點已知：$O(1)$ ；節點未知：$O(n - i)$ </td></tr>
@@ -3265,10 +3282,10 @@ $i$：相對於整個容器的索引位置。</p>
 </ul>
 <a class="header" href="#雙向鏈結串列-doubly-linked-list" id="雙向鏈結串列-doubly-linked-list"><h1>雙向鏈結串列 Doubly linked list</h1></a>
 <a class="header" href="#操作" id="操作"><h2>操作</h2></a>
-<a class="header" href="#效能-17" id="效能-17"><h2>效能</h2></a>
+<a class="header" href="#效能-18" id="效能-18"><h2>效能</h2></a>
 <a class="header" href="#循環鏈結串列-circular-linked-list" id="循環鏈結串列-circular-linked-list"><h1>循環鏈結串列 Circular linked list</h1></a>
 <a class="header" href="#操作-1" id="操作-1"><h2>操作</h2></a>
-<a class="header" href="#效能-18" id="效能-18"><h2>效能</h2></a>
+<a class="header" href="#效能-19" id="效能-19"><h2>效能</h2></a>
 <a class="header" href="#關聯容器-associative-container" id="關聯容器-associative-container"><h1>關聯容器 Associative Container</h1></a>
 <p>關聯容器是一種抽象資料型別，儲存鍵與值配對關係（key-value pair）的集合，並透過鍵存取元素，所謂「鍵值對」好比身份證字號與公民，戶政單位知道一個人證號，就可在關聯容器內，透過證號查找是否有這個公民，以及此證號對應的公民基本資訊。</p>
 <p>關聯容器有許多別名，例如字典（dictionary）、關聯陣列（associative array）、映射（map）、表（table）等。在大多數程式語言函式庫中，關聯容器通常是最基本的容器型別之一，如 Python 的 <code>dict</code>，JavaScript 的 <code>Map</code>，以及 Rust 的 <code>HashMap</code>。</p>
@@ -3507,7 +3524,7 @@ $k$：雜湊表配置的儲存空間（bucket 總數）。</p>
 </blockquote>
 <p>Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 $3/4 = 75%$。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 <a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html"><code>HashMap</code></a> 使用了 <a href="https://doc.rust-lang.org/stable/src/std/collections/hash/map.rs.html#82-103">Robin Hood Hashing</a>，將 load factor 調教到 90%。</p>
 <p>重配置雜湊表與動態陣列的動態調整大小雷同，達到某個門檻值，就會將底層陣列大小翻倍。為了避免開銷過高，通常元素減少時，不會主動調整大小，而是提供一個 <code>shrink_to_fit</code> 一類的方法，讓呼叫端自行決定釋放多餘空間的時機。</p>
-<a class="header" href="#架構設計-2" id="架構設計-2"><h2>架構設計</h2></a>
+<a class="header" href="#架構設計-1" id="架構設計-1"><h2>架構設計</h2></a>
 <p>在介紹架構設計之前，我們先來瞭解 Rust 雜湊相關的觀念與 trait。</p>
 <a class="header" href="#hash-and-eq" id="hash-and-eq"><h3>Hash and Eq</h3></a>
 <p>要實作雜湊函數，當然可以自幹計算雜湊值的函式來用，那為什麼還要使用 Rust 定義好的 <a href="https://doc.rust-lang.org/std/hash/trait.Hash.html"><code>Hash</code></a> 呢？當然是希望將雜湊的介面抽象化，只要型別宣告符合 <code>Hash</code> trait，任何人都可以輕鬆計算雜湊值。而實作 <a href="https://doc.rust-lang.org/std/hash/trait.Hash.html"><code>Hash</code></a> 很簡單，只要寫一個 <code>fn hash()</code>，呼叫端就能透過它計算雜湊，例如：</p>
@@ -3830,7 +3847,7 @@ pub fn iter(&amp;self) -&gt; impl Iterator&lt;Item = (&amp;K, &amp;V)&gt; {
 <li><a href="https://doc.rust-lang.org/reference/types.html#trait-objects">Rust Reference: Trait objects</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html">The Rust Programming Language: Trait objects</a></li>
 </ul>
-<a class="header" href="#效能-19" id="效能-19"><h2>效能</h2></a>
+<a class="header" href="#效能-20" id="效能-20"><h2>效能</h2></a>
 <p>以陣列實作的雜湊表各操作複雜度如下</p>
 <table><thead><tr><th> Operation    </th><th> Best case    </th><th> Worst case </th></tr></thead><tbody>
 <tr><td> add(k, v)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
@@ -3881,7 +3898,7 @@ $v$：欲與鍵綁定的資料。<br />
 <blockquote>
 <p>本次實作的程式碼置於在 <a href="https://rust-algo.club/doc/rust_algorithm_club/collections/struct.HashSet.html">rust_algorithm_club::collections::HashSet</a> API 文件中。</p>
 </blockquote>
-<a class="header" href="#架構設計-3" id="架構設計-3"><h2>架構設計</h2></a>
+<a class="header" href="#架構設計-2" id="架構設計-2"><h2>架構設計</h2></a>
 <a class="header" href="#以雜湊表為底層容器" id="以雜湊表為底層容器"><h3>以雜湊表為底層容器</h3></a>
 <p>集合能以許多不同的資料結構實現，通用的集合實作多會最佳化取得、增加、移除元素等運算，這讓我們想到了「<a href="../hash_map">雜湊表</a>」，雜湊表正是能將集合運算最佳化的一種資料結構，我們將借用<strong>雜湊表作為底層儲存容器</strong>，進一步實作集合。</p>
 <p>你可能好奇，集合明明只有元素，並沒有<strong>鍵值對</strong>，跟雜湊表有啥關係？讓我們回想雜湊表一個重要的特性：每一個鍵（key）只會出現一次，利用雜湊表這個特性，即可達成上述集合兩大特性。</p>
@@ -4281,7 +4298,7 @@ where
 <blockquote>
 <p>有人可能會認為，比較運算還要透過 <code>partial_cmp</code> 判斷 <code>Option</code> 多麻煩，事實上，C++ 20 也帶來了 <code>&lt;=&gt;</code> 運算子以及 <a href="https://en.cppreference.com/w/cpp/language/operator_comparison#Three-way_comparison">three way comparison</a> 衍生的各種型別，partial order 或 parital equal 可說是更精確且必要的比較運算，也是一種趨勢。</p>
 </blockquote>
-<a class="header" href="#效能-20" id="效能-20"><h2>效能</h2></a>
+<a class="header" href="#效能-21" id="效能-21"><h2>效能</h2></a>
 <p>以雜湊表為底層儲存容器的集合，各操作複雜度如下</p>
 <table><thead><tr><th> Operation    </th><th> Best case    </th><th> Worst case </th></tr></thead><tbody>
 <tr><td> insert(v)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>

@@ -154,13 +154,12 @@
 <ul>
 <li>不需事先知道資料型別大小，充分利用動態記憶體管理。</li>
 <li>以常數時間插入／刪除，不需重新配置記憶體（reallocation）。</li>
-<li>不同的串列若有資料相同時，可以共享節點或資料，節省空間。</li>
 </ul>
 <p>但也因動態配置記憶體等因素，連帶產生一些缺陷：</p>
 <ul>
 <li><strong>空間開銷大</strong>：每個元素需儲存額外的指標空間。</li>
 <li><strong>較差的 CPU 快取</strong>：不連續存取的特性，不利於 <a href="https://en.wikipedia.org/wiki/CPU_cache">CPU 快取</a>。</li>
-<li><strong>不允許隨機存取（random access）</strong>：搜尋特定索引下的節點仍需線性時間。</li>
+<li><strong>不允許隨機存取（random access）</strong>：搜尋特定節點仍需線性時間循序存取。</li>
 </ul>
 <a class="header" href="#適用場景" id="適用場景"><h2>適用場景</h2></a>
 <p>大多數的場景其實不太常使用鏈結串列，Rust 內建的 <a href="https://doc.rust-lang.org/std/collections/struct.LinkedList.html"><code>LinkedList</code></a> 文件也建議，除非肯定要用鏈結串列，不然建議優先考慮其他類似的資料結構如 <a href="https://doc.rust-lang.org/std/collections/vec_deque/struct.VecDeque.html"><code>VecDeque</code></a>。話雖如此，鏈結串列仍有不少應用場景：</p>
