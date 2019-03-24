@@ -1,6 +1,5 @@
 use std::rc::Rc;
 use std::cell::RefCell;
-use std::cell::{Ref, RefMut};
 
 /// A doubly-linked list with owned nodes.
 ///
@@ -10,9 +9,11 @@ use std::cell::{Ref, RefMut};
 ///
 /// - [Rust Standard Library: std::collections::LinkedList][1]
 /// - [Learning Rust With Entirely Too Many Linked Lists][2]
+/// - [C++ Container Library: std::list][3]
 ///
-/// [1]: https://doc.rust-lang.org/stable/std/collections/struct.VecDeque.html
+/// [1]: https://doc.rust-lang.org/stable/std/collections/struct.LinkedList.html
 /// [2]: http://cglab.ca/~abeinges/blah/too-many-lists/book/README.html
+/// [3]: https://en.cppreference.com/w/cpp/container/list
 #[derive(Debug)]
 pub struct DoublyLinkedList<T> {
     head: Link<T>,
@@ -25,14 +26,6 @@ type Link<T> = Option<Rc<RefCell<Node<T>>>>;
 ///
 /// This struct is created by the `into_iter` method on `DoublyLinkedList`.
 pub struct IntoIter<T>(DoublyLinkedList<T>);
-
-/// A mutable iterator over the elements of a `DoublyLinkedList`.
-///
-/// This struct is created by the `iter` method on `DoublyLinkedList`.
-pub struct Iter<'a, T> {
-   next: Link<T>,
-   phantomData: std::marker::PhantomData<&'a T>,
-}
 
 /// Internal node representation.
 #[derive(Debug)]
@@ -288,11 +281,6 @@ impl<T> DoublyLinkedList<T> {
     pub fn len(&self) -> usize {
         unimplemented!();
     }
-
-   /// Creates an iterator that yields immutable reference of each element.
-   pub fn iter(&self) -> Iter<T> {
-       Iter { next: self.head, phantomData: std::marker::PhantomData }
-   }
 }
 
 impl<T> Drop for DoublyLinkedList<T> {
@@ -300,28 +288,6 @@ impl<T> Drop for DoublyLinkedList<T> {
         while self.pop_front().is_some() {}
     }
 }
-
-impl<'a, T> Iterator for Iter<'a, T> {
-    type Item = Ref<'a, T>;
-    fn next(&mut self) -> Option<Self::Item> {
-        self.next.as_ref().map(|cell| {
-            Ref::map(cell.borrow(), |node| &node.elem)
-        })
-    }
-}
-
-//impl<'a, T> Iterator for IterMut<'a, T> {
-//    type Item = &'a mut T;
-//    fn next(&mut self) -> Option<Self::Item> {
-//        match self.next.take() {
-//            Some(node) => {
-//                self.next = node.next.as_mut().map(|node| &mut **node);
-//                Some(&mut node.elem)
-//            }
-//            None => None,
-//        }
-//    }
-//}
 
 impl<T> Iterator for IntoIter<T> {
     type Item = T;
@@ -355,10 +321,11 @@ mod tests {
     #[test]
     fn basics() {
         let mut l = DoublyLinkedList::<i32>::new();
-//         assert_eq!(l.len(), 0);
-//         assert_eq!(l.pop_front(), None);
-//         assert_eq!(l.len(), 0);
-//         assert!(l.is_empty());
+        assert_eq!(l.len(), 0);
+        assert_eq!(l.pop_front(), None);
+        assert_eq!(l.pop_back(), None);
+        assert_eq!(l.len(), 0);
+        assert!(l.is_empty());
     }
 
     #[ignore]
@@ -379,10 +346,10 @@ mod tests {
         assert_eq!(l.insert(1, 2), Err(1), "insert at [1] on an 1-element list");
         assert!(l.insert(0, 2).is_ok(), "insert at [0] on an 1-element list");
         // Check remain list is in correct form.
-//        let mut res = DoublyLinkedList::<i32>::new();
-//        res.push_front(1);
-//        res.push_front(3);
-//        assert_eq!(l, res);
+        // let mut res = DoublyLinkedList::<i32>::new();
+        // res.push_front(1);
+        // res.push_front(2);
+        // assert_eq!(l, res);
 
         // A list containing 4 elements.
         let mut l = DoublyLinkedList::<i32>::new();
@@ -394,10 +361,10 @@ mod tests {
         assert!(l.insert(3, 10).is_ok(), "insert at the last position");
         assert!(l.insert(0, 20).is_ok(), "insert at the first position");
         // Check remain list is in correct form.
-//        let mut res = DoublyLinkedList::<i32>::new();
-//        res.push_front(1);
-//        res.push_front(3);
-//        assert_eq!(l, res);
+        // let mut res = DoublyLinkedList::<i32>::new();
+        // res.push_front(1);
+        // res.push_front(3);
+        // assert_eq!(l, res);
     }
 
     #[test]
@@ -418,17 +385,17 @@ mod tests {
         // Remove from tail.
         assert_eq!(l.remove(3), Some(1));
         // Check remain list is in correct form.
-//        let mut res = DoublyLinkedList::<i32>::new();
-//        res.push_front(1);
-//        res.push_front(3);
-//        assert_eq!(l, res);
+        // let mut res = DoublyLinkedList::<i32>::new();
+        // res.push_front(1);
+        // res.push_front(3);
+        // assert_eq!(l, res);
 
         // Remove from head.
         assert_eq!(l.remove(0), Some(4));
-//        let mut res = DoublyLinkedList::<i32>::new();
-//        res.push_front(1);
-//        res.push_front(3);
-//        assert_eq!(l, res);
+        // let mut res = DoublyLinkedList::<i32>::new();
+        // res.push_front(1);
+        // res.push_front(3);
+        // assert_eq!(l, res);
 
         // Remove remain elements
         assert_eq!(l.remove(0), Some(3));
@@ -452,6 +419,7 @@ mod tests {
         l.push_back(2);
         l.push_back(3);
 
+        // Test DoubleEndedIterator
         let mut iter = l.into_iter();
         assert_eq!(iter.next_back(), Some(3));
         assert_eq!(iter.next(), Some(1));
