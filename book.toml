@@ -11,6 +11,7 @@ create-missing = false
 curly-quotes = true
 no-section-label = true
 mathjax-support = true # Disable it in order to add custom config.
+additional-js = ["theme/custom.js"]
 
 [output.html.playpen]
 editable = true
