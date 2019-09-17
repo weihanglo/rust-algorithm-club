@@ -10,8 +10,9 @@ create-missing = false
 [output.html]
 curly-quotes = true
 no-section-label = true
-mathjax-support = true # Disable it in order to add custom config.
+mathjax-support = true
 additional-js = ["theme/custom.js"]
+git-repository-url = "https://github.com/weihanglo/rust-algorithm-club"
 
 [output.html.playpen]
 editable = true
