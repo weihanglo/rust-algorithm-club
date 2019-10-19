@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>計數排序 Counting sort - Rust Algorithm Club</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Learn algorithms and data structures with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +15,7 @@
         <link rel="stylesheet" href="../../css/variables.css">
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
@@ -29,19 +32,15 @@
 
         
         <!-- MathJax -->
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({
-            tex2jax: {
-              inlineMath: [['$','$']],
-            },
-          });
-        </script>
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "../../";</script>
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -63,7 +62,7 @@
         <script type="text/javascript">
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
-            if (theme === null || theme === undefined) { theme = 'light'; }
+            if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
         </script>
@@ -81,7 +80,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li><a href="../../searching/index.html">搜尋</a></li><li><ol class="section"><li><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/index.html" class="active">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li><a href="../../collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li><a href="../../collections/queue/index.html">🚧 佇列 Queue</a></li><li><a href="../../collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li><a href="../../collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li><a href="../../collections/associative-container/index.html">關聯容器</a></li><li><ol class="section"><li><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li><a href="../../collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li><a href="../../collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li><a href="../../collections/set/index.html">集合 Set</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../CONTRIBUTING.html">貢獻指南</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="affix"><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li><a href="../../searching/index.html">搜尋</a></li><li><ol class="section"><li><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/index.html" class="active">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li><a href="../../collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li><a href="../../collections/queue/index.html">🚧 佇列 Queue</a></li><li><a href="../../collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li><a href="../../collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li><a href="../../collections/associative-container/index.html">關聯容器</a></li><li><ol class="section"><li><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li><a href="../../collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li><a href="../../collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li><a href="../../collections/set/index.html">集合 Set</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="affix"><a href="../../404.html">404</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -98,7 +100,7 @@
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -114,9 +116,14 @@
                         <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
-                            <a href="https://github.com/weihanglo/rust-algorithm-club" title="Edit" aria-label="Edit on GitHub">
-                                <i id="print-button" class="fa fa-github"> Edit</i>
+                            <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
                             </a>
+                            
+                            <a href="https://github.com/weihanglo/rust-algorithm-club" title="Git repository" aria-label="Git repository">
+                                <i id="git-repository-button" class="fa fa-github"></i>
+                            </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -145,7 +152,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#計數排序-counting-sort" id="計數排序-counting-sort"><h1>計數排序 Counting sort</h1></a>
+                        <h1><a class="header" href="#計數排序-counting-sort" id="計數排序-counting-sort">計數排序 Counting sort</a></h1>
 <p><a href="https://en.wikipedia.org/wiki/Counting_sort">Counting sort</a> 是一個特殊的整數排序法，被視為 <a href="../bucket_sort">Bucket sort</a> 的特例。原理是在已知整數範圍內，計算每個鍵值出現次數，並用額外的陣列保存（Count array）。最後將 Count array 的元素值作為排序資料的新 index。</p>
 <p>Counting sort 基本特性如下：</p>
 <ul>
@@ -157,13 +164,13 @@
 <li><strong>預期分佈</strong>：預期輸入資料是落在已知範圍內的整數（例如 0 到 k）。</li>
 <li><strong>適用範圍</strong>：僅適用於小範圍整數（額外空間需求大）。</li>
 </ul>
-<a class="header" href="#步驟" id="步驟"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟" id="步驟">步驟</a></h2>
 <ol>
 <li><strong>Count occurrence</strong>：計算每個 key 的出現次數。</li>
 <li><strong>Prefix sum as start index</strong>：計算前綴和（Prefix sum），並作為該元素的 start index。</li>
 <li><strong>Copy output</strong>：利用步驟二的前綴和，遍歷輸入資料，取得元素排序後的索引。</li>
 </ol>
-<a class="header" href="#說明" id="說明"><h2>說明</h2></a>
+<h2><a class="header" href="#說明" id="說明">說明</a></h2>
 <p>這裡有資料需要透過正整數的 key 來排序。key 的範圍在 0 - 9 之間，格式為 <code>(key, value)</code>。</p>
 <pre><code>Input: (1, A) (5, B) (8, C) (2, D) (2, E) (9, F)
 </code></pre>
@@ -221,26 +228,26 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 +--------+--------+--------+--------+--------+--------+
 </code></pre>
 <p>這樣就完成排序了。此外，觀察 <strong>(2, D)</strong> 與 <strong>(2, E)</strong> 排序前後的位置，會發現 counting sort 是個實實在在的穩定排序，很棒。</p>
-<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n + k) $ </td></tr>
-<tr><td> Best         </td><td> $O(n + k) $ </td></tr>
-<tr><td> Average      </td><td> $O(n + k) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(n + k) $ auxiliary </td></tr>
+<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n + k) $</td></tr>
+<tr><td>Best</td><td>$O(n + k) $</td></tr>
+<tr><td>Average</td><td>$O(n + k) $</td></tr>
+<tr><td>Worst space</td><td>$O(n + k) $ auxiliary</td></tr>
 </tbody></table>
 <blockquote>
 <p>k 為資料已知範圍上下界之差。</p>
 </blockquote>
-<a class="header" href="#time-complexity" id="time-complexity"><h3>Time Complexity</h3></a>
+<h3><a class="header" href="#time-complexity" id="time-complexity">Time Complexity</a></h3>
 <p>Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 $n $ 個輸入的資料，因此複雜度為 $O(n) $；步驟二計算 prefix sum，以及 count array 自身的初始化則需執行 $k + 1 $ 次（給定的資料範圍），這部分的複雜度為 $O(k) $。由於 $n $ 與 $k $ 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 $O(n + k) $。</p>
-<a class="header" href="#space-complexity" id="space-complexity"><h3>Space complexity</h3></a>
+<h3><a class="header" href="#space-complexity" id="space-complexity">Space complexity</a></h3>
 <p>Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的記憶體空間，因此 $O(n) $ 的額外（auxiliary）空間複雜度絕對免不了。再加上需要長度為 $k $ 的 count array 保存每個 key 的出現次數，因此需再加上 $O(k) $。除了原始的輸入 array，總共需花費 $O(n + k) $ 的額外空間複雜度。</p>
 <blockquote>
 <p>如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 $O(k) $，但也因此成為不穩定排序法。</p>
 </blockquote>
-<a class="header" href="#實作" id="實作"><h2>實作</h2></a>
+<h2><a class="header" href="#實作" id="實作">實作</a></h2>
 <p>由於 Counting sort 屬於分布式排序（Distribution sort），這裡使用泛型，以彰顯分布式排序的特色。</p>
-<a class="header" href="#function-signature" id="function-signature"><h3>Function Signature</h3></a>
+<h3><a class="header" href="#function-signature" id="function-signature">Function Signature</a></h3>
 <p>首先，我們先看函式如何宣告（function signature）。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -260,7 +267,7 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
 <li><code>F</code>：<code>key</code> extactor 的型別，回傳的 <code>usize</code> 必須落在 <code>[min, max)</code> 之間。</li>
 <li><code>T</code>：陣列元素的型別，實作 <code>Clone</code> 是由於 Counting sort 需要將 output 再複製回原本的參數 <code>arr</code> 上，達成「偽」原地排序。</li>
 </ul>
-<a class="header" href="#prefix-sums-array" id="prefix-sums-array"><h3>Prefix Sums Array</h3></a>
+<h3><a class="header" href="#prefix-sums-array" id="prefix-sums-array">Prefix Sums Array</a></h3>
 <p>再來，了解如何建立一個元素出現次數的陣列。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -293,7 +300,7 @@ fn counting_sort() {
 <li>遍歷整個輸入資料，利用 <code>key</code> function 取出每筆資料的鍵值，出現一次就 +1。</li>
 <li>利用 Iterator 上的 <code>scan</code> method 計算每個鍵值的 prefix sum。需要注意的是，每個元素對應的 prefix sum 不包含自身，例如 key 3 的計算結果就是 key 1 與 key 2 的出現總次數，如此一來，prefix sum 才會直接對應到排序後的位置。</li>
 </ol>
-<a class="header" href="#prefix-sums-as-start-index" id="prefix-sums-as-start-index"><h3>Prefix Sums as Start Index</h3></a>
+<h3><a class="header" href="#prefix-sums-as-start-index" id="prefix-sums-as-start-index">Prefix Sums as Start Index</a></h3>
 <p>最後一步就是將 prefix sum 當作每個 element 的正確位置，把資料重頭排序。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -347,7 +354,7 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Counting_sort">Wiki: Counting sort</a></li>
 <li><a href="http://www.growingwiththeweb.com/2014/05/counting-sort.html">Growing with the web: Counting sort</a></li>
@@ -413,6 +420,8 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
         <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../theme/custom.js"></script>
         
 
         

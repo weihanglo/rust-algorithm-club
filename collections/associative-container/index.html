@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>關聯容器 - Rust Algorithm Club</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Learn algorithms and data structures with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +15,7 @@
         <link rel="stylesheet" href="../../css/variables.css">
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
@@ -29,19 +32,15 @@
 
         
         <!-- MathJax -->
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({
-            tex2jax: {
-              inlineMath: [['$','$']],
-            },
-          });
-        </script>
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "../../";</script>
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -63,7 +62,7 @@
         <script type="text/javascript">
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
-            if (theme === null || theme === undefined) { theme = 'light'; }
+            if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
         </script>
@@ -81,7 +80,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li><a href="../../searching/index.html">搜尋</a></li><li><ol class="section"><li><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li><a href="../../collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li><a href="../../collections/queue/index.html">🚧 佇列 Queue</a></li><li><a href="../../collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li><a href="../../collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li><a href="../../collections/associative-container/index.html" class="active">關聯容器</a></li><li><ol class="section"><li><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li><a href="../../collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li><a href="../../collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li><a href="../../collections/set/index.html">集合 Set</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../CONTRIBUTING.html">貢獻指南</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="affix"><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li><a href="../../searching/index.html">搜尋</a></li><li><ol class="section"><li><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li><a href="../../collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li><a href="../../collections/queue/index.html">🚧 佇列 Queue</a></li><li><a href="../../collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li><a href="../../collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li><a href="../../collections/associative-container/index.html" class="active">關聯容器</a></li><li><ol class="section"><li><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li><a href="../../collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li><a href="../../collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li><a href="../../collections/set/index.html">集合 Set</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="affix"><a href="../../404.html">404</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -98,7 +100,7 @@
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -114,9 +116,14 @@
                         <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
-                            <a href="https://github.com/weihanglo/rust-algorithm-club" title="Edit" aria-label="Edit on GitHub">
-                                <i id="print-button" class="fa fa-github"> Edit</i>
+                            <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
                             </a>
+                            
+                            <a href="https://github.com/weihanglo/rust-algorithm-club" title="Git repository" aria-label="Git repository">
+                                <i id="git-repository-button" class="fa fa-github"></i>
+                            </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -145,13 +152,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#關聯容器-associative-container" id="關聯容器-associative-container"><h1>關聯容器 Associative Container</h1></a>
+                        <h1><a class="header" href="#關聯容器-associative-container" id="關聯容器-associative-container">關聯容器 Associative Container</a></h1>
 <p>關聯容器是一種抽象資料型別，儲存鍵與值配對關係（key-value pair）的集合，並透過鍵存取元素，所謂「鍵值對」好比身份證字號與公民，戶政單位知道一個人證號，就可在關聯容器內，透過證號查找是否有這個公民，以及此證號對應的公民基本資訊。</p>
 <p>關聯容器有許多別名，例如字典（dictionary）、關聯陣列（associative array）、映射（map）、表（table）等。在大多數程式語言函式庫中，關聯容器通常是最基本的容器型別之一，如 Python 的 <code>dict</code>，JavaScript 的 <code>Map</code>，以及 Rust 的 <code>HashMap</code>。</p>
 <p>方便起見，本文以「<strong>映射表</strong>」統稱這類集合型別。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Hash_table_5_0_1_1_1_1_0_LL.svg/1280px-Hash_table_5_0_1_1_1_1_0_LL.svg.png" alt="" /></p>
 <p><em>（雜湊表示意圖）</em></p>
-<a class="header" href="#特性" id="特性"><h2>特性</h2></a>
+<h2><a class="header" href="#特性" id="特性">特性</a></h2>
 <p>一般來說，映射表有以下特性：</p>
 <ul>
 <li><strong>鍵值對為單向關係</strong>：可透過鍵取得其唯一值；但無法確保一值僅對應唯一的鍵。</li>
@@ -170,7 +177,7 @@
 <li><strong>查找</strong>：透過任意鍵搜尋該鍵值對。</li>
 </ul>
 <p>不難看出，基本操作都是透過鍵取得值。事實上，合理實作的映射表，只要透過鍵來操作，就能有良好效能，甚至上述操作能達到 $O(1)$ 複雜度。</p>
-<a class="header" href="#適用場景" id="適用場景"><h2>適用場景</h2></a>
+<h2><a class="header" href="#適用場景" id="適用場景">適用場景</a></h2>
 <p>雖然映射表依實作不同，效能有所權衡。但其最大優勢仍是可「高效地透過鍵尋找值」，只要有映射關係的資料，都非常適合使用映射表。例如，快取暫存機制需透過特定鍵快速查找暫存值。此外，現代常用的 JSON、TOML 等資料交換格式，都是「鍵—值對」的形式，非常適合使用映射表處理。而應用映射表最有名的實際案例莫過於資料庫的索引，透過索引，我們可以大大降低搜尋的成本，從線性時間直落到對數甚至常數時間，不過相對就需要付出額外時空間建立索引。</p>
 <p>我們再次把應用場景條列出來，方便懶人帶著走。</p>
 <ul>
@@ -181,17 +188,17 @@
 <li>查找操作頻率遠高於其他操作時。</li>
 </ul>
 <p>總的來說，只要資料有對應綁定關係，就可以考慮使用映射表處理。</p>
-<a class="header" href="#種類" id="種類"><h2>種類</h2></a>
+<h2><a class="header" href="#種類" id="種類">種類</a></h2>
 <p>以下簡單介紹常見的映射表，詳情請點擊各連結。</p>
-<a class="header" href="#雜湊表-hash-map" id="雜湊表-hash-map"><h3>雜湊表 Hash Map</h3></a>
+<h3><a class="header" href="#雜湊表-hash-map" id="雜湊表-hash-map">雜湊表 Hash Map</a></h3>
 <p><a href="../hash_map">雜湊表</a>是以雜湊函數實作的映射表。透過<a href="../../hash">雜湊函數</a>將任意資料轉換為固定長度的雜湊值，並將此鍵與一筆資料綁定，再映射到內部資料結構的某位置。理論上，只要雜湊函數品質過得去，雜湊表的基本操作都能在常數時間完成。</p>
-<a class="header" href="#有序映射表-ordered-map" id="有序映射表-ordered-map"><h3>有序映射表 Ordered Map</h3></a>
+<h3><a class="header" href="#有序映射表-ordered-map" id="有序映射表-ordered-map">有序映射表 Ordered Map</a></h3>
 <p><a href="../ordered_map">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 $O(\log n)$。</p>
-<a class="header" href="#多重映射表-multimap" id="多重映射表-multimap"><h3>多重映射表 Multimap</h3></a>
+<h3><a class="header" href="#多重映射表-multimap" id="多重映射表-multimap">多重映射表 Multimap</a></h3>
 <p><a href="../multimap">多重映射表</a>允許鍵值對重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的接口操作或迭代整張映射表。</p>
-<a class="header" href="#集合-set" id="集合-set"><h3>集合 Set</h3></a>
+<h3><a class="header" href="#集合-set" id="集合-set">集合 Set</a></h3>
 <p><a href="../set">集合</a>實際上並無鍵值「關聯」，可將其想像成普通的映射表。只關心鍵而值不重要。集合借用了數學<a href="https://en.wikipedia.org/wiki/Set_theory">集合論（set theory）</a>中有限集合的概念，常應用於需要操作交集、聯集、差集等集合運算場景。</p>
-<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Associative_array">Wiki: Associative array</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Associative_containers">Wiki: Associative containers</a></li>
@@ -260,6 +267,8 @@
         <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../theme/custom.js"></script>
         
 
         

@@ -23,7 +23,8 @@ impl<T> Stack<T> {
     ///
     /// # Parameters
     ///
-    /// * `maxsize`: Capacity of the collection. It limits how many items can be stored.
+    /// * `maxsize`: Capacity of the collection. It limits how many items can
+    /// be stored.
     pub fn with_capacity(maxsize: usize) -> Self {
         Self {
             maxsize,
@@ -31,8 +32,6 @@ impl<T> Stack<T> {
         }
     }
 
-    /// Required method.
-    ///
     /// Removes the most recently added element that was not yet removed.
     ///
     /// # Returns
@@ -46,14 +45,12 @@ impl<T> Stack<T> {
         self.items.pop()
     }
 
-    /// Required method.
-    ///
     /// Adds an element to the collection.
     ///
     /// # Returns
     ///
-    /// Returns `true` if the collection has space left and item is successfully added,
-    /// otherwise returns `false`.
+    /// Returns `true` if the collection has space left and item is
+    /// successfully added, otherwise returns `false`.
     ///
     /// # Complexity
     ///
@@ -66,27 +63,26 @@ impl<T> Stack<T> {
         return true;
     }
 
-    /// Optional method.
-    ///
     /// # Returns
     ///
-    /// Returns the size of collection, indicates how many items are added in the collection.
+    /// Returns the size of collection, indicates how many items are added in
+    /// the collection.
     ///
     /// # Note
     ///
     /// Size and capacity are different concepts.
-    /// Capacity limits how many items can be stored, while size indicates how many items is currently stored.
+    /// Capacity limits how many items can be stored, while size indicates how
+    /// many items is currently stored.
     pub fn size(&self) -> usize {
         self.items.len()
     }
 
-    /// Optional method.
-    ///
     /// Peeks the last element added without tampering the collection.
     ///
     /// # Returns
     ///
-    /// Returns the most recently added item. If nothing was added, `None` will be returned.
+    /// Returns the most recently added item. If nothing was added, `None` will
+    /// be returned.
     pub fn peek(&self) -> Option<&T> {
         self.items.last()
     }

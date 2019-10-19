@@ -4,6 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Rust Algorithm Club</title>
+        
+        <meta name="robots" content="noindex" />
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Learn algorithms and data structures with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +17,7 @@
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
@@ -29,19 +34,15 @@
 
         
         <!-- MathJax -->
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({
-            tex2jax: {
-              inlineMath: [['$','$']],
-            },
-          });
-        </script>
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG"></script>
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "";</script>
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -63,7 +64,7 @@
         <script type="text/javascript">
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
-            if (theme === null || theme === undefined) { theme = 'light'; }
+            if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
         </script>
@@ -81,7 +82,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="concepts/index.html">基礎概念</a></li><li><ol class="section"><li><a href="concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li><a href="searching/index.html">搜尋</a></li><li><ol class="section"><li><a href="searching/linear_search/index.html">線性搜尋 Linear search</a></li><li><a href="searching/binary_search/index.html">二元搜尋 Binary search</a></li><li><a href="searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li><a href="searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li><a href="sorting/index.html">排序</a></li><li><ol class="section"><li><a href="sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li><a href="sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li><a href="sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li><a href="sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li><a href="sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li><a href="sorting/quicksort/index.html">快速排序 Quicksort</a></li><li><a href="sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li><a href="sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li><a href="sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li><a href="sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li><a href="sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li><a href="sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="collections/index.html">資料結構</a></li><li><ol class="section"><li><a href="collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li><a href="collections/stack/index.html">堆疊 Stack</a></li><li><a href="collections/queue/index.html">🚧 佇列 Queue</a></li><li><a href="collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li><a href="collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li><a href="collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li><a href="collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li><a href="collections/associative-container/index.html">關聯容器</a></li><li><ol class="section"><li><a href="collections/hash_map/index.html">雜湊表 Hash map</a></li><li><a href="collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li><a href="collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li><a href="collections/set/index.html">集合 Set</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="CONTRIBUTING.html">貢獻指南</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="affix"><a href="index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="concepts/index.html">基礎概念</a></li><li><ol class="section"><li><a href="concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li><a href="searching/index.html">搜尋</a></li><li><ol class="section"><li><a href="searching/linear_search/index.html">線性搜尋 Linear search</a></li><li><a href="searching/binary_search/index.html">二元搜尋 Binary search</a></li><li><a href="searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li><a href="searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li><a href="sorting/index.html">排序</a></li><li><ol class="section"><li><a href="sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li><a href="sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li><a href="sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li><a href="sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li><a href="sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li><a href="sorting/quicksort/index.html">快速排序 Quicksort</a></li><li><a href="sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li><a href="sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li><a href="sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li><a href="sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li><a href="sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li><a href="sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="collections/index.html">資料結構</a></li><li><ol class="section"><li><a href="collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li><a href="collections/stack/index.html">堆疊 Stack</a></li><li><a href="collections/queue/index.html">🚧 佇列 Queue</a></li><li><a href="collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li><a href="collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li><a href="collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li><a href="collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li><a href="collections/associative-container/index.html">關聯容器</a></li><li><ol class="section"><li><a href="collections/hash_map/index.html">雜湊表 Hash map</a></li><li><a href="collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li><a href="collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li><a href="collections/set/index.html">集合 Set</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="CONTRIBUTING.html">貢獻指南</a></li><li class="affix"><a href="404.html">404</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -98,7 +102,7 @@
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -114,9 +118,14 @@
                         <h1 class="menu-title">Rust Algorithm Club</h1>
 
                         <div class="right-buttons">
-                            <a href="https://github.com/weihanglo/rust-algorithm-club" title="Edit" aria-label="Edit on GitHub">
-                                <i id="print-button" class="fa fa-github"> Edit</i>
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
                             </a>
+                            
+                            <a href="https://github.com/weihanglo/rust-algorithm-club" title="Git repository" aria-label="Git repository">
+                                <i id="git-repository-button" class="fa fa-github"></i>
+                            </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -148,25 +157,25 @@
                         <p align="center">
   <img src="logo.svg" alt="logo">
 <p>
-<a class="header" href="#rust-algorithm-club" id="rust-algorithm-club"><h1>Rust Algorithm Club</h1></a>
+<h1><a class="header" href="#rust-algorithm-club" id="rust-algorithm-club">Rust Algorithm Club</a></h1>
 <p>歡迎來到 Rust 演算法俱樂部！本專案受 <a href="https://github.com/raywenderlich/swift-algorithm-club">Swift Algorithm Club</a> 啟發，專案中的演算法皆使用 <a href="https://www.rust-lang.org/">Rust 程式語言</a>撰寫說明與實作！您可以在 <a href="https://rust-algo.club">Rust Algorithm Club</a> 一站，依您的意願，挑選有興趣的演算法知識學習；若您夠大膽，推薦您閱讀<a href="https://rust-algo.club/doc/rust_algorithm_club/">自動生成的 API 文件</a>，直接單挑程式原始碼。</p>
 <p>本專案原始碼放在 <a href="https://github.com/weihanglo/rust-algorithm-club">GitHub</a> 上，非常期待您的貢獻。</p>
 <p><a href="https://rust-lang-nursery.github.io/edition-guide/rust-2018"><img src="https://img.shields.io/badge/Rust_Edition-2018-green.svg" alt="Rust Edition" /></a>
 <a href="https://travis-ci.com/weihanglo/rust-algorithm-club"><img src="https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&amp;branch=master" alt="Build Status" /></a>
 <a href="https://rust-algo.club/doc/rust_algorithm_club/"><img src="https://img.shields.io/badge/doc-available-blue.svg" alt="Documentation" /></a></p>
-<a class="header" href="#基礎概念" id="基礎概念"><h2>基礎概念</h2></a>
+<h2><a class="header" href="#基礎概念" id="基礎概念">基礎概念</a></h2>
 <ul>
 <li><a href="concepts/asymptotic-notation">漸進符號 Asymptotic Notation</a></li>
 </ul>
-<a class="header" href="#演算法" id="演算法"><h2>演算法</h2></a>
-<a class="header" href="#搜尋" id="搜尋"><h3>搜尋</h3></a>
+<h2><a class="header" href="#演算法" id="演算法">演算法</a></h2>
+<h3><a class="header" href="#搜尋" id="搜尋">搜尋</a></h3>
 <ul>
 <li><a href="searching/linear_search">線性搜尋 Linear search</a></li>
 <li><a href="searching/binary_search">二元搜尋 Binary search</a></li>
 <li><a href="searching/interpolation_search">內插搜尋 Interpolation search</a></li>
 <li><a href="searching/exponential_search">指數搜尋 Exponential search</a></li>
 </ul>
-<a class="header" href="#排序" id="排序"><h3>排序</h3></a>
+<h3><a class="header" href="#排序" id="排序">排序</a></h3>
 <p>簡單排序：</p>
 <ul>
 <li><a href="sorting/insertion_sort">插入排序 Insertion sort</a></li>
@@ -192,21 +201,21 @@
 <li><a href="sorting/bucket_sort">桶排序 Bucket sort</a></li>
 <li><a href="sorting/radix_sort">基數排序 Radix sort</a></li>
 </ul>
-<a class="header" href="#資料結構" id="資料結構"><h2>資料結構</h2></a>
-<a class="header" href="#堆疊與佇列" id="堆疊與佇列"><h3>堆疊與佇列</h3></a>
+<h2><a class="header" href="#資料結構" id="資料結構">資料結構</a></h2>
+<h3><a class="header" href="#堆疊與佇列" id="堆疊與佇列">堆疊與佇列</a></h3>
 <ul>
 <li><a href="collections/stack">堆疊 Stack</a></li>
 <li><a href="collections/queue">🚧 佇列 Queue</a></li>
 <li><a href="collections/deque">🚧 雙端佇列 Deque</a></li>
 </ul>
-<a class="header" href="#鏈結串列" id="鏈結串列"><h3>鏈結串列</h3></a>
+<h3><a class="header" href="#鏈結串列" id="鏈結串列">鏈結串列</a></h3>
 <p><a href="collections/linked_list">鏈結串列概述</a></p>
 <ul>
 <li><a href="collections/singly_linked_list">單向鏈結串列 Singly linked list</a></li>
 <li><a href="collections/doubly_linked_list">🚧 雙向鏈結串列 Doubly linked list</a></li>
 <li><a href="collections/circular_linked_list">🚧 循環鏈結串列 Circular linked list</a></li>
 </ul>
-<a class="header" href="#關聯容器" id="關聯容器"><h3>關聯容器</h3></a>
+<h3><a class="header" href="#關聯容器" id="關聯容器">關聯容器</a></h3>
 <p><a href="collections/associative-container">關聯容器概述</a></p>
 <ul>
 <li><a href="collections/hash_map">雜湊表 Hash map</a></li>
@@ -214,7 +223,7 @@
 <li><a href="collections/multimap">🚧 多重映射表 Multimap</a></li>
 <li><a href="collections/set">集合 Set</a></li>
 </ul>
-<a class="header" href="#學習資源" id="學習資源"><h2>學習資源</h2></a>
+<h2><a class="header" href="#學習資源" id="學習資源">學習資源</a></h2>
 <p>有許多優秀的網站與學習資源，分享給大家學習演算法。</p>
 <ul>
 <li><a href="https://visualgo.net/">VisuAlgo</a> - 也許是最好的演算法視覺化專案。</li>
@@ -222,26 +231,26 @@
 <li><a href="http://rosettacode.org">Rosetta Code</a> - 使用各種程式語言，解答上百種不同程式問題。</li>
 <li><a href="https://cses.fi/book.html">Competitive Programmer’s Handbook</a> - 讓你更有競爭力。這書本身也很有競爭力。</li>
 </ul>
-<a class="header" href="#如何貢獻" id="如何貢獻"><h2>如何貢獻</h2></a>
+<h2><a class="header" href="#如何貢獻" id="如何貢獻">如何貢獻</a></h2>
 <p>歡迎各式各樣的貢獻，修正錯字也行！開始動手之前，請先閱讀<a href="CONTRIBUTING.html">貢獻指南</a>。</p>
-<a class="header" href="#貢獻者" id="貢獻者"><h2>貢獻者</h2></a>
+<h2><a class="header" href="#貢獻者" id="貢獻者">貢獻者</a></h2>
 <ul>
 <li><a href="https://github.com/weihanglo">@weihanglo</a></li>
 <li><a href="https://github.com/choznerol">@choznerol</a></li>
 <li><a href="https://github.com/henry40408">@henry40408</a></li>
 </ul>
-<a class="header" href="#授權條款" id="授權條款"><h2>授權條款</h2></a>
+<h2><a class="header" href="#授權條款" id="授權條款">授權條款</a></h2>
 <p>本專案分為兩部分授權：</p>
 <ul>
 <li>程式碼與函式庫依據 <a href="https://github.com/weihanglo/rust-algorithm-club/blob/master/LICENSE">The MIT License (MIT)</a> 授權條款發佈。</li>
 <li>文章與相關著作依據 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons 4.0 (CC BY-NC-SA 4.0)</a> 授權條款發佈。</li>
 </ul>
 <p>Copyright © 2017 - 2018 Weihang Lo</p>
-<a class="header" href="#基礎概念-1" id="基礎概念-1"><h1>基礎概念</h1></a>
+<h1><a class="header" href="#基礎概念-1" id="基礎概念-1">基礎概念</a></h1>
 <ul>
-<li><a href="asymptotic-notation">漸進符號 Asymptotic Notation</a></li>
+<li><a href="concepts/asymptotic-notation">漸進符號 Asymptotic Notation</a></li>
 </ul>
-<a class="header" href="#漸進符號-asymptotic-notation" id="漸進符號-asymptotic-notation"><h1>漸進符號 Asymptotic Notation</h1></a>
+<h1><a class="header" href="#漸進符號-asymptotic-notation" id="漸進符號-asymptotic-notation">漸進符號 Asymptotic Notation</a></h1>
 <p>日常生活中，你會如何描述處理事情的效率？</p>
 <p>「原來她五分鐘內可以吃掉一頭牛！」</p>
 <p>「房間這麼小你還能擺一堆雜物？還不快收拾！」</p>
@@ -249,16 +258,16 @@
 <p>然而，在不同的機器規格、環境溫濕度、程式語言、實作方式，以及有沒有放乖乖的變異影響下，相同演算法的執行成本常常不一致。為了消弭這些外部因素，讓分析演算法能夠更科學化。科學家抽絲剝繭，發明一個方法：</p>
 <p><strong>「統計演算法內所需操作步驟的數目。」</strong></p>
 <p>這是最簡單，最粗淺比較不同演算法效率的作法。</p>
-<a class="header" href="#用數學表示演算法效率" id="用數學表示演算法效率"><h2>用數學表示演算法效率</h2></a>
+<h2><a class="header" href="#用數學表示演算法效率" id="用數學表示演算法效率">用數學表示演算法效率</a></h2>
 <p>「計算步驟數目」很像中小學的數學題目：某公司有三個能力相異的工程師，有的工程師一天解決一個 bug，有的工程師連續工作後效率大幅滑落。每個工程師的除蟲效率可以畫成「bug 數 - 解決 bug 所需時數」函數，橫軸為待處理的臭蟲數，縱軸為解決臭蟲所需時數，如圖一與表所示。</p>
-<table><thead><tr><th> 時數       </th><th> $\log N$ </th><th> $N$ </th><th> $N \log N$ </th></tr></thead><tbody>
-<tr><td> $N=5$  </td><td> 2.236        </td><td> 5       </td><td> 8.046          </td></tr>
-<tr><td> $N=30$ </td><td> 5.477        </td><td> 30      </td><td> 102.036        </td></tr>
+<table><thead><tr><th>時數</th><th>$\log N$</th><th>$N$</th><th>$N \log N$</th></tr></thead><tbody>
+<tr><td>$N=5$</td><td>2.236</td><td>5</td><td>8.046</td></tr>
+<tr><td>$N=30$</td><td>5.477</td><td>30</td><td>102.036</td></tr>
 </tbody></table>
-<p><img src="fig1.png" alt="Fig. 1" /></p>
+<p><img src="concepts/asymptotic-notation/fig1.png" alt="Fig. 1" /></p>
 <p>不論從圖或表，我們都可以明確看出，當 bug 數目小時，每個工程師耗時差不多；當 bug 數目成長到一定程度時，效率好與效率差的工程師差距就很明顯了。</p>
 <p>我們把場景拉回演算法的範疇，再闡明一次。上述的除蟲效率函數關係，可以簡單視為為「輸入資料量 - 運算成本」關係之函數。例如 $f(x)=x^2+3x+6$。當輸入資料量增大時，成本也隨之上升，這個用來描述演算法執行成本與輸入資料量之關係的函數，我們稱之為該演算法的「複雜度」。</p>
-<a class="header" href="#何謂漸進符號" id="何謂漸進符號"><h2>何謂漸進符號</h2></a>
+<h2><a class="header" href="#何謂漸進符號" id="何謂漸進符號">何謂漸進符號</a></h2>
 <p>了解每個演算法的時間複雜度之後，就能比較何者效率佳。但往往天不從人願，給了我們兩個演算法進行比較。</p>
 <p>$$f(x)=\sqrt{\frac{182777}{286}}\pi x^4+5\log_{3}^{26}88x^3-e^{777^{log_2^9}}$$</p>
 <p>$$g(x)=3x^6-2x^2$$</p>
@@ -266,41 +275,41 @@
 <p>為了有統一的加薪標準，我們不能假定產品只會產生特定數量的臭蟲，也不能以單一天的工作表現判定員工能力，我們知道老舊系統有無限多個 bug，因此，優秀的老闆關心的是工程師長期處理「海量臭蟲」，在極限下的<strong>成長趨勢</strong>，這些成長趨勢才是衡量 KPI 的關鍵。再次強調，優秀老闆關心如何榨出是工程師的「極限成長趨勢」，而非一時半刻賣弄學識。</p>
 <p>同樣地，有太多因素干擾影響一個演算法的複雜度，假使我們只觀察當輸入資料量 $n$ 接近無窮大時，演算法的成長趨勢為何，就很接近所謂漸進符號（asymptotic notation）的定義。漸進符號 只關心演算法在極限下的漸進行為，不同的演算法可能使用相同的漸進符號表示。</p>
 <p>我們比較兩個簡單函數，$f(x) = 10x + 29$ 以及 $g(x) = x^2 + 1$。從圖二可以看出一開始 $g(x)$ 的執行時間比 $f(x)$ 多了不少，但隨著輸入資料量 $n$ 增多，$g(x)$ 的執行時間成長愈來愈快速，最後遠遠大於 $f(x)$。</p>
-<p><img src="fig2.png" alt="Fig. 2" /></p>
+<p><img src="concepts/asymptotic-notation/fig2.png" alt="Fig. 2" /></p>
 <p>若以 $an^2 + bn + c$  表示複雜度，就是當存在一個 $a &gt; 0$ 時，一定會有 $n$ 符合 $an^2 &gt; bn + c$，這個差距隨著 $n$ 越大越明顯，這是因為首項（leading term），也就是帶有最高指數的那一項，隨著 輸入大小改變，執行時間變化幅度較大。因此，可捨去複雜度函數中其他較不重要的次項與常數，留下最大次項，「<strong>透過簡單的函數來表述函數接近極限的行為</strong>」,讓複雜度函數更易理解，這就是「漸進符號」的概念。</p>
 <p>這裡介紹常見的幾種漸進符號：</p>
-<a class="header" href="#obig-o" id="obig-o"><h3>$O$：Big O</h3></a>
+<h3><a class="header" href="#obig-o" id="obig-o">$O$：Big O</a></h3>
 <p>當我們談論演算法複雜度時，通常關心的是演算法「最糟糕的情況下」，「最多」需要執行多久。Big O 就是描述演算法複雜度上界的漸進符號，當一個演算法「實際」的複雜度（或執行成本對輸入資料量函數）為 $f(n)$ 時，欲以 Big O 描述其複雜度上界時，必須滿足以下定義：</p>
 <p>$$f(n) = O(g(n)) \colon {\exists k&gt;0\ \exists n_0\ \forall n&gt;n_0\ |f(n)| \leq k \cdot g(n)}$$</p>
 <p>假設有一演算法實際複雜度為 $f(n) = 3n + 4$，有一組 $k = 4;\ g(n) = n;\ n_0 = 4$ 滿足</p>
 <p>$$\forall n &gt; 4,\ 0 \leq f(n) = 3n + 4 \leq 4n$$</p>
 <p>意思是「$f(n)$ 的複雜度上界成長趨勢最終不會超過 $g(n) = 4n$ 」，再代入 $O(g(n))$，可得演算法最差複雜度為 $f(n) = O(n)$，也就是「該演算法的成長趨勢不會比 $g(n)$ 來得快」（見圖三）。</p>
-<p><img src="fig3.png" alt="Fig. 3" /></p>
+<p><img src="concepts/asymptotic-notation/fig3.png" alt="Fig. 3" /></p>
 <p>再多看一個例子，若 $f(n) = 4n^2 + n$ 有一組 $k = 5;\ g(n) = n^2;\ n_0 = 5$ 滿足</p>
 <p>$$\forall n &gt; 5,\ 0 \leq f(n) = 4n^2 + n \leq 5n^2$$</p>
 <p>則此函數的複雜度為 $f(n) = O(n^2)$。</p>
 <blockquote>
 <p>注意：也寫作 $f(n) \in O(g(n))$，因為實際上 $O(g(n))$ 是所有可描述演算法成長趨勢，並滿足上述條件的函數之「集合」。</p>
 </blockquote>
-<a class="header" href="#omegabig-omega" id="omegabig-omega"><h3>$\Omega$：Big Omega</h3></a>
+<h3><a class="header" href="#omegabig-omega" id="omegabig-omega">$\Omega$：Big Omega</a></h3>
 <p>相較於 Big O 描述演算法成長趨勢的上界，Big Omega 則是對應成長趨勢的「下界」，定義如下：</p>
 <p>$$f(n) = \Omega(g(n)) \colon {\exists k&gt;0\ \exists n_0\ \forall n&gt;n_0\ |f(n)| \geq k \cdot g(n)}$$</p>
 <p>以 $f(n) = 3n + 4$ 為例，有一組 $k = 2;\ g(n) = n;\ n_0 = 0$ 滿足上式，因此這個演算法在輸入資料夠大時，「至少」會達到 $\Omega(n)$ 的複雜度，也就是「該演算法的成長趨勢不會比 $g(n)$ 來得慢」。</p>
-<a class="header" href="#thetabig-theta" id="thetabig-theta"><h3>$\Theta$：Big Theta</h3></a>
+<h3><a class="header" href="#thetabig-theta" id="thetabig-theta">$\Theta$：Big Theta</a></h3>
 <p>Big Theta 則是 Big O 與 Big Omega 兩個漸進上下界所夾出的範圍，表示該演算法在輸入資料夠大時，最終的複雜度會成長到這個範圍中。其定義如下：</p>
 <p>$$f(n) = \Theta(g(n)) \colon {\exists k_1&gt;0\ \exists k_2&gt;0\ \exists n_0\ \forall n&gt;n_0\ k_1 \cdot g(n) \leq |f(n)| \leq k_2 \cdot g(n)}$$</p>
 <p>繼續以 $f(n) = 3n + 4$ 為例，同樣有一組 $k_1 = 1;\ k_2 = 5;\ g(n) = n;\ n_0 = 2$，滿足</p>
 <p>$$\forall n \geq 2,\ n \leq f(n) = 3n + 4 \leq 5n$$</p>
 <p>可得知，$f(n) = 3n + 4 \in \Theta(n)$，表示「該演算法的成長趨勢與 $g(n) = n$ 相同」（見圖四）。</p>
-<p><img src="fig4.png" alt="Fig. 4" /></p>
-<a class="header" href="#常見的複雜度" id="常見的複雜度"><h2>常見的複雜度</h2></a>
+<p><img src="concepts/asymptotic-notation/fig4.png" alt="Fig. 4" /></p>
+<h2><a class="header" href="#常見的複雜度" id="常見的複雜度">常見的複雜度</a></h2>
 <p>看完了讓人昏昏欲睡的數學定義，現在來認識一些常見的複雜度，從最快最有效率，到最慢最拖台錢的通通一起認識。</p>
 <ul>
 <li>$O(1)$：常數時間，演算法執行時間與資料量毫無瓜葛。例如讀取 array 首個元素。</li>
-<li>$O(\log n)$：執行時間隨資料量呈對數比例成長。常見的例子是<a href="../../searching/binary_search">二元搜索（Binary search）</a>。</li>
+<li>$O(\log n)$：執行時間隨資料量呈對數比例成長。常見的例子是<a href="concepts/asymptotic-notation/../../searching/binary_search">二元搜索（Binary search）</a>。</li>
 <li>$O(n)$：執行時間隨資料量呈線性成長，例如在無序的 array 中尋找特定值。</li>
-<li>$O(n \log n)$：執行時間隨資料量呈線性對數成長，常見的<a href="../../sorting/mergesort">合併排序（Mergesort）</a>的複雜度即如斯。</li>
-<li>$O(n^2)$：執行時間隨資料量呈平方成長，例如一些效率不彰的排序法如<a href="../../sorting/bubble_sort">氣泡排序（Bubble sort）</a>。</li>
+<li>$O(n \log n)$：執行時間隨資料量呈線性對數成長，常見的<a href="concepts/asymptotic-notation/../../sorting/mergesort">合併排序（Mergesort）</a>的複雜度即如斯。</li>
+<li>$O(n^2)$：執行時間隨資料量呈平方成長，例如一些效率不彰的排序法如<a href="concepts/asymptotic-notation/../../sorting/bubble_sort">氣泡排序（Bubble sort）</a>。</li>
 <li>$O(n^3)$：執行時間隨資料量呈立方成長，常見例子為 naïve 實作的矩陣乘法。</li>
 <li>$O(c^n)$：執行時間隨資料量呈指數成長。</li>
 <li>$O(n!)$：執行時間隨資料量呈階乘成長，大部分情況下，這是非常差勁的複雜度。</li>
@@ -313,32 +322,32 @@
 <blockquote>
 <p>其他的漸進符號還有 little-o、little-omega 等等，有興趣的朋友可以參考文末的資料。</p>
 </blockquote>
-<a class="header" href="#你可能不適合漸進符號" id="你可能不適合漸進符號"><h2>你可能不適合漸進符號</h2></a>
+<h2><a class="header" href="#你可能不適合漸進符號" id="你可能不適合漸進符號">你可能不適合漸進符號</a></h2>
 <p>善用漸進符號，可以讓原本複雜艱澀的實際複雜度，簡化至人類容易理解的簡單數學符號，也讓分析演算法效率更為客觀。但實際上，漸進符號省略了常數項與低次項，僅保留最高次項，這種「漸進行為下」的效能表現，在真實世界中，若輸入資料量不夠大，實際複雜度的低次項係數又比高次項大上許多，很可能這個演算法實際上根本沒辦法使用。</p>
-<p>另外，漸進符號僅考慮最差與最佳複雜度，沒有考慮到平均複雜度。舉例來說，<a href="../../sorting/quicksort">Quicksort</a> 最差複雜度為 $O(n^2)$，乍看之下不是很理想，但這種情況非常稀少；其平均複雜度落在 $O(n \log n)$，且其係數相對較低，額外開銷少，自然成為最熱門的排序法之一。</p>
-<p>還有，漸進符號也沒有考慮到不同語言、平台的基礎操作開銷，例如實作排序法時，有些語言「比較」兩個元素的開銷比「置換」來得大，實作上就需要盡量減少置換元素。同樣的，CPU 快取也非常容易忽略，一些快速的搜尋法很可能因為不是<a href="../../searching/linear_search">線性搜尋</a>，沒辦法充分利用 CPU cache，效能不一定理想。</p>
+<p>另外，漸進符號僅考慮最差與最佳複雜度，沒有考慮到平均複雜度。舉例來說，<a href="concepts/asymptotic-notation/../../sorting/quicksort">Quicksort</a> 最差複雜度為 $O(n^2)$，乍看之下不是很理想，但這種情況非常稀少；其平均複雜度落在 $O(n \log n)$，且其係數相對較低，額外開銷少，自然成為最熱門的排序法之一。</p>
+<p>還有，漸進符號也沒有考慮到不同語言、平台的基礎操作開銷，例如實作排序法時，有些語言「比較」兩個元素的開銷比「置換」來得大，實作上就需要盡量減少置換元素。同樣的，CPU 快取也非常容易忽略，一些快速的搜尋法很可能因為不是<a href="concepts/asymptotic-notation/../../searching/linear_search">線性搜尋</a>，沒辦法充分利用 CPU cache，效能不一定理想。</p>
 <p>總之，漸進符號只能告訴你「當輸入資料量夠大時，演算法的複雜度表現如何」，並不總是適用每個情境，端看你怎麼使用他。</p>
-<a class="header" href="#參考資料" id="參考資料"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Time_complexity">Wiki: Time complexity</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Big_O_notation">Wiki: Big O notation</a></li>
 <li><a href="https://brilliant.org/wiki/big-o-notation/">Brilliant: Big O Notation</a></li>
 <li><a href="http://program-lover.blogspot.com/2008/10/complexity-analysis.html">Infinite Loop: Complexity Analysis</a></li>
 </ul>
-<a class="header" href="#搜尋演算法" id="搜尋演算法"><h1>搜尋演算法</h1></a>
+<h1><a class="header" href="#搜尋演算法" id="搜尋演算法">搜尋演算法</a></h1>
 <p>記錄常見的搜尋演算法。</p>
-<a class="header" href="#線性搜尋-linear-search" id="線性搜尋-linear-search"><h1>線性搜尋 Linear Search</h1></a>
+<h1><a class="header" href="#線性搜尋-linear-search" id="線性搜尋-linear-search">線性搜尋 Linear Search</a></h1>
 <p>線性搜尋，又稱為循序搜尋（sequential search），是一個在序列中找尋目標的方法。正如字面上的意義，線性搜尋會按照順序迭代序列，挨家挨戶比對每個元素與目標值是否相等，若相等則停止迭代，並回傳搜尋所得結果。</p>
 <p>線性搜尋乍看之下，是最簡單實作也最 naïve 的實作，效能應該不怎麼好。事實上，在資料量不多時（少於 100 個元素），線性搜尋的效能也不會太差，因為其他搜尋演算法可能需要建立特殊資料結構，就會導致時空間初始開銷暴增，複雜度的常數項成本變大。</p>
-<a class="header" href="#效能" id="效能"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n)$     </td></tr>
-<tr><td> Best         </td><td> $O(1)$     </td></tr>
-<tr><td> Average      </td><td> $O(n)$     </td></tr>
-<tr><td> Worst space  </td><td> $O(1)$     </td></tr>
+<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n)$</td></tr>
+<tr><td>Best</td><td>$O(1)$</td></tr>
+<tr><td>Average</td><td>$O(n)$</td></tr>
+<tr><td>Worst space</td><td>$O(1)$</td></tr>
 </tbody></table>
 <p>若序列中總共有 $n$ 個元素，則線性搜尋最差的狀況為元素不在序列中，就是全部元素都比較一次，共比較 $n - 1$ 次，最差複雜度為  $O(n)$。</p>
-<a class="header" href="#實作" id="實作"><h2>實作</h2></a>
+<h2><a class="header" href="#實作" id="實作">實作</a></h2>
 <p>線性搜尋就是用一個 for-loop 解決。要注意的是，<code>T</code> 泛型參數至少要實作 <code>PartialEq</code> 才能比較。程式碼中使用了迭代器的 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.enumerate">enumerate</a>，建立一個新迭代器，每次迭代產生迭代次數與對應的值。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -364,9 +373,9 @@ pub fn linear_search&lt;T&gt;(arr: &amp;[T], obj: &amp;T) -&gt; Option&lt;usize&
     arr.iter().position(|x| x == obj)
 }
 #}</code></pre></pre>
-<a class="header" href="#參考資料-1" id="參考資料-1"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-1" id="參考資料-1">參考資料</a></h2>
 <p><a href="https://en.wikipedia.org/wiki/Linear_search">Wiki: Linear search</a></p>
-<a class="header" href="#二元搜尋-binary-search" id="二元搜尋-binary-search"><h1>二元搜尋 Binary Search</h1></a>
+<h1><a class="header" href="#二元搜尋-binary-search" id="二元搜尋-binary-search">二元搜尋 Binary Search</a></h1>
 <p>Binary search，又稱對數搜尋（logarithmic search），是一個在已排序的序列中，快速找出特定元素的搜尋演算法。二元搜尋的步驟就像玩猜數字，先猜一個數字，告訴你你的猜測比正確答案大或小，再繼續往對的方向猜，捨棄猜錯的另一半。這樣持續進行好幾次猜測，每猜一次，搜尋範圍就縮小一半，因此稱為「二元」搜尋。</p>
 <p>二元搜尋有以下幾個特點：</p>
 <ul>
@@ -374,14 +383,14 @@ pub fn linear_search&lt;T&gt;(arr: &amp;[T], obj: &amp;T) -&gt; Option&lt;usize&
 <li>不需額外實作資料結構或配置記憶體空間。</li>
 <li>只能搜尋<strong>已排序</strong>的序列。</li>
 </ul>
-<a class="header" href="#步驟" id="步驟"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟" id="步驟">步驟</a></h2>
 <ol>
 <li>從序列中間的元素開始，比較其與目標值</li>
 <li>若該元素為搜尋目標，則結束搜尋。</li>
 <li>若該元素較大或小，則將序列切一半，往較小或較大的一半搜尋。</li>
 <li>繼續從一半的序列中間的元素開始，重複步驟一到三，直到欲搜尋的序列為空。</li>
 </ol>
-<a class="header" href="#說明" id="說明"><h2>說明</h2></a>
+<h2><a class="header" href="#說明" id="說明">說明</a></h2>
 <p>這裡有一個排好序的序列，共有 15 個元素，現在要找尋 9 是否在序列中。</p>
 <pre><code>                       *
 [2, 3, 3, 6, 6, 7, 9, 13, 15, 19, 20, 22, 23, 24, 25]
@@ -399,12 +408,12 @@ pub fn linear_search&lt;T&gt;(arr: &amp;[T], obj: &amp;T) -&gt; Option&lt;usize&
 [_, _, _, _, _, 7, 9, _, _, _, _, _, _, _, _]
 </code></pre>
 <p>繼續切一半來搜尋，繼續找中間的元素 2 / 2 = 1，並從第六個元素計算索引位置 6 + 1 = 7，查看第七個元素是 9，終於找到了！</p>
-<a class="header" href="#效能-1" id="效能-1"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity  </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(\log n)$ </td></tr>
-<tr><td> Best         </td><td> $O(1)$      </td></tr>
-<tr><td> Average      </td><td> $O(\log n)$ </td></tr>
-<tr><td> Worst space  </td><td> $O(1)$      </td></tr>
+<h2><a class="header" href="#效能-1" id="效能-1">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(\log n)$</td></tr>
+<tr><td>Best</td><td>$O(1)$</td></tr>
+<tr><td>Average</td><td>$O(\log n)$</td></tr>
+<tr><td>Worst space</td><td>$O(1)$</td></tr>
 </tbody></table>
 <p>二元搜尋可以透過分治法（Divide and conquer）遞迴求解，而遞迴的終止條件是序列不能在切兩半。由此可知，二元搜尋的複雜度奠基在要切幾次，子序列長度才會等於 1。設 $n$ 為資料數目，$k$ 為要切幾次才會達成終止條件，可得：</p>
 <p>$$ \frac{n}{2^k} = 1 $$</p>
@@ -434,15 +443,15 @@ $$</p>
 +---+  +---+  +---+  +---+
 </code></pre>
 <p>樹中每一條路徑都代表任意搜尋會經過的步驟，總共有 7 種不同的搜尋路徑，最短路徑僅需要 $\lfloor{\log_2 n} = 3 \rfloor$ 個操作，也就是需要執行「樹高」次的操作。</p>
-<a class="header" href="#實作-1" id="實作-1"><h2>實作</h2></a>
-<a class="header" href="#函式宣告" id="函式宣告"><h3>函式宣告</h3></a>
+<h2><a class="header" href="#實作-1" id="實作-1">實作</a></h2>
+<h3><a class="header" href="#函式宣告" id="函式宣告">函式宣告</a></h3>
 <p>二元搜尋概念看似簡單，實際上誤區一堆，不易寫出完全正確的演算法。我們參考 <a href="https://doc.rust-lang.org/std/primitive.slice.html#method.binary_search">Rust slice binary_search</a> 的實作。先來看看 function signature（函式的宣告）。</p>
 <pre><code>pub fn binary_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&lt;usize, usize&gt;
     where T: PartialOrd
 </code></pre>
 <p>二元搜尋函式宣告中，回傳值大概是最特別的部分。如果有找到目標元素，<code>Result</code> 會是 <code>Ok(目標索引位置)</code>，如果沒有找到則回傳 <code>Err(目標值若插入後，不會影響序列排序的位置)</code>。<code>Err</code> 回傳值提供了插入點，非常方便。</p>
 <p>再來，<code>T</code> 泛型參數需是 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>，這是由於二元搜尋使用排序過後的元素，比起線性搜尋，仍需元素之間相互比較。</p>
-<a class="header" href="#函式主體" id="函式主體"><h3>函式主體</h3></a>
+<h3><a class="header" href="#函式主體" id="函式主體">函式主體</a></h3>
 <p>市面上常見的實作通常以兩個變數 <code>l</code> 與 <code>r</code> 記錄搜尋範圍的上下界，而我們另闢蹊徑，記錄了</p>
 <ul>
 <li><code>base</code>：搜尋範圍的下界，</li>
@@ -489,7 +498,7 @@ pub fn binary_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&lt;usi
 </li>
 <li>到了第三部分，<code>base</code> 已經是切到長度為一的序列了，若匹配目標值就直接回傳；若否，需要傳可供目標值插入的位置，將 bool 判斷是轉型成 <code>usize</code>，若 <code>arr[base]</code> 比目標值小，則目標值要加到其後 +1 位置，反之則加在其前 -1 位置。</li>
 </ol>
-<a class="header" href="#常見誤區與解法" id="常見誤區與解法"><h2>常見誤區與解法</h2></a>
+<h2><a class="header" href="#常見誤區與解法" id="常見誤區與解法">常見誤區與解法</a></h2>
 <ol>
 <li>
 <p>只適用已排序序列： 這是使用二元搜尋的前提，千萬不能忽略這重要特性，否則後果絕對大錯特錯。</p>
@@ -510,27 +519,27 @@ let mid = start + (end - start) / 2   // Correct
 <p>終止條件錯誤：無論如何實作，請將終止條件設為「搜尋範圍為空」，也就是下界大於上界，而不要只比較上下界是否相等。其實搜尋範圍低於一定長度，即可使用線性搜尋替代，避免處理邊界值的麻煩，實務上也幾乎沒有太多效能損失。</p>
 </li>
 </ol>
-<a class="header" href="#變形與衍生" id="變形與衍生"><h2>變形與衍生</h2></a>
-<a class="header" href="#interpolation-search" id="interpolation-search"><h3>Interpolation Search</h3></a>
-<p><a href="../interpolation_search">Interpolation search</a> 改良自二元搜尋，差別在於，二元搜尋選擇中間的元素作為二分點，而 interpolation search 人如其名，以內插法找尋二分點。在資料平均分佈時，比二元搜尋更高效。欲知後續，待下回<a href="../interpolation_search">內插搜尋 Interpolation search</a> 分曉。</p>
-<a class="header" href="#exponential-search" id="exponential-search"><h3>Exponential Search</h3></a>
-<p><a href="../exponential_search">Exponential search</a> 是一種特殊的二元搜尋，主要用在搜尋無限、無邊界的已排序序列，由於邊界未知長度就未知，無法以傳統二元搜尋找尋中點。Exponential 顧名思義就是不斷比較在 $2^0$，$2^1$ 直到 $2^n$ 的位置上資料是否比目標值大，若較大，再從該位置執行二元搜尋回頭找。詳情請看<a href="../exponential_search">指數搜尋 Exponential search</a>。</p>
-<a class="header" href="#binary-insertion-sort" id="binary-insertion-sort"><h3>Binary Insertion Sort</h3></a>
-<p>Insertion sort 有一個步驟是在前面已經排完序的資料中，找到適合的地方插入待排序的元素，這部分可透過二元搜尋加快在已排序資料搜尋的速度。詳情請參考 <a href="../../sorting/insertion_sort/#binary-insertion-sort">Binary insertion sort</a>。</p>
-<a class="header" href="#參考資料-2" id="參考資料-2"><h2>參考資料</h2></a>
+<h2><a class="header" href="#變形與衍生" id="變形與衍生">變形與衍生</a></h2>
+<h3><a class="header" href="#interpolation-search" id="interpolation-search">Interpolation Search</a></h3>
+<p><a href="searching/binary_search/../interpolation_search">Interpolation search</a> 改良自二元搜尋，差別在於，二元搜尋選擇中間的元素作為二分點，而 interpolation search 人如其名，以內插法找尋二分點。在資料平均分佈時，比二元搜尋更高效。欲知後續，待下回<a href="searching/binary_search/../interpolation_search">內插搜尋 Interpolation search</a> 分曉。</p>
+<h3><a class="header" href="#exponential-search" id="exponential-search">Exponential Search</a></h3>
+<p><a href="searching/binary_search/../exponential_search">Exponential search</a> 是一種特殊的二元搜尋，主要用在搜尋無限、無邊界的已排序序列，由於邊界未知長度就未知，無法以傳統二元搜尋找尋中點。Exponential 顧名思義就是不斷比較在 $2^0$，$2^1$ 直到 $2^n$ 的位置上資料是否比目標值大，若較大，再從該位置執行二元搜尋回頭找。詳情請看<a href="searching/binary_search/../exponential_search">指數搜尋 Exponential search</a>。</p>
+<h3><a class="header" href="#binary-insertion-sort" id="binary-insertion-sort">Binary Insertion Sort</a></h3>
+<p>Insertion sort 有一個步驟是在前面已經排完序的資料中，找到適合的地方插入待排序的元素，這部分可透過二元搜尋加快在已排序資料搜尋的速度。詳情請參考 <a href="searching/binary_search/../../sorting/insertion_sort/#binary-insertion-sort">Binary insertion sort</a>。</p>
+<h2><a class="header" href="#參考資料-2" id="參考資料-2">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Binary_search_algorithm">Wiki: Binary search algorithm</a></li>
 <li><a href="https://www.zhihu.com/question/36132386">知乎：二分查找有几种写法？它们的区别是什么？</a></li>
 </ul>
-<a class="header" href="#內插搜尋-interpolation-search" id="內插搜尋-interpolation-search"><h1>內插搜尋 Interpolation Search</h1></a>
-<p>內插搜尋 Interpolation search 為<a href="../binary_search">二元搜尋</a>的變種，差別在於二分點的選擇方法，二元搜尋選擇中間的元素作為二分點，而內插搜尋則名副其實，以內插法找尋二分點。內插法有許多種類，本次搜尋演算法選擇使用常見的<a href="https://en.wikipedia.org/wiki/Linear_interpolation">線性內插（linear interpolation）</a>實作。</p>
+<h1><a class="header" href="#內插搜尋-interpolation-search" id="內插搜尋-interpolation-search">內插搜尋 Interpolation Search</a></h1>
+<p>內插搜尋 Interpolation search 為<a href="searching/interpolation_search/../binary_search">二元搜尋</a>的變種，差別在於二分點的選擇方法，二元搜尋選擇中間的元素作為二分點，而內插搜尋則名副其實，以內插法找尋二分點。內插法有許多種類，本次搜尋演算法選擇使用常見的<a href="https://en.wikipedia.org/wiki/Linear_interpolation">線性內插（linear interpolation）</a>實作。</p>
 <p>內插搜尋的特色如下：</p>
 <ul>
 <li>資料需要是可計算<a href="https://en.wikipedia.org/wiki/Interpolation">內插（interpolation）</a>的數值資料。</li>
 <li>對資料分佈敏感，資料均勻分佈時，效能勝過二元搜尋。</li>
 <li>資料分佈不均勻時，最差複雜度高達 $O(n)$。</li>
 </ul>
-<a class="header" href="#步驟-1" id="步驟-1"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-1" id="步驟-1">步驟</a></h2>
 <ol>
 <li>確認資料已經排好序。</li>
 <li>利用第一個元素 a 與最後的元素 b，以及搜尋上下界 hi 與 lo 位置，作為兩個端點。</li>
@@ -543,7 +552,7 @@ let mid = start + (end - start) / 2   // Correct
 </li>
 <li>搜尋停止在 a’、b’ 兩元素搜尋位置重疊，以及目標值比下界 a’ 小或比上界 b’ 大。</li>
 </ol>
-<a class="header" href="#說明-1" id="說明-1"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-1" id="說明-1">說明</a></h2>
 <p>迅速說明線性內插法。線性內插法是中學必修的數學概念，給定兩點 $(x_0,y_0)$ 與 $(x_1,y_1)$，欲求在 $[x_0,x_1]$ 區間內直線上 $x’$ 點的 y 值，可以透過斜率公式求解：</p>
 <p>$$
 \frac{y - y_0}{x’ - x_0} = \frac{y_1 - y_0}{x_1 - x_0 }
@@ -558,20 +567,20 @@ $$</p>
 <pre><code>[1, 9, 10, 15, 17, 17, 18, 23, 27, 28, 29, 30, 31, 34]
 </code></pre>
 <p>我們將序列索引當作 x 軸，元素值作為 y 軸。可得已知兩點為 $(0, 1)$ 及 $(13, 34)$。</p>
-<p>首先，透過斜率公式，計算出在 $y = 27$ 時，$x’$，也就是 27 在序列中可能的位置為</p>
+<p>首先，透過斜率公式，計算出在 $y = 27$ 時，$x’$，也就是 27 在序列中可能的位置為 </p>
 <p>$$x’ = \lfloor 27 / (34 - 1) \cdot (13 - 0) \rfloor = 10$$</p>
 <p>查看 <code>arr[10]</code> 為 29，比搜尋目標 27 來得大。將 29 當作我們新的上界，搜尋範變成第 [0, 9] 個元素（29 不需列入搜尋），繼續計算內插</p>
 <p>$$x’ = \lfloor 27 / (28 - 1) \cdot (9 - 0) \rfloor = 9$$</p>
 <p>查看 <code>arr[9]</code> 為 28，比搜尋目標 27 來得大。將 28 當作我們新的上界，搜尋範變成第 [0, 8] 個元素（28 不需列入搜尋），繼續計算內插</p>
 <p>$$x’ = \lfloor 27 / (27 - 1) \cdot (8 - 0) \rfloor = 8$$</p>
 <p>查看 <code>arr[8]</code> 為 27，恰恰是搜尋目標 27，搜尋到此結束。</p>
-<a class="header" href="#效能-2" id="效能-2"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n)$     </td></tr>
-<tr><td> Best         </td><td> $O(1)$     </td></tr>
-<tr><td> Average      </td><td> $O(n)$     </td></tr>
-<tr><td> Average      </td><td> $O(\log \log n)$ on uniform distributed data </td></tr>
-<tr><td> Worst space  </td><td> $O(1)$      </td></tr>
+<h2><a class="header" href="#效能-2" id="效能-2">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n)$</td></tr>
+<tr><td>Best</td><td>$O(1)$</td></tr>
+<tr><td>Average</td><td>$O(n)$</td></tr>
+<tr><td>Average</td><td>$O(\log \log n)$ on uniform distributed data</td></tr>
+<tr><td>Worst space</td><td>$O(1)$</td></tr>
 </tbody></table>
 <blockquote>
 <p>$n$：資料筆數</p>
@@ -580,7 +589,7 @@ $$</p>
 <p>線性內插搜尋對資料的期望是均勻機率分佈（uniform probability distribution）。想求平均時間複雜度 $O(\log \log n)$ ，須先透過機率密度函數，計算條件機率，一步步縮小範圍，求得平均誤差，最後求得期望值。這部分計算較為複雜，有興趣的朋友可以參考閱讀資料「<a href="http://www.cs.technion.ac.il/%7Eitai/publications/Algorithms/p550-perl.pdf">Perl, Y., Itai, A., &amp; Avni, H. (1978). Interpolation search—a log log N search.</a>」。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Uniform_Distribution_PDF_SVG.svg/320px-Uniform_Distribution_PDF_SVG.svg.png" alt="" /></p>
 <p><em>PDF of uniform distribution by IkamusumeFan - CC BY-SA 3.0</em></p>
-<a class="header" href="#實作-2" id="實作-2"><h2>實作</h2></a>
+<h2><a class="header" href="#實作-2" id="實作-2">實作</a></h2>
 <p>內插搜尋的實作共分為幾部分：</p>
 <ol>
 <li>處理空序列狀況。</li>
@@ -730,10 +739,11 @@ pub fn interpolation_search(
 }
 #}</code></pre></pre>
 <blockquote>
-<p>如同<a href="../binary_search">二元搜尋</a>與<a href="../exponential_search">指數搜尋</a>，未特別處理重複元素的內插搜尋，並無法預期會選擇哪一個元素。</p>
+<p>如同<a href="searching/interpolation_search/../binary_search">二元搜尋</a>與<a href="searching/interpolation_search/../exponential_search">指數搜尋
+</a>，未特別處理重複元素的內插搜尋，並無法預期會選擇哪一個元素。</p>
 </blockquote>
-<a class="header" href="#變形與衍生-1" id="變形與衍生-1"><h2>變形與衍生</h2></a>
-<a class="header" href="#interpolation-search-tree" id="interpolation-search-tree"><h3>Interpolation Search Tree</h3></a>
+<h2><a class="header" href="#變形與衍生-1" id="變形與衍生-1">變形與衍生</a></h2>
+<h3><a class="header" href="#interpolation-search-tree" id="interpolation-search-tree">Interpolation Search Tree</a></h3>
 <p>Interpolation search tree（IST），姑且稱它「內插搜尋樹」，是一個將內插搜尋結合樹的資料結構。如上述提及，內插搜尋達到 $O(\log \log n)$ 的搜尋時間，但僅適用於均勻機率分佈的資料。而 IST 利用動態內插搜尋，讓 1）內插搜尋樹的搜尋可以使用在更多元的<strong>規律機率分佈</strong>的資料中，且 2）可以達到以下的執行效能：</p>
 <ul>
 <li>$O(n)$ 空間複雜度。</li>
@@ -742,7 +752,7 @@ pub fn interpolation_search(
 <li>線性時間的循序存取，而取得前後節點或最小值都是常數時間。</li>
 </ul>
 <p>更多詳細證明可以閱讀參考資料「<a href="https://people.mpi-inf.mpg.de/%7Emehlhorn/ftp/DynamicInterpolationSearch.pdf">Andersson, A. (1996, October). Faster deterministic sorting and searching in linear space</a>」。</p>
-<a class="header" href="#參考資料-3" id="參考資料-3"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-3" id="參考資料-3">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Interpolation_search">Wiki: Interpolation search</a></li>
 <li><a href="http://www.cs.technion.ac.il/%7Eitai/publications/Algorithms/p550-perl.pdf">Perl, Y., Itai, A., &amp; Avni, H. (1978). Interpolation search—a log log N search. Communications of the ACM, 21(7), 550-553.</a></li>
@@ -750,15 +760,15 @@ pub fn interpolation_search(
 <li>Linear interpolation visualisation SVG By Cmglee <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons.</li>
 <li>Probability density function of uniform distribution SVG By IkamusumeFan <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons.</li>
 </ul>
-<a class="header" href="#指數搜尋-exponential-search" id="指數搜尋-exponential-search"><h1>指數搜尋 Exponential Search</h1></a>
-<p>指數搜尋，又稱為 galloping search，是一種特殊的<a href="../binary_search">二元搜尋</a>，主要用在搜尋無限、無邊界的已排序序列。由於邊界未知長度就未知，無法以傳統二元搜尋來找中點。而 Exponential 顧名思義就是從底數為 2，指數為 0 的索引（$2^0$ ）開始，不斷比較在 $2^1$、$2^2$ 直到 $2^k$ 位置上的值，若比目標值大，則停止指數成長，直接從該位置執行二元搜尋，回頭尋找目標值。</p>
+<h1><a class="header" href="#指數搜尋-exponential-search" id="指數搜尋-exponential-search">指數搜尋 Exponential Search</a></h1>
+<p>指數搜尋，又稱為 galloping search，是一種特殊的<a href="searching/exponential_search/../binary_search">二元搜尋</a>，主要用在搜尋無限、無邊界的已排序序列。由於邊界未知長度就未知，無法以傳統二元搜尋來找中點。而 Exponential 顧名思義就是從底數為 2，指數為 0 的索引（$2^0$ ）開始，不斷比較在 $2^1$、$2^2$ 直到 $2^k$ 位置上的值，若比目標值大，則停止指數成長，直接從該位置執行二元搜尋，回頭尋找目標值。</p>
 <p>指數搜尋的特點如下：</p>
 <ul>
 <li>可以搜尋邊界未知的已排序序列。</li>
 <li>縮小搜尋範圍，可比 naïve 的二元搜尋效率高些。</li>
 <li>若目標值實際位置很靠近序列前端，效率會非常棒。</li>
 </ul>
-<a class="header" href="#步驟-2" id="步驟-2"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-2" id="步驟-2">步驟</a></h2>
 <p>指數搜尋的步驟只有非常簡單的兩步驟：</p>
 <ol>
 <li>依照目標值大小，劃出搜尋範圍。</li>
@@ -771,7 +781,7 @@ pub fn interpolation_search(
 <li>若較小，指數加一 $k^{i + 1}$ 後繼續重複步驟二比較。</li>
 <li>若較大，停止比較，得搜尋範圍為 $k^{i - 1}$ 到 $k^i$。</li>
 </ol>
-<a class="header" href="#說明-2" id="說明-2"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-2" id="說明-2">說明</a></h2>
 <p>這裡有個排好序的序列，我們要尋找其中是否有 22 這個數字。</p>
 <pre><code>    *
 [2, 3, 3, 6, 6, 7, 9, 13, 15, 19, 20, 22, 23, 24, 25]
@@ -780,7 +790,7 @@ pub fn interpolation_search(
 <pre><code>       *     *            *
 [2, 3, 3, 6, 6, 7, 9, 13, 15, 19, 20, 22, 23, 24, 25]
 </code></pre>
-<p>再來，連續看看</p>
+<p>再來，連續看看 </p>
 <ul>
 <li>$2^1$：<code>3 &lt; 22</code></li>
 <li>$2^2$：<code>6 &lt; 22</code></li>
@@ -792,24 +802,24 @@ pub fn interpolation_search(
 </code></pre>
 <p>最後，一口氣將指數加到 4，看看$2^4$ 上的數字是否大於 22。哎呀，$2^4 = 16$，的位置已經超出序列長度，因此取至序列最後一個數字作為比較對象。<code>25 &gt; 22</code>，找到了！</p>
 <p>得到搜尋的範圍是 $$2^{4-1} &lt; x &lt; \text{array.length} &lt; 2^{4}$$</p>
-<a class="header" href="#效能-3" id="效能-3"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity  </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(\log i)$ </td></tr>
-<tr><td> Best         </td><td> $O(1)$      </td></tr>
-<tr><td> Average      </td><td> $O(\log i)$ </td></tr>
-<tr><td> Worst space  </td><td> $O(1)$      </td></tr>
+<h2><a class="header" href="#效能-3" id="效能-3">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(\log i)$</td></tr>
+<tr><td>Best</td><td>$O(1)$</td></tr>
+<tr><td>Average</td><td>$O(\log i)$</td></tr>
+<tr><td>Worst space</td><td>$O(1)$</td></tr>
 </tbody></table>
 <blockquote>
 <p>$i$：目標值在序列中實際的索引位置。</p>
 </blockquote>
 <p>指數搜尋的複雜度分為兩部分分析：</p>
-<a class="header" href="#劃定搜尋範圍" id="劃定搜尋範圍"><h3>劃定搜尋範圍</h3></a>
+<h3><a class="header" href="#劃定搜尋範圍" id="劃定搜尋範圍">劃定搜尋範圍</a></h3>
 <p>設 $i$ 為目標值在序列中實際的索引位置，則搜尋上界，指數增加的操作需執行 $\lceil \log(i) \rceil$ 次，例如匹配目標值的搜尋結果位於序列第 9 個，則指數需增加 $\lceil \log(9) \rceil = 4$ 次，上界才會超過目標值。我們設這部分的複雜度為 $O(log i)$。</p>
-<a class="header" href="#執行二元搜尋" id="執行二元搜尋"><h3>執行二元搜尋</h3></a>
+<h3><a class="header" href="#執行二元搜尋" id="執行二元搜尋">執行二元搜尋</a></h3>
 <p>第二部分就是二元搜尋，複雜度為 $O(log n)$，$n$ 為搜尋範圍的長度。根據第一部分，可以得知範圍長度為 $2^{\log i} - 2^{\log{i - 1}} = 2^{log{i - 1}}$ 個元素，帶入二元搜尋的複雜度，計算出第二部分的複雜度為 $log (2^{\log{i - 1}}) = \log{(i)} - 1 = O(\log i)$。</p>
 <p>最後，將兩部分的複雜度合起來，就是指數搜尋的時間複雜度了。</p>
 <p>$$O(\log i) + O(\log i) = 2 O(\log i) = O(\log i)$$</p>
-<a class="header" href="#實作-3" id="實作-3"><h2>實作</h2></a>
+<h2><a class="header" href="#實作-3" id="實作-3">實作</a></h2>
 <p>本次實作有邊界的指數搜尋，主要分為三個部分：</p>
 <ol>
 <li>處理空序列的狀況。</li>
@@ -852,22 +862,22 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 由於回傳結果的位置是以 sub slice 起始，需加上位移量（下界 <code>lo</code>）才會對應原始 slice 的位置。</li>
 </ol>
 <blockquote>
-<p>由於內部使用<a href="../binary_search">二元搜尋</a>，若該二元搜尋沒有處理重複元素的狀況，指數搜尋連帶無法預期這個行為。</p>
+<p>由於內部使用<a href="searching/exponential_search/../binary_search">二元搜尋</a>，若該二元搜尋沒有處理重複元素的狀況，指數搜尋連帶無法預期這個行為。</p>
 </blockquote>
-<a class="header" href="#參考資料-4" id="參考資料-4"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-4" id="參考資料-4">參考資料</a></h2>
 <p><a href="https://en.wikipedia.org/wiki/Exponential_search">Wiki: Exponential search</a></p>
-<a class="header" href="#排序演算法" id="排序演算法"><h1>排序演算法</h1></a>
+<h1><a class="header" href="#排序演算法" id="排序演算法">排序演算法</a></h1>
 <p>記錄常見的排序演算法。</p>
-<a class="header" href="#編排慣例" id="編排慣例"><h2>編排慣例</h2></a>
+<h2><a class="header" href="#編排慣例" id="編排慣例">編排慣例</a></h2>
 <p>為了避免泛型宣告降低程式碼可讀性，部分文章內的示範程式不撰寫泛型，排序結果訂為「由小至大」。若需要了解如何撰寫泛型排序演算法，請逕行閱讀對應的 Rust 程式碼。</p>
-<a class="header" href="#簡單排序" id="簡單排序"><h1>簡單排序</h1></a>
+<h1><a class="header" href="#簡單排序" id="簡單排序">簡單排序</a></h1>
 <ul>
-<li><a href="insertion_sort">插入排序 Insertion sort</a></li>
-<li><a href="selection_sort">選擇排序 Selection sort</a></li>
-<li><a href="bubble_sort">氣泡排序 Bubble sort</a></li>
-<li><a href="shellsort">希爾排序 Shellsort</a></li>
+<li><a href="sorting/insertion_sort">插入排序 Insertion sort</a></li>
+<li><a href="sorting/selection_sort">選擇排序 Selection sort</a></li>
+<li><a href="sorting/bubble_sort">氣泡排序 Bubble sort</a></li>
+<li><a href="sorting/shellsort">希爾排序 Shellsort</a></li>
 </ul>
-<a class="header" href="#插入排序-insertion-sort" id="插入排序-insertion-sort"><h1>插入排序 Insertion Sort</h1></a>
+<h1><a class="header" href="#插入排序-insertion-sort" id="插入排序-insertion-sort">插入排序 Insertion Sort</a></h1>
 <p>Insertion sort 是最簡單的排序法之一，比起 quicksort 等高效的排序法，對大資料的處理效能較不理想。其演算法是將欲排序元素直接插入正確位置，因而得名。</p>
 <p>Insertion sort 基本特性如下：</p>
 <ul>
@@ -878,7 +888,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 <li><strong>即時演算法</strong>：可處理逐步輸入的資料，不需等資料完全備妥。</li>
 </ul>
-<a class="header" href="#步驟-3" id="步驟-3"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-3" id="步驟-3">步驟</a></h2>
 <p>將序列分為未排序與部分排序兩個區域。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Insertionsort-before.png" alt="" /></p>
 <ol>
@@ -892,12 +902,12 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Insertionsort-after.png" alt="" /></p>
 <p>Insertion sort 非常簡單，看動畫就能明瞭。
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif" alt="" /></p>
-<a class="header" href="#效能-4" id="效能-4"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n^2) $ </td></tr>
-<tr><td> Best         </td><td> $O(n) $   </td></tr>
-<tr><td> Average      </td><td> $O(n^2) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
+<h2><a class="header" href="#效能-4" id="效能-4">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n^2) $</td></tr>
+<tr><td>Best</td><td>$O(n) $</td></tr>
+<tr><td>Average</td><td>$O(n^2) $</td></tr>
+<tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
 <p>最佳時間複雜度發生在資料已完成排序的狀況下，insertion sort 只需執行最外層的迴圈 $n $ 次。</p>
 <p>最差時間複雜度發生在資料完全相反時，insertion sort 每取得一個新元素是，都需將資料插入序列最前面，，因此所需的操作如下（ $c $ 為任意常數）：</p>
@@ -905,7 +915,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <p>最後等於</p>
 <p>$$\frac{cn^2}{2} - \frac{cn}{2}$$</p>
 <p>捨去低次項，得到時間複雜度為 $O(n^2) $。</p>
-<a class="header" href="#實作-4" id="實作-4"><h2>實作</h2></a>
+<h2><a class="header" href="#實作-4" id="實作-4">實作</a></h2>
 <p>簡單實作的程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -924,8 +934,8 @@ pub fn insertion_sort(arr: &amp;mut [i32]) {
 <li>外層迴圈迭代整個序列。並取出 index <code>i</code>，<code>arr[i]</code> 是待排序的元素，index 比 <code>i</code> 小的元素則組成已排序的部分序列。</li>
 <li>內層迴圈負責元素比較，決定待排序元素該從何處插入，若前一個元素比待排元素大，則置換兩元素，並繼續往下尋找正確的插入點。直到 <code>j == 0</code> 或待排元素比任何已排序元素都大為止。</li>
 </ol>
-<a class="header" href="#變形" id="變形"><h2>變形</h2></a>
-<a class="header" href="#binary-insertion-sort-1" id="binary-insertion-sort-1"><h3>Binary Insertion Sort</h3></a>
+<h2><a class="header" href="#變形" id="變形">變形</a></h2>
+<h3><a class="header" href="#binary-insertion-sort-1" id="binary-insertion-sort-1">Binary Insertion Sort</a></h3>
 <p>在一般演算法討論中，通常以簡單的型別如 <code>i32</code> 來探討並實作。在真實世界中，做哪種操作，用哪種語言，都會影響到實際效能。例如 Python 的比較操作相對於置換元素，成本高出不少，是因為每個物件在 Python 的比較需動態檢查是否實作 <code>__lt__</code> <code>__gt__</code> 等方法才能進行比較。所以 Python 排序法實作就要特別注意減少比較操作的次數。</p>
 <p>Binary insertion sort 的目的就是減少內層迴圈的比較次數。在內層迴圈開始之前，使用 <a href="https://en.wikipedia.org/wiki/Binary_search">binary search</a> 搜尋新元素應要插入哪個位置，最多僅需 $\log_2n $ 次比較。但 binary insertion sort 的複雜度依舊是 $O(n^2) $，因為除了比較之外，仍需置換（swap）、賦值（assign）等基礎操作。</p>
 <p>Binary insertion sort 的程式碼和一般的 insertion sort 差不了多少，我們這裡使用 <code>slice</code> 內建的 <code>binary_search</code> 來找尋插入點。</p>
@@ -952,13 +962,13 @@ pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
 <li><code>binary_search</code> 回傳一個 <code>Result&lt;usize, usize&gt;</code> 型別，找到時回傳 <code>Ok(index 值)</code>，找無時回傳 <code>Err(不影響排序穩定度的插入點)</code>，這個 <code>Err</code> 的設計巧妙解決新值插入的問題。</li>
 <li>和普通 insertion sort 雷同，從插入點至 sorted pile 迭代到末端以進行排序，省下不少比較操作。</li>
 </ol>
-<a class="header" href="#參考資料-5" id="參考資料-5"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-5" id="參考資料-5">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Insertion_sort">Wiki: Insertion sort</a></li>
 <li><a href="https://github.com/python/cpython/blob/15f44ab043b37c064d6891c7864205fed9fb0dd1/Objects/listsort.txt#L686-L703">CPython: listsort note</a></li>
 <li>Sorting GIF by Swfung8 (Own work) <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a> via Wikimedia Commons.</li>
 </ul>
-<a class="header" href="#選擇排序-selection-sort" id="選擇排序-selection-sort"><h1>選擇排序 Selection sort</h1></a>
+<h1><a class="header" href="#選擇排序-selection-sort" id="選擇排序-selection-sort">選擇排序 Selection sort</a></h1>
 <p>Selection sort 是最易實作的入門排序法之一，會將資料分為 sorted pile 與 unsorted pile，每次從 unsorted pile 尋找最大／最小值，加入 sorted pile 中。</p>
 <p>Selection sort 的特性如下：</p>
 <ul>
@@ -967,7 +977,7 @@ pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
 <li><strong>不穩定排序</strong>：排序後，相同鍵值的元素相對位置可能改變。</li>
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 </ul>
-<a class="header" href="#步驟-4" id="步驟-4"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-4" id="步驟-4">步驟</a></h2>
 <ol>
 <li>將資料分為 sorted pile 與 unsorted pile。</li>
 <li>從 unsorted pile 尋找最小值。</li>
@@ -979,7 +989,7 @@ pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
 </blockquote>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif" alt="" /></p>
 <p><em>Joestape89 - CC BY-SA 3.0</em></p>
-<a class="header" href="#說明-3" id="說明-3"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-3" id="說明-3">說明</a></h2>
 <p>為什麼 naïve 的 selection sort 會是不穩定排序？</p>
 <p>假定有一個序列要遞增排序，其中有重複的 <code>2</code> 元素，我們將其標上 <code>2a</code>、<code>2b</code> 以利辨識。</p>
 <pre><code>[2a, 3, 4, 2b, 1]
@@ -997,17 +1007,17 @@ pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
 <p>有沒有發現，<code>2a</code> 與 <code>2b</code> 的相對順序顛倒了呢？</p>
 <p>首先，回想一下穩定排序的定義：<strong>相同鍵值的元素，排序後相對位置不改變。</strong></p>
 <p>問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 $O(1) $ insertion 的資料結構，不然就會多出額外 $O(n^2) $ 的寫入成本。</p>
-<a class="header" href="#效能-5" id="效能-5"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n^2) $ </td></tr>
-<tr><td> Best         </td><td> $O(n^2) $ </td></tr>
-<tr><td> Average      </td><td> $O(n^2) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
+<h2><a class="header" href="#效能-5" id="效能-5">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n^2) $</td></tr>
+<tr><td>Best</td><td>$O(n^2) $</td></tr>
+<tr><td>Average</td><td>$O(n^2) $</td></tr>
+<tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
 <p>對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 $n - 1 $ 次比較，第二個 $n - 2 $ 次，總比較次數如下：</p>
 <p>$$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$</p>
 <p>因此無論序列是否排序完成，selection sort 仍需執行 $n^2 $ 次比較，時間複雜度為 $O(n^2) $。</p>
-<a class="header" href="#實作-5" id="實作-5"><h2>實作</h2></a>
+<h2><a class="header" href="#實作-5" id="實作-5">實作</a></h2>
 <p>簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -1031,16 +1041,16 @@ pub fn selection_sort(arr: &amp;mut [i32]) {
 <li>外層迴圈在找到最小值之後，置換兩元素。</li>
 </ol>
 <p>眼尖的人會發現，內外兩層迴圈的 upper bound 都是 <code>len</code>，這樣是否內側迴圈會 out of bound？Rust 的 range operator（<code>core::ops::Range</code>）實作 <a href="https://doc.rust-lang.org/core/ops/struct.Range.html#impl-Iterator"><code>Iterator</code></a> trait 時，有檢查 <code>range.start &lt; range.end</code>，因此這個寫法並不會有出界問題，但會多跑一次無意義的迭代。</p>
-<a class="header" href="#變形-1" id="變形-1"><h2>變形</h2></a>
-<a class="header" href="#heapsort" id="heapsort"><h3>Heapsort</h3></a>
-<p><a href="../heapsort/">Heapsort</a> 是一個高效的排序法，使用 selection sort 融合 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序的資料結構，讓時間複雜度進化至 $O(n \log n) $。更多詳情可以參考<a href="../heapsort/">這篇介紹</a>。</p>
-<a class="header" href="#參考資料-6" id="參考資料-6"><h2>參考資料</h2></a>
+<h2><a class="header" href="#變形-1" id="變形-1">變形</a></h2>
+<h3><a class="header" href="#heapsort" id="heapsort">Heapsort</a></h3>
+<p><a href="sorting/selection_sort/../heapsort/">Heapsort</a> 是一個高效的排序法，使用 selection sort 融合 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序的資料結構，讓時間複雜度進化至 $O(n \log n) $。更多詳情可以參考<a href="sorting/selection_sort/../heapsort/">這篇介紹</a>。</p>
+<h2><a class="header" href="#參考資料-6" id="參考資料-6">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Selection_sort">Wiki: Selection sort</a></li>
 <li><a href="https://stackoverflow.com/questions/20761396/">Why Selection sort can be stable or unstable</a></li>
 <li>Sorting GIF by Joestape89 <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
-<a class="header" href="#氣泡排序-bubble-sort" id="氣泡排序-bubble-sort"><h1>氣泡排序 Bubble sort</h1></a>
+<h1><a class="header" href="#氣泡排序-bubble-sort" id="氣泡排序-bubble-sort">氣泡排序 Bubble sort</a></h1>
 <p>Bubble sort 是最簡單的排序法之一，由於排序時每個元素會如同泡泡般，一個一個浮出序列頂部，因而得名。由於其簡單好理解，名稱又有趣，常作為第一個學習的入門排序法。不過其效率不彰，甚至不如同為 quardratic time 的 insertion sort。Bubble sort 的原理很平凡，就是相鄰兩兩元素互相比較，如果大小順序錯了，就置換位置。再往下一個 pair 比較。</p>
 <p>Bubble sort 的特性如下：</p>
 <ul>
@@ -1048,7 +1058,7 @@ pub fn selection_sort(arr: &amp;mut [i32]) {
 <li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 </ul>
-<a class="header" href="#步驟-5" id="步驟-5"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-5" id="步驟-5">步驟</a></h2>
 <ol>
 <li>比較兩個相鄰元素，若首個元素比次個元素大，置換兩者的位置。</li>
 <li>依序對相鄰元素執行步驟一，直到抵達序列頂端，此時頂端元素排序完成。</li>
@@ -1056,7 +1066,7 @@ pub fn selection_sort(arr: &amp;mut [i32]) {
 </ol>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="" />
 <em>Swfung8 - CC BY-SA 3.0</em></p>
-<a class="header" href="#說明-4" id="說明-4"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-4" id="說明-4">說明</a></h2>
 <p>給定一組序列 <code>[5, 3, 8, 7, 2]</code>，以 bubble sort 遞增排序。以 ASCII diagram 表示：</p>
 <p><strong>第一次迭代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
@@ -1114,19 +1124,19 @@ pub fn selection_sort(arr: &amp;mut [i32]) {
 [3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
 </code></pre>
 <p>很簡單的排序法！</p>
-<a class="header" href="#效能-6" id="效能-6"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity    </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n^2) $ </td></tr>
-<tr><td> Best         </td><td> $O(n) $   </td></tr>
-<tr><td> Average      </td><td> $O(n^2) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
+<h2><a class="header" href="#效能-6" id="效能-6">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n^2) $</td></tr>
+<tr><td>Best</td><td>$O(n) $</td></tr>
+<tr><td>Average</td><td>$O(n^2) $</td></tr>
+<tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
-<a class="header" href="#time-complexity" id="time-complexity"><h3>Time complexity</h3></a>
+<h3><a class="header" href="#time-complexity" id="time-complexity">Time complexity</a></h3>
 <p>Bubble sort 總共需要 $n - 1 $ 次迭代，每次迭代至少需要執行 $n - 1 - i $ 置換（ $i $ 為第幾次迭代），總共需要迭代</p>
 <p>$$\sum_{i=0}^{n-1} (n - i - 1) = n^2 - \sum_{i=0}^{n-1}i - n = n^2 - \frac{n(n - 1)}{2} - n = \frac{n^2}{2} - \frac{n}{2}$$</p>
 <p>次，因此，時間複雜度為 $O(n^2) $。</p>
 <p>Bubble sort 在已排序完成的序列上，只需要迭代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
-<a class="header" href="#實作-6" id="實作-6"><h2>實作</h2></a>
+<h2><a class="header" href="#實作-6" id="實作-6">實作</a></h2>
 <p>Bubble sort 簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -1177,22 +1187,22 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 <li>若未排序部分 <code>new_len</code> 為零，代表排序完成。</li>
 <li>外層迴圈將新長度值 <code>new_len</code> 賦予 <code>len</code>，下一次迭代就可少做一次比較。</li>
 </ol>
-<a class="header" href="#參考資料-7" id="參考資料-7"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-7" id="參考資料-7">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Bubble_sort">Wiki: Bubble sort</a></li>
 <li>Sorting GIF was created by Swfung8 (Own work) <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a> via Wikimedia Commons.</li>
 </ul>
-<a class="header" href="#希爾排序-shellsort" id="希爾排序-shellsort"><h1>希爾排序 Shellsort</h1></a>
-<p>眾所周知，<a href="../insertion_sort">Insertion sort</a> 用在幾乎完成排序的序列上非常高效，換句話說，當元素置換不需移動太遠時，效率很高。反之，如果有元素錯位非常遙遠，效能就會大打折扣。Shellsort 以一個 gap sequence 將資料依指定的間隔（gap）分組進行 insertion sort，使得較遠的元素能夠快速歸位，下一次的排序就會因前次排序結果愈來愈接近完成而加速。</p>
+<h1><a class="header" href="#希爾排序-shellsort" id="希爾排序-shellsort">希爾排序 Shellsort</a></h1>
+<p>眾所周知，<a href="sorting/shellsort/../insertion_sort">Insertion sort</a> 用在幾乎完成排序的序列上非常高效，換句話說，當元素置換不需移動太遠時，效率很高。反之，如果有元素錯位非常遙遠，效能就會大打折扣。Shellsort 以一個 gap sequence 將資料依指定的間隔（gap）分組進行 insertion sort，使得較遠的元素能夠快速歸位，下一次的排序就會因前次排序結果愈來愈接近完成而加速。</p>
 <p>Shellsort 最後一個 gap 必定是 1，也就是排序會退化成 insertion sort，此時大部分元素皆排序完成，insertion sort 會非常高效。</p>
 <p>Shellsort 特性如下：</p>
 <ul>
 <li><strong>自適應排序</strong>：可根據當前資料排序情形加速排序，資料越接近排序完成，效率越高。</li>
 <li><strong>不穩定排序</strong>：排序後，相同鍵值的元素相對位置可能改變。</li>
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
-<li>可視為一般化（Generalizaion）的 <a href="../insertion_sort">insertion sort</a>。</li>
+<li>可視為一般化（Generalizaion）的 <a href="sorting/shellsort/../insertion_sort">insertion sort</a>。</li>
 </ul>
-<a class="header" href="#步驟-6" id="步驟-6"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-6" id="步驟-6">步驟</a></h2>
 <p>Shellsort 分為兩個步驟：</p>
 <ol>
 <li>決定一組 gap sequence。</li>
@@ -1201,16 +1211,16 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 <blockquote>
 <p>最後一次排序（gap = 1）會退化為 insertion sort，完成整個排序。</p>
 </blockquote>
-<a class="header" href="#gap-sequneces" id="gap-sequneces"><h3>Gap Sequneces</h3></a>
+<h3><a class="header" href="#gap-sequneces" id="gap-sequneces">Gap Sequneces</a></h3>
 <p>Shellsort 的效率取決於 gap sequence 的選擇，這邊舉幾個常見的 gap sequence：</p>
-<table><thead><tr><th>              </th><th> Sequence                        </th></tr></thead><tbody>
-<tr><td> Marcin Ciura </td><td> 1, 4, 10, 23, 57, 132, 301, 701 </td></tr>
-<tr><td> $2^{k} - 1 $  </td><td> 1, 3, 7, 15, 31, 63,...         </td></tr>
-<tr><td> $\lfloor {\frac {N}{2^k}} \rfloor $ </td><td> $\lfloor {\frac {N}{2}} \rfloor $, $\lfloor {\frac {N}{4}} \rfloor $, ..., 1</td></tr>
+<table><thead><tr><th></th><th>Sequence</th></tr></thead><tbody>
+<tr><td>Marcin Ciura</td><td>1, 4, 10, 23, 57, 132, 301, 701</td></tr>
+<tr><td>$2^{k} - 1 $</td><td>1, 3, 7, 15, 31, 63,...</td></tr>
+<tr><td>$\lfloor {\frac {N}{2^k}} \rfloor $</td><td>$\lfloor {\frac {N}{2}} \rfloor $, $\lfloor {\frac {N}{4}} \rfloor $, ..., 1</td></tr>
 </tbody></table>
 <p>感受一下 gap sequence 為 23, 10, 4, 1 的 shellsort 吧。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Sorting_shellsort_anim.gif" alt="" /></p>
-<a class="header" href="#說明-5" id="說明-5"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-5" id="說明-5">說明</a></h2>
 <p>Shellsort 其實就是進行好幾次不同 gap 的 insertion sort，以下用 ASCII diagram 解釋。</p>
 <p>假定這裡有一個序列需要遞增排序。</p>
 <pre><code>[5, 3, 8, 7, 4, 9, 6, 2]
@@ -1266,17 +1276,17 @@ pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
 </code></pre>
 <p>再來進行第三次排序。gap 為 $8 / 2^3 = 1 $，shellsort 退化至 insertion sort，但前一次結果已經很接近排序完成，insertion sort 可以幾乎在 one pass 完成排序。</p>
 <blockquote>
-<p>Insertion sort 的 ASCII diagram 我們就不展示了，請參考 <a href="../insertion_sort">Insertion sort</a>。</p>
+<p>Insertion sort 的 ASCII diagram 我們就不展示了，請參考 <a href="sorting/shellsort/../insertion_sort">Insertion sort</a>。</p>
 </blockquote>
-<a class="header" href="#效能-7" id="效能-7"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity                                            </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n^2) $ ~  $O(n \log^2 n) $ (Depends on gap sequence) </td></tr>
-<tr><td> Best         </td><td> $O(n \log n) $                                    </td></tr>
-<tr><td> Average      </td><td> Depends on gap sequence                               </td></tr>
-<tr><td> Worst space  </td><td> $O(1) $ auxiliary                                 </td></tr>
+<h2><a class="header" href="#效能-7" id="效能-7">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n^2) $ ~  $O(n \log^2 n) $ (Depends on gap sequence)</td></tr>
+<tr><td>Best</td><td>$O(n \log n) $</td></tr>
+<tr><td>Average</td><td>Depends on gap sequence</td></tr>
+<tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
 <p>Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 $O(n \log^2 n) $，有著不錯的表現。有興趣可以參考<a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">這篇文章</a>。</p>
-<a class="header" href="#實作-7" id="實作-7"><h2>實作</h2></a>
+<h2><a class="header" href="#實作-7" id="實作-7">實作</a></h2>
 <p>我們這裡以 <a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Marcin 的 Paper</a> 中提到的經驗式為例，首先，先建立一個 gap sequence 的常數。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -1315,20 +1325,20 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <li>最內層迴圈，執行插入動作，將每個元素置換到正確位置。</li>
 <li>由於 <code>gap</code> 的型別是 <code>&amp;usize</code>，需透過 <code>*gap</code> dereference 得到 <code>usize</code> 型別。</li>
 </ol>
-<a class="header" href="#參考資料-8" id="參考資料-8"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-8" id="參考資料-8">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Shellsort">Wiki: Shellsort</a></li>
 <li><a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Best Increments for the Average Case of Shellsort, M. Ciura, 2001</a></li>
 <li><a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">Shellsort and Sorting Networks (Outstanding Dissertations in the Computer Sciences)</a></li>
 </ul>
-<a class="header" href="#高效排序" id="高效排序"><h1>高效排序</h1></a>
+<h1><a class="header" href="#高效排序" id="高效排序">高效排序</a></h1>
 <ul>
-<li><a href="heapsort">堆積排序 Heapsort</a></li>
-<li><a href="quicksort">快速排序 Quicksort</a></li>
-<li><a href="mergesort">合併排序 Mergesort</a></li>
+<li><a href="sorting/heapsort">堆積排序 Heapsort</a></li>
+<li><a href="sorting/quicksort">快速排序 Quicksort</a></li>
+<li><a href="sorting/mergesort">合併排序 Mergesort</a></li>
 </ul>
-<a class="header" href="#堆積排序-heapsort" id="堆積排序-heapsort"><h1>堆積排序 Heapsort</h1></a>
-<p>Heapsort（堆積排序）可以看作是 <a href="../selection_sort">selection sort</a> 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。</p>
+<h1><a class="header" href="#堆積排序-heapsort" id="堆積排序-heapsort">堆積排序 Heapsort</a></h1>
+<p>Heapsort（堆積排序）可以看作是 <a href="sorting/heapsort/../selection_sort">selection sort</a> 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。</p>
 <p>和 selection sort 不同之處是，heapsort 利用<a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">堆積（heap）</a>這種半排序（partially sorted）的資料結構輔助並加速排序。</p>
 <p>Heapsort 的特性如下：</p>
 <ul>
@@ -1337,7 +1347,7 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 <li><strong>較差的 CPU 快取</strong>：heap 不連續存取位址的特性，不利於 <a href="https://en.wikipedia.org/wiki/CPU_cache">CPU 快取</a>。</li>
 </ul>
-<a class="header" href="#步驟-7" id="步驟-7"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-7" id="步驟-7">步驟</a></h2>
 <p>Heapsort 的演算法分為兩大步驟：</p>
 <ol>
 <li>將資料轉換為 heap 資料結構（遞增排序用 max-heap, 遞減排序選擇 min-heap）。</li>
@@ -1351,7 +1361,7 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 </ol>
 <p>透過 GIF 動畫感受一下 heapsort 的威力吧！</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif" alt="" /></p>
-<a class="header" href="#說明-6" id="說明-6"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-6" id="說明-6">說明</a></h2>
 <p>在開始之前，定義幾個 heap 常用名詞：</p>
 <ul>
 <li><strong>Heap ordering property</strong>：一個 heap 必須要滿足的條件。以 heap 種類不同有幾種變形。
@@ -1373,7 +1383,7 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <pre><code>[21, 20, 17, 1, 3, 2]
 </code></pre>
 <p>對應的二元樹（binary tree）的圖形如下：</p>
-<p><img src="tree.png" height="300px" /></p>
+<img src="sorting/heapsort/tree.png" height="300px" />
 <p>再來就是<strong>排序的部分</strong>，Max-heap 會將最大的元素擺在 root 的位置，我們先將最後一個 node 與 root 進行交換，完成第一個排序步驟。</p>
 <blockquote>
 <p>若不熟悉 heap，可以閱讀 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">Wiki 的介紹</a>，其實 heap 就是用陣列實作的二元樹。</p>
@@ -1419,27 +1429,27 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 (Done!)
 </code></pre>
 <p>以上便是 heapsort 演算法的簡單流程，是不是和 selection sort 非常相似呢！</p>
-<a class="header" href="#效能-8" id="效能-8"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n \log n) $ </td></tr>
-<tr><td> Best         </td><td> $O(n \log n) $ </td></tr>
-<tr><td> Average      </td><td> $O(n \log n) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(1) $ auxiliary </td></tr>
+<h2><a class="header" href="#效能-8" id="效能-8">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n \log n) $</td></tr>
+<tr><td>Best</td><td>$O(n \log n) $</td></tr>
+<tr><td>Average</td><td>$O(n \log n) $</td></tr>
+<tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
 <p>Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n) $，同樣分為兩部分簡單解釋。</p>
-<a class="header" href="#build-heap-heapify" id="build-heap-heapify"><h3>Build heap (heapify)</h3></a>
+<h3><a class="header" href="#build-heap-heapify" id="build-heap-heapify">Build heap (heapify)</a></h3>
 <p>建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。</p>
-<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。</p>
+<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="sorting/heapsort/index.html#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。</p>
 <p>Heapify 從最末個元素開始反向迭代，每個元素都呼叫 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
 <p>$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$</p>
 <blockquote>
 <p>實際上，build heap 步驟的複雜度可達到 $O(n) $，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
 </blockquote>
-<a class="header" href="#sorting-sift-down" id="sorting-sift-down"><h3>Sorting (sift down)</h3></a>
+<h3><a class="header" href="#sorting-sift-down" id="sorting-sift-down">Sorting (sift down)</a></h3>
 <p>講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 <strong>sift down</strong> 修正符合 heap order。所以總共需要做 $n $ 次 sift down，複雜度為 $O(n \log n) $。</p>
-<a class="header" href="#sum-up" id="sum-up"><h3>Sum up</h3></a>
+<h3><a class="header" href="#sum-up" id="sum-up">Sum up</a></h3>
 <p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 $O(n \log n) $。</p>
-<a class="header" href="#實作-8" id="實作-8"><h2>實作</h2></a>
+<h2><a class="header" href="#實作-8" id="實作-8">實作</a></h2>
 <p>Heapsort 的實作相對簡單，只需要不斷呼叫 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -1507,15 +1517,15 @@ fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
 <li><strong>置換</strong>：若 <code>root</code> 元素比 <code>child</code> 的元素小，則置換兩者，並將 <code>child</code> 設置為下個迭代的 <code>root</code>，繼續檢查最初的 <code>start</code> 元素是否滿足 heap ordering。</li>
 </ol>
 <p>以上就是簡單的 <code>sift_down</code> 實作，也是整個 heapsort 的精髓。</p>
-<a class="header" href="#參考資料-9" id="參考資料-9"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-9" id="參考資料-9">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">Wiki: Heap</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Heapsort">Wiki: Heapsort</a></li>
-<li><a href="www.cs.umd.edu/%7Emeesh/">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
+<li><a href="sorting/heapsort/www.cs.umd.edu/%7Emeesh/">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
 <li>Sorting GIF by RolandH <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
-<a class="header" href="#快速排序-quicksort" id="快速排序-quicksort"><h1>快速排序 Quicksort</h1></a>
-<p>Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 $O(n \log n) $ 的平均時間複雜度。雖然最差時間複雜度與 <a href="../bubble_sort">bubble sort</a> 同為 $O(n^2) $，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 $O(\log n) $ 的額外儲存空間，比它的競爭對手 <a href="../mergesort">mergesort</a> 來得節省。非常適合運用在真實世界中的排序法。</p>
+<h1><a class="header" href="#快速排序-quicksort" id="快速排序-quicksort">快速排序 Quicksort</a></h1>
+<p>Quicksort 是一個非常熱門且應用廣泛的排序法，相對簡單的實作就可達到 $O(n \log n) $ 的平均時間複雜度。雖然最差時間複雜度與 <a href="sorting/quicksort/../bubble_sort">bubble sort</a> 同為 $O(n^2) $，但這種情形非常少見。簡單的最佳化實作下，Quicksort 僅需 $O(\log n) $ 的額外儲存空間，比它的競爭對手 <a href="sorting/quicksort/../mergesort">mergesort</a> 來得節省。非常適合運用在真實世界中的排序法。</p>
 <p>Quicksort 基本特性如下：</p>
 <ul>
 <li>實作簡單，速度快。</li>
@@ -1523,14 +1533,14 @@ fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
 <li><strong>非原地排序</strong>：除了資料本身，仍需額外花費儲存空間來排序。</li>
 <li><strong>分治演算法</strong>：將主問題化作數個子問題，各個擊破。</li>
 </ul>
-<a class="header" href="#步驟-8" id="步驟-8"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-8" id="步驟-8">步驟</a></h2>
 <p>Quicksort 是一個分治演算法（divide-and-conquer），不斷遞迴下列三個步驟：</p>
 <ol>
 <li><strong>選擇 Pivot</strong>：在序列中任意選擇一個元素，稱為 <strong>Pivot</strong>。</li>
 <li><strong>分割序列</strong>：將序列重新排序，分為兩部分，比 pivot 小 的元素置換到 pivot 之前，比 pivot 大的元素置換到 pivot 之後，而 pivot 本身會座落在它最終的正確位置。</li>
 <li><strong>遞迴</strong>：分別將_比 pivot 小_，以及_比 pivot 大_ 兩部分分別重複上述步驟，直到新序列的長度小於等於 1，無法繼續分割為止，此時排序完成。</li>
 </ol>
-<a class="header" href="#lomuto-partition-scheme" id="lomuto-partition-scheme"><h3>Lomuto partition scheme</h3></a>
+<h3><a class="header" href="#lomuto-partition-scheme" id="lomuto-partition-scheme">Lomuto partition scheme</a></h3>
 <p>為了達成上述條件，Quicksort 有許多不同的分割序列實作方案（partition scheme），其中以 Lomuto partition 最易理解，常被做為教材。</p>
 <ol>
 <li>以序列最後一個元素當做 pivot。</li>
@@ -1552,7 +1562,7 @@ fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
 <li><code>arr[j...high-1]</code> 包含所有尚未迭代的元素。</li>
 <li><code>arr[high]</code> pivot 本身。</li>
 </ul>
-<a class="header" href="#說明-7" id="說明-7"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-7" id="說明-7">說明</a></h2>
 <p>以 Lomuto partition scheme 為例，使用 ASCII diagram 解釋。</p>
 <p>給定一個序列，並選擇最後一個元素作為 pivot，<code>i</code> <code>j</code> 指標則在第一個元素位置。</p>
 <pre><code>                      * -&gt; pivot
@@ -1618,29 +1628,29 @@ swap i, j
  -------     ---------
  quicksort    quicksort
 </code></pre>
-<a class="header" href="#效能-9" id="效能-9"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n^2) $      </td></tr>
-<tr><td> Best         </td><td> $O(n \log n) $ </td></tr>
-<tr><td> Average      </td><td> $O(n \log n) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(\log n) $ or $O(n) $ auxiliary </td></tr>
+<h2><a class="header" href="#效能-9" id="效能-9">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n^2) $</td></tr>
+<tr><td>Best</td><td>$O(n \log n) $</td></tr>
+<tr><td>Average</td><td>$O(n \log n) $</td></tr>
+<tr><td>Worst space</td><td>$O(\log n) $ or $O(n) $ auxiliary</td></tr>
 </tbody></table>
-<a class="header" href="#time-complexity-1" id="time-complexity-1"><h3>Time complexity</h3></a>
+<h3><a class="header" href="#time-complexity-1" id="time-complexity-1">Time complexity</a></h3>
 <p>Quicksort 僅有「<strong>選擇 Pivot</strong>」與「<strong>分割序列</strong>」兩步驟，不同的實作的效能各異，也影響 Quicksort 的時間複雜度。</p>
-<a class="header" href="#最差情況" id="最差情況"><h4>最差情況</h4></a>
+<h4><a class="header" href="#最差情況" id="最差情況">最差情況</a></h4>
 <p>最差的分割序列狀況發生在挑選的 pivot 總是最大或最小值（或在 Lomuto partition 下，所有元素值都一樣）。由於 Lomuto 總是選擇最後一個元素作為 pivot，這種情形好發於已排序或接近排序完成的資料上。</p>
 <p>而當每次的 partition 都是最不平衡的分割序列，就會產生最差時間複雜度的狀況。遞迴在序列長度等於 1 時停止，因此整個排序法的 call stack 需要 $n - 1 $ 的嵌套遞迴呼叫（nested call）；而第 $i $ 次分割會執行 $n - i $ 次基本操作（ $O(n) $），所以總共需執行</p>
 <p>$$\sum_{i = 0}^n (n - i) = n^2 - \frac{n(n + 1)}{2}$$</p>
 <p>次基本操作，最差時間複雜度為 $O(n^2) $。</p>
-<a class="header" href="#最佳情況" id="最佳情況"><h4>最佳情況</h4></a>
+<h4><a class="header" href="#最佳情況" id="最佳情況">最佳情況</a></h4>
 <p>既然最差情況發生在 pivot 總選到最大或最小值，反之，最佳情況則發生在每次 pivot 都可以順利選到序列的中位數（median），如此一來，每次遞迴分割的序列長度都會減半（ $n / 2 $），call stack 的嵌套遞迴總共需要 $2 \log_2{n} $ 次，序列的長度就會減至 1，而每次分割同樣有 $O(n) $ 的複雜度，因此最佳情況為：</p>
 <p>$$O(n \cdot 2 \log_2{n}) = O(n \log n)$$</p>
-<a class="header" href="#space-complexity" id="space-complexity"><h3>Space complexity</h3></a>
+<h3><a class="header" href="#space-complexity" id="space-complexity">Space complexity</a></h3>
 <p>Quicksort 的空間複雜度取決於實作細節，由於<strong>分割序列</strong>步驟需 $O(1) $ 的空間複雜度，因此僅需分析遞迴式會在 call stack 產生多少 stack frame 即可。</p>
-<p><a href="#%E6%9C%80%E5%B7%AE%E6%83%85%E6%B3%81">前面提及</a>，最 naïve 的 Lomuto partition 最糟糕的情形下，會產生 $n - 1 $ 個嵌套遞迴，也就是需額外使用 $O(n) $ 的空間儲存 call stack frame，但只要 compiler 有支援 <a href="https://en.wikipedia.org/wiki/Tail_call">尾端呼叫</a>最佳化（tail-call optimization，TCO），Quicksort 很容易最佳化至 $O(\log n) $。</p>
-<a class="header" href="#實作-9" id="實作-9"><h2>實作</h2></a>
+<p><a href="sorting/quicksort/index.html#%E6%9C%80%E5%B7%AE%E6%83%85%E6%B3%81">前面提及</a>，最 naïve 的 Lomuto partition 最糟糕的情形下，會產生 $n - 1 $ 個嵌套遞迴，也就是需額外使用 $O(n) $ 的空間儲存 call stack frame，但只要 compiler 有支援 <a href="https://en.wikipedia.org/wiki/Tail_call">尾端呼叫</a>最佳化（tail-call optimization，TCO），Quicksort 很容易最佳化至 $O(\log n) $。</p>
+<h2><a class="header" href="#實作-9" id="實作-9">實作</a></h2>
 <p>Quicksort 實作主要分為兩部分：遞迴，以及分割序列（partition）。</p>
-<a class="header" href="#recursion" id="recursion"><h3>Recursion</h3></a>
+<h3><a class="header" href="#recursion" id="recursion">Recursion</a></h3>
 <p>遞迴函式本身實作非常簡單，分別將小於 pivot 與大於 pivot 兩部分遞迴呼叫自身即可。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -1672,7 +1682,7 @@ pub fn quicksort_lomuto(arr: &amp;mut [i32]) {
     quicksort_helper(arr, 0, hi);
 }
 #}</code></pre></pre>
-<a class="header" href="#partitioning" id="partitioning"><h3>Partitioning</h3></a>
+<h3><a class="header" href="#partitioning" id="partitioning">Partitioning</a></h3>
 <p>一般來說，分割序列的實作有下列兩個步驟：</p>
 <ul>
 <li>選擇 pivot</li>
@@ -1707,15 +1717,15 @@ fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; isize {
 <li><code>i</code> 指標加一，繼續處理下個元素。</li>
 <li>最後置換第 i 個元素於 pivot，此時 pivot 已落在最終正確的位置。</li>
 </ol>
-<a class="header" href="#最佳化與變形" id="最佳化與變形"><h2>最佳化與變形</h2></a>
+<h2><a class="header" href="#最佳化與變形" id="最佳化與變形">最佳化與變形</a></h2>
 <p>Quicksort 有數個方向可以探討最佳化：</p>
 <ul>
-<li><a href="#%E9%99%8D%E4%BD%8E%E9%A1%8D%E5%A4%96%E7%A9%BA%E9%96%93%E8%A4%87%E9%9B%9C%E5%BA%A6">降低額外空間複雜度</a></li>
-<li><a href="#%E9%81%B8%E6%93%87-pivot-%E7%9A%84%E6%96%B9%E6%B3%95">選擇 Pivot 的方法</a></li>
-<li><a href="#%E5%B0%8D%E4%BB%98%E9%87%8D%E8%A4%87%E7%9A%84%E5%85%83%E7%B4%A0">對付重複的元素</a></li>
-<li><a href="%E9%81%B8%E6%93%87%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%86%E5%89%B2%E6%96%B9%E6%A1%88">選擇不同的分割方案</a></li>
+<li><a href="sorting/quicksort/index.html#%E9%99%8D%E4%BD%8E%E9%A1%8D%E5%A4%96%E7%A9%BA%E9%96%93%E8%A4%87%E9%9B%9C%E5%BA%A6">降低額外空間複雜度</a></li>
+<li><a href="sorting/quicksort/index.html#%E9%81%B8%E6%93%87-pivot-%E7%9A%84%E6%96%B9%E6%B3%95">選擇 Pivot 的方法</a></li>
+<li><a href="sorting/quicksort/index.html#%E5%B0%8D%E4%BB%98%E9%87%8D%E8%A4%87%E7%9A%84%E5%85%83%E7%B4%A0">對付重複的元素</a></li>
+<li><a href="sorting/quicksort/%E9%81%B8%E6%93%87%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%86%E5%89%B2%E6%96%B9%E6%A1%88">選擇不同的分割方案</a></li>
 </ul>
-<a class="header" href="#降低額外空間複雜度" id="降低額外空間複雜度"><h3>降低額外空間複雜度</h3></a>
+<h3><a class="header" href="#降低額外空間複雜度" id="降低額外空間複雜度">降低額外空間複雜度</a></h3>
 <p>前述提到最佳情形下（每次 pivot 都選到中位數），僅需 $\log n $ 個嵌套遞迴，額外空間複雜度僅需 $O(\log n) $。
 倘若編譯器有實作 <strong>尾端呼叫最佳化</strong>，Quicksort 可以達到 $O(\log n) $ 對數級別的額外空間使用。</p>
 <p>實作尾端呼叫最佳化的思路很簡單，「<strong>先遞迴較少元素的部分，再利用 tall-call 遞迴另一部分</strong>」，如此以來，較多元素的遞迴則會直接被編譯器展開，消去遞迴時需要的 call stack 空間。剩下較少元素的部分，則與最佳情形相同，最多僅需 $\log n $ 次嵌套遞迴。</p>
@@ -1771,7 +1781,7 @@ fn quicksort_helper_manual_tco(arr: &amp;mut [i32], mut lo: isize, mut hi: isize
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#選擇-pivot-的方法" id="選擇-pivot-的方法"><h3>選擇 Pivot 的方法</h3></a>
+<h3><a class="header" href="#選擇-pivot-的方法" id="選擇-pivot-的方法">選擇 Pivot 的方法</a></h3>
 <p>選擇 pivot 的方法大致上有以下幾種：</p>
 <ul>
 <li>總是選擇最後一個元素。</li>
@@ -1781,7 +1791,7 @@ fn quicksort_helper_manual_tco(arr: &amp;mut [i32], mut lo: isize, mut hi: isize
 </ul>
 <p>選擇第一個或最後一個元素會印序列已經接近排序完成或相反排序，造成 $O(n^2) $ 最壞的時間複雜度。隨機或選擇特定位置的方法較能避免這種情況，但實作上較困難。</p>
 <p>除了選擇 pivot 的方法，近幾年來多 pivot（multi-pivot）Quicksort 也愈趨流行，可以減少 20% 的元素置換。相關的討論與證明可以參考<a href="https://cs.stanford.edu/%7Erishig/courses/ref/l11a.pdf">這篇文章</a>。</p>
-<a class="header" href="#對付重複的元素" id="對付重複的元素"><h3>對付重複的元素</h3></a>
+<h3><a class="header" href="#對付重複的元素" id="對付重複的元素">對付重複的元素</a></h3>
 <p>若輸入序列有許多重複的元素，使用原本 Lomuto scheme 實作的 Quicksort 仍然會比較置換等於 pivot 的所有元素。3-way partition scheme 就是將序列多分出「等於 pivot」部分，減少重複置換相等元素的排序法。</p>
 <pre><code>[ values &lt; pivot | values == pivot | value &gt; pivot ]
 </code></pre>
@@ -1813,7 +1823,7 @@ fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; (isize, isize) {
     (i, k)
 }
 #}</code></pre></pre>
-<a class="header" href="#選擇不同的分割方案" id="選擇不同的分割方案"><h3>選擇不同的分割方案</h3></a>
+<h3><a class="header" href="#選擇不同的分割方案" id="選擇不同的分割方案">選擇不同的分割方案</a></h3>
 <p>不同的分割方案有著不同的應用場景，如上述的 3-way scheme 就適合重複元素多的序列。這裡再多介紹另一個常見的分割實作方案 Hoare partition，是 Quicksort 發明這 Hoare 自己提出的分割法，Rust 實作演算法如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -1847,14 +1857,14 @@ fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
 <li>從最右邊開始找比 pivot 小或相等的元素。</li>
 <li>若找到這兩個元素，置換之，以符合小於 pivot 在前，大於 pivot 在後的分割準則。</li>
 </ol>
-<a class="header" href="#參考資料-10" id="參考資料-10"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-10" id="參考資料-10">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Quicksort">Wiki: Quicksort</a></li>
 <li><a href="https://algs4.cs.princeton.edu/23quicksort/">Algorithms, 4th Edition by R. Sedgewick and K. Wayne</a></li>
 <li><a href="https://www.geeksforgeeks.org/quick-sort/">GeeksForGeeks: QuickSort</a></li>
 <li><a href="https://github.com/raywenderlich/swift-algorithm-club/tree/master/Quicksort">Swift Algorithm Club: Quicksort</a></li>
 </ul>
-<a class="header" href="#合併排序-mergesort" id="合併排序-mergesort"><h1>合併排序 Mergesort</h1></a>
+<h1><a class="header" href="#合併排序-mergesort" id="合併排序-mergesort">合併排序 Mergesort</a></h1>
 <p>Mergesort 是一個泛用且高效穩定的排序法，最佳與最差時間複雜都是 $O(n \log n) $。Mergesort 可謂著名「Divide and Conquer」手法的經典案例，先將序列分成更小的子序列（Divide），一個個排序後（Conquer），再合併已排序的子序列（Combine）。</p>
 <ul>
 <li><strong>高效穩定</strong>：最佳、平均，與最差時間複雜度皆為 $O(n \log n) $。</li>
@@ -1862,7 +1872,7 @@ fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
 <li><strong>非原地排序</strong>：除了資料本身，仍需額外花費儲存空間來排序。</li>
 <li><strong>分治演算法</strong>：將主問題化作數個子問題，各個擊破。</li>
 </ul>
-<a class="header" href="#步驟-9" id="步驟-9"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-9" id="步驟-9">步驟</a></h2>
 <p>Mergesort 演算法分為以下步驟：</p>
 <ol>
 <li><strong>Divide</strong>：將含有 n 個元素的序列分割成含有 n / 2 個子序列。</li>
@@ -1872,7 +1882,7 @@ fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
 <p>其中，Conquer 步驟中的「排序」可以不斷遞迴 Mergesort 自身，因此需要停止遞迴的條件（base case），我們將條件設定為「子序列的長度小於 2」，因為長度為 1 的序列可視為已完成排序。</p>
 <p>將 Mergesort 視覺化排序如下：</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Merge_sort_animation2.gif" alt="mergsort" /></p>
-<a class="header" href="#說明-8" id="說明-8"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-8" id="說明-8">說明</a></h2>
 <p>以 ASCII diagram 圖解 Mergesort。</p>
 <p>先將原始序列分割成數個長度為一的子序列。</p>
 <pre><code>Split array into length 1 subarray.
@@ -1900,14 +1910,14 @@ fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
                 V
     [1, 2, 3, 4, 5, 6, 7, 8]
 </code></pre>
-<a class="header" href="#效能-10" id="效能-10"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n \log n) $ </td></tr>
-<tr><td> Best         </td><td> $O(n \log n) $ </td></tr>
-<tr><td> Average      </td><td> $O(n \log n) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(n) $ auxiliary   </td></tr>
+<h2><a class="header" href="#效能-10" id="效能-10">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n \log n) $</td></tr>
+<tr><td>Best</td><td>$O(n \log n) $</td></tr>
+<tr><td>Average</td><td>$O(n \log n) $</td></tr>
+<tr><td>Worst space</td><td>$O(n) $ auxiliary</td></tr>
 </tbody></table>
-<a class="header" href="#time-complexity-2" id="time-complexity-2"><h3>Time Complexity</h3></a>
+<h3><a class="header" href="#time-complexity-2" id="time-complexity-2">Time Complexity</a></h3>
 <p>透過遞迴關係式，很容易計算 Mergesort 的時間複雜度。假設排序長度為 $n $ 的序列最多需要 $T(n) $ 時間。可以觀察到，如果序列只有一個元素，Mergesort 僅需要常數時間就可以完成排序，寫成 $T(n) = 1 $。</p>
 <p>如果 $n &gt; 2 $，Mergesort 會將序列分為 $\lceil \frac{n}{2} \rceil $ 部分，以及 $\lfloor \frac{n}{2} \rfloor $ 部分。我們可以將排序前者寫成 $T(\lceil \frac{n}{2} \rceil) $，而後者花費時間為 $ T(\lfloor \frac{n}{2} \rfloor) $。</p>
 <p>最後，合併兩個子序列僅需 $n $ 個操作。可得下列遞迴關係式。<br />
@@ -1919,10 +1929,10 @@ T(n) =
 2T(\frac{n}{2}) + n &amp; \text{otherwise}.
 \end{cases}
 $$</p>
-<p>根據 <a href="master-theorem">Master Theorem</a>，可得複雜度為 $O(n \log n) $。</p>
-<a class="header" href="#space-complexity-1" id="space-complexity-1"><h3>Space Complexity</h3></a>
+<p>根據 <a href="sorting/mergesort/master-theorem">Master Theorem</a>，可得複雜度為 $O(n \log n) $。</p>
+<h3><a class="header" href="#space-complexity-1" id="space-complexity-1">Space Complexity</a></h3>
 <p>Mergesort 的缺點之一就是在合併子序列時，需要額外的空間依序插入排序資料；若是遞迴版本的 Mergesort 還需額外加上遞迴花費的 call stack 空間，因此額外空間複雜度為 $O(n) + O(\log n) = O(n) $（以陣列實作）。</p>
-<a class="header" href="#實作-10" id="實作-10"><h2>實作</h2></a>
+<h2><a class="header" href="#實作-10" id="實作-10">實作</a></h2>
 <p>一般來說，Divide and Conquer 有兩種設計、解決問題的技巧：Top-down（自上而下）與 Buttom-up（自下而上）。前者是先對問題有整體的輪廓概念，再逐步針對細節一一處理；後者則是先準備每個問題需要的基礎步驟與元件，再將這些步驟結合，解決整體的問題。</p>
 <p>Mergesort 的實作分為兩部分：</p>
 <ul>
@@ -1930,7 +1940,7 @@ $$</p>
 <li><code>merge</code>：合併子序列，對應到 Conquer 與 Combine 功能。</li>
 </ul>
 <p>先來看看如何分割序列。</p>
-<a class="header" href="#top-down-split" id="top-down-split"><h3>Top-down split</h3></a>
+<h3><a class="header" href="#top-down-split" id="top-down-split">Top-down split</a></h3>
 <p>自上而下的解法會不斷以類似 binary search 的方式找中點，進而分割序列。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -1961,7 +1971,7 @@ pub fn mergesort(arr: &amp;mut [i32]) {
 <li>將兩個 <code>slice</code> 合併排序至 <code>ret</code> vector 中。</li>
 <li>將 <code>ret</code> 的結果複製到原始 <code>arr</code> 中，使回傳值保有相同起始位址。</li>
 </ol>
-<a class="header" href="#buttom-up-split" id="buttom-up-split"><h3>Buttom-up split</h3></a>
+<h3><a class="header" href="#buttom-up-split" id="buttom-up-split">Buttom-up split</a></h3>
 <p>自下而上的解法則是預定好最小的子序列長度，直接使用 for 迴圈從頭開始逐一擊破。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -1999,7 +2009,7 @@ pub fn mergesort_bottom_up(arr: &amp;mut [i32]) {
 <li>繼續下兩個子序列的合併步驟。</li>
 <li>將下個迭代的子序列長度加倍，繼續合併。</li>
 </ol>
-<a class="header" href="#the-merge-part" id="the-merge-part"><h3>The merge part</h3></a>
+<h3><a class="header" href="#the-merge-part" id="the-merge-part">The merge part</a></h3>
 <p>無論是 Top-down 還是 Buttom-up 版本的解法，皆免不了 <code>merge</code> 這個共同步驟，將子序列合併為較大的序列。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2041,34 +2051,34 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
 <blockquote>
 <p><code>slice.copy_from_slice</code> 底層使用 C 的 <code>memcpy</code>，比起 for-loop 一個個賦值，直接複製整塊記憶體比較快了。</p>
 </blockquote>
-<a class="header" href="#變形-2" id="變形-2"><h2>變形</h2></a>
-<a class="header" href="#timsort" id="timsort"><h3>Timsort</h3></a>
-<p>在真實世界資料中，早有許多部分排序的分區（natural run），倘若跳過排序這些分區的步驟，就可減少許多不必要的操作，<a href="../timsort">Timsort</a> 就是為了完全利用榨乾這些分區的混合排序法。</p>
-<a class="header" href="#參考資料-11" id="參考資料-11"><h2>參考資料</h2></a>
+<h2><a class="header" href="#變形-2" id="變形-2">變形</a></h2>
+<h3><a class="header" href="#timsort" id="timsort">Timsort</a></h3>
+<p>在真實世界資料中，早有許多部分排序的分區（natural run），倘若跳過排序這些分區的步驟，就可減少許多不必要的操作，<a href="sorting/mergesort/../timsort">Timsort</a> 就是為了完全利用榨乾這些分區的混合排序法。</p>
+<h2><a class="header" href="#參考資料-11" id="參考資料-11">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Merge_sort">Wiki: Merge sort</a></li>
-<li><a href="www.cs.umd.edu/%7Emeesh/">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
+<li><a href="sorting/mergesort/www.cs.umd.edu/%7Emeesh/">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
 <li>Sorting GIF was created By CobaltBlue <a href="https://creativecommons.org/licenses/by-sa/2.5">CC BY-SA 2.5</a> via Wikimedia Commons.</li>
 </ul>
-<a class="header" href="#混合排序" id="混合排序"><h1>混合排序</h1></a>
+<h1><a class="header" href="#混合排序" id="混合排序">混合排序</a></h1>
 <ul>
-<li><a href="introsort">內省排序 Introsort</a></li>
-<li><a href="timsort">自適應合併排序 Timsort</a></li>
-<li><a href="pdqsort">模式消除快速排序 Pdqsort</a></li>
+<li><a href="sorting/introsort">內省排序 Introsort</a></li>
+<li><a href="sorting/timsort">自適應合併排序 Timsort</a></li>
+<li><a href="sorting/pdqsort">模式消除快速排序 Pdqsort</a></li>
 </ul>
-<a class="header" href="#內省排序-introsort" id="內省排序-introsort"><h1>內省排序 Introsort</h1></a>
+<h1><a class="header" href="#內省排序-introsort" id="內省排序-introsort">內省排序 Introsort</a></h1>
 <p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
-<a class="header" href="#自適應合併排序-timsort" id="自適應合併排序-timsort"><h1>自適應合併排序 Timsort</h1></a>
+<h1><a class="header" href="#自適應合併排序-timsort" id="自適應合併排序-timsort">自適應合併排序 Timsort</a></h1>
 <p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
-<a class="header" href="#效能-11" id="效能-11"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity         </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n \log n) $ </td></tr>
-<tr><td> Best         </td><td> $O(n) $        </td></tr>
-<tr><td> Average      </td><td> $O(n \log n) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(n) $ auxiliary   </td></tr>
+<h2><a class="header" href="#效能-11" id="效能-11">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n \log n) $</td></tr>
+<tr><td>Best</td><td>$O(n) $</td></tr>
+<tr><td>Average</td><td>$O(n \log n) $</td></tr>
+<tr><td>Worst space</td><td>$O(n) $ auxiliary</td></tr>
 </tbody></table>
-<a class="header" href="#實作-11" id="實作-11"><h2>實作</h2></a>
-<a class="header" href="#參考資料-12" id="參考資料-12"><h2>參考資料</h2></a>
+<h2><a class="header" href="#實作-11" id="實作-11">實作</a></h2>
+<h2><a class="header" href="#參考資料-12" id="參考資料-12">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Timsort">Wiki: Timsort</a></li>
 <li>http://blog.csdn.net/yangzhongblog/article/details/8184707</li>
@@ -2076,13 +2086,13 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
 <li>https://github.com/python/cpython/blob/master/Objects/listsort.txt</li>
 <li>https://youtu.be/uVWGZyekGos</li>
 </ul>
-<a class="header" href="#模式消除快速排序-pattern-defeating-quicksort" id="模式消除快速排序-pattern-defeating-quicksort"><h1>模式消除快速排序 Pattern-defeating Quicksort</h1></a>
+<h1><a class="header" href="#模式消除快速排序-pattern-defeating-quicksort" id="模式消除快速排序-pattern-defeating-quicksort">模式消除快速排序 Pattern-defeating Quicksort</a></h1>
 <p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
 <ul>
 <li>Unstable</li>
 <li>Adopted in libcore in Rust</li>
 </ul>
-<a class="header" href="#參考資料-13" id="參考資料-13"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-13" id="參考資料-13">參考資料</a></h2>
 <ul>
 <li>https://news.ycombinator.com/item?id=14661659</li>
 <li>https://redd.it/5qa8h6</li>
@@ -2090,14 +2100,14 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
 <li>https://github.com/stjepang/pdqsort</li>
 <li>https://github.com/rust-lang/rust/pull/40601</li>
 </ul>
-<a class="header" href="#特殊排序" id="特殊排序"><h1>特殊排序</h1></a>
+<h1><a class="header" href="#特殊排序" id="特殊排序">特殊排序</a></h1>
 <ul>
-<li><a href="counting_sort">計數排序 Counting sort</a></li>
-<li><a href="bucket_sort">桶排序 Bucket sort</a></li>
-<li><a href="radix_sort">基數排序 Radix sort</a></li>
+<li><a href="sorting/counting_sort">計數排序 Counting sort</a></li>
+<li><a href="sorting/bucket_sort">桶排序 Bucket sort</a></li>
+<li><a href="sorting/radix_sort">基數排序 Radix sort</a></li>
 </ul>
-<a class="header" href="#計數排序-counting-sort" id="計數排序-counting-sort"><h1>計數排序 Counting sort</h1></a>
-<p><a href="https://en.wikipedia.org/wiki/Counting_sort">Counting sort</a> 是一個特殊的整數排序法，被視為 <a href="../bucket_sort">Bucket sort</a> 的特例。原理是在已知整數範圍內，計算每個鍵值出現次數，並用額外的陣列保存（Count array）。最後將 Count array 的元素值作為排序資料的新 index。</p>
+<h1><a class="header" href="#計數排序-counting-sort" id="計數排序-counting-sort">計數排序 Counting sort</a></h1>
+<p><a href="https://en.wikipedia.org/wiki/Counting_sort">Counting sort</a> 是一個特殊的整數排序法，被視為 <a href="sorting/counting_sort/../bucket_sort">Bucket sort</a> 的特例。原理是在已知整數範圍內，計算每個鍵值出現次數，並用額外的陣列保存（Count array）。最後將 Count array 的元素值作為排序資料的新 index。</p>
 <p>Counting sort 基本特性如下：</p>
 <ul>
 <li><strong>非原地排序</strong>：額外花費較大量、非固定的空間來排序。</li>
@@ -2108,13 +2118,13 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
 <li><strong>預期分佈</strong>：預期輸入資料是落在已知範圍內的整數（例如 0 到 k）。</li>
 <li><strong>適用範圍</strong>：僅適用於小範圍整數（額外空間需求大）。</li>
 </ul>
-<a class="header" href="#步驟-10" id="步驟-10"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-10" id="步驟-10">步驟</a></h2>
 <ol>
 <li><strong>Count occurrence</strong>：計算每個 key 的出現次數。</li>
 <li><strong>Prefix sum as start index</strong>：計算前綴和（Prefix sum），並作為該元素的 start index。</li>
 <li><strong>Copy output</strong>：利用步驟二的前綴和，遍歷輸入資料，取得元素排序後的索引。</li>
 </ol>
-<a class="header" href="#說明-9" id="說明-9"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-9" id="說明-9">說明</a></h2>
 <p>這裡有資料需要透過正整數的 key 來排序。key 的範圍在 0 - 9 之間，格式為 <code>(key, value)</code>。</p>
 <pre><code>Input: (1, A) (5, B) (8, C) (2, D) (2, E) (9, F)
 </code></pre>
@@ -2172,26 +2182,26 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 +--------+--------+--------+--------+--------+--------+
 </code></pre>
 <p>這樣就完成排序了。此外，觀察 <strong>(2, D)</strong> 與 <strong>(2, E)</strong> 排序前後的位置，會發現 counting sort 是個實實在在的穩定排序，很棒。</p>
-<a class="header" href="#效能-12" id="效能-12"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n + k) $ </td></tr>
-<tr><td> Best         </td><td> $O(n + k) $ </td></tr>
-<tr><td> Average      </td><td> $O(n + k) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(n + k) $ auxiliary </td></tr>
+<h2><a class="header" href="#效能-12" id="效能-12">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n + k) $</td></tr>
+<tr><td>Best</td><td>$O(n + k) $</td></tr>
+<tr><td>Average</td><td>$O(n + k) $</td></tr>
+<tr><td>Worst space</td><td>$O(n + k) $ auxiliary</td></tr>
 </tbody></table>
 <blockquote>
 <p>k 為資料已知範圍上下界之差。</p>
 </blockquote>
-<a class="header" href="#time-complexity-3" id="time-complexity-3"><h3>Time Complexity</h3></a>
+<h3><a class="header" href="#time-complexity-3" id="time-complexity-3">Time Complexity</a></h3>
 <p>Counting sort 沒有用到任何遞迴，可以直觀地分析複雜度。在步驟一，建立 count array 與步驟三輸出排序結果，都需要遍歷 $n $ 個輸入的資料，因此複雜度為 $O(n) $；步驟二計算 prefix sum，以及 count array 自身的初始化則需執行 $k + 1 $ 次（給定的資料範圍），這部分的複雜度為 $O(k) $。由於 $n $ 與 $k $ 的權重會因輸入資料及實作的不同而有所改變，我們無法捨棄任何一個因子，可得知 counting sort 的複雜度為 $O(n + k) $。</p>
-<a class="header" href="#space-complexity-2" id="space-complexity-2"><h3>Space complexity</h3></a>
+<h3><a class="header" href="#space-complexity-2" id="space-complexity-2">Space complexity</a></h3>
 <p>Counting sort 並非 in-place sort，排序後的結果會另外輸出為新的記憶體空間，因此 $O(n) $ 的額外（auxiliary）空間複雜度絕對免不了。再加上需要長度為 $k $ 的 count array 保存每個 key 的出現次數，因此需再加上 $O(k) $。除了原始的輸入 array，總共需花費 $O(n + k) $ 的額外空間複雜度。</p>
 <blockquote>
 <p>如果欲排序資料就是整數鍵值自身，可以將「計算前綴和」與「複製輸出」兩步驟最佳化，直接覆寫原始陣列，額外空間複雜度會下降至 $O(k) $，但也因此成為不穩定排序法。</p>
 </blockquote>
-<a class="header" href="#實作-12" id="實作-12"><h2>實作</h2></a>
+<h2><a class="header" href="#實作-12" id="實作-12">實作</a></h2>
 <p>由於 Counting sort 屬於分布式排序（Distribution sort），這裡使用泛型，以彰顯分布式排序的特色。</p>
-<a class="header" href="#function-signature" id="function-signature"><h3>Function Signature</h3></a>
+<h3><a class="header" href="#function-signature" id="function-signature">Function Signature</a></h3>
 <p>首先，我們先看函式如何宣告（function signature）。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2211,7 +2221,7 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
 <li><code>F</code>：<code>key</code> extactor 的型別，回傳的 <code>usize</code> 必須落在 <code>[min, max)</code> 之間。</li>
 <li><code>T</code>：陣列元素的型別，實作 <code>Clone</code> 是由於 Counting sort 需要將 output 再複製回原本的參數 <code>arr</code> 上，達成「偽」原地排序。</li>
 </ul>
-<a class="header" href="#prefix-sums-array" id="prefix-sums-array"><h3>Prefix Sums Array</h3></a>
+<h3><a class="header" href="#prefix-sums-array" id="prefix-sums-array">Prefix Sums Array</a></h3>
 <p>再來，了解如何建立一個元素出現次數的陣列。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2244,7 +2254,7 @@ fn counting_sort() {
 <li>遍歷整個輸入資料，利用 <code>key</code> function 取出每筆資料的鍵值，出現一次就 +1。</li>
 <li>利用 Iterator 上的 <code>scan</code> method 計算每個鍵值的 prefix sum。需要注意的是，每個元素對應的 prefix sum 不包含自身，例如 key 3 的計算結果就是 key 1 與 key 2 的出現總次數，如此一來，prefix sum 才會直接對應到排序後的位置。</li>
 </ol>
-<a class="header" href="#prefix-sums-as-start-index" id="prefix-sums-as-start-index"><h3>Prefix Sums as Start Index</h3></a>
+<h3><a class="header" href="#prefix-sums-as-start-index" id="prefix-sums-as-start-index">Prefix Sums as Start Index</a></h3>
 <p>最後一步就是將 prefix sum 當作每個 element 的正確位置，把資料重頭排序。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2298,12 +2308,12 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#參考資料-14" id="參考資料-14"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-14" id="參考資料-14">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Counting_sort">Wiki: Counting sort</a></li>
 <li><a href="http://www.growingwiththeweb.com/2014/05/counting-sort.html">Growing with the web: Counting sort</a></li>
 </ul>
-<a class="header" href="#桶排序-bucket-sort" id="桶排序-bucket-sort"><h1>桶排序 Bucket sort</h1></a>
+<h1><a class="header" href="#桶排序-bucket-sort" id="桶排序-bucket-sort">桶排序 Bucket sort</a></h1>
 <p><a href="https://en.wikipedia.org/wiki/Bucket_sort">Bucket sort</a>，是一個非比較排序。原理是建立一些桶子，每個桶子對應一資料區間，在將待排序資料分配到不同的桶中，桶子內部各自排序。由於並非<a href="https://en.wikipedia.org/wiki/Comparison_sort">比較排序</a>，使用 Bucket sort 需要事先知道資料的範圍與分佈，才能決定桶子對應的區間。</p>
 <p>Bucket sort 基本特性如下：</p>
 <ul>
@@ -2312,7 +2322,7 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
 <li><strong>分配式排序</strong>：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。</li>
 <li><strong>預期分佈</strong>：資料為<strong>均勻分佈</strong>。</li>
 </ul>
-<a class="header" href="#步驟-11" id="步驟-11"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-11" id="步驟-11">步驟</a></h2>
 <p>假設要排序 $n $ 個元素的陣列，這些元素的值平均散落在某個<strong>已知的預期範圍內</strong>，例如 1 到 100。</p>
 <ol>
 <li><strong>Create buckets</strong>：建立 $k $ 個桶子（bucket）的陣列。每個桶子<strong>對應預期範圍的某區間</strong>，如第一個桶子放 1 到 10，第二個放 11 到 20。</li>
@@ -2320,7 +2330,7 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
 <li><strong>Inner sort</strong>：排序所有非空的桶子。</li>
 <li><strong>Gather</strong>：依序走訪所有桶子，將桶內的元素放回原本的陣列中。</li>
 </ol>
-<a class="header" href="#說明-10" id="說明-10"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-10" id="說明-10">說明</a></h2>
 <p>以下用 ASCII diagram 視覺化解釋：</p>
 <p>這裡有一些整數，落在 1 至 100 之間。我們有 $n = 10 $ 的陣列要排序。</p>
 <pre><code>Original array
@@ -2367,20 +2377,20 @@ pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key:
 |  6 |  9 | 14 | 28 | 36 | 37 | 71 | 74 | 91 | 96 |
 +-------------------------------------------------+
 </code></pre>
-<a class="header" href="#效能-13" id="效能-13"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity      </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(n^2) $   </td></tr>
-<tr><td> Best         </td><td> $O(n + k) $ </td></tr>
-<tr><td> Average      </td><td> $O(n + k) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(n + k) $ auxiliary </td></tr>
+<h2><a class="header" href="#效能-13" id="效能-13">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(n^2) $</td></tr>
+<tr><td>Best</td><td>$O(n + k) $</td></tr>
+<tr><td>Average</td><td>$O(n + k) $</td></tr>
+<tr><td>Worst space</td><td>$O(n + k) $ auxiliary</td></tr>
 </tbody></table>
 <blockquote>
 <p>$k $ = 桶子的數量（number of buckets）
 $n $ = 資料筆數</p>
 </blockquote>
-<a class="header" href="#worst-case" id="worst-case"><h3>Worst case</h3></a>
+<h3><a class="header" href="#worst-case" id="worst-case">Worst case</a></h3>
 <p>Bucket sort 是一個分配式排序法，對資料分佈有既定的預期：「<strong>所有元素平均分佈在每個 bucket 的區間內</strong>」。可想而知，最差的狀況是所有元素都聚集（clustering）在同一個 bucket 中，整個 bucket sort 的會退化成單一一個 inner sort 的複雜度。而桶內排序通常選用 insertion sort（最差 $O(n^2) $），所以最差的時間複雜度為「 $O(n^2) $」。</p>
-<a class="header" href="#best-case" id="best-case"><h3>Best case</h3></a>
+<h3><a class="header" href="#best-case" id="best-case">Best case</a></h3>
 <p>最佳的狀況則是完全符合預期的平均分佈，一個蘿蔔一個坑，每個桶內排序的最佳時間複雜度為 $O(n / k) $，再乘上桶子總數 $k $，僅需 $O(k \cdot (n / k)) = O(n) $。計算結果看起來非常合理，但實際上最佳時間複雜度為 $O(n + k) $，為什麼呢？</p>
 <p>無庸置疑，桶內排序最佳時間複雜度為 $O(n / k) $，但別忘了這是省略常數項過後式子，進行符號運算時，較精確的表達是 $c_0 O(n / k) + c_1 $，對於實作層面的常數 $c_0 $ 和 $c_1 $ 則予以保留。</p>
 <p>當我們乘上 $k $，試著算出總運算量時，</p>
@@ -2396,10 +2406,10 @@ $n $ = 資料筆數</p>
 <p>最外層的迴圈依桶子數 $k $ 而定，至少需要執行 $k $ 次，複雜度為 $O(k) $。內層的迴圈則是每個桶內的元素都會執行，而我們的資料時均勻分布，因此執行時間與元素總數 $n $ 相關，為 $O(n) $。兩者加起來就是我們所說的 $O(n + k) $ 的最佳複雜度。</p>
 <p><strong>那 $k $ 究竟會是多少，影響會比 $n $ 大嗎？</strong></p>
 <p>端看桶子總數而定，若桶子總數很大，比元素個數 $n $ 大得多，則桶子總數對執行時間的影響恐較劇烈，就算大多數為空桶子，仍須挨家挨戶查看是否需要執行桶內排序。</p>
-<a class="header" href="#space-complexity-3" id="space-complexity-3"><h3>Space Complexity</h3></a>
+<h3><a class="header" href="#space-complexity-3" id="space-complexity-3">Space Complexity</a></h3>
 <p>Bucket sort 須額外建立 $k $ 個桶子，每個桶子需要配置長度為 $n $ 的 array，因此空間複雜度為 $O(n \cdot k) $。如果以 dynamic array 實作 bucket，並考慮平攤分析（Amortized analysis），則空間複雜度降至 $O(n + k) $，這也是大多數人接受的分析結果，畢竟不會有人無聊到預先配置 $n \cdot k $ 個 empty bucket。</p>
-<a class="header" href="#實作-13" id="實作-13"><h2>實作</h2></a>
-<a class="header" href="#bucket" id="bucket"><h3>Bucket</h3></a>
+<h2><a class="header" href="#實作-13" id="實作-13">實作</a></h2>
+<h3><a class="header" href="#bucket" id="bucket">Bucket</a></h3>
 <p>Bucket sort 有許多種各異的實作法，差異最大之處就是桶子 bucket 這部分。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2428,7 +2438,7 @@ impl&lt;H, T&gt; Bucket&lt;H, T&gt; {
 <li><code>values</code>：使用 <a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a> 儲存對應範圍內的元素</li>
 <li><code>hash</code>：Bucket Sort 主函式有一個 <code>hasher</code> 函式，會計算出對應各個桶子的雜湊值，因此要確保桶子的雜湊值有唯一性。</li>
 </ul>
-<a class="header" href="#sorting" id="sorting"><h3>Sorting</h3></a>
+<h3><a class="header" href="#sorting" id="sorting">Sorting</a></h3>
 <p>接下來就是排序主函式。依照慣例，先看看函式的宣告（function signature）。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2444,7 +2454,7 @@ pub fn bucket_sort&lt;H, F, T&gt;(arr: &amp;mut [T], hasher: F)
 <li><code>F</code>：<code>hasher</code> 函式自身，只需要一個參數 <code>&amp;T</code>，回傳一個 <code>H</code>。</li>
 <li><code>T</code>：欲排序資料的型別。</li>
 </ul>
-<p>函式自身稍微複雜一點，但仍不脫離<a href="#%E6%AD%A5%E9%A9%9F">四步驟</a>：Create buckets、Scatter、Inner sort，還有 Gather。</p>
+<p>函式自身稍微複雜一點，但仍不脫離<a href="sorting/bucket_sort/index.html#%E6%AD%A5%E9%A9%9F">四步驟</a>：Create buckets、Scatter、Inner sort，還有 Gather。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -2494,15 +2504,15 @@ pub fn bucket_sort() {
 <li>由於要模擬 in-place 原地排序法的特性，將排序好的資料再次拷貝到 <code>arr</code> 上。這也是為什麼函式元素泛型 <code>T</code> 需要 <code>Clone</code> trait 的原因了。</li>
 </ol>
 <p>有關於步驟 2.2.，這部分可以用 <code>HashMap</code> 的變形 <a href="https://github.com/bluss/indexmap">IndexMap</a>（一個保存插入順序的有序 HashMap）保存雜湊值對應桶子的資訊，使得外界更容易依雜湊值找到桶子。但為了保持範例程式的簡潔，決定不引入第三方的 crate（Rust 語言第三方模組的代稱），且 <code>binary_search_by</code> 的複雜度為 $O(\log n) $，對 Bucket sort 最差複雜度並無影響。</p>
-<a class="header" href="#參考資料-15" id="參考資料-15"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-15" id="參考資料-15">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Bucket_sort">Wiki: Bucket sort</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Amortized_analysis">Wiki: Amortized analysis</a></li>
 <li><a href="https://stackoverflow.com/questions/7311415">How is the complexity of bucket sort is O(n+k) if we implement buckets using linked lists?</a></li>
 <li><a href="https://codereview.stackexchange.com/questions/145113/bucket-sort-in-rust">Bucket sort in Rust</a></li>
 </ul>
-<a class="header" href="#基數排序-radix-sort" id="基數排序-radix-sort"><h1>基數排序 Radix sort</h1></a>
-<p>如果你對 <a href="../counting_sort">Counting sort</a> 與 <a href="../bucket_sort">Bucket sort</a> 有認識，應該知道這兩個排序都能突破比較排序法複雜度 $O(n \log n) $ 限制的特殊排序法。<a href="https://en.wikipedia.org/wiki/Radix_sort">Radix sort</a> 同樣是個特殊的<a href="https://en.wikipedia.org/wiki/Integer_sorting">整數排序法</a>，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。</p>
+<h1><a class="header" href="#基數排序-radix-sort" id="基數排序-radix-sort">基數排序 Radix sort</a></h1>
+<p>如果你對 <a href="sorting/radix_sort/../counting_sort">Counting sort</a> 與 <a href="sorting/radix_sort/../bucket_sort">Bucket sort</a> 有認識，應該知道這兩個排序都能突破比較排序法複雜度 $O(n \log n) $ 限制的特殊排序法。<a href="https://en.wikipedia.org/wiki/Radix_sort">Radix sort</a> 同樣是個特殊的<a href="https://en.wikipedia.org/wiki/Integer_sorting">整數排序法</a>，效能同樣可達突破限制。差別在於，前兩者僅依據一個鍵值排序，而 Radix sort 則是依據多個鍵值排序。</p>
 <p>舉例來說，欲排序一群範圍在 0 - 999 的整數，若以 Counting sort 排序，則需建立一個「1000 元素的陣列」來計算每個整數的出現次數；若使用以 10 為基數的 Radix sort，則僅需以個位數、十位數、百位數作為鍵值分別排序三次。通常 Radix sort 的排序副程式（Sorting subroutine）會選用 Counting sort 或 Bucket sort，而以 10 為基數的鍵值範圍僅 0 - 9，這種小範圍整數非常適合 Counting sort 作為排序副程式，節省了配置 <code>int arr[1000]</code> 的 count array 的時空間。</p>
 <p>Radix sort 基本特性如下：</p>
 <ul>
@@ -2510,7 +2520,7 @@ pub fn bucket_sort() {
 <li><strong>分配式排序法</strong>：不透過兩兩比較，而是分析鍵值分佈來排序。特定情況下可達線性執行時間。</li>
 <li><strong>穩定性</strong>：採用 LSD 的 Radix sort 屬穩定排序法（Stable sort）；透過優化，採用 MSD 也可以是穩定排序法。</li>
 </ul>
-<a class="header" href="#步驟-12" id="步驟-12"><h2>步驟</h2></a>
+<h2><a class="header" href="#步驟-12" id="步驟-12">步驟</a></h2>
 <p>常見的 Radix sort 依據整數的每個位數來排序，依照位數排序的先後順序，可分為兩種：</p>
 <ul>
 <li><strong>Least significant digit (LSD)</strong>：從最低有效鍵值開始排序（最小位數排到大）。</li>
@@ -2531,13 +2541,13 @@ pub fn bucket_sort() {
 <blockquote>
 <p>由於 MSD Radix sort 先排序最大位數，會出現 <strong>8 &gt; 126</strong> 的結果，這種順序通常稱為 <a href="https://en.wikipedia.org/wiki/Lexicographical_order">Lexicographical order</a>，有如字典一般，越前面的字母排序權重越重，也因此，基本版的 MSD Radix sort 並非穩定排序法。</p>
 </blockquote>
-<a class="header" href="#說明-11" id="說明-11"><h2>說明</h2></a>
+<h2><a class="header" href="#說明-11" id="說明-11">說明</a></h2>
 <p>我們選用 LSD Radix sort 示範，並且為了增加可讀性，將基數設為 10。需注意在現實場景中，有時使用 bytes 作為基數可能更適合。</p>
 <p>待排序的數列如下。</p>
 <pre><code>[170, 45, 75, 90, 802, 2, 24, 66]
 </code></pre>
 <blockquote>
-<p>Radix sort 的排序副程式，通常選用 counting sort 或 bucket sort，因此，開始排序前，需建立供其使用的 buckets（或 count array）。這屬於其他排序法的範疇，有興趣可看 <a href="../counting_sort">Counting sort</a> 或 <a href="../bucket_sort">Bucket sort</a>。</p>
+<p>Radix sort 的排序副程式，通常選用 counting sort 或 bucket sort，因此，開始排序前，需建立供其使用的 buckets（或 count array）。這屬於其他排序法的範疇，有興趣可看 <a href="sorting/radix_sort/../counting_sort">Counting sort</a> 或 <a href="sorting/radix_sort/../bucket_sort">Bucket sort</a>。</p>
 </blockquote>
 <p>首先，從最小位數開始排序。
 注意，同樣鍵值的資料，相對位置不會改變（穩定排序）。</p>
@@ -2573,26 +2583,26 @@ sort by leftmost digit --&gt;
                         _    _
 [2, 24, 45, 66, 75, 90, 170, 802]
 </code></pre>
-<a class="header" href="#效能-14" id="效能-14"><h2>效能</h2></a>
-<table><thead><tr><th>              </th><th> Complexity   </th></tr></thead><tbody>
-<tr><td> Worst        </td><td> $O(dn) $ </td></tr>
-<tr><td> Best         </td><td> $O(dn) $ </td></tr>
-<tr><td> Average      </td><td> $O(dn) $ </td></tr>
-<tr><td> Worst space  </td><td> $O(d + n) $ auxiliary </td></tr>
+<h2><a class="header" href="#效能-14" id="效能-14">效能</a></h2>
+<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<tr><td>Worst</td><td>$O(dn) $</td></tr>
+<tr><td>Best</td><td>$O(dn) $</td></tr>
+<tr><td>Average</td><td>$O(dn) $</td></tr>
+<tr><td>Worst space</td><td>$O(d + n) $ auxiliary</td></tr>
 </tbody></table>
 <blockquote>
 <p>$n $：資料筆數。<br />
 $d $：number of digit，資料中最多有幾個位數（或鍵值）。<br />
 $k $：基數，就是一個位數最多有幾種可能的值。</p>
 </blockquote>
-<a class="header" href="#time-complexity-4" id="time-complexity-4"><h3>Time complexity</h3></a>
+<h3><a class="header" href="#time-complexity-4" id="time-complexity-4">Time complexity</a></h3>
 <p>欲分析 Radix sort 的時間複雜度，我們可以逐一擊破，先從排序副程式開始分析。</p>
 <p>Radix sort 的 subroutine 通常採用 Counting sort 或 Bucket sort，因此每個 subroutine 的複雜度為 $O(n + k) $， $k $ 為 key 的範圍，以 10 為基數，就是 0 - 9 之間 $k = 10 $。</p>
 <p>再來，我們分析整個主程式，Radix sort 每個位數各需排序一次，若最多位數的資料有 $d $ 位數，時間複雜度需乘上 $d $，為 $O(d (n + k)) $，那這個 $k $ 是否可以捨去呢？</p>
 <p>分析 Counting sort 或 Bucket sort 時，範圍 $k $ 會隨輸入資料而變化，若 $k $ 過大，對複雜度的影響甚至會超過 $n $，因此分析複雜度時無法將 $k $ 捨去。而在 Radix sort， $k $ 通常為一個已知的常數，例如以 bytes 為基數 $k = 8 $， $k $ 可以捨去。最後可得 Radix sort 的時間複雜度為 $O(d \cdot n) $。</p>
-<a class="header" href="#space-complexity-4" id="space-complexity-4"><h3>Space complexity</h3></a>
+<h3><a class="header" href="#space-complexity-4" id="space-complexity-4">Space complexity</a></h3>
 <p>Radix sort 的空間複雜度同樣取決於排序副程式，Counting sort 與 Bucket sort 的空間複雜度皆為 $O(n \cdot k) $。Radix sort 的 $k $ 是常數，予以捨去。再乘上 $d $ 個位數，最差的空間複雜度為 $O(d \cdot n) $。</p>
-<a class="header" href="#實作-14" id="實作-14"><h2>實作</h2></a>
+<h2><a class="header" href="#實作-14" id="實作-14">實作</a></h2>
 <p>這裡示範實作以 10 為基數，用來排序非負整數的 Radix sort。</p>
 <p>首先，我們的排序副程式使用 Counting sort。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -2630,27 +2640,27 @@ pub fn radix_sort(arr: &amp;mut [i32]) {
 <blockquote>
 <p>小提醒：這是簡單又容易理解的實作，相對有許多額外的運算開銷（例如尋找最大值）。實務上，會在對資料有些了解才採用 Radix sort，因此實作並不會這麼 naive。</p>
 </blockquote>
-<a class="header" href="#參考資料-16" id="參考資料-16"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-16" id="參考資料-16">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Radix_sort">Wiki: Radix sort</a></li>
 <li><a href="https://www.cs.princeton.edu/%7Ers/AlgsDS07/18RadixSort.pdf">Princeton University DSA Course: Radix sort</a></li>
 <li><a href="https://www.byvoid.com/zht/blog/sort-radix">ByVoid: 三種線性排序算法 計數排序、桶排序與基數排序</a></li>
 </ul>
-<a class="header" href="#data-structures" id="data-structures"><h1>Data Structures</h1></a>
+<h1><a class="header" href="#data-structures" id="data-structures">Data Structures</a></h1>
 <p>🚧 🚧 🚧 TBD 🚧 🚧 🚧</p>
-<a class="header" href="#堆疊與佇列-1" id="堆疊與佇列-1"><h1>堆疊與佇列</h1></a>
+<h1><a class="header" href="#堆疊與佇列-1" id="堆疊與佇列-1">堆疊與佇列</a></h1>
 <ul>
-<li><a href="stack">堆疊 Stack</a></li>
-<li><a href="queue">🚧 佇列 Queue</a></li>
-<li><a href="deque">🚧 雙端佇列 Deque</a></li>
+<li><a href="collections/stack">堆疊 Stack</a></li>
+<li><a href="collections/queue">🚧 佇列 Queue</a></li>
+<li><a href="collections/deque">🚧 雙端佇列 Deque</a></li>
 </ul>
-<a class="header" href="#堆疊-stack" id="堆疊-stack"><h1>堆疊 Stack</h1></a>
+<h1><a class="header" href="#堆疊-stack" id="堆疊-stack">堆疊 Stack</a></h1>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Lifo_stack.png" alt="Stack - Wikipedia" /></p>
 <p>堆疊是一個具有<em>後進先出</em> LIFO 特性的資料結構。以從 Wikipedia 借來的上圖為例，在第五張圖的狀況下，如果要取得 2，就必須先把 3、4、5 都退出堆疊。</p>
 <p>堆疊的底部與頂部都是抽象的概念，頂部是資料被加入、移除、較為繁忙的那一端，底部即另一端。</p>
 <p>堆疊的空間可能是有限的，亦即也有可能實現空間無限的堆疊。有鑑於有限空間的堆疊較為常見，我們選擇實作空間有限的堆疊。</p>
 <p>堆疊 stack 有兩種實作方式：陣列 array 與鏈結串列 linked list，在此選擇以類似陣列的 Vector 實現。</p>
-<a class="header" href="#架構設計" id="架構設計"><h2>架構設計</h2></a>
+<h2><a class="header" href="#架構設計" id="架構設計">架構設計</a></h2>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -2661,7 +2671,7 @@ pub struct Stack&lt;T&gt; {
 #}</code></pre></pre>
 <p><code>maxsize</code> 用於模擬堆疊空間有限的特性；<code>items</code> 負責保存加入堆疊的資料。</p>
 <p>在此刻意將 <code>maxsize</code>、<code>items</code> 定義為 private member，避免外部直接存取。</p>
-<a class="header" href="#基本操作" id="基本操作"><h2>基本操作</h2></a>
+<h2><a class="header" href="#基本操作" id="基本操作">基本操作</a></h2>
 <ul>
 <li><code>with_capacity</code>：定義一個空間有限的堆疊。</li>
 <li><code>push</code>：將新資料加入資料結構。</li>
@@ -2669,7 +2679,7 @@ pub struct Stack&lt;T&gt; {
 <li><code>size</code>：（選用）取得堆疊的大小。</li>
 <li><code>peek</code>：（選用）在不將資料退出堆疊的情況下偷看最後加入堆疊的資料。</li>
 </ul>
-<a class="header" href="#定義一個空間有限的堆疊" id="定義一個空間有限的堆疊"><h3>定義一個空間有限的堆疊</h3></a>
+<h3><a class="header" href="#定義一個空間有限的堆疊" id="定義一個空間有限的堆疊">定義一個空間有限的堆疊</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -2682,7 +2692,7 @@ pub fn with_capacity(maxsize: usize) -&gt; Stack&lt;T&gt; {
 #}</code></pre></pre>
 <p>初始化一個帶有預先分配空間 Vector 的堆疊。</p>
 <p>⚠ 注意，即使預先分配了有限的空間，Rust 的 vector 在空間已滿的情況下會重新分配。假設一開始為 vector 分配了 10 單位的空間，在將第 11 筆資料插入 vector 前，vector 在記憶體的空間將被重新分配，以容納這第 11 筆資料。為了模擬堆疊空間有限的特性，我們會在 <code>push</code> 的操作動點手腳。</p>
-<a class="header" href="#將新資料加入資料結構" id="將新資料加入資料結構"><h3>將新資料加入資料結構</h3></a>
+<h3><a class="header" href="#將新資料加入資料結構" id="將新資料加入資料結構">將新資料加入資料結構</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -2695,7 +2705,7 @@ pub fn push(&amp;mut self, item: T) -&gt; bool {
 }
 #}</code></pre></pre>
 <p>由於 <code>push</code> 操作會改變 <code>items</code>，因此需要堆疊的 mutable reference。由於 Rust 的 vector 有重新分配的特性，在將資料正式加入堆疊之前，必須先檢查堆疊初始化時設定的空間是否已經被塞滿了。如果結果為是，則拒絕將資料加入堆疊。</p>
-<a class="header" href="#將最新加入的資料移出資料結構" id="將最新加入的資料移出資料結構"><h3>將最新加入的資料移出資料結構</h3></a>
+<h3><a class="header" href="#將最新加入的資料移出資料結構" id="將最新加入的資料移出資料結構">將最新加入的資料移出資料結構</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -2704,7 +2714,7 @@ pub fn pop(&amp;mut self) -&gt; Option&lt;T&gt; {
 }
 #}</code></pre></pre>
 <p>堆疊有可能是空的，在此以 <code>Option</code> 表現這個情況。如果針對一個空堆疊進行 <code>pop</code> 操作，將會得到 <code>None</code>。</p>
-<a class="header" href="#取得堆疊的大小" id="取得堆疊的大小"><h3>取得堆疊的大小</h3></a>
+<h3><a class="header" href="#取得堆疊的大小" id="取得堆疊的大小">取得堆疊的大小</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -2713,7 +2723,7 @@ pub fn size(&amp;self) -&gt; usize {
 }
 #}</code></pre></pre>
 <p>一個空堆疊的大小是 0，加入一筆資料後是 1⋯⋯以此類推。注意容量 capcity 與大小 size 是兩個不同的概念。容量是這個堆疊最多可以塞下多少資料，大小則是這個堆疊已經被塞入了多少資料。由於 <code>push</code> 的檢查機制，堆疊的大小永遠不會超過 <code>maxsize</code>。</p>
-<a class="header" href="#在不將資料退出堆疊的情況下偷看最後加入堆疊的資料" id="在不將資料退出堆疊的情況下偷看最後加入堆疊的資料"><h3>在不將資料退出堆疊的情況下偷看最後加入堆疊的資料</h3></a>
+<h3><a class="header" href="#在不將資料退出堆疊的情況下偷看最後加入堆疊的資料" id="在不將資料退出堆疊的情況下偷看最後加入堆疊的資料">在不將資料退出堆疊的情況下偷看最後加入堆疊的資料</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -2722,26 +2732,27 @@ pub fn peek(&amp;self) -&gt; Option&lt;&amp;T&gt; {
 }
 #}</code></pre></pre>
 <p>與 <code>pop</code> 操作類似，但不會對堆疊造成任何影響。如果偷看的是一個空堆疊，會得到 <code>None</code>。</p>
-<a class="header" href="#效能-15" id="效能-15"><h2>效能</h2></a>
-<table><thead><tr><th> Operation </th><th> Best Complexity </th><th> Worst Complexity </th></tr></thead><tbody>
-<tr><td> push (insert) </td><td> O(1) </td><td> O(1) </td></tr>
-<tr><td> pop (delete) </td><td> O(1) </td><td> O(1) </td></tr>
+<h2><a class="header" href="#效能-15" id="效能-15">效能</a></h2>
+<table><thead><tr><th>Operation</th><th>Best Complexity</th><th>Worst Complexity</th></tr></thead><tbody>
+<tr><td>push (insert)</td><td>O(1)</td><td>O(1)</td></tr>
+<tr><td>pop (delete)</td><td>O(1)</td><td>O(1)</td></tr>
 </tbody></table>
 <p>無論堆疊大小如何變化，<code>push</code> 與 <code>pop</code> 的效能都不會被影響。</p>
-<a class="header" href="#參考資料-17" id="參考資料-17"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-17" id="參考資料-17">參考資料</a></h2>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">Stack (abstract data type)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">Stack (abstract data type)
+</a></li>
 <li><a href="http://bigocheatsheet.com/">Big-O Algorithm Complexity Cheat Sheet</a></li>
 </ul>
-<a class="header" href="#佇列-queue" id="佇列-queue"><h1>佇列 Queue</h1></a>
-<a class="header" href="#參考資料-18" id="參考資料-18"><h2>參考資料</h2></a>
-<a class="header" href="#雙端佇列-deque" id="雙端佇列-deque"><h1>雙端佇列 Deque</h1></a>
-<a class="header" href="#參考資料-19" id="參考資料-19"><h2>參考資料</h2></a>
-<a class="header" href="#鏈結串列-linked-list" id="鏈結串列-linked-list"><h1>鏈結串列 Linked list</h1></a>
+<h1><a class="header" href="#佇列-queue" id="佇列-queue">佇列 Queue</a></h1>
+<h2><a class="header" href="#參考資料-18" id="參考資料-18">參考資料</a></h2>
+<h1><a class="header" href="#雙端佇列-deque" id="雙端佇列-deque">雙端佇列 Deque</a></h1>
+<h2><a class="header" href="#參考資料-19" id="參考資料-19">參考資料</a></h2>
+<h1><a class="header" href="#鏈結串列-linked-list" id="鏈結串列-linked-list">鏈結串列 Linked list</a></h1>
 <p>鏈結串列是一種基本線性資料集合，每一個資料元素都是獨立的物件。儲存資料的方式和一般陣列配置連續物理記憶體空間不同，而是在各節點儲存額外的指標指向下一個節點。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Singly-linked-list.svg/612px-Singly-linked-list.svg.png" alt="" /></p>
 <p><em>(單向鏈結串列示意圖）</em></p>
-<a class="header" href="#特性" id="特性"><h2>特性</h2></a>
+<h2><a class="header" href="#特性" id="特性">特性</a></h2>
 <p>鏈結串列有以下特性與優點：</p>
 <ul>
 <li>不需事先知道資料型別大小，充分利用動態記憶體管理。</li>
@@ -2753,21 +2764,21 @@ pub fn peek(&amp;self) -&gt; Option&lt;&amp;T&gt; {
 <li><strong>較差的 CPU 快取</strong>：不連續存取的特性，不利於 <a href="https://en.wikipedia.org/wiki/CPU_cache">CPU 快取</a>。</li>
 <li><strong>不允許隨機存取（random access）</strong>：搜尋特定節點仍需線性時間循序存取。</li>
 </ul>
-<a class="header" href="#適用場景" id="適用場景"><h2>適用場景</h2></a>
+<h2><a class="header" href="#適用場景" id="適用場景">適用場景</a></h2>
 <p>大多數的場景其實不太常使用鏈結串列，Rust 內建的 <a href="https://doc.rust-lang.org/std/collections/struct.LinkedList.html"><code>LinkedList</code></a> 文件也建議，除非肯定要用鏈結串列，不然建議優先考慮其他類似的資料結構如 <a href="https://doc.rust-lang.org/std/collections/vec_deque/struct.VecDeque.html"><code>VecDeque</code></a>。話雖如此，鏈結串列仍有不少應用場景：</p>
 <ul>
 <li>需要頻繁地插入與刪除資料。</li>
 <li>需要頻繁分離與合併（split and merge）資料。</li>
 <li>不需要隨機存取的資料。</li>
 <li>遞迴友好，因此成為大多函數式語言中基本資料型別之一。</li>
-<li>教學上，常用於實作抽象資料型別，如<a href="../stack">堆疊</a>與<a href="../queue">佇列</a>等等。</li>
+<li>教學上，常用於實作抽象資料型別，如<a href="collections/linked_list/../stack">堆疊</a>與<a href="collections/linked_list/../queue">佇列</a>等等。</li>
 </ul>
-<a class="header" href="#術語" id="術語"><h2>術語</h2></a>
-<a class="header" href="#node" id="node"><h3>Node</h3></a>
+<h2><a class="header" href="#術語" id="術語">術語</a></h2>
+<h3><a class="header" href="#node" id="node">Node</a></h3>
 <p>又稱「節點」，為組成鏈結串列的基本元素，節點包含資料儲存區與指標儲存區，指標儲存區用以儲存指向其他節點位址的變數。此外，最後一個節點的不指向其他節點位址的指標成為 null pointer，慣例以 NULL 表示。</p>
-<p><img src="../singly_linked_list/node-box.svg" alt="node-box" /></p>
+<p><img src="collections/linked_list/../singly_linked_list/node-box.svg" alt="node-box" /></p>
 <p><em>（節點示意圖）</em></p>
-<a class="header" href="#head-and-tail" id="head-and-tail"><h3>Head and tail</h3></a>
+<h3><a class="header" href="#head-and-tail" id="head-and-tail">Head and tail</a></h3>
 <p>Head 為指向整個串列第一個節點的指標。而 tail 則為指向最後一個節點的指標。用 ASCII 圖表示如下：</p>
 <pre><code>   head                      tail
     |                         |
@@ -2778,7 +2789,7 @@ pub fn peek(&amp;self) -&gt; Option&lt;&amp;T&gt; {
 |        |   |        |   |        |
 +--------+   +--------+   +--------+
 </code></pre>
-<a class="header" href="#sentinel-node" id="sentinel-node"><h3>Sentinel node</h3></a>
+<h3><a class="header" href="#sentinel-node" id="sentinel-node">Sentinel node</a></h3>
 <p>Sentinal node 一個特殊的節點，資料值為 NULL 的節點，用意代表鏈結串列的端點。也就是說，sentinel node 指向串列第一個節點，而串列最後一個節點也會指向 sentinel node，就像哨兵一樣守著串列前後，因而得名。</p>
 <p>實作鏈結串列時，常常因為判斷節點是否為 NULL 而讓程式變得複雜，而 sentinel node 可減少程式操作步驟，也能增加程式可讀性。詳細資訊可以參考這篇 <a href="https://stackoverflow.com/questions/5384358/">NULL 與 sentinel node 的比較討論</a>。</p>
 <pre><code>    +-----------------------------------------------+
@@ -2790,23 +2801,23 @@ pub fn peek(&amp;self) -&gt; Option&lt;&amp;T&gt; {
 |  node   |   |        |   |        |   |        |
 +---------+   +--------+   +--------+   +--------+
 </code></pre>
-<a class="header" href="#種類" id="種類"><h2>種類</h2></a>
+<h2><a class="header" href="#種類" id="種類">種類</a></h2>
 <p>依據每個節點的鏈結多寡，可分為</p>
-<p><a href="../singly_linked_list">單向鏈結串列</a>，每個節點只有一個指標，指向下一個節點。</p>
+<p><a href="collections/linked_list/../singly_linked_list">單向鏈結串列</a>，每個節點只有一個指標，指向下一個節點。</p>
 <pre><code>+--------+   +--------+   +--------+
 |        |   |        |   |        |
 | node 0 |--&gt;| node 1 |--&gt;| node 2 |--&gt; NULL
 |        |   |        |   |        |
 +--------+   +--------+   +--------+
 </code></pre>
-<p><a href="../doubly_linked_list">雙向鏈結串列</a>，每個節點有兩個指標，分別指向前後一個節點。</p>
+<p><a href="collections/linked_list/../doubly_linked_list">雙向鏈結串列</a>，每個節點有兩個指標，分別指向前後一個節點。</p>
 <pre><code>        +--------+   +--------+   +--------+
         |        |--&gt;|        |--&gt;|        |--&gt; NULL
         | node 0 |   | node 1 |   | node 2 |
 NULL &lt;--|        |&lt;--|        |&lt;--|        |
         +--------+   +--------+   +--------+
 </code></pre>
-<p>倘若該鏈結串列末端節點的指標指向第一個的節點，形成一個循環，則稱之為「<a href="../circular_linked_list">循環鏈結串列</a>」。</p>
+<p>倘若該鏈結串列末端節點的指標指向第一個的節點，形成一個循環，則稱之為「<a href="collections/linked_list/../circular_linked_list">循環鏈結串列</a>」。</p>
 <pre><code>Singly linked list as circular
 
 +-----------------------------------------+
@@ -2818,12 +2829,12 @@ NULL &lt;--|        |&lt;--|        |&lt;--|        |
     +--------+   +--------+   +--------+
 </code></pre>
 <p>詳細說明與實作請點選各個連結。</p>
-<a class="header" href="#參考資料-20" id="參考資料-20"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-20" id="參考資料-20">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Linked_list">Wiki: Linked list</a></li>
 <li>Singly linked list SVG By Lasindi [Public domain], via Wikimedia Commons.</li>
 </ul>
-<a class="header" href="#單向鏈結串列-singly-linked-list" id="單向鏈結串列-singly-linked-list"><h1>單向鏈結串列 Singly linked list</h1></a>
+<h1><a class="header" href="#單向鏈結串列-singly-linked-list" id="單向鏈結串列-singly-linked-list">單向鏈結串列 Singly linked list</a></h1>
 <p>單向鏈結串列是鏈結串列家族中最簡單的版本，特色是每兩個節點間只有一個單向的鏈結。</p>
 <pre><code>   head
     |
@@ -2836,24 +2847,24 @@ NULL &lt;--|        |&lt;--|        |&lt;--|        |
 </code></pre>
 <p>比起 <a href="collections/singly_linked_list/doubly.html">雙向鏈結串列</a>，單向鏈結串列少了一個額外的指標開銷，在基本操作的花費也較低。在不需要雙向迭代情形下單向鏈結串列很適用。</p>
 <p>此外，單向鏈結串列也支援 tail-sharing，也就是共享 sublist。藉由共享 sublist，單向鏈結串列很容易實作 <a href="https://en.wikipedia.org/wiki/Persistent_data_structure">persistent data structure</a>，再配合 immutable 特性，使得單向鏈結串列幾乎成為函數式程式語言最常見的集合型別之一。可以參考這篇 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/third.html">persistent immutable stack 實作</a>文章。</p>
-<a class="header" href="#效能-16" id="效能-16"><h2>效能</h2></a>
-<table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
-<tr><td> get       </td><td> \(O(n)\)                                      </td></tr>
-<tr><td> insert    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
-<tr><td> remove    </td><td> 節點已知：\(O(1)\) ；節點未知：\(O(n - i)\) </td></tr>
-<tr><td> append    </td><td> \(O(n)\)                                      </td></tr>
-<tr><td> prepend   </td><td> \(O(1)\)                                      </td></tr>
-<tr><td> pop first </td><td> \(O(1)\)                                      </td></tr>
-<tr><td> pop last  </td><td> \(O(n)\)                                      </td></tr>
-<tr><td> space     </td><td> \(O(n)\) + 各節點額外一個指標 \(n\) 個      </td></tr>
+<h2><a class="header" href="#效能-16" id="效能-16">效能</a></h2>
+<table><thead><tr><th>Operation</th><th>Complexity</th></tr></thead><tbody>
+<tr><td>get</td><td>\(O(n)\)</td></tr>
+<tr><td>insert</td><td>節點已知：\(O(1)\) ；節點未知：\(O(n - i)\)</td></tr>
+<tr><td>remove</td><td>節點已知：\(O(1)\) ；節點未知：\(O(n - i)\)</td></tr>
+<tr><td>append</td><td>\(O(n)\)</td></tr>
+<tr><td>prepend</td><td>\(O(1)\)</td></tr>
+<tr><td>pop first</td><td>\(O(1)\)</td></tr>
+<tr><td>pop last</td><td>\(O(n)\)</td></tr>
+<tr><td>space</td><td>\(O(n)\) + 各節點額外一個指標 \(n\) 個</td></tr>
 </tbody></table>
 <blockquote>
 <p>\(n\)：資料筆數。<br />
 \(i\)：相對於整個容器的索引位置。</p>
 </blockquote>
 <p>值得注意的是，許多操作因為單向鏈結串列只能從 head 開始搜索的緣故，執行時間都呈線性，使用上要特別小心。</p>
-<a class="header" href="#實作設計" id="實作設計"><h2>實作設計</h2></a>
-<a class="header" href="#node-1" id="node-1"><h3>Node</h3></a>
+<h2><a class="header" href="#實作設計" id="實作設計">實作設計</a></h2>
+<h3><a class="header" href="#node-1" id="node-1">Node</a></h3>
 <p>先建立最基本的節點 Node。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2865,7 +2876,7 @@ struct Node&lt;T&gt; {
 }
 #}</code></pre></pre>
 <p><code>Node.elem</code> 很直觀地儲存實際資料。而 <code>Node.next</code> 則是指向下個 Node。但這樣編譯不會成功，Rust 編譯時需要決定每個型別該配置多少記憶體空間，這種遞迴型別使得編譯器無限循環，無法決定配置大小。</p>
-<p><img src="node-recursive.svg" alt="node-recursive" /></p>
+<p><img src="collections/singly_linked_list/node-recursive.svg" alt="node-recursive" /></p>
 <p>很簡單，我們使用 <a href="https://doc.rust-lang.org/std/boxed/index.html"><code>Box&lt;T&gt;</code></a> 這個<a href="https://doc.rust-lang.org/book/ch15-00-smart-pointers.html">智慧指標</a>，直接將 Node 配置在記憶體 heap 上。如此以來，編譯器就會知道 <code>next</code> 只佔了一個指標的空間。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2875,7 +2886,7 @@ struct Node&lt;T&gt; {
     next: Box&lt;Node&lt;T&gt;&gt;,
 }
 #}</code></pre></pre>
-<p><img src="node-box.svg" alt="node-box" /></p>
+<p><img src="collections/singly_linked_list/node-box.svg" alt="node-box" /></p>
 <p>由於 Rust 沒有 null pointer，但照鏈結串列的定義，<code>Node.next</code> 可以是 NULL，因此我們使用 <a href="https://doc.rust-lang.org/std/option/index.html"><code>Option&lt;T&gt;</code></a> 模擬 null pointer 的行為。最後，Node 的定義如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2885,7 +2896,7 @@ struct Node&lt;T&gt; {
     next: Option&lt;Box&lt;Node&lt;T&gt;&gt;&gt;,
 }
 #}</code></pre></pre>
-<a class="header" href="#singlylinkedlist" id="singlylinkedlist"><h3>SinglyLinkedList</h3></a>
+<h3><a class="header" href="#singlylinkedlist" id="singlylinkedlist">SinglyLinkedList</a></h3>
 <p>在開始實作各種增刪節點的操作之前，我們需要建立一個 struct 存放指向鏈結串列 head 的指標，同時，各種操作也會實作在這個 struct 上。事實上，這個 struct 就是對外公開的資料結構。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2895,7 +2906,7 @@ pub struct SinglyLinkedList&lt;T&gt; {
 }
 #}</code></pre></pre>
 <p>選擇把操作串列的函式寫在另一個 struct 而非 Node 上有幾個原因，1）外部並不需知道串列內部如何實作，公開 Node 會暴露實作。2）每個 Node 都帶有成員函式的話，函式指標會佔用太多額外資源。</p>
-<a class="header" href="#基本操作-1" id="基本操作-1"><h2>基本操作</h2></a>
+<h2><a class="header" href="#基本操作-1" id="基本操作-1">基本操作</a></h2>
 <p>串列的基本操作如下：</p>
 <ul>
 <li><code>new</code>：初始化一個空串列。</li>
@@ -2907,7 +2918,7 @@ pub struct SinglyLinkedList&lt;T&gt; {
 <li><code>is_empty</code>：檢查串列是否沒有任何節點。</li>
 <li><code>reverse</code>：反轉整個串列（head 變成 tail）。</li>
 </ul>
-<a class="header" href="#初始化與清除資料" id="初始化與清除資料"><h3>初始化與清除資料</h3></a>
+<h3><a class="header" href="#初始化與清除資料" id="初始化與清除資料">初始化與清除資料</a></h3>
 <p>實做初始化與清除資料非常直觀。其中清除其實就只是將 <code>self</code> 指向新的串列實例。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2923,8 +2934,8 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 }
 #}</code></pre></pre>
 <p>你可能會想，在清除所有資料時，資源需不需要手動釋放？</p>
-<p>和 C++ 的 RAII 一樣，Rust 有一個名叫 <code>drop</code> 的解構式，只要程式執行離開了資源擁有者的可視範圍（out of scope），就會自動呼叫 <code>drop</code>。我們在 <a href="#drop-trait">Drop trait</a> 一節會再深入探討。</p>
-<a class="header" href="#增刪首個節點" id="增刪首個節點"><h3>增刪首個節點</h3></a>
+<p>和 C++ 的 RAII 一樣，Rust 有一個名叫 <code>drop</code> 的解構式，只要程式執行離開了資源擁有者的可視範圍（out of scope），就會自動呼叫 <code>drop</code>。我們在 <a href="collections/singly_linked_list/index.html#drop-trait">Drop trait</a> 一節會再深入探討。</p>
+<h3><a class="header" href="#增刪首個節點" id="增刪首個節點">增刪首個節點</a></h3>
 <p>單向鏈結串列在第一個節點前增加新節點，或是刪除第一個節點，都可以在常數時間完成。新增節點 <code>push_front</code> 的概念很簡單，1）建立新的節點，並把新節點 <code>next</code> 指標指向串列第一個節點。2）把串列的 head 指向新建立的節點。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -2958,7 +2969,7 @@ pub fn pop_front(&amp;mut self) -&gt; Option&lt;T&gt; {
 <li>將 head 指向下一個節點。</li>
 <li>返回即將刪除節點的資料。</li>
 </ol>
-<a class="header" href="#插入刪除任意節點" id="插入刪除任意節點"><h3>插入刪除任意節點</h3></a>
+<h3><a class="header" href="#插入刪除任意節點" id="插入刪除任意節點">插入刪除任意節點</a></h3>
 <p>鏈結串列新增和刪除第一個節點都可以在 $O(1)$ 時間內做完，那為什麼插入刪除任意節點沒有辦法呢？原因是鏈結串列不支援隨機存取（random access），就是無法透過索引在常數時間內取得資料，每次的搜尋都只能從 head 開始。因此，當我們需要在某個索引的節點後新增一筆資料，我們會需要最差 $O(n)$ 的複雜度。</p>
 <p>實作插入 <code>insert_after</code> 分為幾個步驟：</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -3028,7 +3039,7 @@ pub fn remove(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
 <li>把節點 A 的後一個節點 B 賦值給原本指向節點 A 的指標 <code>curr</code>。</li>
 <li>回傳節點 A 的值。</li>
 </ol>
-<a class="header" href="#反轉" id="反轉"><h3>反轉</h3></a>
+<h3><a class="header" href="#反轉" id="反轉">反轉</a></h3>
 <p>反轉鏈結串列是工作面試時很常見的考題，這裡來實作看看。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -3060,9 +3071,9 @@ pub fn reverse(&amp;mut self) {
 </li>
 <li>最後一次迭代時，變數 <code>prev</code> 會儲存原始串列末端節點，這時轉移所有權到 head，完成反轉。</li>
 </ol>
-<a class="header" href="#traits" id="traits"><h2>Traits</h2></a>
+<h2><a class="header" href="#traits" id="traits">Traits</a></h2>
 <p>除了基本操作，<code>SinglyLinkedList</code> 實作了許多 trait，使用上更方便更符合 Rust 的慣例。</p>
-<a class="header" href="#drop-trait" id="drop-trait"><h3>Drop trait</h3></a>
+<h3><a class="header" href="#drop-trait" id="drop-trait">Drop trait</a></h3>
 <p>如果一個 struct 有許多成員，則會遞迴呼叫 struct 的 <code>drop</code> 成員函式。因此，一個串列的解構式很可能發生深層的巢狀遞迴：</p>
 <pre><code># a linked list
 a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
@@ -3100,7 +3111,7 @@ impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
 <li>取得 head 的所有權。</li>
 <li>透過 pattern matching 取得 Node 裡面 Box 的所有權。</li>
 <li>取得下一個 Node 的所有權，並將它指向共用的變數 <code>link</code>。</li>
-<li>離開了 <code>node</code> 的 scope，<code>node</code> 呼叫 <code>drop</code> 釋放自身資源。</li>
+<li>離開了 <code>node</code> 的 scope，<code>node</code> 呼叫 <code>drop</code> 釋放自身資源。 </li>
 </ol>
 <blockquote>
 <p>詳細思路過程可查看 Learning Rust With Entirely Too Many Linked Lists 的 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/first-drop.html">Drop</a> 章節，該章完整闡述為什麼不能用 tail recursive 來實作，但最大的原因是 Rust core team 暫時延緩實踐 <a href="https://github.com/rust-lang/rfcs/pull/1888">tail call optimization</a>。</p>
@@ -3115,7 +3126,7 @@ impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#iterator-and-intoiterator-traits" id="iterator-and-intoiterator-traits"><h3>Iterator and IntoIterator traits</h3></a>
+<h3><a class="header" href="#iterator-and-intoiterator-traits" id="iterator-and-intoiterator-traits">Iterator and IntoIterator traits</a></h3>
 <p>既然鏈結串列是一種序列（sequence，有序的資料結構），少不了實作 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html">Iterator</a>、<a href="https://doc.rust-lang.org/std/iter/trait.IntoIterator.html">IntoIterator</a> 等 trait，使串列可以輕鬆使用 for-in loop 遍歷（traverse）。</p>
 <p>首先，先定義幾個迭代器的 struct。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -3219,7 +3230,7 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 <li>產生迭代器初始化狀態，和第三步一模一樣。</li>
 </ol>
 <p>最後，<code>IterMut</code> 與 <code>Iter</code> 迭代器實作上大同小異。把 <code>Iter</code> 用到 <code>Option.as_ref()</code> 改為 <code>Option.as_mut()</code>，其他 <code>&amp;</code> 改成 <code>&amp;mut</code> 即可。</p>
-<a class="header" href="#partialeq-trait" id="partialeq-trait"><h3>PartialEq trait</h3></a>
+<h3><a class="header" href="#partialeq-trait" id="partialeq-trait">PartialEq trait</a></h3>
 <p><a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html">PartialEq trait</a> 是用來實現兩個串列是否能夠比較，而我們在此定義如下：</p>
 <p>有兩個 <code>SinglyLinkedList</code> Sa、Sb，Sa、Sb 的元素皆符合 <code>PartialEq</code> trait。當</p>
 <ul>
@@ -3242,7 +3253,7 @@ impl&lt;T: PartialEq&gt; PartialEq for SinglyLinkedList&lt;T&gt; {
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#debug-trait" id="debug-trait"><h3>Debug trait</h3></a>
+<h3><a class="header" href="#debug-trait" id="debug-trait">Debug trait</a></h3>
 <p>為了方便修復臭蟲，通常會實作 <a href="https://doc.rust-lang.org/std/fmt/trait.Debug.html">Debug trait</a> 印出有助於解決問題的資料。歸功於 <code>Iterator</code> 的實踐，我們可以快速用 <code>self.iter()</code> 印出所有節點內的元素，客製化 <code>Debug</code> 的顯示方式。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -3256,23 +3267,23 @@ impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
     }
 }
 #}</code></pre></pre>
-<a class="header" href="#效能-17" id="效能-17"><h2>效能</h2></a>
-<table><thead><tr><th> Operation </th><th> Complexity                                      </th></tr></thead><tbody>
-<tr><td> get       </td><td> $O(n)$                                      </td></tr>
-<tr><td> insert    </td><td> 節點已知：$O(1)$ ；節點未知：$O(n - i)$ </td></tr>
-<tr><td> remove    </td><td> 節點已知：$O(1)$ ；節點未知：$O(n - i)$ </td></tr>
-<tr><td> append    </td><td> $O(n)$                                      </td></tr>
-<tr><td> prepend   </td><td> $O(1)$                                      </td></tr>
-<tr><td> pop first </td><td> $O(1)$                                      </td></tr>
-<tr><td> pop last  </td><td> $O(n)$                                      </td></tr>
-<tr><td> space     </td><td> $O(n)$ + 各節點額外一個指標 $n$ 個      </td></tr>
+<h2><a class="header" href="#效能-17" id="效能-17">效能</a></h2>
+<table><thead><tr><th>Operation</th><th>Complexity</th></tr></thead><tbody>
+<tr><td>get</td><td>$O(n)$</td></tr>
+<tr><td>insert</td><td>節點已知：$O(1)$ ；節點未知：$O(n - i)$</td></tr>
+<tr><td>remove</td><td>節點已知：$O(1)$ ；節點未知：$O(n - i)$</td></tr>
+<tr><td>append</td><td>$O(n)$</td></tr>
+<tr><td>prepend</td><td>$O(1)$</td></tr>
+<tr><td>pop first</td><td>$O(1)$</td></tr>
+<tr><td>pop last</td><td>$O(n)$</td></tr>
+<tr><td>space</td><td>$O(n)$ + 各節點額外一個指標 $n$ 個</td></tr>
 </tbody></table>
 <blockquote>
 <p>$n$：資料筆數。<br />
 $i$：相對於整個容器的索引位置。</p>
 </blockquote>
 <p>值得觀察的是，許多操作因為單向鏈結串列只能從 head 開始搜索的緣故，執行時間都呈線性，使用上要特別注意。</p>
-<a class="header" href="#參考資料-21" id="參考資料-21"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-21" id="參考資料-21">參考資料</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/src/alloc/linked_list.rs.html">Rust Documentation: LinkedList</a></li>
 <li><a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/README.html">Learning Rust With Entirely Too Many Linked Lists</a></li>
@@ -3280,19 +3291,19 @@ $i$：相對於整個容器的索引位置。</p>
 <li><a href="https://codereview.stackexchange.com/questions/150906">StackExchange: Reversal of a singly-linked list in Rust</a></li>
 <li>SVG of node memory representation modified from <a href="https://doc.rust-lang.org/book">The Rust Programming Language</a></li>
 </ul>
-<a class="header" href="#雙向鏈結串列-doubly-linked-list" id="雙向鏈結串列-doubly-linked-list"><h1>雙向鏈結串列 Doubly linked list</h1></a>
-<a class="header" href="#操作" id="操作"><h2>操作</h2></a>
-<a class="header" href="#效能-18" id="效能-18"><h2>效能</h2></a>
-<a class="header" href="#循環鏈結串列-circular-linked-list" id="循環鏈結串列-circular-linked-list"><h1>循環鏈結串列 Circular linked list</h1></a>
-<a class="header" href="#操作-1" id="操作-1"><h2>操作</h2></a>
-<a class="header" href="#效能-19" id="效能-19"><h2>效能</h2></a>
-<a class="header" href="#關聯容器-associative-container" id="關聯容器-associative-container"><h1>關聯容器 Associative Container</h1></a>
+<h1><a class="header" href="#雙向鏈結串列-doubly-linked-list" id="雙向鏈結串列-doubly-linked-list">雙向鏈結串列 Doubly linked list</a></h1>
+<h2><a class="header" href="#操作" id="操作">操作</a></h2>
+<h2><a class="header" href="#效能-18" id="效能-18">效能</a></h2>
+<h1><a class="header" href="#循環鏈結串列-circular-linked-list" id="循環鏈結串列-circular-linked-list">循環鏈結串列 Circular linked list</a></h1>
+<h2><a class="header" href="#操作-1" id="操作-1">操作</a></h2>
+<h2><a class="header" href="#效能-19" id="效能-19">效能</a></h2>
+<h1><a class="header" href="#關聯容器-associative-container" id="關聯容器-associative-container">關聯容器 Associative Container</a></h1>
 <p>關聯容器是一種抽象資料型別，儲存鍵與值配對關係（key-value pair）的集合，並透過鍵存取元素，所謂「鍵值對」好比身份證字號與公民，戶政單位知道一個人證號，就可在關聯容器內，透過證號查找是否有這個公民，以及此證號對應的公民基本資訊。</p>
 <p>關聯容器有許多別名，例如字典（dictionary）、關聯陣列（associative array）、映射（map）、表（table）等。在大多數程式語言函式庫中，關聯容器通常是最基本的容器型別之一，如 Python 的 <code>dict</code>，JavaScript 的 <code>Map</code>，以及 Rust 的 <code>HashMap</code>。</p>
 <p>方便起見，本文以「<strong>映射表</strong>」統稱這類集合型別。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Hash_table_5_0_1_1_1_1_0_LL.svg/1280px-Hash_table_5_0_1_1_1_1_0_LL.svg.png" alt="" /></p>
 <p><em>（雜湊表示意圖）</em></p>
-<a class="header" href="#特性-1" id="特性-1"><h2>特性</h2></a>
+<h2><a class="header" href="#特性-1" id="特性-1">特性</a></h2>
 <p>一般來說，映射表有以下特性：</p>
 <ul>
 <li><strong>鍵值對為單向關係</strong>：可透過鍵取得其唯一值；但無法確保一值僅對應唯一的鍵。</li>
@@ -3311,7 +3322,7 @@ $i$：相對於整個容器的索引位置。</p>
 <li><strong>查找</strong>：透過任意鍵搜尋該鍵值對。</li>
 </ul>
 <p>不難看出，基本操作都是透過鍵取得值。事實上，合理實作的映射表，只要透過鍵來操作，就能有良好效能，甚至上述操作能達到 $O(1)$ 複雜度。</p>
-<a class="header" href="#適用場景-1" id="適用場景-1"><h2>適用場景</h2></a>
+<h2><a class="header" href="#適用場景-1" id="適用場景-1">適用場景</a></h2>
 <p>雖然映射表依實作不同，效能有所權衡。但其最大優勢仍是可「高效地透過鍵尋找值」，只要有映射關係的資料，都非常適合使用映射表。例如，快取暫存機制需透過特定鍵快速查找暫存值。此外，現代常用的 JSON、TOML 等資料交換格式，都是「鍵—值對」的形式，非常適合使用映射表處理。而應用映射表最有名的實際案例莫過於資料庫的索引，透過索引，我們可以大大降低搜尋的成本，從線性時間直落到對數甚至常數時間，不過相對就需要付出額外時空間建立索引。</p>
 <p>我們再次把應用場景條列出來，方便懶人帶著走。</p>
 <ul>
@@ -3322,17 +3333,17 @@ $i$：相對於整個容器的索引位置。</p>
 <li>查找操作頻率遠高於其他操作時。</li>
 </ul>
 <p>總的來說，只要資料有對應綁定關係，就可以考慮使用映射表處理。</p>
-<a class="header" href="#種類-1" id="種類-1"><h2>種類</h2></a>
+<h2><a class="header" href="#種類-1" id="種類-1">種類</a></h2>
 <p>以下簡單介紹常見的映射表，詳情請點擊各連結。</p>
-<a class="header" href="#雜湊表-hash-map" id="雜湊表-hash-map"><h3>雜湊表 Hash Map</h3></a>
-<p><a href="../hash_map">雜湊表</a>是以雜湊函數實作的映射表。透過<a href="../../hash">雜湊函數</a>將任意資料轉換為固定長度的雜湊值，並將此鍵與一筆資料綁定，再映射到內部資料結構的某位置。理論上，只要雜湊函數品質過得去，雜湊表的基本操作都能在常數時間完成。</p>
-<a class="header" href="#有序映射表-ordered-map" id="有序映射表-ordered-map"><h3>有序映射表 Ordered Map</h3></a>
-<p><a href="../ordered_map">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 $O(\log n)$。</p>
-<a class="header" href="#多重映射表-multimap" id="多重映射表-multimap"><h3>多重映射表 Multimap</h3></a>
-<p><a href="../multimap">多重映射表</a>允許鍵值對重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的接口操作或迭代整張映射表。</p>
-<a class="header" href="#集合-set" id="集合-set"><h3>集合 Set</h3></a>
-<p><a href="../set">集合</a>實際上並無鍵值「關聯」，可將其想像成普通的映射表。只關心鍵而值不重要。集合借用了數學<a href="https://en.wikipedia.org/wiki/Set_theory">集合論（set theory）</a>中有限集合的概念，常應用於需要操作交集、聯集、差集等集合運算場景。</p>
-<a class="header" href="#參考資料-22" id="參考資料-22"><h2>參考資料</h2></a>
+<h3><a class="header" href="#雜湊表-hash-map" id="雜湊表-hash-map">雜湊表 Hash Map</a></h3>
+<p><a href="collections/associative-container/../hash_map">雜湊表</a>是以雜湊函數實作的映射表。透過<a href="collections/associative-container/../../hash">雜湊函數</a>將任意資料轉換為固定長度的雜湊值，並將此鍵與一筆資料綁定，再映射到內部資料結構的某位置。理論上，只要雜湊函數品質過得去，雜湊表的基本操作都能在常數時間完成。</p>
+<h3><a class="header" href="#有序映射表-ordered-map" id="有序映射表-ordered-map">有序映射表 Ordered Map</a></h3>
+<p><a href="collections/associative-container/../ordered_map">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 $O(\log n)$。</p>
+<h3><a class="header" href="#多重映射表-multimap" id="多重映射表-multimap">多重映射表 Multimap</a></h3>
+<p><a href="collections/associative-container/../multimap">多重映射表</a>允許鍵值對重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的接口操作或迭代整張映射表。</p>
+<h3><a class="header" href="#集合-set" id="集合-set">集合 Set</a></h3>
+<p><a href="collections/associative-container/../set">集合</a>實際上並無鍵值「關聯」，可將其想像成普通的映射表。只關心鍵而值不重要。集合借用了數學<a href="https://en.wikipedia.org/wiki/Set_theory">集合論（set theory）</a>中有限集合的概念，常應用於需要操作交集、聯集、差集等集合運算場景。</p>
+<h2><a class="header" href="#參考資料-22" id="參考資料-22">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Associative_array">Wiki: Associative array</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Associative_containers">Wiki: Associative containers</a></li>
@@ -3340,7 +3351,7 @@ $i$：相對於整個容器的索引位置。</p>
 <li><a href="https://doc.rust-lang.org/stable/std/collections/">Rust documentation: std::colledtion</a></li>
 <li>Map graph by Jorge Stolfi <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
-<a class="header" href="#雜湊表-hash-map-1" id="雜湊表-hash-map-1"><h1>雜湊表 Hash Map</h1></a>
+<h1><a class="header" href="#雜湊表-hash-map-1" id="雜湊表-hash-map-1">雜湊表 Hash Map</a></h1>
 <p>雜湊表是以雜湊函數實作的關聯容器。透過雜湊函數，計算鍵（key）對應到容器內部的索引位置，進而找到對應的值（value）。一般來說，雜湊表最常見的實作是以一個簡單陣列儲存資料。</p>
 <p>雜湊表的優勢是：</p>
 <ul>
@@ -3354,7 +3365,7 @@ $i$：相對於整個容器的索引位置。</p>
 <li>效能與雜湊函數息息相關，較差的函數容易雜湊碰撞，較佳函數計算成本通常較高。</li>
 <li>只能以某種偽隨機的順序迭代雜湊表。</li>
 </ul>
-<a class="header" href="#概念" id="概念"><h2>概念</h2></a>
+<h2><a class="header" href="#概念" id="概念">概念</a></h2>
 <p>建立雜湊表的第一步，就是配置一定大小的陣列（通常稱為 bucket array），來儲存對應索引的鍵值對。我們以建立電話簿為例，儲存人名與號碼的對應關係。</p>
 <pre><code>Create an empty phone book with some blank slots.
 
@@ -3448,7 +3459,7 @@ Sam   --&gt; | 2: 11-2-333 | --&gt; Sam's phone number
 <blockquote>
 <p>註：雜湊表也可以搜尋樹等其他資料結構實作，在此不深入討論。</p>
 </blockquote>
-<a class="header" href="#雜湊" id="雜湊"><h3>雜湊</h3></a>
+<h3><a class="header" href="#雜湊" id="雜湊">雜湊</a></h3>
 <p>所謂的雜湊函數，就是一種將「較寬的定義域映射到較窄值域」的函數。簡單來說，就是輸入任意值到此函數，則輸出值會落在一已知範圍。再白話一點，雜湊函數就是用來「化繁為簡」，把複雜多變的東西，透過函數生成簡化版本。此外，相同的輸入鍵，必須得到相同的輸出雜湊值，這是雜湊函數很重要的一個特性，以虛擬碼表示：</p>
 <pre><code>key1 == key2 -&gt; hash(key1) == hash(key2)
 </code></pre>
@@ -3460,7 +3471,7 @@ hash_value = hash_function(key) // 1
 index = hash_value % array_size // 2
 </code></pre>
 <p>如此一來，所有可能的值都會落在陣列內，這就是最簡單普遍的雜湊兩步驟：計算雜湊值﹢取模。</p>
-<a class="header" href="#選擇雜湊函數" id="選擇雜湊函數"><h3>選擇雜湊函數</h3></a>
+<h3><a class="header" href="#選擇雜湊函數" id="選擇雜湊函數">選擇雜湊函數</a></h3>
 <p>接下來，你會緊接著向問第二個問題「函數計算出相同索引值該怎麼辦？」不同輸入產生相同雜湊值，多個值映射到同個索引上，這種狀況科學家稱之<strong>雜湊碰撞（hash collision）</strong>。</p>
 <p>首先，要瞭解雜湊函數本身就是時空間的權衡，如果記憶體空間夠多，那讓輸入值與雜湊值呈一對一的完美關係，就不會出現碰撞；大多數情況，尤其是實作泛用的雜湊函式庫，無法預期輸入資料的範圍，實務上會鎖定一個輸出雜湊值的範圍，僧多粥少，難免碰撞。</p>
 <p>好的雜湊函數還必須符合一些條件：</p>
@@ -3470,13 +3481,13 @@ index = hash_value % array_size // 2
 <li>任意輸入資料所得之雜湊值在值域內需接近<a href="https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)">均勻分佈（uniform distribution）</a>，才能減少碰撞機率。</li>
 </ol>
 <p>但總歸一句，欲達成上述條件，就是一種權衡取捨，例如，<a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">加密雜湊函數（cryptographic hash function）</a>即是非常優秀的雜湊函數，但相對需付出更高的計算成本。</p>
-<p>更多雜湊函數相關的討論，會另撰<a href="../../hash">專文</a>。</p>
-<a class="header" href="#處理雜湊碰撞" id="處理雜湊碰撞"><h3>處理雜湊碰撞</h3></a>
+<p>更多雜湊函數相關的討論，會另撰<a href="collections/hash_map/../../hash">專文</a>。</p>
+<h3><a class="header" href="#處理雜湊碰撞" id="處理雜湊碰撞">處理雜湊碰撞</a></h3>
 <p>既然雜湊函數人生在世難免碰撞，科學家也研究幾個處理雜湊碰撞的策略，分別是 separate chaining 與 open addressing。</p>
 <p><strong>Separate chaining</strong> 可以說是最直觀的做法，就是設法讓同一個索引下，可以儲存多個碰撞的值。依據儲存資料的形式，可分為幾種實作：</p>
 <ul>
-<li><strong>鏈結串列</strong>：以<a href="../linked_list">鏈結串列（linked list）</a>儲存元素。發生碰撞時，新的元素串接在既有元素之後。</li>
-<li><strong>動態陣列</strong>：新增元素時，在該位址配置<a href="../dynamic_array">動態陣列（dynamic array）</a>儲存元素。發生碰撞時，直接將新元素加在陣列尾端。</li>
+<li><strong>鏈結串列</strong>：以<a href="collections/hash_map/../linked_list">鏈結串列（linked list）</a>儲存元素。發生碰撞時，新的元素串接在既有元素之後。</li>
+<li><strong>動態陣列</strong>：新增元素時，在該位址配置<a href="collections/hash_map/../dynamic_array">動態陣列（dynamic array）</a>儲存元素。發生碰撞時，直接將新元素加在陣列尾端。</li>
 </ul>
 <p>不同實作方式有各自優缺點，例如串列版本容易實作，但需額外儲存指標資訊；用動態陣列，則會有更好的 CPU caching，但相對地碰撞過多則需要重配置陣列。</p>
 <p>以 ASCII 表述使用串列實作 separate chaining 示意圖如下：</p>
@@ -3514,7 +3525,7 @@ Sam    --&gt;|2: ptr  |--+   +---------------+
 <p>這些方法的差異主要在於 CPU caching 的效能，以及 HashMap 資料的群聚效應（clustering）的敏感程度。當然，論 caching 絕對非 linear probing 莫屬，但 linear probing 以線性一個挨一個探勘，效能較容易受雜湊值群聚影響。</p>
 <p>以下是 linear probing（間隔 = 1）的示意圖。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/HASHTB12.svg/1280px-HASHTB12.svg.png" alt="" /></p>
-<a class="header" href="#動態調整雜湊表大小" id="動態調整雜湊表大小"><h3>動態調整雜湊表大小</h3></a>
+<h3><a class="header" href="#動態調整雜湊表大小" id="動態調整雜湊表大小">動態調整雜湊表大小</a></h3>
 <p>若資料的筆數已知，那初始配置的陣列大小設定與資料筆數成比例，就不必擔心雜湊表空間不夠，需要重新配置（reallocate）儲存空間的困擾。倘若資料量未知，而最初配置的 bucket array 滿了，該如何重新配置呢？</p>
 <p>動態調整大小對雜湊表來說，不同於一般動態陣列，舊的雜湊表若要對應到新雜湊表，是每個鍵都需要重新計算雜湊值（rehash），成本相對較高。因此，減少動態調整的次數，可說是調教雜湊表的重點之一。說到調教雜湊表，必定要瞭解一個重要指標：<em>load factor</em>。</p>
 <p>$$\text{load factor} = \frac{n}{k}$$</p>
@@ -3524,9 +3535,9 @@ $k$：雜湊表配置的儲存空間（bucket 總數）。</p>
 </blockquote>
 <p>Load factor 代表目前雜湊表的「使用率」，若三筆資料放在四個 bucket 內，則 load factor 為 $3/4 = 75%$。Load factor 太大會更容易碰撞，會有效能上的影響；太小則代表過多冗餘空間沒有使用。如何維持 load factor 在一定範圍內至關重要。一般來說，75% 的 load factor 就可以準備重新配置雜湊表了，當然，這個門檻仍要以實作經驗為主，例如 Rust 的 <a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html"><code>HashMap</code></a> 使用了 <a href="https://doc.rust-lang.org/stable/src/std/collections/hash/map.rs.html#82-103">Robin Hood Hashing</a>，將 load factor 調教到 90%。</p>
 <p>重配置雜湊表與動態陣列的動態調整大小雷同，達到某個門檻值，就會將底層陣列大小翻倍。為了避免開銷過高，通常元素減少時，不會主動調整大小，而是提供一個 <code>shrink_to_fit</code> 一類的方法，讓呼叫端自行決定釋放多餘空間的時機。</p>
-<a class="header" href="#架構設計-1" id="架構設計-1"><h2>架構設計</h2></a>
+<h2><a class="header" href="#架構設計-1" id="架構設計-1">架構設計</a></h2>
 <p>在介紹架構設計之前，我們先來瞭解 Rust 雜湊相關的觀念與 trait。</p>
-<a class="header" href="#hash-and-eq" id="hash-and-eq"><h3>Hash and Eq</h3></a>
+<h3><a class="header" href="#hash-and-eq" id="hash-and-eq">Hash and Eq</a></h3>
 <p>要實作雜湊函數，當然可以自幹計算雜湊值的函式來用，那為什麼還要使用 Rust 定義好的 <a href="https://doc.rust-lang.org/std/hash/trait.Hash.html"><code>Hash</code></a> 呢？當然是希望將雜湊的介面抽象化，只要型別宣告符合 <code>Hash</code> trait，任何人都可以輕鬆計算雜湊值。而實作 <a href="https://doc.rust-lang.org/std/hash/trait.Hash.html"><code>Hash</code></a> 很簡單，只要寫一個 <code>fn hash()</code>，呼叫端就能透過它計算雜湊，例如：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -3566,7 +3577,7 @@ fn make_hash&lt;X&gt;(x: &amp;X, len: usize) -&gt; Option&lt;usize&gt;
 <blockquote>
 <p>所謂 <strong>Dynamically Sized Types（DSTs）</strong> 是指無法靜態得知大小的型別，例如 slice，或是一個函式的參數接受實作某個 trait 型別（<a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html">trait object</a>），而在 Rust 幾乎所有基礎型別預設都是 <code>Sized</code> 編譯期就可得知大小。而在這裡我們不關心知道實作該型別可否靜態決定大小，只需知道它是否實作 <code>Hash</code>，所以明確添加 <code>?Sized</code> 表示接受 DSTs。</p>
 </blockquote>
-<a class="header" href="#記憶體佈局" id="記憶體佈局"><h3>記憶體佈局</h3></a>
+<h3><a class="header" href="#記憶體佈局" id="記憶體佈局">記憶體佈局</a></h3>
 <p>我們嘗試建立可以儲存 key-value pair 的結構體，裡面配置一個 bucket array <code>buckets</code>。其中 <code>K</code> 泛型參數是準備計算雜湊的鍵，而 <code>V</code> 則是與鍵配對的資料。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -3593,8 +3604,8 @@ pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
 </ol>
 <p>之所以使用額外的成員記錄資料數目，是為了計算數目能在 O(1) 時間內完成，nested array 動態迭代每個 <code>Bucket</code> 計算的成本太高。</p>
 <p>這就是 <strong>Vector-based separate chaining HashMap</strong> 的記憶體佈局，來看張精美的雜湊表架構佈局圖吧！</p>
-<p><img src="layout.svg" alt="" /></p>
-<a class="header" href="#基本操作-2" id="基本操作-2"><h2>基本操作</h2></a>
+<p><img src="collections/hash_map/layout.svg" alt="" /></p>
+<h2><a class="header" href="#基本操作-2" id="基本操作-2">基本操作</a></h2>
 <p>雜湊表有以下幾個基本操作：</p>
 <ul>
 <li><code>new</code>：初始化一個空雜湊表。</li>
@@ -3614,7 +3625,7 @@ pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
 <li><code>make_hash</code>：從輸入資料產生雜湊值，再模除 bucket 數，得到輸入資料對應的索引位置。</li>
 </ul>
 <p>接下來解釋實作的重點。</p>
-<a class="header" href="#初始化與預設值" id="初始化與預設值"><h3>初始化與預設值</h3></a>
+<h3><a class="header" href="#初始化與預設值" id="初始化與預設值">初始化與預設值</a></h3>
 <p>雜湊表初始化相對容易，一樣慣例使用 <code>new</code>。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -3653,7 +3664,7 @@ pub fn with_capacity(cap: usize) -&gt; Self {
 } 
 #}</code></pre></pre>
 <p>很清楚地，同樣建立一個空的 bucket array，再預先配置給定數量的 <code>Bucket</code> 。<code>len</code> 則因為沒有開始增加新值，而設定為 0。</p>
-<a class="header" href="#存取單一元素" id="存取單一元素"><h3>存取單一元素</h3></a>
+<h3><a class="header" href="#存取單一元素" id="存取單一元素">存取單一元素</a></h3>
 <p>存取元素的實作也非常直觀，</p>
 <ol>
 <li>使用 <code>make_hash</code> 計算出 key 對應的索引位置，</li>
@@ -3693,7 +3704,7 @@ pub fn get&lt;Q&gt;(&amp;self, q: &amp;Q) -&gt; Option&lt;&amp;V&gt;
 <blockquote>
 <p><code>fn get_mut()</code> 與 <code>fn get()</code> 的差異只在於呼叫了 <code>self.bucket.get_mut</code> 取得 mutable reference，這裡就不多做說明。</p>
 </blockquote>
-<a class="header" href="#插入與刪除元素" id="插入與刪除元素"><h3>插入與刪除元素</h3></a>
+<h3><a class="header" href="#插入與刪除元素" id="插入與刪除元素">插入與刪除元素</a></h3>
 <p>插入與刪除比較特別，需要做些額外的功夫：</p>
 <ul>
 <li>在操作完成之後需依據操作結果增減 <code>HashMap.len</code>，確保 <code>len</code> 永遠記錄正確的鍵值對數目。</li>
@@ -3766,7 +3777,7 @@ pub fn insert(&amp;mut self, key: K, value: V) -&gt; Option&lt;V&gt; {
 <li><code>mem::replace</code> 可當作將同型別兩變數的記憶體位置互換，也就同時更新了原始資料。</li>
 </ul>
 </blockquote>
-<a class="header" href="#動態調整儲存空間" id="動態調整儲存空間"><h3>動態調整儲存空間</h3></a>
+<h3><a class="header" href="#動態調整儲存空間" id="動態調整儲存空間">動態調整儲存空間</a></h3>
 <p>動態調整儲存空間大概是整個實作中最詭譎的一部分。首先，我們需要知道</p>
 <ul>
 <li>容器內鍵值對的總數：透過 <code>self.len</code>，我們將取得 <code>self.len</code> 的邏輯包裝在 <code>fn len(&amp;self)</code>，以免未來長度移動至別處儲存計算。</li>
@@ -3805,7 +3816,7 @@ fn try_resize(&amp;mut self) {
 <li>開始迭代舊的 bucket，並利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flat_map"><code>flat_map</code></a> 打平 nested vector，再利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.for_each"><code>for_each</code></a> 將每個元素重新 insert 到新雜湊表。</li>
 <li>把 <code>self</code> 的值指向新雜湊表，舊雜湊表的記憶體空間會被釋放。</li>
 </ol>
-<a class="header" href="#實作迭代器方法" id="實作迭代器方法"><h3>實作迭代器方法</h3></a>
+<h3><a class="header" href="#實作迭代器方法" id="實作迭代器方法">實作迭代器方法</a></h3>
 <p>一個集合型別當然少不了簡易的產生迭代器實作。</p>
 <p>根據之前其他方法的實作，要迭代整個雜湊表非常簡單，就是迭代所有 bucket，並利用 <code>flat_map</code> 打平 nested vector。簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -3847,13 +3858,13 @@ pub fn iter(&amp;self) -&gt; impl Iterator&lt;Item = (&amp;K, &amp;V)&gt; {
 <li><a href="https://doc.rust-lang.org/reference/types.html#trait-objects">Rust Reference: Trait objects</a></li>
 <li><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html">The Rust Programming Language: Trait objects</a></li>
 </ul>
-<a class="header" href="#效能-20" id="效能-20"><h2>效能</h2></a>
+<h2><a class="header" href="#效能-20" id="效能-20">效能</a></h2>
 <p>以陣列實作的雜湊表各操作複雜度如下</p>
-<table><thead><tr><th> Operation    </th><th> Best case    </th><th> Worst case </th></tr></thead><tbody>
-<tr><td> add(k, v)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
-<tr><td> update(k, v) </td><td> $O(1)$   </td><td> $O(n)$ </td></tr>
-<tr><td> remove(k)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
-<tr><td> search(k)    </td><td> $O(1)$   </td><td> $O(n)$ </td></tr>
+<table><thead><tr><th>Operation</th><th>Best case</th><th>Worst case</th></tr></thead><tbody>
+<tr><td>add(k, v)</td><td>$O(1)$~</td><td>$O(n)$</td></tr>
+<tr><td>update(k, v)</td><td>$O(1)$</td><td>$O(n)$</td></tr>
+<tr><td>remove(k)</td><td>$O(1)$~</td><td>$O(n)$</td></tr>
+<tr><td>search(k)</td><td>$O(1)$</td><td>$O(n)$</td></tr>
 </tbody></table>
 <blockquote>
 <p>$n$：資料筆數。<br />
@@ -3861,7 +3872,7 @@ $k$：欲綁定資料的鍵。<br />
 $v$：欲與鍵綁定的資料。<br />
 <strong>~</strong>：平攤後的複雜度（amortized）。</p>
 </blockquote>
-<a class="header" href="#時間複雜度" id="時間複雜度"><h3>時間複雜度</h3></a>
+<h3><a class="header" href="#時間複雜度" id="時間複雜度">時間複雜度</a></h3>
 <p>在預期情況下，只要雜湊函數品質穩定，大部分操作都可達到在常數時間， 但由於部分操作，尤其是新增或刪除元素的操作，會需要調整 bucket array 的空間，重新配置記憶體空間，所以需要平攤計算複雜度。</p>
 <p>而最差複雜度出現在每個元素都發生雜湊碰撞。若使用 open addressing 處理碰撞，則會把雜湊表配置的每個位置都填滿，而所有操作都從同個位置開始，搜尋對應的鍵，複雜度與陣列的線性搜索相同為 $O(n)$；若使用 separate chaining，碰撞代表所有元素都會在同一個 bucket 裡面，也就是只有一個 bucket 上會有一個長度為 <em>n</em> ，被塞滿的陣列或鏈結串列，結果同樣是線性搜索的 $O(n)$。</p>
 <p>我們嘗試使用數學表示搜索的複雜度。另</p>
@@ -3870,12 +3881,12 @@ $v$：欲與鍵綁定的資料。<br />
 <li>$k$：雜湊表配置的儲存空間（bucket 總數）。</li>
 <li>$\text{load factor} = \frac{n}{k}$：預期每個 bucket 儲存的資料筆數。</li>
 </ul>
-<p>則預期執行時間為</p>
+<p>則預期執行時間為 </p>
 <p>$$\Theta(1+\frac{n}{k}) = O(1) \ \text{ if } \frac{n}{k} = O(1)$$</p>
 <p>而 <strong>1</strong> 為計算雜湊與取得索引（random access）的執行時間，$\frac{n}{k}$ 則是搜尋陣列的執行時間。只要 load factor 越接近 $n$，執行時間就相對增加。</p>
-<a class="header" href="#空間複雜度" id="空間複雜度"><h3>空間複雜度</h3></a>
+<h3><a class="header" href="#空間複雜度" id="空間複雜度">空間複雜度</a></h3>
 <p>雜湊表的空間複雜度取決於實作預先配置的陣列大小，並與維持 <em>load factor</em> 息息相關。一般來說，仍與資料筆數成線性關係，因此空間複雜度只有資料本身 $O(n)$。而以 separate chaining 會額外配置陣列或鏈結串列儲存碰撞元素，理論上需負擔更多額外的指標儲存空間。</p>
-<a class="header" href="#參考資料-23" id="參考資料-23"><h2>參考資料</h2></a>
+<h2><a class="header" href="#參考資料-23" id="參考資料-23">參考資料</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/stable/std/collections/hash_map/index.html">Rust Documentation: HashMap</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Hash_table">Wiki: Hash table</a></li>
@@ -3884,11 +3895,11 @@ $v$：欲與鍵綁定的資料。<br />
 <li><a href="https://courses.csail.mit.edu/6.006/fall11/notes.shtml">MIT 6.006: Introduction to Algorithms, fall 2011: Unit 3 Hashing</a></li>
 <li>Map graph by Jorge Stolfi <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
-<a class="header" href="#有序映射表-ordered-map-1" id="有序映射表-ordered-map-1"><h1>有序映射表 Ordered Map</h1></a>
+<h1><a class="header" href="#有序映射表-ordered-map-1" id="有序映射表-ordered-map-1">有序映射表 Ordered Map</a></h1>
 <p>有特定排序方式的映射表。</p>
-<a class="header" href="#多重映射表-multimap-1" id="多重映射表-multimap-1"><h1>多重映射表 Multimap</h1></a>
+<h1><a class="header" href="#多重映射表-multimap-1" id="多重映射表-multimap-1">多重映射表 Multimap</a></h1>
 <p>允許鍵值對重複，一個鍵可對應多個值（一對多）映射表。</p>
-<a class="header" href="#集合-set-1" id="集合-set-1"><h1>集合 Set</h1></a>
+<h1><a class="header" href="#集合-set-1" id="集合-set-1">集合 Set</a></h1>
 <p>集合是一種抽象資料型別（Abstract data type），概念衍生自數學的<a href="https://en.wikipedia.org/wiki/Set_theory">集合論</a>，和陣列類似，為不同元素所組成的資料結構，不同在於集合有些重要的特性：</p>
 <ul>
 <li>無序性：集合內各元素無特定排序或排序不重要。</li>
@@ -3898,9 +3909,9 @@ $v$：欲與鍵綁定的資料。<br />
 <blockquote>
 <p>本次實作的程式碼置於在 <a href="https://rust-algo.club/doc/rust_algorithm_club/collections/struct.HashSet.html">rust_algorithm_club::collections::HashSet</a> API 文件中。</p>
 </blockquote>
-<a class="header" href="#架構設計-2" id="架構設計-2"><h2>架構設計</h2></a>
-<a class="header" href="#以雜湊表為底層容器" id="以雜湊表為底層容器"><h3>以雜湊表為底層容器</h3></a>
-<p>集合能以許多不同的資料結構實現，通用的集合實作多會最佳化取得、增加、移除元素等運算，這讓我們想到了「<a href="../hash_map">雜湊表</a>」，雜湊表正是能將集合運算最佳化的一種資料結構，我們將借用<strong>雜湊表作為底層儲存容器</strong>，進一步實作集合。</p>
+<h2><a class="header" href="#架構設計-2" id="架構設計-2">架構設計</a></h2>
+<h3><a class="header" href="#以雜湊表為底層容器" id="以雜湊表為底層容器">以雜湊表為底層容器</a></h3>
+<p>集合能以許多不同的資料結構實現，通用的集合實作多會最佳化取得、增加、移除元素等運算，這讓我們想到了「<a href="collections/set/../hash_map">雜湊表</a>」，雜湊表正是能將集合運算最佳化的一種資料結構，我們將借用<strong>雜湊表作為底層儲存容器</strong>，進一步實作集合。</p>
 <p>你可能好奇，集合明明只有元素，並沒有<strong>鍵值對</strong>，跟雜湊表有啥關係？讓我們回想雜湊表一個重要的特性：每一個鍵（key）只會出現一次，利用雜湊表這個特性，即可達成上述集合兩大特性。</p>
 <p>既然選用雜湊表作為底層容器，集合的結構體就非常簡單了，我們可以將集合想像為在 HashMap 薄薄的一層封裝。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -3914,9 +3925,9 @@ where
 }
 #}</code></pre></pre>
 <p>比較特別的是雜湊表的鍵值，這裡使用空的 tuple <code>()</code>，也就是以 <a href="https://doc.rust-lang.org/std/primitive.unit.html">unit type</a> 作為雜湊表之值，只要將集合的元素作為雜湊表鍵，忽略對應的值，就是貨真價實的集合結構。</p>
-<a class="header" href="#不佔空間的-unit-type" id="不佔空間的-unit-type"><h3>不佔空間的 Unit Type</h3></a>
+<h3><a class="header" href="#不佔空間的-unit-type" id="不佔空間的-unit-type">不佔空間的 Unit Type</a></h3>
 <p>這樣多儲存一個 <code>()</code> 會不會造成額外的儲存空間負擔？事實上，Unit type <code>()</code> 在 Rust 語言中是一種 <a href="https://doc.rust-lang.org/nomicon/exotic-sizes.html#zero-sized-types-zsts">Zero Sized Types (ZSTs)</a>，在編譯時期 Rust 會將 ZST 當作一種型別來操作，但真正輸出的機器碼中，ZST 並不會佔用任何運算空間。<code>Set = HashMap&lt;T, ()&gt;</code> 完全體現了 Rust 零成本抽象的語言特性。</p>
-<a class="header" href="#基本操作-3" id="基本操作-3"><h2>基本操作</h2></a>
+<h2><a class="header" href="#基本操作-3" id="基本操作-3">基本操作</a></h2>
 <p>身為一個容器，集合有以下幾個基本操作：</p>
 <ul>
 <li><code>new</code>：初始化一個集合。</li>
@@ -3927,7 +3938,7 @@ where
 <li><code>len</code>：檢查集合內的元素數目。</li>
 <li><code>iter</code>：產生一個迭代集合內所有元素的迭代器。</li>
 </ul>
-<p>這些基本操作的實作上，只是對雜湊表的簡單封裝，詳細實作可以參考 <a href="../hash_map">HashMap</a>。</p>
+<p>這些基本操作的實作上，只是對雜湊表的簡單封裝，詳細實作可以參考 <a href="collections/set/../hash_map">HashMap</a>。</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
@@ -3974,12 +3985,12 @@ where
 <li><code>remove</code> 同樣直接呼叫 <code>HashMap::remove</code>，並透過回傳 <code>Option&lt;()&gt;</code> 判斷實際上是否有移除任何元素。</li>
 <li><code>iter</code> 則直接利用 <code>HashMap::iter</code> 並捨棄 value。</li>
 </ol>
-<a class="header" href="#集合運算" id="集合運算"><h2>集合運算</h2></a>
+<h2><a class="header" href="#集合運算" id="集合運算">集合運算</a></h2>
 <p>電腦科學的集合型別衍生自<a href="https://en.wikipedia.org/wiki/Set_theory">集合論</a>，當然也得符合<a href="https://en.wikipedia.org/wiki/Algebra_of_sets">集合代數（set algebra）</a>的特性，和算術的加減乘除，集合也有自己的二元運算，我們會實作以下幾個基本方法：</p>
 <ul>
 <li><code>intersection</code>：交集，A ∩ B 定義為 A 與 B 共有的元素。</li>
 <li><code>union</code>：聯集，A ∪ B 定義為 A 與 B 所有的元素。</li>
-<li><code>symmetric_difference</code>：對稱差集，定義為 A △ B = (A ∪ B) - (A ∩ B)，就是只出現在 A 或 B，不會在兩集合內同時出現的元素。</li>
+<li><code>symmetric_difference</code>：對稱差集，定義為 A △ B = (A ∪ B) - (A ∩ B)，就是只出現在 A 或 B，不會在兩集合內同時出現的元素。 </li>
 <li><code>difference</code>：差集，A \ B 定義為 A 中所有未在 B 中出現的元素。</li>
 </ul>
 <p><img src="https://i.imgur.com/jeLakB0.png" alt="venn digrams" /></p>
@@ -3990,8 +4001,8 @@ where
 <li><code>is_superset</code>：包含 ⊇，是否為超集。</li>
 </ul>
 <p>哇！好多方法要實作。那就事不宜遲！</p>
-<a class="header" href="#實作聯集" id="實作聯集"><h3>實作聯集</h3></a>
-<a class="header" href="#第一次嘗試---建立新的聯集集合" id="第一次嘗試---建立新的聯集集合"><h4>第一次嘗試 - 建立新的聯集集合</h4></a>
+<h3><a class="header" href="#實作聯集" id="實作聯集">實作聯集</a></h3>
+<h4><a class="header" href="#第一次嘗試---建立新的聯集集合" id="第一次嘗試---建立新的聯集集合">第一次嘗試 - 建立新的聯集集合</a></h4>
 <p>要取得兩個集合的聯集，最直覺的想法可能是創造一個新的集合，再把 A 和 B 兩個集合的元素通通 <code>insert</code> 進去，就像這樣：</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
@@ -4019,7 +4030,7 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; HashSet&lt;T&gt; {
 <blockquote>
 <p>更多詳情可參考實作過程的<a href="https://github.com/weihanglo/rust-algorithm-club/pull/15#issuecomment-427587785">討論串</a>與<a href="https://github.com/weihanglo/rust-algorithm-club/pull/15/commits/caab7fbc5323e09eb1e30ea374eb21a59f955bad">第一次嘗試的完整實作</a>。</p>
 </blockquote>
-<a class="header" href="#第二次嘗試---lazy-iterator" id="第二次嘗試---lazy-iterator"><h4>第二次嘗試 - Lazy Iterator</h4></a>
+<h4><a class="header" href="#第二次嘗試---lazy-iterator" id="第二次嘗試---lazy-iterator">第二次嘗試 - Lazy Iterator</a></h4>
 <p>有了第一次嘗試的經驗，第二次決定讓 <code>union()</code> 回傳一個 lazy iterator，會迭代聯集的元素，必要才從迭代器收集所有元素，再建立新的集合，如此可以節省許多運算資源。</p>
 <p>至於實作步驟，我們可以：</p>
 <ol>
@@ -4038,7 +4049,7 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Ite
     self.iter().chain(other_but_not_self)
 }
 #}</code></pre></pre>
-<a class="header" href="#lifetime-elision" id="lifetime-elision"><h4>Lifetime Elision</h4></a>
+<h4><a class="header" href="#lifetime-elision" id="lifetime-elision">Lifetime Elision</a></h4>
 <p>但很不幸地，Compiler error E0623（甚至查不到 E0623 是什麼）。</p>
 <pre><code class="language-bash">error[E0623]: lifetime mismatch
    --&gt; src/collections/set/mod.rs:117:48
@@ -4069,7 +4080,7 @@ pub fn union&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl
 <blockquote>
 <p>更多 Lifetime Elision 的資訊，可以參考 <a href="https://doc.rust-lang.org/nomicon/lifetime-elision.html">Rust 黑魔法 Nomicon</a> 與 <a href="https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html#lifetime-elision">Rust TRPL 的解釋</a>，還有相關的 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0141-lifetime-elision.md">RFC</a> 可以看。</p>
 </blockquote>
-<a class="header" href="#move-closure" id="move-closure"><h4><code>move</code> closure</h4></a>
+<h4><a class="header" href="#move-closure" id="move-closure"><code>move</code> closure</a></h4>
 <p>解決了生命週期，編譯看看就知道誰沒穿褲子。<a href="https://doc.rust-lang.org/error-index.html#E0373">Compiler error E0373</a>，是野生的 borrow checker！</p>
 <pre><code class="language-bash">error[E0373]: closure may outlive the current function, but it borrows `self`, which is owned by the current function
    --&gt; src/collections/set/mod.rs:118:53
@@ -4104,7 +4115,7 @@ pub fn union&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl
     self.iter().chain(other_but_not_self)
 }
 #}</code></pre></pre>
-<a class="header" href="#實作交集差集與對稱差集" id="實作交集差集與對稱差集"><h3>實作交集、差集與對稱差集</h3></a>
+<h3><a class="header" href="#實作交集差集與對稱差集" id="實作交集差集與對稱差集">實作交集、差集與對稱差集</a></h3>
 <p>呼，上面解決了最困難的生命週期和 borrow checker 問題，接下來的實作只要關注數學上的集合定義就能輕鬆解決了。</p>
 <p>首先，交集的定義為「你有，而且我也有的」，簡單，迭代 <code>self</code> 並過濾出 <code>other</code> 也有的元素就好，秒殺！</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -4141,7 +4152,7 @@ pub fn symmetric_difference&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&
 }
 #}</code></pre></pre>
 <p>整個集合的基礎在這邊大功告成了！</p>
-<a class="header" href="#子集超集與不交集" id="子集超集與不交集"><h3>子集、超集與不交集</h3></a>
+<h3><a class="header" href="#子集超集與不交集" id="子集超集與不交集">子集、超集與不交集</a></h3>
 <p>經歷 Rust 編譯器的摧殘，來實作比較簡單的方法吧。集合運算常要比較兩個集合的關係，例如 A ⊆ B 代表 A 是 B 的子集，定義是 A 裡面的元素 B 都有。</p>
 <p>我們先來實作 <code>is_subset</code> 檢查 <code>self</code> 是否為 <code>other</code> 的子集。</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -4174,9 +4185,9 @@ pub fn is_disjoint(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; bool {
     self.intersection(other).count() == 0
 }
 #}</code></pre></pre>
-<a class="header" href="#二元運算與運算子" id="二元運算與運算子"><h2>二元運算與運算子</h2></a>
+<h2><a class="header" href="#二元運算與運算子" id="二元運算與運算子">二元運算與運算子</a></h2>
 <p>上面的方法好冗，能不能和 <a href="https://docs.python.org/3/library/stdtypes.html#set">Python</a> 一樣，用簡單明瞭的語法操作集合的二元運算？當然行，Rust 的表達性很強，完全不輸 Python，透過<a href="https://en.wikipedia.org/wiki/Operator_overloading">運算子多載（operator overloading）</a>。</p>
-<a class="header" href="#運算子多載" id="運算子多載"><h3>運算子多載</h3></a>
+<h3><a class="header" href="#運算子多載" id="運算子多載">運算子多載</a></h3>
 <p>Rust 提供許多 trait 供使用者多載運算子，可以簡化集合的二元運算：</p>
 <ul>
 <li><code>set | other</code>：bitwise or 運算子，效果同 <code>union</code> 聯集。</li>
@@ -4209,7 +4220,7 @@ where
 <blockquote>
 <p>多載運算子，可以參考 <a href="https://doc.rust-lang.org/beta/std/ops/index.html">Overloadable operators</a> 一頁的說明。</p>
 </blockquote>
-<a class="header" href="#比較運算子" id="比較運算子"><h3>比較運算子</h3></a>
+<h3><a class="header" href="#比較運算子" id="比較運算子">比較運算子</a></h3>
 <p>除了交集、聯集等運算，我們還可以實作集合間的比較，作為檢查是否為子集或超集的運算子。</p>
 <ul>
 <li><code>A &lt;= B</code>：效果同 <code>is_subset</code>，A 是否為 B 的子集 A ⊆ B。</li>
@@ -4221,7 +4232,7 @@ where
 <p>在開始介紹如何實作比較前，先讓複習一下離散數學學到的二元關係：</p>
 <p>若 ∼ 為一種二元關係，A 為任意集合。</p>
 <ul>
-<li>自反性（Reflexive）：對所有 x ∈ A : x ∼ x。</li>
+<li>自反性（Reflexive）：對所有 x ∈ A : x ∼ x。 </li>
 <li>對稱性（Symmetric）：對所有 x, y ∈ A ，若 x ∼ y 則 y ∼ x。</li>
 <li>傳遞性（Transitive）：對所有 x, y, z ∈ A ，若 x ∼ y 且 y ∼ z 則 x ∼ z。</li>
 <li>反對稱（Antisymmetric）：對所有 x, y ∈ A，若 x ∼ y 且 x ≠ y 則 y ∼ x 不成立。</li>
@@ -4298,31 +4309,31 @@ where
 <blockquote>
 <p>有人可能會認為，比較運算還要透過 <code>partial_cmp</code> 判斷 <code>Option</code> 多麻煩，事實上，C++ 20 也帶來了 <code>&lt;=&gt;</code> 運算子以及 <a href="https://en.cppreference.com/w/cpp/language/operator_comparison#Three-way_comparison">three way comparison</a> 衍生的各種型別，partial order 或 parital equal 可說是更精確且必要的比較運算，也是一種趨勢。</p>
 </blockquote>
-<a class="header" href="#效能-21" id="效能-21"><h2>效能</h2></a>
+<h2><a class="header" href="#效能-21" id="效能-21">效能</a></h2>
 <p>以雜湊表為底層儲存容器的集合，各操作複雜度如下</p>
-<table><thead><tr><th> Operation    </th><th> Best case    </th><th> Worst case </th></tr></thead><tbody>
-<tr><td> insert(v)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
-<tr><td> remove(v)    </td><td> $O(1)$~  </td><td> $O(n)$ </td></tr>
-<tr><td> contains(v)  </td><td> $O(1)$   </td><td> $O(n)$ </td></tr>
-<tr><td> union        </td><td> $O(n)$   </td><td> $O(n)$ </td></tr>
-<tr><td> intersection </td><td> $O(n)$   </td><td> $O(n)$ </td></tr>
-<tr><td> difference   </td><td> $O(n)$   </td><td> $O(n)$ </td></tr>
-<tr><td> symmetric difference </td><td> $O(n)$   </td><td> $O(n)$ </td></tr>
+<table><thead><tr><th>Operation</th><th>Best case</th><th>Worst case</th></tr></thead><tbody>
+<tr><td>insert(v)</td><td>$O(1)$~</td><td>$O(n)$</td></tr>
+<tr><td>remove(v)</td><td>$O(1)$~</td><td>$O(n)$</td></tr>
+<tr><td>contains(v)</td><td>$O(1)$</td><td>$O(n)$</td></tr>
+<tr><td>union</td><td>$O(n)$</td><td>$O(n)$</td></tr>
+<tr><td>intersection</td><td>$O(n)$</td><td>$O(n)$</td></tr>
+<tr><td>difference</td><td>$O(n)$</td><td>$O(n)$</td></tr>
+<tr><td>symmetric difference</td><td>$O(n)$</td><td>$O(n)$</td></tr>
 </tbody></table>
 <blockquote>
 <p>$n$：資料筆數。<br />
 $v$：資料值。<br />
 <strong>~</strong>：平攤後的複雜度（amortized）。</p>
 </blockquote>
-<p>操作的時間與空間複雜度，與其底層儲存容器的實作有關，本次集合實作只是對雜湊表的簡單封裝，詳細演算法複雜度可以參考 <a href="../hash_map#%E6%95%88%E8%83%BD">HashMap</a>。</p>
-<a class="header" href="#參考資料-24" id="參考資料-24"><h2>參考資料</h2></a>
+<p>操作的時間與空間複雜度，與其底層儲存容器的實作有關，本次集合實作只是對雜湊表的簡單封裝，詳細演算法複雜度可以參考 <a href="collections/set/../hash_map#%E6%95%88%E8%83%BD">HashMap</a>。</p>
+<h2><a class="header" href="#參考資料-24" id="參考資料-24">參考資料</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/collections/hash_set/struct.HashSet.html">Rust Documentation: HashSet</a></li>
 <li><a href="https://docs.python.org/3/library/stdtypes.html#set">Python 3: Set</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Set_theory">Wiki: Set theory</a></li>
 <li>Venn diagrams are screenshoot from Wikipedia via public domain.</li>
 </ul>
-<a class="header" href="#貢獻指南" id="貢獻指南"><h1>貢獻指南</h1></a>
+<h1><a class="header" href="#貢獻指南" id="貢獻指南">貢獻指南</a></h1>
 <p>感謝您有興趣貢獻 Rust 演算法俱樂部。我們歡迎各種形式的協助。這裡列出幾種任務供你挑選。</p>
 <ul>
 <li>增加新的演算法</li>
@@ -4330,11 +4341,11 @@ $v$：資料值。<br />
 <li>改善文件的品質</li>
 </ul>
 <p>接下來，將介紹幾個貢獻的注意事項。</p>
-<a class="header" href="#開始貢獻之前" id="開始貢獻之前"><h2>開始貢獻之前</h2></a>
+<h2><a class="header" href="#開始貢獻之前" id="開始貢獻之前">開始貢獻之前</a></h2>
 <p>若您決定著手做些厲害的事，請先在<a href="https://github.com/weihanglo/rust-algorithm-club/search?q=&amp;type=Issues&amp;utf8=%E2%9C%93">已知 issues 與 pull requests</a> 搜尋，那裡可能已有回報相似的問題。</p>
 <p>若沒有重複的問題，請發起一個「進行中（work-in-progress）」的 issue，告知其他人你正在做這項功能。你的時間很寶貴，必須防止重工發生。維護團隊也會追蹤這些 issue 以利管理俱樂部。</p>
 <p>有些 meta issue 專門追蹤尚未完成的工作 🚧，可以去看看是否有感興趣的主題。</p>
-<a class="header" href="#提交你的成果" id="提交你的成果"><h2>提交你的成果</h2></a>
+<h2><a class="header" href="#提交你的成果" id="提交你的成果">提交你的成果</a></h2>
 <p>在提交你的貢獻之前，確認成果滿足下列需求：</p>
 <ul>
 <li>不要搞壞既有測試。發起 pull request 前執行 <code>cargo test</code>。新的演算法也需包含自身的單元測試。</li>
@@ -4342,7 +4353,9 @@ $v$：資料值。<br />
 <li>儘量維持文章間寫作風格與結構一致。例如：首段需包含簡扼的敘述、解釋效能時請愛用漸進符號。</li>
 <li>程式碼撰寫風格應貼近 Rust 的慣例，例如：涉及所有權轉移請使用 <code>into</code>、替額外建構式命名請添加 <code>with</code> 前綴。目前為止，並不強制使用 <a href="https://github.com/rust-lang-nursery/rust-clippy">Clippy</a> 與 <a href="https://github.com/rust-lang-nursery/rustfmt">rustfmt</a>。</li>
 </ul>
-<a class="header" href="#歡迎加入-rust-演算法俱樂部願演算法與你同在" id="歡迎加入-rust-演算法俱樂部願演算法與你同在"><h3>歡迎加入 Rust 演算法俱樂部，願演算法與你同在！</h3></a>
+<h3><a class="header" href="#歡迎加入-rust-演算法俱樂部願演算法與你同在" id="歡迎加入-rust-演算法俱樂部願演算法與你同在">歡迎加入 Rust 演算法俱樂部，願演算法與你同在！</a></h3>
+<h1><a class="header" href="#oops-something-went-wrong" id="oops-something-went-wrong">Oops! Something went wrong...</a></h1>
+<p><img src="https://weihanglo.tw/assets/ferris-404.png" alt="" /></p>
 
                     </main>
 
@@ -4388,6 +4401,8 @@ $v$：資料值。<br />
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="theme/custom.js"></script>
         
 
         
