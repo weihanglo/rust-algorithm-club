@@ -29,4 +29,4 @@ rm -rf _tmp_book
 echo "Updating branch ${TARGET_BRANCH}"
 cd "${PUBLIC_DIR}" && git add --all && \
     git commit -m "Publishing via publish.sh at $(date)" && \
-    git push
+    git push $1
