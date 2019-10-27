@@ -17,25 +17,6 @@
 
 此外，單向鏈結串列也支援 tail-sharing，也就是共享 sublist。藉由共享 sublist，單向鏈結串列很容易實作 [persistent data structure](https://en.wikipedia.org/wiki/Persistent_data_structure)，再配合 immutable 特性，使得單向鏈結串列幾乎成為函數式程式語言最常見的集合型別之一。可以參考這篇 [persistent immutable stack 實作](http://cglab.ca/~abeinges/blah/too-many-lists/book/third.html)文章。
 
-
-## 效能
-
-| Operation | Complexity                                      |
-| --------- | ----------------------------------------------- |
-| get       | \\(O(n)\\)                                      |
-| insert    | 節點已知：\\(O(1)\\) ；節點未知：\\(O(n - i)\\) |
-| remove    | 節點已知：\\(O(1)\\) ；節點未知：\\(O(n - i)\\) |
-| append    | \\(O(n)\\)                                      |
-| prepend   | \\(O(1)\\)                                      |
-| pop first | \\(O(1)\\)                                      |
-| pop last  | \\(O(n)\\)                                      |
-| space     | \\(O(n)\\) + 各節點額外一個指標 \\(n\\) 個      |
-
-> \\(n\\)：資料筆數。  
-> \\(i\\)：相對於整個容器的索引位置。
-
-值得注意的是，許多操作因為單向鏈結串列只能從 head 開始搜索的緣故，執行時間都呈線性，使用上要特別小心。
-
 ## 實作設計
 
 ### Node
