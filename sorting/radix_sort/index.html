@@ -39,7 +39,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../../";
-            var default_theme = "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -80,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li><a href="../../searching/index.html">搜尋</a></li><li><ol class="section"><li><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/index.html" class="active">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li><a href="../../collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li><a href="../../collections/queue/index.html">🚧 佇列 Queue</a></li><li><a href="../../collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li><a href="../../collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li><a href="../../collections/associative-container/index.html">關聯容器</a></li><li><ol class="section"><li><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li><a href="../../collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li><a href="../../collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li><a href="../../collections/set/index.html">集合 Set</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="affix"><a href="../../404.html">404</a></li></ol>
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="../../index.html">Rust Algorithm Club</a></li><li class="expanded "><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li class="expanded "><a href="../../searching/index.html">搜尋</a></li><li><ol class="section"><li class="expanded "><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li class="expanded "><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li class="expanded "><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li class="expanded "><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li class="expanded "><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li class="expanded "><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li class="expanded "><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li class="expanded "><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li class="expanded "><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li class="expanded "><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li class="expanded "><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li class="expanded "><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li class="expanded "><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li class="expanded "><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li class="expanded "><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li class="expanded "><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li class="expanded "><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li class="expanded "><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li class="expanded "><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li class="expanded "><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li class="expanded "><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li class="expanded "><a href="../../sorting/radix_sort/index.html" class="active">基數排序 Radix sort</a></li></ol></li></ol></li><li class="expanded "><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li class="expanded "><a href="../../collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li class="expanded "><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li class="expanded "><a href="../../collections/queue/index.html">🚧 佇列 Queue</a></li><li class="expanded "><a href="../../collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li class="expanded "><a href="../../collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li class="expanded "><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li class="expanded "><a href="../../collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li class="expanded "><a href="../../collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li class="expanded "><a href="../../collections/associative-container/index.html">關聯容器</a></li><li><ol class="section"><li class="expanded "><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li class="expanded "><a href="../../collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li class="expanded "><a href="../../collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li class="expanded "><a href="../../collections/set/index.html">集合 Set</a></li><li class="spacer"></li></ol></li></ol></li><li class="expanded "><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="expanded affix "><a href="../../404.html">404</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -247,16 +247,17 @@ $k $：基數，就是一個位數最多有幾種可能的值。</p>
 <p>這裡示範實作以 10 為基數，用來排序非負整數的 Radix sort。</p>
 <p>首先，我們的排序副程式使用 Counting sort。</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-// 0. Include counting sort.
+<span class="boring">#![allow(unused_variables)]
+fn main() {
+</span>// 0. Include counting sort.
 use ::sorting::counting_sort;
-#}</code></pre></pre>
+<span class="boring">}
+</code></pre></pre>
 <p>再來，就是 Radix sort 本體了。為了凸顯 Radix sort 的概念，簡化了函式參數數量，除去泛型宣告，並將基數選擇寫死在函式裡。</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-pub fn radix_sort(arr: &amp;mut [i32]) {
+<span class="boring">#![allow(unused_variables)]
+fn main() {
+</span>pub fn radix_sort(arr: &amp;mut [i32]) {
     let radix = 10;             // 1
     let mut digit = 1;          // 2
     let max_value = arr         // 3
@@ -269,7 +270,8 @@ pub fn radix_sort(arr: &amp;mut [i32]) {
         digit *= radix;         // 6
     }
 }
-#}</code></pre></pre>
+<span class="boring">}
+</code></pre></pre>
 <ol>
 <li>設定基數為 10。</li>
 <li>設定一個旗標，記錄當前在排序哪一位數，1 表示從最小位數（個位數）開始。</li>
@@ -327,6 +329,14 @@ pub fn radix_sort(arr: &amp;mut [i32]) {
 
         
 
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
         
 
         

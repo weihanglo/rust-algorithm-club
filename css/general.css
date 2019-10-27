@@ -16,14 +16,15 @@ body {
 }
 
 code {
-    font-family: "Source Code Pro", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace, monospace;
+    font-family: "Source Code Pro", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace, monospace !important;
     font-size: 0.875em; /* please adjust the ace font size accordingly in editor.js */
 }
 
 .left { float: left; }
 .right { float: right; }
+.boring { opacity: 0.6; }
+.hide-boring .boring { display: none; }
 .hidden { display: none; }
-.play-button.hidden { display: none; }
 
 h2, h3 { margin-top: 2.5em; }
 h4, h5 { margin-top: 2em; }

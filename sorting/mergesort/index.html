@@ -39,7 +39,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../../";
-            var default_theme = "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -80,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li><a href="../../searching/index.html">搜尋</a></li><li><ol class="section"><li><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li><a href="../../sorting/mergesort/index.html" class="active">合併排序 Mergesort</a></li></ol></li><li><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li><a href="../../collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li><a href="../../collections/queue/index.html">🚧 佇列 Queue</a></li><li><a href="../../collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li><a href="../../collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li><a href="../../collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li><a href="../../collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li><a href="../../collections/associative-container/index.html">關聯容器</a></li><li><ol class="section"><li><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li><a href="../../collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li><a href="../../collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li><a href="../../collections/set/index.html">集合 Set</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="affix"><a href="../../404.html">404</a></li></ol>
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="../../index.html">Rust Algorithm Club</a></li><li class="expanded "><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li class="expanded "><a href="../../searching/index.html">搜尋</a></li><li><ol class="section"><li class="expanded "><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li class="expanded "><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li class="expanded "><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li class="expanded "><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li class="expanded "><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li class="expanded "><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li class="expanded "><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li class="expanded "><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li class="expanded "><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li class="expanded "><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li class="expanded "><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li class="expanded "><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li class="expanded "><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li class="expanded "><a href="../../sorting/mergesort/index.html" class="active">合併排序 Mergesort</a></li></ol></li><li class="expanded "><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li class="expanded "><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li class="expanded "><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li class="expanded "><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li class="expanded "><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li class="expanded "><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li class="expanded "><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li class="expanded "><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li class="expanded "><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li class="expanded "><a href="../../collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li class="expanded "><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li class="expanded "><a href="../../collections/queue/index.html">🚧 佇列 Queue</a></li><li class="expanded "><a href="../../collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li class="expanded "><a href="../../collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li class="expanded "><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li class="expanded "><a href="../../collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li class="expanded "><a href="../../collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li class="expanded "><a href="../../collections/associative-container/index.html">關聯容器</a></li><li><ol class="section"><li class="expanded "><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li class="expanded "><a href="../../collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li class="expanded "><a href="../../collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li class="expanded "><a href="../../collections/set/index.html">集合 Set</a></li><li class="spacer"></li></ol></li></ol></li><li class="expanded "><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="expanded affix "><a href="../../404.html">404</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -231,9 +231,9 @@ $$</p>
 <h3><a class="header" href="#top-down-split" id="top-down-split">Top-down split</a></h3>
 <p>自上而下的解法會不斷以類似 binary search 的方式找中點，進而分割序列。</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-pub fn mergesort(arr: &amp;mut [i32]) {
+<span class="boring">#![allow(unused_variables)]
+fn main() {
+</span>pub fn mergesort(arr: &amp;mut [i32]) {
     let mid = arr.len() / 2;
     if mid == 0 {                 // 1
         return;
@@ -251,7 +251,8 @@ pub fn mergesort(arr: &amp;mut [i32]) {
     // Copy back the result back to original array.
     arr.copy_from_slice(&amp;ret);    // 5
 }
-#}</code></pre></pre>
+<span class="boring">}
+</code></pre></pre>
 <ol>
 <li>設定遞迴的終止條件（base case），middle index 為 0 表示長度不大於 1。</li>
 <li>利用 Rust 的 <a href="https://doc.rust-lang.org/std/ops/struct.Range.html">Range Operator</a>，可快速分割兩個 <code>slice</code>。</li>
@@ -262,9 +263,9 @@ pub fn mergesort(arr: &amp;mut [i32]) {
 <h3><a class="header" href="#buttom-up-split" id="buttom-up-split">Buttom-up split</a></h3>
 <p>自下而上的解法則是預定好最小的子序列長度，直接使用 for 迴圈從頭開始逐一擊破。</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-pub fn mergesort_bottom_up(arr: &amp;mut [i32]) {
+<span class="boring">#![allow(unused_variables)]
+fn main() {
+</span>pub fn mergesort_bottom_up(arr: &amp;mut [i32]) {
     let mut width = 1;                                // 1
     // Create an array to store intermediate result.
     let mut ret = arr.to_vec();                       // 2
@@ -288,7 +289,8 @@ pub fn mergesort_bottom_up(arr: &amp;mut [i32]) {
         width *= 2;                                   // 6
     }
 }
-#}</code></pre></pre>
+<span class="boring">}
+</code></pre></pre>
 <ol>
 <li>設定最小的子序列長度，這個長度以下的子序列皆視為已排序。</li>
 <li>建立一個 <code>Vec</code> 儲存排序結果。</li>
@@ -300,9 +302,9 @@ pub fn mergesort_bottom_up(arr: &amp;mut [i32]) {
 <h3><a class="header" href="#the-merge-part" id="the-merge-part">The merge part</a></h3>
 <p>無論是 Top-down 還是 Buttom-up 版本的解法，皆免不了 <code>merge</code> 這個共同步驟，將子序列合併為較大的序列。</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
+<span class="boring">#![allow(unused_variables)]
+fn main() {
+</span>fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
     let mut left = 0; // Head of left pile.             // 1
     let mut right = 0; // Head of right pile.
     let mut index = 0;
@@ -329,7 +331,8 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
         ret[index..].copy_from_slice(&amp;arr2[right..]);
     }
 }
-#}</code></pre></pre>
+<span class="boring">}
+</code></pre></pre>
 <ol>
 <li>建立三個指標，分別給 <code>arr1</code>、<code>arr2</code> 與回傳陣列 <code>ret</code> 使用。</li>
 <li>這部分依序比較兩個子序列，排序較小者先進入回傳 <code>ret</code>。直到其中一序列所有元素都進入 <code>ret</code> 就停止。</li>
@@ -388,6 +391,14 @@ fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
 
         
 
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
         
 
         
