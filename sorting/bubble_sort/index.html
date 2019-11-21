@@ -245,7 +245,7 @@
 <p>Bubble sort 簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn bubble_sort(arr: &amp;mut [i32]) {
     let mut swapped = true;                 // 1
     while swapped {
@@ -259,7 +259,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>建立一個旗標，標誌該次迭代是否有元素置換。</li>
 <li>內層迴圈依序比較兩兩相鄰元素。</li>
@@ -268,7 +268,7 @@ fn main() {
 <p>倘若記錄已排好序的元素位置，雖然複雜度仍是 $O(n^2) $，但如此以來，每次迭代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
     let mut new_len: usize;
     let mut len = arr.len();            // 1
@@ -287,7 +287,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>將當前的序列長度記錄到 <code>len</code>。</li>
 <li>內層迴圈負責比較、置換，以及記錄未排序部分的序列長度到 <code>new_len</code>。</li>

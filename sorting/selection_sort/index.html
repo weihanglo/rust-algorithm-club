@@ -208,7 +208,7 @@
 <p>簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn selection_sort(arr: &amp;mut [i32]) {
     let len = arr.len();
     for i in 0..len {                     // 1
@@ -222,7 +222,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>外層迴圈負責儲存當前要排序的 index <code>i</code> 的位置。</li>
 <li>內層迴圈負責在 unsorted pile 範圍 [<code>i</code>, <code>len</code>) 找最小值。</li>

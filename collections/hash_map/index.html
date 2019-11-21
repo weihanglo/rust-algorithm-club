@@ -345,7 +345,7 @@ $k$：雜湊表配置的儲存空間（bucket 總數）。</p>
 <p>要實作雜湊函數，當然可以自幹計算雜湊值的函式來用，那為什麼還要使用 Rust 定義好的 <a href="https://doc.rust-lang.org/std/hash/trait.Hash.html"><code>Hash</code></a> 呢？當然是希望將雜湊的介面抽象化，只要型別宣告符合 <code>Hash</code> trait，任何人都可以輕鬆計算雜湊值。而實作 <a href="https://doc.rust-lang.org/std/hash/trait.Hash.html"><code>Hash</code></a> 很簡單，只要寫一個 <code>fn hash()</code>，呼叫端就能透過它計算雜湊，例如：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>use std::hash::{Hash, Hasher};
 
 struct Car {
@@ -358,13 +358,13 @@ impl Hash for Car {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>光是計算雜湊值還不夠，要確定「當鍵相等時，其雜湊值也相等」這極為重要的雜湊特性，這時候除了實作 <code>Hash</code> trait，<code>Eq</code> trait 也要同時實作，該型別才能夠「被比較」，標準函式庫的 <code>HashMap</code> 的鍵就是實作 <code>Hash + Eq</code> 的型別，詳情請參閱 trait 的文件說明。</p>
 <p>綜合以上，可以大膽定論，我們將實作的雜湊表的 key 一定符合 <code>K: Hash + Eq</code>，key 本身才能相互比較（實作 <code>Eq</code>），並開放呼叫端自定義型別實作不同的雜湊計算方式（實作 <code>Hash</code>）。</p>
 <p>為了方便計算雜湊值，我們寫了一個輔助函式，以達成雜湊兩步驟：<strong>計算雜湊值﹢取模</strong>。其中，我們使用了 Rust 預設的雜湊演算法 <a href="https://doc.rust-lang.org/std/collections/hash_map/struct.DefaultHasher.html">DefaultHasher</a>，省下實作雜湊函數的功夫。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn make_hash&lt;X&gt;(x: &amp;X, len: usize) -&gt; Option&lt;usize&gt;
     where X: Hash + ?Sized,                   // 1
 {
@@ -374,7 +374,7 @@ fn main() {
     Some(hasher.finish() as usize % len)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li><code>X</code> 泛型參數除了 <code>Hash</code>，還必須是 <a href="https://doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait">Dynamically Sized Type</a>（DST，型別記作 <code>?Sized</code>）</li>
 <li>防止以 0 取模（<code>%</code> modulo），除數不能為 0。</li>
@@ -387,16 +387,16 @@ fn main() {
 <p>我們嘗試建立可以儲存 key-value pair 的結構體，裡面配置一個 bucket array <code>buckets</code>。其中 <code>K</code> 泛型參數是準備計算雜湊的鍵，而 <code>V</code> 則是與鍵配對的資料。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
     buckets: Vec&lt;(K, V)&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>可是，用單一 <code>Vec</code> 儲存所有資料，萬一雜湊碰撞，不同鍵指向同個索引值該如何？這次先挑選相對容易的方案 separate chaining 處理碰撞，並以 <code>Vec</code> 動態陣列作為每個 bucket 儲存碰撞元素的容器，因此，<code>buckets</code> 陣列裡面改存 <code>Bucket</code> 陣列，而 <code>Bucket</code> 則儲存真正的 key-value pair。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>type Bucket&lt;K, V&gt; = Vec&lt;(K, V)&gt;;              // 1
 
 pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
@@ -404,7 +404,7 @@ pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
    len: usize,                                // 3
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>宣告 bucket 的型別 <code>Bucket</code>，實際上是一個 type alias 指向儲存鍵值 <code>(K, V)</code> 的動態陣列。</li>
 <li>將 <code>HashMap.buckets</code> 改為儲存 <code>Bucket</code> 的動態陣列。</li>
@@ -437,7 +437,7 @@ pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
 <p>雜湊表初始化相對容易，一樣慣例使用 <code>new</code>。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;K, V&gt; HashMap&lt;K, V&gt; where K: Hash + Eq {
     pub fn new() -&gt; Self {
         Default::default()
@@ -453,7 +453,7 @@ impl&lt;K, V&gt; Default for HashMap&lt;K, V&gt;
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>這裡為了符合人因工程，使用了 <a href="https://doc.rust-lang.org/std/default/trait.Default.html"><code>Default</code></a> trait 設定初始值。此外，由於 Rust 的容器型別慣例上沒有任何元素時，不會配置任何記憶體空間，僅有初始的 pointer。 HashMap 初始化後，記憶體空間僅需</p>
 <ul>
 <li><code>buckets</code> 的 <code>Vec</code> 佔據 3 個 usize 大小（一個 heap 指標，兩個記錄容量與長度的 usize。</li>
@@ -463,7 +463,7 @@ impl&lt;K, V&gt; Default for HashMap&lt;K, V&gt;
 <p>為了後續實作 resize 容易些，同時實作了指定 bucket 數目的建構式。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn with_capacity(cap: usize) -&gt; Self {
     let mut buckets: Vec&lt;Bucket&lt;K, V&gt;&gt; =  Vec::new();
     for _ in 0..cap {
@@ -472,7 +472,7 @@ fn main() {
     Self { buckets, len: 0 }
 } 
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>很清楚地，同樣建立一個空的 bucket array，再預先配置給定數量的 <code>Bucket</code> 。<code>len</code> 則因為沒有開始增加新值，而設定為 0。</p>
 <h3><a class="header" href="#存取單一元素" id="存取單一元素">存取單一元素</a></h3>
 <p>存取元素的實作也非常直觀，</p>
@@ -483,7 +483,7 @@ fn main() {
 </ol>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn get(&amp;self, key: &amp;K) -&gt; Option&lt;&amp;V&gt; {
     let index = self.make_hash(key)?;
     self.buckets.get(index).and_then(|bucket|
@@ -493,12 +493,12 @@ fn main() {
     )
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>事實上，這個 <code>get</code> 不是非常方便使用，當我們透過 <code>HashMep::get</code> 搜尋特定鍵時，必須傳入一模一樣的型別，例如 <code>HashMap&lt;&amp;str, u8&gt;</code> 就只能透過相同的 borrowed value <code>&amp;str</code> 搜索，而不能透過 owned value <code>&amp;String</code> 尋找，就算兩個型別可無痛轉換也無法。</p>
 <p>因此我們可以參考 Rust 標準函式庫為泛型參數 <code>K</code> 實作 <a href="https://doc.rust-lang.org/stable/std/borrow/trait.Borrow.html">Borrow</a> trait，抽象化 owned 與 borrowed 間的型別，讓呼叫端無論傳 owned 或 borrowed 型別都可以有相同的行為。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn get&lt;Q&gt;(&amp;self, q: &amp;Q) -&gt; Option&lt;&amp;V&gt;
     where
         K: Borrow&lt;Q&gt;,
@@ -512,7 +512,7 @@ fn main() {
     )
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <blockquote>
 <p><code>fn get_mut()</code> 與 <code>fn get()</code> 的差異只在於呼叫了 <code>self.bucket.get_mut</code> 取得 mutable reference，這裡就不多做說明。</p>
 </blockquote>
@@ -525,7 +525,7 @@ fn main() {
 <p>先來看看刪除怎麼實作。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn remove&lt;Q&gt;(&amp;mut self, q: &amp;Q) -&gt; Option&lt;V&gt;
     where
         K: Borrow&lt;Q&gt;,
@@ -542,7 +542,7 @@ fn main() {
     })
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>所有涉及搜尋的操作，第一步一定是計算雜湊值。</li>
 <li>建立 mutable 的迭代器，利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.position"><code>posiion</code></a> 找到對應的鍵值對，再呼叫 <code>Vec::swap_remove</code> 移除。</li>
@@ -554,7 +554,7 @@ fn main() {
 <p>而插入與移除非常相似。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn insert(&amp;mut self, key: K, value: V) -&gt; Option&lt;V&gt; {
     self.try_resize();                                      // 1
     let index = self                                        // 2
@@ -573,7 +573,7 @@ fn main() {
     }                                                       // 4
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>嘗試調整雜湊表大小，以確保 load factor 在閾值之間。</li>
 <li>同樣地，根據鍵計算雜湊值，以取得對應的內部 bucket 位置。</li>
@@ -601,7 +601,7 @@ fn main() {
 <p>前情提要完畢，接下來就是程式碼的部分了。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn try_resize(&amp;mut self) {
     let entry_count = self.len();                               // 1
     let capacity = self.bucket_count();
@@ -622,7 +622,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>取得所有需要用到的長度資料。</li>
 <li>若當前容量為 0，表示尚未新增任何元素，我們 push 一個空 bucket 進去，讓其他操作可以正常新增鍵值對。</li>
@@ -636,14 +636,14 @@ fn main() {
 <p>根據之前其他方法的實作，要迭代整個雜湊表非常簡單，就是迭代所有 bucket，並利用 <code>flat_map</code> 打平 nested vector。簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn iter() -&gt; std::slice::Iter&lt;(&amp;k, &amp;v)&gt; {
     self.buckets.iter_mut()
         .flat_map(|b| b)
         .map(|(k, v)| (k, v))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>但最終會發現，我們的程式完全無法編譯，也無法理解這麼長的閉包（closure）究竟要如何寫泛型型別。得了吧 Rust，老子學不動了！</p>
 <pre><code>error[E0308]: mismatched types
    --&gt; src/collections/hash_map/mod.rs:253:9
@@ -660,14 +660,14 @@ fn main() {
 <p>實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn iter(&amp;self) -&gt; impl Iterator&lt;Item = (&amp;K, &amp;V)&gt; {
     self.buckets.iter()
         .flat_map(|b| b)
         .map(|(k, v)| (k, v))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>更多 impl trait 相關資訊可以參考：</p>
 <ul>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/1522-conservative-impl-trait.md">Rust RFC: impl trait</a></li>

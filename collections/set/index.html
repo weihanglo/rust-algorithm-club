@@ -172,7 +172,7 @@
 <p>既然選用雜湊表作為底層容器，集合的結構體就非常簡單了，我們可以將集合想像為在 HashMap 薄薄的一層封裝。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct HashSet&lt;T&gt;
 where
     T: Hash + Eq,
@@ -180,7 +180,7 @@ where
     hash_map: HashMap&lt;T, ()&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>比較特別的是雜湊表的鍵值，這裡使用空的 tuple <code>()</code>，也就是以 <a href="https://doc.rust-lang.org/std/primitive.unit.html">unit type</a> 作為雜湊表之值，只要將集合的元素作為雜湊表鍵，忽略對應的值，就是貨真價實的集合結構。</p>
 <h3><a class="header" href="#不佔空間的-unit-type" id="不佔空間的-unit-type">不佔空間的 Unit Type</a></h3>
 <p>這樣多儲存一個 <code>()</code> 會不會造成額外的儲存空間負擔？事實上，Unit type <code>()</code> 在 Rust 語言中是一種 <a href="https://doc.rust-lang.org/nomicon/exotic-sizes.html#zero-sized-types-zsts">Zero Sized Types (ZSTs)</a>，在編譯時期 Rust 會將 ZST 當作一種型別來操作，但真正輸出的機器碼中，ZST 並不會佔用任何運算空間。<code>Set = HashMap&lt;T, ()&gt;</code> 完全體現了 Rust 零成本抽象的語言特性。</p>
@@ -198,7 +198,7 @@ where
 <p>這些基本操作的實作上，只是對雜湊表的簡單封裝，詳細實作可以參考 <a href="../hash_map">HashMap</a>。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; HashSet&lt;T&gt;
 where
     T: Hash + Eq,
@@ -236,7 +236,7 @@ where
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li><code>insert</code> 將元素置於 key 上，value 則設為 <code>()</code>。</li>
 <li><code>contains</code> 利用 <code>HashMap::get</code> 回傳的 <code>Option&lt;()&gt;</code> 判斷是否已有該的元素。</li>
@@ -264,7 +264,7 @@ where
 <p>要取得兩個集合的聯集，最直覺的想法可能是創造一個新的集合，再把 A 和 B 兩個集合的元素通通 <code>insert</code> 進去，就像這樣：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// 利用 Clone 實現的聯集。完整實作見 bit.ly/caab7fb
 pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; HashSet&lt;T&gt; {
     // 複製一整份 other 到新的 set
@@ -279,7 +279,7 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; HashSet&lt;T&gt; {
     new_set
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>然而，上述做法有兩個缺點：</p>
 <ol>
 <li>建立了一個全新的 HashSet 實例，花了額外的時間與空間</li>
@@ -299,7 +299,7 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; HashSet&lt;T&gt; {
 <p>這樣其實就是 <code>other \ self</code> 這個差集，加上 <code>self</code> 自身，剛好就是聯集。程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// 使用 impl trait 語法，避免宣告不同迭代器型別的麻煩。
 pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     // 實際上就是差集
@@ -308,7 +308,7 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Ite
     self.iter().chain(other_but_not_self)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h4><a class="header" href="#lifetime-elision" id="lifetime-elision">Lifetime Elision</a></h4>
 <p>但很不幸地，Compiler error E0623（甚至查不到 E0623 是什麼）。</p>
 <pre><code class="language-bash">error[E0623]: lifetime mismatch
@@ -323,22 +323,22 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Ite
 <p>是 <code>self</code> 與 <code>other</code> 的生命週期不同導致，當這兩個集合的迭代器被 chain 起來後回傳，編譯器無法確認 Iterator 的 Item 生命週期多長。你可能很好奇為什麼 <code>self</code> 與 <code>other</code> 生命週期不同，事實上，Rust 為了讓語法輕鬆一點，允許函數省略部分生命週期標註，這個行為稱作 <a href="https://doc.rust-lang.org/nomicon/lifetime-elision.html">Lifetime Elision</a>，會在各種不同的條件下加註生命週期，其中有一條是「<strong>每個被省略的生命週期都會成為獨立的生命週期</strong>」。因此，<code>union()</code> 加上被省略的生命週期，會長得像：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn union&lt;'a, 'b&gt;(&amp;'a self, other: &amp;'b HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;'a ??? &amp;'b ???T&gt;;
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>於是乎，編譯器無法理解 Iterator&lt;Item = &amp;T&gt; 的 <code>&amp;T</code> 到底生命週期是 ‘a 還是 ‘b，就不給編譯。</p>
 <p>解法也很簡單，合併 <code>self</code> 與 <code>other</code> 的生命週期到同一個，不論是語意上（兩個集合至少活得一樣長）還是編譯條件都說得通。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// 加上 'a ，讓 self、other 的生命週期至少在這個函數內一樣長
 pub fn union&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     let other_but_not_self = other.iter().filter(|item| !self.contains(item));
     self.iter().chain(other_but_not_self)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <blockquote>
 <p>更多 Lifetime Elision 的資訊，可以參考 <a href="https://doc.rust-lang.org/nomicon/lifetime-elision.html">Rust 黑魔法 Nomicon</a> 與 <a href="https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html#lifetime-elision">Rust TRPL 的解釋</a>，還有相關的 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0141-lifetime-elision.md">RFC</a> 可以看。</p>
 </blockquote>
@@ -369,7 +369,7 @@ help: to force the closure to take ownership of `self` (and any other referenced
 <p>編譯器也十分好心地提示，只要使用 <code>move</code> 關鍵字，將 <code>self</code> 的所有權轉移至 closure 中，就能避免生命週期不一致的問題。你可能有些疑惑，把 <code>self</code> move 進 closure 之後，<code>self</code> 不就會被 drop 釋放掉了？可以這樣理解，轉移進 closure 的型別是整個 <code>self</code>，也就是 <code>&amp;'a mut HashSet&lt;T&gt;</code> 型別，解讀為編譯器將 <code>self</code> 的型別看作新的 owned type，所有權可合法轉移，但底層仍保留指向原始資料的 borrow，巧妙避開生命週期問題。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn union&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     // 用 move 修飾 closure
     // self（&amp;'a HashSet&lt;T&gt;）被整個轉移進 closure
@@ -377,54 +377,54 @@ fn main() {
     self.iter().chain(other_but_not_self)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#實作交集差集與對稱差集" id="實作交集差集與對稱差集">實作交集、差集與對稱差集</a></h3>
 <p>呼，上面解決了最困難的生命週期和 borrow checker 問題，接下來的實作只要關注數學上的集合定義就能輕鬆解決了。</p>
 <p>首先，交集的定義為「你有，而且我也有的」，簡單，迭代 <code>self</code> 並過濾出 <code>other</code> 也有的元素就好，秒殺！</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn intersection&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     self.iter().filter(move |item| other.contains(item))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>再來是差集，概念是就是「我有，但你沒有的」，一樣迭代 <code>self</code> 並過濾出 <code>other</code> 沒有的元素。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn difference&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     self.iter().filter(move |item| !other.contains(item))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>剛剛實作 <code>union</code> 有用到差集，我們可以稍微改寫，讓 <code>union</code> 的程式碼更神清氣爽。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn union&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     // self ∪ (other \ self)
     self.iter().chain(other.difference(self))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>最後，對稱差集可以透過組合上面的操作算出，可以是：「我有加上你有的，減去我們共同有的」，也可以是「我有但你沒有的，加上你有但我沒有的」，這裡我們選擇第二種實作。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn symmetric_difference&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     // (self \ other) ∪ (other \ self)
     self.difference(other).chain(other.difference(self))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>整個集合的基礎在這邊大功告成了！</p>
 <h3><a class="header" href="#子集超集與不交集" id="子集超集與不交集">子集、超集與不交集</a></h3>
 <p>經歷 Rust 編譯器的摧殘，來實作比較簡單的方法吧。集合運算常要比較兩個集合的關係，例如 A ⊆ B 代表 A 是 B 的子集，定義是 A 裡面的元素 B 都有。</p>
 <p>我們先來實作 <code>is_subset</code> 檢查 <code>self</code> 是否為 <code>other</code> 的子集。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn is_subset(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; bool {
     // 若 self 的元素比 other 多，就不可能是 self ⊆ other
     // 所以提前回傳 false
@@ -435,26 +435,26 @@ fn main() {
     self.iter().all(|item| other.contains(&amp;item))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p><code>is_superset</code> 檢查 <code>self</code> 是否為 <code>other</code> 的超集就更簡單了，只要把 <code>is_subset</code> 反過來使用就行了。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn is_superset(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; bool {
     // self ⊇ other = other ⊆ self
     other.is_subset(self)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>最後，我們常會檢查兩個集合是否沒有交集（disjoint），這個方法只要檢查交集 <code>intersection()</code> 迭代器的長度是否為 0 就可以了。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn is_disjoint(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; bool {
     self.intersection(other).count() == 0
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h2><a class="header" href="#二元運算與運算子" id="二元運算與運算子">二元運算與運算子</a></h2>
 <p>上面的方法好冗，能不能和 <a href="https://docs.python.org/3/library/stdtypes.html#set">Python</a> 一樣，用簡單明瞭的語法操作集合的二元運算？當然行，Rust 的表達性很強，完全不輸 Python，透過<a href="https://en.wikipedia.org/wiki/Operator_overloading">運算子多載（operator overloading）</a>。</p>
 <h3><a class="header" href="#運算子多載" id="運算子多載">運算子多載</a></h3>
@@ -468,7 +468,7 @@ fn main() {
 <p>由於四個運算子實作的概念相同，這裡挑 <code>|</code> <strong>bitwise or</strong> 來解釋如何客製化運算子邏輯。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// 實作 BitOr 多載 `|` 運算子
 impl&lt;'a, 'b, T&gt; BitOr&lt;&amp;'b HashSet&lt;T&gt;&gt; for &amp;'a HashSet&lt;T&gt;
 where
@@ -482,7 +482,7 @@ where
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>要多載 bit or 運算子，代表型別要實作 <code>BitOr</code> trait。</li>
 <li>由於運算子的 required method 通常會 consume <code>self</code> 的所有權，因此我們要在 impl 動手腳，改以 <code>&amp;HashSet&lt;T&gt;</code> 作為 <code>BitOr</code> 實作的對象。</li>
@@ -516,7 +516,7 @@ where
 </ol>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; PartialEq for HashSet&lt;T&gt;
 where
     T: Hash + Eq,
@@ -534,7 +534,7 @@ where
 /// `Eq` 並沒有 required method，只要實作 `Partial::eq` 方法，就能直接推斷出 `Eq`。
 impl&lt;T&gt; Eq for HashSet&lt;T&gt; where T: Hash + Eq {}
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>與相等關係相同，Rust 的排序關係同樣有理論依據，<code>Ord</code> 是數學上的 <a href="https://en.wikipedia.org/wiki/Total_order">Total order</a>，符合反對稱性、傳遞性，以及 <a href="https://en.wikipedia.org/wiki/Connex_relation">connex relation</a>；而 <code>ParitalOrd</code> 則接近數學上的 partial order，Rust 的文件中描述該 trait 須符合反對稱性與傳遞性。</p>
 <blockquote>
 <p>Connex relation：在集合 X 下，所有 (x, y) pair 都會符合 x ∼ y 或 y ∼ x 的關係。在排序關係上，意指不是 x ≥ y 就是 y ≥ x。</p>
@@ -560,7 +560,7 @@ impl&lt;T&gt; Eq for HashSet&lt;T&gt; where T: Hash + Eq {}
 </ol>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; PartialOrd for HashSet&lt;T&gt;
 where
     T: Hash + Eq,
@@ -577,7 +577,7 @@ where
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>實作 <code>PartialEq</code>，<code>Eq</code> 與 <code>PartialOrd</code> 後，我們的集合型別終於能和 Python 的集合互別苗頭，有更高層次的表達性！</p>
 <blockquote>
 <p>有人可能會認為，比較運算還要透過 <code>partial_cmp</code> 判斷 <code>Option</code> 多麻煩，事實上，C++ 20 也帶來了 <code>&lt;=&gt;</code> 運算子以及 <a href="https://en.cppreference.com/w/cpp/language/operator_comparison#Three-way_comparison">three way comparison</a> 衍生的各種型別，partial order 或 parital equal 可說是更精確且必要的比較運算，也是一種趨勢。</p>

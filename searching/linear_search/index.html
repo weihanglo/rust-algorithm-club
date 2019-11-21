@@ -170,7 +170,7 @@
 <p>線性搜尋就是用一個 for-loop 解決。要注意的是，<code>T</code> 泛型參數至少要實作 <code>PartialEq</code> 才能比較。程式碼中使用了迭代器的 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.enumerate">enumerate</a>，建立一個新迭代器，每次迭代產生迭代次數與對應的值。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn linear_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Option&lt;usize&gt;
     where T: PartialEq
 {
@@ -182,18 +182,18 @@ fn main() {
     None
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>事實上，若利用 Rust 內建的 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.position"><code>iterator.position</code></a>，程式碼也許會更簡潔。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn linear_search&lt;T&gt;(arr: &amp;[T], obj: &amp;T) -&gt; Option&lt;usize&gt;
     where T: PartialEq
 {
     arr.iter().position(|x| x == obj)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
 <p><a href="https://en.wikipedia.org/wiki/Linear_search">Wiki: Linear search</a></p>
 

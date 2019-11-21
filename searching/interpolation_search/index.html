@@ -224,13 +224,13 @@ $$</p>
 <p>首先是函式宣告。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn interpolation_search(
     arr: &amp;[i32],
     target: &amp;i32,
 ) -&gt; Result&lt;usize, usize&gt;
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>映入眼簾的是 <code>i32</code>，而非泛型參數，為什麼呢？是因為內插搜尋為了計算線性內插，資料僅限定在「數值資料」，而 Rust 並沒有特別一類 <strong>Numeric</strong> 的型別，自己透過 trait 實作又異常繁瑣，因此先以 <code>i32</code> 代替。而回傳值的部分，與指數搜尋／二元搜尋一模一樣，回傳的 <code>Result</code></p>
 <ul>
 <li>若為 <code>Ok</code>，其值代表目標值在序列內的索引位置；</li>
@@ -242,7 +242,7 @@ fn main() {
 <p>再來就是第一第二部分，處理空序列與建立共用變數，非常直觀。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>    if arr.is_empty() {
         return Err(0)
     }
@@ -252,7 +252,7 @@ fn main() {
 
     let mut interpolant = 0_usize;
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ul>
 <li><code>hi</code>、<code>lo</code> 兩個變數劃定的搜尋範圍上下界。</li>
 <li><code>interpolant</code> 儲存線性插值，代表每次迭代的搜尋位置。</li>
@@ -260,7 +260,7 @@ fn main() {
 <p>接下來就是主要的迴圈，負責迭代計算內插值。分為三個部分，直接看程式碼先。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>    loop {
         let lo_val = arr[lo];
         let hi_val = arr[hi];
@@ -286,7 +286,7 @@ fn main() {
         }
     }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>迴圈的三個終止條件，分別為：
 <ul>
@@ -301,7 +301,7 @@ fn main() {
 <p>最後一部分則是決定線性插值所得的索引位置是否為目標值，並將該值映射到 <code>Result</code> 上。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>    if *target &gt; arr[hi] {
         Err(hi + 1)
     } else if *target &lt; arr[lo] {
@@ -310,11 +310,11 @@ fn main() {
         Ok(interpolant)
     }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>完整的程式碼如下。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn interpolation_search(
     arr: &amp;[i32],
     target: &amp;i32,
@@ -366,7 +366,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <blockquote>
 <p>如同<a href="../binary_search">二元搜尋</a>與<a href="../exponential_search">指數搜尋
 </a>，未特別處理重複元素的內插搜尋，並無法預期會選擇哪一個元素。</p>

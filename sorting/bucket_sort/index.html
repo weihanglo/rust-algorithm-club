@@ -255,7 +255,7 @@ $n $ = 資料筆數</p>
 <p>Bucket sort 有許多種各異的實作法，差異最大之處就是桶子 bucket 這部分。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>/// Bucket to store elements.
 struct Bucket&lt;H, T&gt; {
     hash: H,
@@ -275,7 +275,7 @@ impl&lt;H, T&gt; Bucket&lt;H, T&gt; {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>這裡的桶子實作兩個 struct fields：</p>
 <ul>
 <li><code>values</code>：使用 <a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a> 儲存對應範圍內的元素</li>
@@ -285,13 +285,13 @@ impl&lt;H, T&gt; Bucket&lt;H, T&gt; {
 <p>接下來就是排序主函式。依照慣例，先看看函式的宣告（function signature）。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn bucket_sort&lt;H, F, T&gt;(arr: &amp;mut [T], hasher: F)
     where H: Ord,
           F: Fn(&amp;T) -&gt; H,
           T: Ord + Clone,
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>這個 <code>bucket_sort</code> 函式使用了不少泛型：</p>
 <ul>
 <li><code>H</code>：<code>hasher</code> 函式的回傳型別，用來辨識不同的桶子。</li>
@@ -301,7 +301,7 @@ fn main() {
 <p>函式自身稍微複雜一點，但仍不脫離<a href="#%E6%AD%A5%E9%A9%9F">四步驟</a>：Create buckets、Scatter、Inner sort，還有 Gather。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn bucket_sort() {
     // ...
 
@@ -331,7 +331,7 @@ fn main() {
     arr.clone_from_slice(&amp;ret); // 4 Copy to original array
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>一般來說，第一步會配置完所有桶子，但這裡實作僅建立儲存桶子們的容器 <code>buckets</code>，這是由於實作了 <code>hasher</code> 函式，元素對應桶子的邏輯交由外部決定，因此桶子不需事先配置，而是交給第二步驟時 <strong>on-the-fly</strong> 建立。</li>
 <li>迭代輸入的 <code>arr</code>，將元素散佈到桶子中。

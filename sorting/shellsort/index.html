@@ -253,11 +253,11 @@
 <p>我們這裡以 <a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Marcin 的 Paper</a> 中提到的經驗式為例，首先，先建立一個 gap sequence 的常數。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>/// Marcin Ciura's gap sequence.
 pub const MARCIN_GAPS: [usize; 8] = [701, 301, 132, 57, 23, 10, 4, 1];
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>再來就是主程式的部分，總共會有三個迴圈，</p>
 <ul>
 <li>最外層是迭代 gap sequence，</li>
@@ -266,7 +266,7 @@ pub const MARCIN_GAPS: [usize; 8] = [701, 301, 132, 57, 23, 10, 4, 1];
 </ul>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>/// Shellsort
 pub fn shellsort(arr: &amp;mut [i32]) {
     let len = arr.len();
@@ -283,7 +283,7 @@ pub fn shellsort(arr: &amp;mut [i32]) {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>最外層的迴圈，利用 <code>iter()</code> trait 產生迭代器，迭代 gap sequence。</li>
 <li>中間層迴圈，控制 <code>i</code> 是否超出資料序列，以迭代整合資料序列。</li>

@@ -173,47 +173,47 @@
 <p>先建立最基本的節點 Node。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// cannot compile
 struct Node&lt;T&gt; {
     elem: T,
     next: Node&lt;T&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p><code>Node.elem</code> 很直觀地儲存實際資料。而 <code>Node.next</code> 則是指向下個 Node。但這樣編譯不會成功，Rust 編譯時需要決定每個型別該配置多少記憶體空間，這種遞迴型別使得編譯器無限循環，無法決定配置大小。</p>
 <p><img src="node-recursive.svg" alt="node-recursive" /></p>
 <p>很簡單，我們使用 <a href="https://doc.rust-lang.org/std/boxed/index.html"><code>Box&lt;T&gt;</code></a> 這個<a href="https://doc.rust-lang.org/book/ch15-00-smart-pointers.html">智慧指標</a>，直接將 Node 配置在記憶體 heap 上。如此以來，編譯器就會知道 <code>next</code> 只佔了一個指標的空間。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>struct Node&lt;T&gt; {
     elem: T,
     next: Box&lt;Node&lt;T&gt;&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p><img src="node-box.svg" alt="node-box" /></p>
 <p>由於 Rust 沒有 null pointer，但照鏈結串列的定義，<code>Node.next</code> 可以是 NULL，因此我們使用 <a href="https://doc.rust-lang.org/std/option/index.html"><code>Option&lt;T&gt;</code></a> 模擬 null pointer 的行為。最後，Node 的定義如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>struct Node&lt;T&gt; {
     elem: T,
     next: Option&lt;Box&lt;Node&lt;T&gt;&gt;&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#singlylinkedlist" id="singlylinkedlist">SinglyLinkedList</a></h3>
 <p>在開始實作各種增刪節點的操作之前，我們需要建立一個 struct 存放指向鏈結串列 head 的指標，同時，各種操作也會實作在這個 struct 上。事實上，這個 struct 就是對外公開的資料結構。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct SinglyLinkedList&lt;T&gt; {
     head: Option&lt;Box&lt;Node&lt;T&gt;&gt;&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>選擇把操作串列的函式寫在另一個 struct 而非 Node 上有幾個原因，1）外部並不需知道串列內部如何實作，公開 Node 會暴露實作。2）每個 Node 都帶有成員函式的話，函式指標會佔用太多額外資源。</p>
 <h2><a class="header" href="#基本操作" id="基本操作">基本操作</a></h2>
 <p>串列的基本操作如下：</p>
@@ -231,7 +231,7 @@ fn main() {
 <p>實做初始化與清除資料非常直觀。其中清除其實就只是將 <code>self</code> 指向新的串列實例。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
     pub fn new() -&gt; Self {
         Self { head: None }
@@ -242,20 +242,20 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>你可能會想，在清除所有資料時，資源需不需要手動釋放？</p>
 <p>和 C++ 的 RAII 一樣，Rust 有一個名叫 <code>drop</code> 的解構式，只要程式執行離開了資源擁有者的可視範圍（out of scope），就會自動呼叫 <code>drop</code>。我們在 <a href="#drop-trait">Drop trait</a> 一節會再深入探討。</p>
 <h3><a class="header" href="#增刪首個節點" id="增刪首個節點">增刪首個節點</a></h3>
 <p>單向鏈結串列在第一個節點前增加新節點，或是刪除第一個節點，都可以在常數時間完成。新增節點 <code>push_front</code> 的概念很簡單，1）建立新的節點，並把新節點 <code>next</code> 指標指向串列第一個節點。2）把串列的 head 指向新建立的節點。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn push_front(&amp;mut self, elem: T) {
     let next = self.head.take(); // 1
     self.head = Some(Box::new(Node { elem, next })); // 2
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>釋放 SinglyLinkedList 對第一個節點的所有權</li>
 <li>建立一新節點，並將原本第一個節點所有權轉移給新節點。再將新節點所有權轉移到串列本身。</li>
@@ -263,7 +263,7 @@ fn main() {
 <p>刪除第一個節點 <code>pop_front</code> 的實作步驟如下：首先取得第一個節點的所有權，再將 head 指向第一個節點 <code>Node.next</code> 下一個節點，再返回第一個節點的資料給呼叫端。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn pop_front(&amp;mut self) -&gt; Option&lt;T&gt; {
     let head = self.head.take(); // 1
     match head {
@@ -275,7 +275,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>取得第一個元素的所有權。</li>
 <li>將 head 指向下一個節點。</li>
@@ -286,7 +286,7 @@ fn main() {
 <p>實作插入 <code>insert_after</code> 分為幾個步驟：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn insert_after(&amp;mut self, pos: usize, elem: T) -&gt; Result&lt;(), usize&gt; {
     let mut curr = &amp;mut self.head;
     let mut pos_ = pos;
@@ -313,7 +313,7 @@ fn main() {
     Ok(())
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>找到對應索引值的節點 A，若找不到則回傳這個串列的資料長度。</li>
 <li>先取得節點 A 的所有權，才能修改它的值。</li>
@@ -324,7 +324,7 @@ fn main() {
 <p>而實作刪除任意索引下的節點 <code>remove</code> 和插入非常相似。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn remove(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
     let mut curr = &amp;mut self.head;
     let mut pos = pos;
@@ -346,7 +346,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>找到對應索引值的節點 A，若找不到則回傳 <code>None</code>。</li>
 <li>先取得節點 A 的所有權，才能修改它的值。</li>
@@ -357,7 +357,7 @@ fn main() {
 <p>反轉鏈結串列是工作面試時很常見的考題，這裡來實作看看。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn reverse(&amp;mut self) {
     let mut prev = None;              // 1: prev -&gt; Node P
     let mut curr = self.head.take();  // 2
@@ -370,7 +370,7 @@ fn main() {
     self.head = prev.take(); // 4
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>先建立一個暫時變數 <code>prev</code>，儲存迭代時的前一個節點。</li>
 <li>從串列 head 取得第一個節點的所有權。</li>
@@ -412,7 +412,7 @@ a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
 <p>既然如此，那麼就透過 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html">Drop trait</a>，實作一個迭代版本的解構式，消弭可怕的 call stack 吧。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
     fn drop(&amp;mut self) {
         let mut link = self.head.take();  // 1
@@ -422,7 +422,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>取得 head 的所有權。</li>
 <li>透過 pattern matching 取得 Node 裡面 Box 的所有權。</li>
@@ -435,20 +435,20 @@ fn main() {
 <p>實際上，透過呼叫 <code>pop_front()</code>，不斷移除第一個節點，並使用 <code>is_some()</code> 檢查是否仍有節點，幾乎可以達到同樣的 drop 效果，而且更簡潔易懂。差別僅在於，相較於前個實作自己處理 call stack，這個實作每次移除元素都需要 <code>pop_front()</code> 與 <code>is_some()</code> 的 stack，多了些微小的開銷。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
     fn drop(&amp;mut self) {
         while self.pop_front().is_some() {}
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#iterator-and-intoiterator-traits" id="iterator-and-intoiterator-traits">Iterator and IntoIterator traits</a></h3>
 <p>既然鏈結串列是一種序列（sequence，有序的資料結構），少不了實作 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html">Iterator</a>、<a href="https://doc.rust-lang.org/std/iter/trait.IntoIterator.html">IntoIterator</a> 等 trait，使串列可以輕鬆使用 for-in loop 遍歷（traverse）。</p>
 <p>首先，先定義幾個迭代器的 struct。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct IntoIter&lt;T&gt;(SinglyLinkedList&lt;T&gt;);
 
 pub struct Iter&lt;'a, T: 'a&gt; {
@@ -459,7 +459,7 @@ pub struct IterMut&lt;'a, T: 'a&gt; {
     next: Option&lt;&amp;'a mut Node&lt;T&gt;&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>建立這三個 iterator struct 是常見的 Rust 設計模式。</p>
 <ul>
 <li><code>IntoIter</code>：產生 <code>T</code>，實作會吃掉元素所有權的 <code>IntoIterator</code> trait</li>
@@ -475,7 +475,7 @@ pub struct IterMut&lt;'a, T: 'a&gt; {
 <p>先來看 <code>IntoIter</code> 實作。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct IntoIter&lt;T&gt;(SinglyLinkedList&lt;T&gt;);      // 1
 
 impl&lt;T&gt; Iterator for IntoIter&lt;T&gt; {                // 2
@@ -493,7 +493,7 @@ impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt; {    // 3
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>宣告一個 tuple struct，唯一的成員是 <code>SinglyLinkedList</code>。</li>
 <li>實作 <code>Iterator</code> trait 的 required method <code>next</code>，為了達成 <em>Into</em> 會消耗原始資料，轉換所有權的特性，我們利用 <code>pop_front()</code> 將節點的資料依序刪除（pop）。</li>
@@ -505,7 +505,7 @@ impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt; {    // 3
 <p>再來看看 <code>Iter</code> 怎麼實踐。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct Iter&lt;'a, T: 'a&gt; {                    // 1
     next: Option&lt;&amp;'a Node&lt;T&gt;&gt;,
 }
@@ -531,7 +531,7 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>這個 struct 的 <code>next</code> 是為了儲存 <code>Node</code> 資訊，方便記錄迭代器當前的狀態。加上生命週期 <code>'a</code> 是因編譯器無法推敲 <code>Option&lt;&amp;Node&lt;T&gt;&gt;</code> 會活多久，需要顯著標明 <code>&amp;Node</code> 至少與該迭代器同生共死。</li>
 <li>由於 <code>Iter</code> 是為了實作產生 <code>&amp;T</code> 的迭代器，associated type 設為  <code>&amp;'a T</code>。</li>
@@ -561,7 +561,7 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 <p>實作上我們用了 <code>iter</code> 成員函式把兩個串列 <code>zip</code> 在一起，在用 <code>all</code> 確認元素兩兩相等，十分 Rust 風格的作法。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T: PartialEq&gt; PartialEq for SinglyLinkedList&lt;T&gt; {
     fn eq(&amp;self, other: &amp;Self) -&gt; bool {
         if self.len() != other.len() {
@@ -573,12 +573,12 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#debug-trait" id="debug-trait">Debug trait</a></h3>
 <p>為了方便修復臭蟲，通常會實作 <a href="https://doc.rust-lang.org/std/fmt/trait.Debug.html">Debug trait</a> 印出有助於解決問題的資料。歸功於 <code>Iterator</code> 的實踐，我們可以快速用 <code>self.iter()</code> 印出所有節點內的元素，客製化 <code>Debug</code> 的顯示方式。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
     fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter) -&gt; std::fmt::Result {
         for elem in self.iter() {
@@ -588,7 +588,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h2><a class="header" href="#效能" id="效能">效能</a></h2>
 <table><thead><tr><th>Operation</th><th>Complexity</th></tr></thead><tbody>
 <tr><td>get</td><td>$O(n)$</td></tr>

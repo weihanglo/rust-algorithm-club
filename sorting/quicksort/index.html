@@ -285,7 +285,7 @@ swap i, j
 <p>遞迴函式本身實作非常簡單，分別將小於 pivot 與大於 pivot 兩部分遞迴呼叫自身即可。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>/// Recursion helper
 fn quicksort_helper(arr: &amp;mut [i32], lo: isize, hi: isize) {
     if lo &lt;= hi {                               // 1
@@ -295,7 +295,7 @@ fn quicksort_helper(arr: &amp;mut [i32], lo: isize, hi: isize) {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>利用 <code>lo</code> 與 <code>hi</code> 兩個指標決定每次的遞迴範圍，並在 <code>lo</code> 大於 <code>hi</code> 時停止遞迴，避免重複分割序列。</li>
 <li>分割序列步驟，回傳該序列範圍內 pivot 的 index。</li>
@@ -308,13 +308,13 @@ fn quicksort_helper(arr: &amp;mut [i32], lo: isize, hi: isize) {
 <p>由於外部不需知道排序法實作細節，我們將函式命名為 <code>quicksort_helper</code> ，對外再多封裝一層主函式 <code>quicksort_lomuto</code>，實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn quicksort_lomuto(arr: &amp;mut [i32]) {
     let hi = arr.len() as isize - 1;
     quicksort_helper(arr, 0, hi);
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#partitioning" id="partitioning">Partitioning</a></h3>
 <p>一般來說，分割序列的實作有下列兩個步驟：</p>
 <ul>
@@ -324,7 +324,7 @@ fn main() {
 <p>我們以 Lomuto scheme 實作 partition。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; isize {
     // -- Determine the pivot --
     // In Lomuto parition scheme,
@@ -344,7 +344,7 @@ fn main() {
     i // Return the final index of the pivot
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>Lomuto scheme 選擇 pivot 的方式很直接，就是選擇最後一個元素。</li>
 <li>利用 <code>i</code>、<code>j</code> 兩個指標迭代指定的序列範圍，若第 j 個值小於 pivot 時，則於第 i 個元素置換。</li>
@@ -366,7 +366,7 @@ fn main() {
 <p>簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn quicksort_helper_optimized(arr: &amp;mut [i32], lo: isize, hi: isize) {
     if lo &lt;= hi {
         let pivot = partition(arr, lo, hi);
@@ -380,7 +380,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>說穿了就只有這個判斷式，決定哪部分該先遞迴而已。</li>
 <li>這是一個尾端呼叫，會展開。</li>
@@ -402,7 +402,7 @@ fn main() {
 <p>再來，選擇性遞迴較小的部分。Iterative 版本的尾端呼叫消除（tail-call eliminate）就做完了！</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn quicksort_helper_manual_tco(arr: &amp;mut [i32], mut lo: isize, mut hi: isize) {
     while lo &lt; hi {
         let pivot = partition(arr, lo, hi);
@@ -416,7 +416,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#選擇-pivot-的方法" id="選擇-pivot-的方法">選擇 Pivot 的方法</a></h3>
 <p>選擇 pivot 的方法大致上有以下幾種：</p>
 <ul>
@@ -434,7 +434,7 @@ fn main() {
 <p>通常是使用著名的 <a href="https://en.wikipedia.org/wiki/Dutch_national_flag_problem">Dutch national flag algorithm</a> 來解決這個問題。實作上和 Lomuto 非常類似。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; (isize, isize) {
     let pivot = arr[hi as usize];
     let mut i = lo;         // smaller
@@ -459,12 +459,12 @@ fn main() {
     (i, k)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#選擇不同的分割方案" id="選擇不同的分割方案">選擇不同的分割方案</a></h3>
 <p>不同的分割方案有著不同的應用場景，如上述的 3-way scheme 就適合重複元素多的序列。這裡再多介紹另一個常見的分割實作方案 Hoare partition，是 Quicksort 發明這 Hoare 自己提出的分割法，Rust 實作演算法如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
     let pivot = arr[lo];
     let mut i = lo;
@@ -489,7 +489,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>從最左邊開始找比 pivot 大或相等的元素。</li>
 <li>從最右邊開始找比 pivot 小或相等的元素。</li>

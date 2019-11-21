@@ -164,13 +164,13 @@
 <h2><a class="header" href="#架構設計" id="架構設計">架構設計</a></h2>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct Stack&lt;T&gt; {
     maxsize: usize,
     items: Vec&lt;T&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p><code>maxsize</code> 用於模擬堆疊空間有限的特性；<code>items</code> 負責保存加入堆疊的資料。</p>
 <p>在此刻意將 <code>maxsize</code>、<code>items</code> 定義為 private member，避免外部直接存取。</p>
 <h2><a class="header" href="#基本操作" id="基本操作">基本操作</a></h2>
@@ -184,7 +184,7 @@ fn main() {
 <h3><a class="header" href="#定義一個空間有限的堆疊" id="定義一個空間有限的堆疊">定義一個空間有限的堆疊</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn with_capacity(maxsize: usize) -&gt; Stack&lt;T&gt; {
     Stack {
         maxsize,
@@ -192,13 +192,13 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>初始化一個帶有預先分配空間 Vector 的堆疊。</p>
 <p>⚠ 注意，即使預先分配了有限的空間，Rust 的 vector 在空間已滿的情況下會重新分配。假設一開始為 vector 分配了 10 單位的空間，在將第 11 筆資料插入 vector 前，vector 在記憶體的空間將被重新分配，以容納這第 11 筆資料。為了模擬堆疊空間有限的特性，我們會在 <code>push</code> 的操作動點手腳。</p>
 <h3><a class="header" href="#將新資料加入資料結構" id="將新資料加入資料結構">將新資料加入資料結構</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn push(&amp;mut self, item: T) -&gt; bool {
     if self.items.len() == self.maxsize {
         return false;
@@ -207,37 +207,37 @@ fn main() {
     return true;
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>由於 <code>push</code> 操作會改變 <code>items</code>，因此需要堆疊的 mutable reference。由於 Rust 的 vector 有重新分配的特性，在將資料正式加入堆疊之前，必須先檢查堆疊初始化時設定的空間是否已經被塞滿了。如果結果為是，則拒絕將資料加入堆疊。</p>
 <h3><a class="header" href="#將最新加入的資料移出資料結構" id="將最新加入的資料移出資料結構">將最新加入的資料移出資料結構</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn pop(&amp;mut self) -&gt; Option&lt;T&gt; {
     self.items.pop()
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>堆疊有可能是空的，在此以 <code>Option</code> 表現這個情況。如果針對一個空堆疊進行 <code>pop</code> 操作，將會得到 <code>None</code>。</p>
 <h3><a class="header" href="#取得堆疊的大小" id="取得堆疊的大小">取得堆疊的大小</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn size(&amp;self) -&gt; usize {
     self.items.len()
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>一個空堆疊的大小是 0，加入一筆資料後是 1⋯⋯以此類推。注意容量 capcity 與大小 size 是兩個不同的概念。容量是這個堆疊最多可以塞下多少資料，大小則是這個堆疊已經被塞入了多少資料。由於 <code>push</code> 的檢查機制，堆疊的大小永遠不會超過 <code>maxsize</code>。</p>
 <h3><a class="header" href="#在不將資料退出堆疊的情況下偷看最後加入堆疊的資料" id="在不將資料退出堆疊的情況下偷看最後加入堆疊的資料">在不將資料退出堆疊的情況下偷看最後加入堆疊的資料</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn peek(&amp;self) -&gt; Option&lt;&amp;T&gt; {
     self.items.last()
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>與 <code>pop</code> 操作類似，但不會對堆疊造成任何影響。如果偷看的是一個空堆疊，會得到 <code>None</code>。</p>
 <h2><a class="header" href="#效能" id="效能">效能</a></h2>
 <table><thead><tr><th>Operation</th><th>Best Complexity</th><th>Worst Complexity</th></tr></thead><tbody>

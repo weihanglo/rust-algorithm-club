@@ -240,7 +240,7 @@ $$</p>
 <p>以下是完整實作：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn binary_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&lt;usize, usize&gt;
     where T: PartialOrd
 {
@@ -267,7 +267,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>第一部分先取得搜尋範圍 <code>size</code> 以及確定下界為 <code>0_usize</code>。這裡同時檢查若序列長度為零，直接回傳 <code>Err(0)</code>，告知呼叫端可直接在 index 0 新增元素。</li>
 <li>第二部分就是精髓了，將終止條件設在 <code>size &lt;= 1</code>，以確保迴圈能夠正常結束。
@@ -291,11 +291,11 @@ fn main() {
 <p>整數溢位：部分二元搜尋實作會 以兩個變數儲存搜尋範圍上下界的索引位置，而取中點時千萬不可直接將上下界相加再除二，否則很可能整數溢位（integer overflow）。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>let mid = (end + start) / 2           // Wrong: integer overflow
 let mid = start + (end - start) / 2   // Correct
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 </li>
 <li>
 <p>終止條件錯誤：無論如何實作，請將終止條件設為「搜尋範圍為空」，也就是下界大於上界，而不要只比較上下界是否相等。其實搜尋範圍低於一定長度，即可使用線性搜尋替代，避免處理邊界值的麻煩，實務上也幾乎沒有太多效能損失。</p>

@@ -226,7 +226,7 @@
 
 <span class="doccomment">/// Recursion helper</span>
 <span class="kw">fn</span> <span class="ident">quicksort_helper</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) {
-    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;=</span> <span class="ident">hi</span> {
+    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">hi</span> {
         <span class="kw">let</span> <span class="ident">pivot</span> <span class="op">=</span> <span class="ident">partition</span>(<span class="ident">arr</span>, <span class="ident">lo</span>, <span class="ident">hi</span>);
         <span class="ident">quicksort_helper</span>(<span class="ident">arr</span>, <span class="ident">lo</span>, <span class="ident">pivot</span> <span class="op">-</span> <span class="number">1</span>);
         <span class="ident">quicksort_helper</span>(<span class="ident">arr</span>, <span class="ident">pivot</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">hi</span>);
@@ -244,7 +244,7 @@
 <span class="doccomment">/// Can achieve O(log n) auxiliary space complexity if Rust compiler is</span>
 <span class="doccomment">/// implemented with tail-call optimization in the future).</span>
 <span class="kw">fn</span> <span class="ident">quicksort_helper_optimized</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) {
-    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;=</span> <span class="ident">hi</span> {
+    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">hi</span> {
         <span class="kw">let</span> <span class="ident">pivot</span> <span class="op">=</span> <span class="ident">partition</span>(<span class="ident">arr</span>, <span class="ident">lo</span>, <span class="ident">hi</span>);
         <span class="kw">if</span> <span class="ident">pivot</span> <span class="op">-</span> <span class="ident">lo</span> <span class="op">&lt;</span> <span class="ident">hi</span> <span class="op">-</span> <span class="ident">pivot</span> {
             <span class="comment">// 1</span>
@@ -283,7 +283,7 @@
 <span class="doccomment">/// Lomuto partition scheme</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Return index of the pivot.</span>
-<span class="kw">fn</span> <span class="ident">partition</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) <span class="op">-&gt;</span> <span class="ident">isize</span> {
+<span class="kw">fn</span> <span class="ident">partition</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">isize</span> {
     <span class="comment">// -- Determine the pivot --</span>
     <span class="comment">// In Lomuto parition scheme,</span>
     <span class="comment">// the latest element is always chosen as the pivot.</span>
@@ -294,7 +294,7 @@
     <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="ident">lo</span>..<span class="ident">hi</span> {
         <span class="kw">if</span> <span class="ident">arr</span>[<span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">&lt;</span> <span class="ident">pivot</span> {
             <span class="ident">arr</span>.<span class="ident">swap</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>);
-            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
     }
     <span class="comment">// Swap pivot to the middle of two piles.</span>
@@ -314,7 +314,7 @@
 
 <span class="doccomment">/// Recursion helper</span>
 <span class="kw">fn</span> <span class="ident">quicksort_helper_3way</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) {
-    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;=</span> <span class="ident">hi</span> {
+    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">hi</span> {
         <span class="kw">let</span> (<span class="ident">smaller</span>, <span class="ident">larger</span>) <span class="op">=</span> <span class="ident">partition_3way</span>(<span class="ident">arr</span>, <span class="ident">lo</span>, <span class="ident">hi</span>);
         <span class="ident">quicksort_helper_3way</span>(<span class="ident">arr</span>, <span class="ident">lo</span>, <span class="ident">smaller</span> <span class="op">-</span> <span class="number">1</span>);
         <span class="ident">quicksort_helper_3way</span>(<span class="ident">arr</span>, <span class="ident">larger</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">hi</span>);
@@ -324,23 +324,23 @@
 <span class="doccomment">/// 3-way paritition scheme</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Return smaller and larger index. (to avoid redundant work on identical elements)</span>
-<span class="kw">fn</span> <span class="ident">partition_3way</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) <span class="op">-&gt;</span> (<span class="ident">isize</span>, <span class="ident">isize</span>) {
+<span class="kw">fn</span> <span class="ident">partition_3way</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">isize</span>, <span class="ident">isize</span>) {
     <span class="kw">let</span> <span class="ident">pivot</span> <span class="op">=</span> <span class="ident">arr</span>[<span class="ident">hi</span> <span class="kw">as</span> <span class="ident">usize</span>];
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="ident">lo</span>; <span class="comment">// smaller</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">j</span> <span class="op">=</span> <span class="ident">lo</span>; <span class="comment">// equal</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">k</span> <span class="op">=</span> <span class="ident">hi</span>; <span class="comment">// large</span>
 
-    <span class="kw">while</span> <span class="ident">j</span> <span class="op">&lt;=</span> <span class="ident">k</span> {
+    <span class="kw">while</span> <span class="ident">j</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">k</span> {
         <span class="kw">if</span> <span class="ident">arr</span>[<span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">&lt;</span> <span class="ident">pivot</span> {
             <span class="ident">arr</span>.<span class="ident">swap</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>);
-            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
-            <span class="ident">j</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">j</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">arr</span>[<span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">&gt;</span> <span class="ident">pivot</span> {
             <span class="ident">arr</span>.<span class="ident">swap</span>(<span class="ident">k</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>);
-            <span class="ident">k</span> <span class="op">-=</span> <span class="number">1</span>;
+            <span class="ident">k</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         } <span class="kw">else</span> {
             <span class="comment">// No swap when identicial.</span>
-            <span class="ident">j</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">j</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
     }
 
@@ -376,7 +376,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Note that the return value is not necessarily be the index of the pivot,</span>
 <span class="doccomment">/// and the pivot is located somewhere of the first partition.</span>
-<span class="kw">fn</span> <span class="ident">partition_hoare</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">usize</span>, <span class="ident">hi</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+<span class="kw">fn</span> <span class="ident">partition_hoare</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">usize</span>, <span class="ident">hi</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
     <span class="kw">let</span> <span class="ident">pivot</span> <span class="op">=</span> <span class="ident">arr</span>[<span class="ident">lo</span>];
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="ident">lo</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">j</span> <span class="op">=</span> <span class="ident">hi</span>;
@@ -384,19 +384,19 @@
     <span class="kw">loop</span> {
         <span class="comment">// Find element &gt;= pivot from leftmost element.</span>
         <span class="kw">while</span> <span class="ident">arr</span>[<span class="ident">i</span>] <span class="op">&lt;</span> <span class="ident">pivot</span> {
-            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="comment">// Find element &lt;= pivot from rightmost element.</span>
         <span class="kw">while</span> <span class="ident">arr</span>[<span class="ident">j</span>] <span class="op">&gt;</span> <span class="ident">pivot</span> {
-            <span class="ident">j</span> <span class="op">-=</span> <span class="number">1</span>;
+            <span class="ident">j</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         }
-        <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;=</span> <span class="ident">j</span> {
+        <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">j</span> {
             <span class="kw">return</span> <span class="ident">j</span>;
         }
         <span class="comment">// Two elements are misplaced, swap them.</span>
         <span class="ident">arr</span>.<span class="ident">swap</span>(<span class="ident">i</span>, <span class="ident">j</span>);
-        <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
-        <span class="ident">j</span> <span class="op">-=</span> <span class="number">1</span>;
+        <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="ident">j</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
     }
 }
 

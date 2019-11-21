@@ -271,7 +271,7 @@
 <p>Heapsort 的實作相對簡單，只需要不斷呼叫 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn heapsort(arr: &amp;mut [i32]) {
     // -- Heapify part --
     // This procedure would build a valid max-heap.
@@ -289,7 +289,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>這部分是 heapify，從最小 non-leaf node 開始（<code>end</code> / 2），修正序列至滿足 heap order，再反向迭代做 heapify。</li>
 <li>這部分負責排序，每次迭代都將排序 heap 的 root 元素，步驟如 3 - 4：</li>
@@ -299,7 +299,7 @@ fn main() {
 <p>Heapsort 全靠 <code>sift_down</code> 神救援，那 <code>sift_down</code> 到底有什麼神奇魔力，一探究竟吧！</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
     let mut root = start;
     loop {
@@ -322,7 +322,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p><code>sift_down</code> 的功能是將 node 往下移。通常用在 heap 刪除或取代 node 時，將序列修正為有效的 heap。 這裡實作的版本有三個參數：</p>
 <ul>
 <li><code>arr</code>：欲修正為符合 heap 定義的序列。</li>

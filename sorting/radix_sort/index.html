@@ -251,15 +251,15 @@ $k $：基數，就是一個位數最多有幾種可能的值。</p>
 <p>首先，我們的排序副程式使用 Counting sort。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// 0. Include counting sort.
 use ::sorting::counting_sort;
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>再來，就是 Radix sort 本體了。為了凸顯 Radix sort 的概念，簡化了函式參數數量，除去泛型宣告，並將基數選擇寫死在函式裡。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn radix_sort(arr: &amp;mut [i32]) {
     let radix = 10;             // 1
     let mut digit = 1;          // 2
@@ -274,7 +274,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>設定基數為 10。</li>
 <li>設定一個旗標，記錄當前在排序哪一位數，1 表示從最小位數（個位數）開始。</li>

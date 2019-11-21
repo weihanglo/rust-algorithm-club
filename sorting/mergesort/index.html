@@ -235,7 +235,7 @@ $$</p>
 <p>自上而下的解法會不斷以類似 binary search 的方式找中點，進而分割序列。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn mergesort(arr: &amp;mut [i32]) {
     let mid = arr.len() / 2;
     if mid == 0 {                 // 1
@@ -255,7 +255,7 @@ fn main() {
     arr.copy_from_slice(&amp;ret);    // 5
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>設定遞迴的終止條件（base case），middle index 為 0 表示長度不大於 1。</li>
 <li>利用 Rust 的 <a href="https://doc.rust-lang.org/std/ops/struct.Range.html">Range Operator</a>，可快速分割兩個 <code>slice</code>。</li>
@@ -267,7 +267,7 @@ fn main() {
 <p>自下而上的解法則是預定好最小的子序列長度，直接使用 for 迴圈從頭開始逐一擊破。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn mergesort_bottom_up(arr: &amp;mut [i32]) {
     let mut width = 1;                                // 1
     // Create an array to store intermediate result.
@@ -293,7 +293,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>設定最小的子序列長度，這個長度以下的子序列皆視為已排序。</li>
 <li>建立一個 <code>Vec</code> 儲存排序結果。</li>
@@ -306,7 +306,7 @@ fn main() {
 <p>無論是 Top-down 還是 Buttom-up 版本的解法，皆免不了 <code>merge</code> 這個共同步驟，將子序列合併為較大的序列。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
     let mut left = 0; // Head of left pile.             // 1
     let mut right = 0; // Head of right pile.
@@ -335,7 +335,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>建立三個指標，分別給 <code>arr1</code>、<code>arr2</code> 與回傳陣列 <code>ret</code> 使用。</li>
 <li>這部分依序比較兩個子序列，排序較小者先進入回傳 <code>ret</code>。直到其中一序列所有元素都進入 <code>ret</code> 就停止。</li>

@@ -354,7 +354,7 @@
 <p>線性搜尋就是用一個 for-loop 解決。要注意的是，<code>T</code> 泛型參數至少要實作 <code>PartialEq</code> 才能比較。程式碼中使用了迭代器的 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.enumerate">enumerate</a>，建立一個新迭代器，每次迭代產生迭代次數與對應的值。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn linear_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Option&lt;usize&gt;
     where T: PartialEq
 {
@@ -366,18 +366,18 @@ fn main() {
     None
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>事實上，若利用 Rust 內建的 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.position"><code>iterator.position</code></a>，程式碼也許會更簡潔。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn linear_search&lt;T&gt;(arr: &amp;[T], obj: &amp;T) -&gt; Option&lt;usize&gt;
     where T: PartialEq
 {
     arr.iter().position(|x| x == obj)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h2><a class="header" href="#參考資料-1" id="參考資料-1">參考資料</a></h2>
 <p><a href="https://en.wikipedia.org/wiki/Linear_search">Wiki: Linear search</a></p>
 <h1><a class="header" href="#二元搜尋-binary-search" id="二元搜尋-binary-search">二元搜尋 Binary Search</a></h1>
@@ -465,7 +465,7 @@ $$</p>
 <p>以下是完整實作：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn binary_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&lt;usize, usize&gt;
     where T: PartialOrd
 {
@@ -492,7 +492,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>第一部分先取得搜尋範圍 <code>size</code> 以及確定下界為 <code>0_usize</code>。這裡同時檢查若序列長度為零，直接回傳 <code>Err(0)</code>，告知呼叫端可直接在 index 0 新增元素。</li>
 <li>第二部分就是精髓了，將終止條件設在 <code>size &lt;= 1</code>，以確保迴圈能夠正常結束。
@@ -516,11 +516,11 @@ fn main() {
 <p>整數溢位：部分二元搜尋實作會 以兩個變數儲存搜尋範圍上下界的索引位置，而取中點時千萬不可直接將上下界相加再除二，否則很可能整數溢位（integer overflow）。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>let mid = (end + start) / 2           // Wrong: integer overflow
 let mid = start + (end - start) / 2   // Correct
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 </li>
 <li>
 <p>終止條件錯誤：無論如何實作，請將終止條件設為「搜尋範圍為空」，也就是下界大於上界，而不要只比較上下界是否相等。其實搜尋範圍低於一定長度，即可使用線性搜尋替代，避免處理邊界值的麻煩，實務上也幾乎沒有太多效能損失。</p>
@@ -607,13 +607,13 @@ $$</p>
 <p>首先是函式宣告。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn interpolation_search(
     arr: &amp;[i32],
     target: &amp;i32,
 ) -&gt; Result&lt;usize, usize&gt;
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>映入眼簾的是 <code>i32</code>，而非泛型參數，為什麼呢？是因為內插搜尋為了計算線性內插，資料僅限定在「數值資料」，而 Rust 並沒有特別一類 <strong>Numeric</strong> 的型別，自己透過 trait 實作又異常繁瑣，因此先以 <code>i32</code> 代替。而回傳值的部分，與指數搜尋／二元搜尋一模一樣，回傳的 <code>Result</code></p>
 <ul>
 <li>若為 <code>Ok</code>，其值代表目標值在序列內的索引位置；</li>
@@ -625,7 +625,7 @@ fn main() {
 <p>再來就是第一第二部分，處理空序列與建立共用變數，非常直觀。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>    if arr.is_empty() {
         return Err(0)
     }
@@ -635,7 +635,7 @@ fn main() {
 
     let mut interpolant = 0_usize;
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ul>
 <li><code>hi</code>、<code>lo</code> 兩個變數劃定的搜尋範圍上下界。</li>
 <li><code>interpolant</code> 儲存線性插值，代表每次迭代的搜尋位置。</li>
@@ -643,7 +643,7 @@ fn main() {
 <p>接下來就是主要的迴圈，負責迭代計算內插值。分為三個部分，直接看程式碼先。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>    loop {
         let lo_val = arr[lo];
         let hi_val = arr[hi];
@@ -669,7 +669,7 @@ fn main() {
         }
     }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>迴圈的三個終止條件，分別為：
 <ul>
@@ -684,7 +684,7 @@ fn main() {
 <p>最後一部分則是決定線性插值所得的索引位置是否為目標值，並將該值映射到 <code>Result</code> 上。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>    if *target &gt; arr[hi] {
         Err(hi + 1)
     } else if *target &lt; arr[lo] {
@@ -693,11 +693,11 @@ fn main() {
         Ok(interpolant)
     }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>完整的程式碼如下。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn interpolation_search(
     arr: &amp;[i32],
     target: &amp;i32,
@@ -749,7 +749,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <blockquote>
 <p>如同<a href="searching/interpolation_search/../binary_search">二元搜尋</a>與<a href="searching/interpolation_search/../exponential_search">指數搜尋
 </a>，未特別處理重複元素的內插搜尋，並無法預期會選擇哪一個元素。</p>
@@ -841,7 +841,7 @@ fn main() {
 <p>話不多說，直接看程式碼。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>use crate::searching::binary_search;
 
 pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&lt;usize, usize&gt;
@@ -866,7 +866,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
         .map_err(|index| lo + index)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>和二元搜尋同，遇到空序列就返回 <code>Err(0)</code> 告知呼叫端可新增資料在位置 0。</li>
 <li>決定搜尋上下界，只要 上界不超過序列長度，且 <code>arr[hi]</code> 小於目標值，就讓上界指數成長。這裡用位元左移運算子（bitwise left shift）實作乘以 2。<br />
@@ -932,7 +932,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <p>簡單實作的程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn insertion_sort(arr: &amp;mut [i32]) {
     for i in 1..arr.len() {                   // 1
         let mut j = i;
@@ -943,7 +943,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>外層迴圈迭代整個序列。並取出 index <code>i</code>，<code>arr[i]</code> 是待排序的元素，index 比 <code>i</code> 小的元素則組成已排序的部分序列。</li>
 <li>內層迴圈負責元素比較，決定待排序元素該從何處插入，若前一個元素比待排元素大，則置換兩元素，並繼續往下尋找正確的插入點。直到 <code>j == 0</code> 或待排元素比任何已排序元素都大為止。</li>
@@ -955,7 +955,7 @@ fn main() {
 <p>Binary insertion sort 的程式碼和一般的 insertion sort 差不了多少，我們這裡使用 <code>slice</code> 內建的 <code>binary_search</code> 來找尋插入點。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn binary_insertion_sort(arr: &amp;mut [i32]) {
     for i in 1..arr.len() {
         let val = arr[i];
@@ -971,7 +971,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>先限制 <code>binary_search</code> 範圍，取出 sorted pile <code>arr[..i]</code>。再對 slice 執行 <code>binary_search</code>。</li>
 <li><code>binary_search</code> 回傳一個 <code>Result&lt;usize, usize&gt;</code> 型別，找到時回傳 <code>Ok(index 值)</code>，找無時回傳 <code>Err(不影響排序穩定度的插入點)</code>，這個 <code>Err</code> 的設計巧妙解決新值插入的問題。</li>
@@ -1036,7 +1036,7 @@ fn main() {
 <p>簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn selection_sort(arr: &amp;mut [i32]) {
     let len = arr.len();
     for i in 0..len {                     // 1
@@ -1050,7 +1050,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>外層迴圈負責儲存當前要排序的 index <code>i</code> 的位置。</li>
 <li>內層迴圈負責在 unsorted pile 範圍 [<code>i</code>, <code>len</code>) 找最小值。</li>
@@ -1156,7 +1156,7 @@ fn main() {
 <p>Bubble sort 簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn bubble_sort(arr: &amp;mut [i32]) {
     let mut swapped = true;                 // 1
     while swapped {
@@ -1170,7 +1170,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>建立一個旗標，標誌該次迭代是否有元素置換。</li>
 <li>內層迴圈依序比較兩兩相鄰元素。</li>
@@ -1179,7 +1179,7 @@ fn main() {
 <p>倘若記錄已排好序的元素位置，雖然複雜度仍是 $O(n^2) $，但如此以來，每次迭代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn bubble_sort_optimized(arr: &amp;mut [i32]) {
     let mut new_len: usize;
     let mut len = arr.len();            // 1
@@ -1198,7 +1198,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>將當前的序列長度記錄到 <code>len</code>。</li>
 <li>內層迴圈負責比較、置換，以及記錄未排序部分的序列長度到 <code>new_len</code>。</li>
@@ -1308,11 +1308,11 @@ fn main() {
 <p>我們這裡以 <a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Marcin 的 Paper</a> 中提到的經驗式為例，首先，先建立一個 gap sequence 的常數。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>/// Marcin Ciura's gap sequence.
 pub const MARCIN_GAPS: [usize; 8] = [701, 301, 132, 57, 23, 10, 4, 1];
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>再來就是主程式的部分，總共會有三個迴圈，</p>
 <ul>
 <li>最外層是迭代 gap sequence，</li>
@@ -1321,7 +1321,7 @@ pub const MARCIN_GAPS: [usize; 8] = [701, 301, 132, 57, 23, 10, 4, 1];
 </ul>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>/// Shellsort
 pub fn shellsort(arr: &amp;mut [i32]) {
     let len = arr.len();
@@ -1338,7 +1338,7 @@ pub fn shellsort(arr: &amp;mut [i32]) {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>最外層的迴圈，利用 <code>iter()</code> trait 產生迭代器，迭代 gap sequence。</li>
 <li>中間層迴圈，控制 <code>i</code> 是否超出資料序列，以迭代整合資料序列。</li>
@@ -1473,7 +1473,7 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <p>Heapsort 的實作相對簡單，只需要不斷呼叫 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn heapsort(arr: &amp;mut [i32]) {
     // -- Heapify part --
     // This procedure would build a valid max-heap.
@@ -1491,7 +1491,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>這部分是 heapify，從最小 non-leaf node 開始（<code>end</code> / 2），修正序列至滿足 heap order，再反向迭代做 heapify。</li>
 <li>這部分負責排序，每次迭代都將排序 heap 的 root 元素，步驟如 3 - 4：</li>
@@ -1501,7 +1501,7 @@ fn main() {
 <p>Heapsort 全靠 <code>sift_down</code> 神救援，那 <code>sift_down</code> 到底有什麼神奇魔力，一探究竟吧！</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
     let mut root = start;
     loop {
@@ -1524,7 +1524,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p><code>sift_down</code> 的功能是將 node 往下移。通常用在 heap 刪除或取代 node 時，將序列修正為有效的 heap。 這裡實作的版本有三個參數：</p>
 <ul>
 <li><code>arr</code>：欲修正為符合 heap 定義的序列。</li>
@@ -1676,7 +1676,7 @@ swap i, j
 <p>遞迴函式本身實作非常簡單，分別將小於 pivot 與大於 pivot 兩部分遞迴呼叫自身即可。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>/// Recursion helper
 fn quicksort_helper(arr: &amp;mut [i32], lo: isize, hi: isize) {
     if lo &lt;= hi {                               // 1
@@ -1686,7 +1686,7 @@ fn quicksort_helper(arr: &amp;mut [i32], lo: isize, hi: isize) {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>利用 <code>lo</code> 與 <code>hi</code> 兩個指標決定每次的遞迴範圍，並在 <code>lo</code> 大於 <code>hi</code> 時停止遞迴，避免重複分割序列。</li>
 <li>分割序列步驟，回傳該序列範圍內 pivot 的 index。</li>
@@ -1699,13 +1699,13 @@ fn quicksort_helper(arr: &amp;mut [i32], lo: isize, hi: isize) {
 <p>由於外部不需知道排序法實作細節，我們將函式命名為 <code>quicksort_helper</code> ，對外再多封裝一層主函式 <code>quicksort_lomuto</code>，實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn quicksort_lomuto(arr: &amp;mut [i32]) {
     let hi = arr.len() as isize - 1;
     quicksort_helper(arr, 0, hi);
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#partitioning" id="partitioning">Partitioning</a></h3>
 <p>一般來說，分割序列的實作有下列兩個步驟：</p>
 <ul>
@@ -1715,7 +1715,7 @@ fn main() {
 <p>我們以 Lomuto scheme 實作 partition。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; isize {
     // -- Determine the pivot --
     // In Lomuto parition scheme,
@@ -1735,7 +1735,7 @@ fn main() {
     i // Return the final index of the pivot
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>Lomuto scheme 選擇 pivot 的方式很直接，就是選擇最後一個元素。</li>
 <li>利用 <code>i</code>、<code>j</code> 兩個指標迭代指定的序列範圍，若第 j 個值小於 pivot 時，則於第 i 個元素置換。</li>
@@ -1757,7 +1757,7 @@ fn main() {
 <p>簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn quicksort_helper_optimized(arr: &amp;mut [i32], lo: isize, hi: isize) {
     if lo &lt;= hi {
         let pivot = partition(arr, lo, hi);
@@ -1771,7 +1771,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>說穿了就只有這個判斷式，決定哪部分該先遞迴而已。</li>
 <li>這是一個尾端呼叫，會展開。</li>
@@ -1793,7 +1793,7 @@ fn main() {
 <p>再來，選擇性遞迴較小的部分。Iterative 版本的尾端呼叫消除（tail-call eliminate）就做完了！</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn quicksort_helper_manual_tco(arr: &amp;mut [i32], mut lo: isize, mut hi: isize) {
     while lo &lt; hi {
         let pivot = partition(arr, lo, hi);
@@ -1807,7 +1807,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#選擇-pivot-的方法" id="選擇-pivot-的方法">選擇 Pivot 的方法</a></h3>
 <p>選擇 pivot 的方法大致上有以下幾種：</p>
 <ul>
@@ -1825,7 +1825,7 @@ fn main() {
 <p>通常是使用著名的 <a href="https://en.wikipedia.org/wiki/Dutch_national_flag_problem">Dutch national flag algorithm</a> 來解決這個問題。實作上和 Lomuto 非常類似。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn partition(arr: &amp;mut [i32], lo: isize, hi: isize) -&gt; (isize, isize) {
     let pivot = arr[hi as usize];
     let mut i = lo;         // smaller
@@ -1850,12 +1850,12 @@ fn main() {
     (i, k)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#選擇不同的分割方案" id="選擇不同的分割方案">選擇不同的分割方案</a></h3>
 <p>不同的分割方案有著不同的應用場景，如上述的 3-way scheme 就適合重複元素多的序列。這裡再多介紹另一個常見的分割實作方案 Hoare partition，是 Quicksort 發明這 Hoare 自己提出的分割法，Rust 實作演算法如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn partition(arr: &amp;mut [i32], lo: usize, hi: usize) -&gt; usize {
     let pivot = arr[lo];
     let mut i = lo;
@@ -1880,7 +1880,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>從最左邊開始找比 pivot 大或相等的元素。</li>
 <li>從最右邊開始找比 pivot 小或相等的元素。</li>
@@ -1973,7 +1973,7 @@ $$</p>
 <p>自上而下的解法會不斷以類似 binary search 的方式找中點，進而分割序列。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn mergesort(arr: &amp;mut [i32]) {
     let mid = arr.len() / 2;
     if mid == 0 {                 // 1
@@ -1993,7 +1993,7 @@ fn main() {
     arr.copy_from_slice(&amp;ret);    // 5
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>設定遞迴的終止條件（base case），middle index 為 0 表示長度不大於 1。</li>
 <li>利用 Rust 的 <a href="https://doc.rust-lang.org/std/ops/struct.Range.html">Range Operator</a>，可快速分割兩個 <code>slice</code>。</li>
@@ -2005,7 +2005,7 @@ fn main() {
 <p>自下而上的解法則是預定好最小的子序列長度，直接使用 for 迴圈從頭開始逐一擊破。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn mergesort_bottom_up(arr: &amp;mut [i32]) {
     let mut width = 1;                                // 1
     // Create an array to store intermediate result.
@@ -2031,7 +2031,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>設定最小的子序列長度，這個長度以下的子序列皆視為已排序。</li>
 <li>建立一個 <code>Vec</code> 儲存排序結果。</li>
@@ -2044,7 +2044,7 @@ fn main() {
 <p>無論是 Top-down 還是 Buttom-up 版本的解法，皆免不了 <code>merge</code> 這個共同步驟，將子序列合併為較大的序列。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn merge(arr1: &amp;[i32], arr2: &amp;[i32], ret: &amp;mut [i32]) {
     let mut left = 0; // Head of left pile.             // 1
     let mut right = 0; // Head of right pile.
@@ -2073,7 +2073,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>建立三個指標，分別給 <code>arr1</code>、<code>arr2</code> 與回傳陣列 <code>ret</code> 使用。</li>
 <li>這部分依序比較兩個子序列，排序較小者先進入回傳 <code>ret</code>。直到其中一序列所有元素都進入 <code>ret</code> 就停止。</li>
@@ -2237,12 +2237,12 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 <p>首先，我們先看函式如何宣告（function signature）。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key: F) 
     where F: Fn(&amp;T) -&gt; usize, 
           T: Clone,
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>這裡使用了四個參數：</p>
 <ul>
 <li><code>arr</code>：待排序陣列。</li>
@@ -2258,7 +2258,7 @@ fn main() {
 <p>再來，了解如何建立一個元素出現次數的陣列。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn counting_sort() {
     // ...
 
@@ -2282,7 +2282,7 @@ fn main() {
     // ...
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>建立一個長度為上下界之差的 count array。注意，這裡使用了 <code>Vec.resize</code>，因為 Rust initialize 空的 <code>Vec</code> 時並不會插入 0 或其他預設值。</li>
 <li>遍歷整個輸入資料，利用 <code>key</code> function 取出每筆資料的鍵值，出現一次就 +1。</li>
@@ -2292,7 +2292,7 @@ fn main() {
 <p>最後一步就是將 prefix sum 當作每個 element 的正確位置，把資料重頭排序。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn counting_sort() {
     // ...
 
@@ -2303,7 +2303,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>將輸入資料透過 <code>to_vec</code> 複製起來迭代，需要複製 <code>arr</code> 是因為之後要直接在 <code>arr</code> 插入新值，需要另一份原始輸入的拷貝。</li>
 <li>利用 <code>key</code> 擷取鍵值後，把資料複製給 <code>arra</code> 上對應 <code>prefix_sums[index]</code> 的位置。</li>
@@ -2312,7 +2312,7 @@ fn main() {
 <p>完成了！這裡再貼一次完整的程式碼。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key: F) 
     where F: Fn(&amp;T) -&gt; usize,
           T: Clone,
@@ -2343,7 +2343,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h2><a class="header" href="#參考資料-14" id="參考資料-14">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Counting_sort">Wiki: Counting sort</a></li>
@@ -2449,7 +2449,7 @@ $n $ = 資料筆數</p>
 <p>Bucket sort 有許多種各異的實作法，差異最大之處就是桶子 bucket 這部分。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>/// Bucket to store elements.
 struct Bucket&lt;H, T&gt; {
     hash: H,
@@ -2469,7 +2469,7 @@ impl&lt;H, T&gt; Bucket&lt;H, T&gt; {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>這裡的桶子實作兩個 struct fields：</p>
 <ul>
 <li><code>values</code>：使用 <a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a> 儲存對應範圍內的元素</li>
@@ -2479,13 +2479,13 @@ impl&lt;H, T&gt; Bucket&lt;H, T&gt; {
 <p>接下來就是排序主函式。依照慣例，先看看函式的宣告（function signature）。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn bucket_sort&lt;H, F, T&gt;(arr: &amp;mut [T], hasher: F)
     where H: Ord,
           F: Fn(&amp;T) -&gt; H,
           T: Ord + Clone,
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>這個 <code>bucket_sort</code> 函式使用了不少泛型：</p>
 <ul>
 <li><code>H</code>：<code>hasher</code> 函式的回傳型別，用來辨識不同的桶子。</li>
@@ -2495,7 +2495,7 @@ fn main() {
 <p>函式自身稍微複雜一點，但仍不脫離<a href="sorting/bucket_sort/index.html#%E6%AD%A5%E9%A9%9F">四步驟</a>：Create buckets、Scatter、Inner sort，還有 Gather。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn bucket_sort() {
     // ...
 
@@ -2525,7 +2525,7 @@ fn main() {
     arr.clone_from_slice(&amp;ret); // 4 Copy to original array
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>一般來說，第一步會配置完所有桶子，但這裡實作僅建立儲存桶子們的容器 <code>buckets</code>，這是由於實作了 <code>hasher</code> 函式，元素對應桶子的邏輯交由外部決定，因此桶子不需事先配置，而是交給第二步驟時 <strong>on-the-fly</strong> 建立。</li>
 <li>迭代輸入的 <code>arr</code>，將元素散佈到桶子中。
@@ -2646,15 +2646,15 @@ $k $：基數，就是一個位數最多有幾種可能的值。</p>
 <p>首先，我們的排序副程式使用 Counting sort。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// 0. Include counting sort.
 use ::sorting::counting_sort;
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>再來，就是 Radix sort 本體了。為了凸顯 Radix sort 的概念，簡化了函式參數數量，除去泛型宣告，並將基數選擇寫死在函式裡。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn radix_sort(arr: &amp;mut [i32]) {
     let radix = 10;             // 1
     let mut digit = 1;          // 2
@@ -2669,7 +2669,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>設定基數為 10。</li>
 <li>設定一個旗標，記錄當前在排序哪一位數，1 表示從最小位數（個位數）開始。</li>
@@ -2704,13 +2704,13 @@ fn main() {
 <h2><a class="header" href="#架構設計" id="架構設計">架構設計</a></h2>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct Stack&lt;T&gt; {
     maxsize: usize,
     items: Vec&lt;T&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p><code>maxsize</code> 用於模擬堆疊空間有限的特性；<code>items</code> 負責保存加入堆疊的資料。</p>
 <p>在此刻意將 <code>maxsize</code>、<code>items</code> 定義為 private member，避免外部直接存取。</p>
 <h2><a class="header" href="#基本操作" id="基本操作">基本操作</a></h2>
@@ -2724,7 +2724,7 @@ fn main() {
 <h3><a class="header" href="#定義一個空間有限的堆疊" id="定義一個空間有限的堆疊">定義一個空間有限的堆疊</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn with_capacity(maxsize: usize) -&gt; Stack&lt;T&gt; {
     Stack {
         maxsize,
@@ -2732,13 +2732,13 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>初始化一個帶有預先分配空間 Vector 的堆疊。</p>
 <p>⚠ 注意，即使預先分配了有限的空間，Rust 的 vector 在空間已滿的情況下會重新分配。假設一開始為 vector 分配了 10 單位的空間，在將第 11 筆資料插入 vector 前，vector 在記憶體的空間將被重新分配，以容納這第 11 筆資料。為了模擬堆疊空間有限的特性，我們會在 <code>push</code> 的操作動點手腳。</p>
 <h3><a class="header" href="#將新資料加入資料結構" id="將新資料加入資料結構">將新資料加入資料結構</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn push(&amp;mut self, item: T) -&gt; bool {
     if self.items.len() == self.maxsize {
         return false;
@@ -2747,37 +2747,37 @@ fn main() {
     return true;
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>由於 <code>push</code> 操作會改變 <code>items</code>，因此需要堆疊的 mutable reference。由於 Rust 的 vector 有重新分配的特性，在將資料正式加入堆疊之前，必須先檢查堆疊初始化時設定的空間是否已經被塞滿了。如果結果為是，則拒絕將資料加入堆疊。</p>
 <h3><a class="header" href="#將最新加入的資料移出資料結構" id="將最新加入的資料移出資料結構">將最新加入的資料移出資料結構</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn pop(&amp;mut self) -&gt; Option&lt;T&gt; {
     self.items.pop()
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>堆疊有可能是空的，在此以 <code>Option</code> 表現這個情況。如果針對一個空堆疊進行 <code>pop</code> 操作，將會得到 <code>None</code>。</p>
 <h3><a class="header" href="#取得堆疊的大小" id="取得堆疊的大小">取得堆疊的大小</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn size(&amp;self) -&gt; usize {
     self.items.len()
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>一個空堆疊的大小是 0，加入一筆資料後是 1⋯⋯以此類推。注意容量 capcity 與大小 size 是兩個不同的概念。容量是這個堆疊最多可以塞下多少資料，大小則是這個堆疊已經被塞入了多少資料。由於 <code>push</code> 的檢查機制，堆疊的大小永遠不會超過 <code>maxsize</code>。</p>
 <h3><a class="header" href="#在不將資料退出堆疊的情況下偷看最後加入堆疊的資料" id="在不將資料退出堆疊的情況下偷看最後加入堆疊的資料">在不將資料退出堆疊的情況下偷看最後加入堆疊的資料</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn peek(&amp;self) -&gt; Option&lt;&amp;T&gt; {
     self.items.last()
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>與 <code>pop</code> 操作類似，但不會對堆疊造成任何影響。如果偷看的是一個空堆疊，會得到 <code>None</code>。</p>
 <h2><a class="header" href="#效能-15" id="效能-15">效能</a></h2>
 <table><thead><tr><th>Operation</th><th>Best Complexity</th><th>Worst Complexity</th></tr></thead><tbody>
@@ -2899,47 +2899,47 @@ NULL &lt;--|        |&lt;--|        |&lt;--|        |
 <p>先建立最基本的節點 Node。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// cannot compile
 struct Node&lt;T&gt; {
     elem: T,
     next: Node&lt;T&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p><code>Node.elem</code> 很直觀地儲存實際資料。而 <code>Node.next</code> 則是指向下個 Node。但這樣編譯不會成功，Rust 編譯時需要決定每個型別該配置多少記憶體空間，這種遞迴型別使得編譯器無限循環，無法決定配置大小。</p>
 <p><img src="collections/singly_linked_list/node-recursive.svg" alt="node-recursive" /></p>
 <p>很簡單，我們使用 <a href="https://doc.rust-lang.org/std/boxed/index.html"><code>Box&lt;T&gt;</code></a> 這個<a href="https://doc.rust-lang.org/book/ch15-00-smart-pointers.html">智慧指標</a>，直接將 Node 配置在記憶體 heap 上。如此以來，編譯器就會知道 <code>next</code> 只佔了一個指標的空間。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>struct Node&lt;T&gt; {
     elem: T,
     next: Box&lt;Node&lt;T&gt;&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p><img src="collections/singly_linked_list/node-box.svg" alt="node-box" /></p>
 <p>由於 Rust 沒有 null pointer，但照鏈結串列的定義，<code>Node.next</code> 可以是 NULL，因此我們使用 <a href="https://doc.rust-lang.org/std/option/index.html"><code>Option&lt;T&gt;</code></a> 模擬 null pointer 的行為。最後，Node 的定義如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>struct Node&lt;T&gt; {
     elem: T,
     next: Option&lt;Box&lt;Node&lt;T&gt;&gt;&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#singlylinkedlist" id="singlylinkedlist">SinglyLinkedList</a></h3>
 <p>在開始實作各種增刪節點的操作之前，我們需要建立一個 struct 存放指向鏈結串列 head 的指標，同時，各種操作也會實作在這個 struct 上。事實上，這個 struct 就是對外公開的資料結構。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct SinglyLinkedList&lt;T&gt; {
     head: Option&lt;Box&lt;Node&lt;T&gt;&gt;&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>選擇把操作串列的函式寫在另一個 struct 而非 Node 上有幾個原因，1）外部並不需知道串列內部如何實作，公開 Node 會暴露實作。2）每個 Node 都帶有成員函式的話，函式指標會佔用太多額外資源。</p>
 <h2><a class="header" href="#基本操作-1" id="基本操作-1">基本操作</a></h2>
 <p>串列的基本操作如下：</p>
@@ -2957,7 +2957,7 @@ fn main() {
 <p>實做初始化與清除資料非常直觀。其中清除其實就只是將 <code>self</code> 指向新的串列實例。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
     pub fn new() -&gt; Self {
         Self { head: None }
@@ -2968,20 +2968,20 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>你可能會想，在清除所有資料時，資源需不需要手動釋放？</p>
 <p>和 C++ 的 RAII 一樣，Rust 有一個名叫 <code>drop</code> 的解構式，只要程式執行離開了資源擁有者的可視範圍（out of scope），就會自動呼叫 <code>drop</code>。我們在 <a href="collections/singly_linked_list/index.html#drop-trait">Drop trait</a> 一節會再深入探討。</p>
 <h3><a class="header" href="#增刪首個節點" id="增刪首個節點">增刪首個節點</a></h3>
 <p>單向鏈結串列在第一個節點前增加新節點，或是刪除第一個節點，都可以在常數時間完成。新增節點 <code>push_front</code> 的概念很簡單，1）建立新的節點，並把新節點 <code>next</code> 指標指向串列第一個節點。2）把串列的 head 指向新建立的節點。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn push_front(&amp;mut self, elem: T) {
     let next = self.head.take(); // 1
     self.head = Some(Box::new(Node { elem, next })); // 2
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>釋放 SinglyLinkedList 對第一個節點的所有權</li>
 <li>建立一新節點，並將原本第一個節點所有權轉移給新節點。再將新節點所有權轉移到串列本身。</li>
@@ -2989,7 +2989,7 @@ fn main() {
 <p>刪除第一個節點 <code>pop_front</code> 的實作步驟如下：首先取得第一個節點的所有權，再將 head 指向第一個節點 <code>Node.next</code> 下一個節點，再返回第一個節點的資料給呼叫端。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn pop_front(&amp;mut self) -&gt; Option&lt;T&gt; {
     let head = self.head.take(); // 1
     match head {
@@ -3001,7 +3001,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>取得第一個元素的所有權。</li>
 <li>將 head 指向下一個節點。</li>
@@ -3012,7 +3012,7 @@ fn main() {
 <p>實作插入 <code>insert_after</code> 分為幾個步驟：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn insert_after(&amp;mut self, pos: usize, elem: T) -&gt; Result&lt;(), usize&gt; {
     let mut curr = &amp;mut self.head;
     let mut pos_ = pos;
@@ -3039,7 +3039,7 @@ fn main() {
     Ok(())
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>找到對應索引值的節點 A，若找不到則回傳這個串列的資料長度。</li>
 <li>先取得節點 A 的所有權，才能修改它的值。</li>
@@ -3050,7 +3050,7 @@ fn main() {
 <p>而實作刪除任意索引下的節點 <code>remove</code> 和插入非常相似。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn remove(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
     let mut curr = &amp;mut self.head;
     let mut pos = pos;
@@ -3072,7 +3072,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>找到對應索引值的節點 A，若找不到則回傳 <code>None</code>。</li>
 <li>先取得節點 A 的所有權，才能修改它的值。</li>
@@ -3083,7 +3083,7 @@ fn main() {
 <p>反轉鏈結串列是工作面試時很常見的考題，這裡來實作看看。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn reverse(&amp;mut self) {
     let mut prev = None;              // 1: prev -&gt; Node P
     let mut curr = self.head.take();  // 2
@@ -3096,7 +3096,7 @@ fn main() {
     self.head = prev.take(); // 4
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>先建立一個暫時變數 <code>prev</code>，儲存迭代時的前一個節點。</li>
 <li>從串列 head 取得第一個節點的所有權。</li>
@@ -3138,7 +3138,7 @@ a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
 <p>既然如此，那麼就透過 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html">Drop trait</a>，實作一個迭代版本的解構式，消弭可怕的 call stack 吧。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
     fn drop(&amp;mut self) {
         let mut link = self.head.take();  // 1
@@ -3148,7 +3148,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>取得 head 的所有權。</li>
 <li>透過 pattern matching 取得 Node 裡面 Box 的所有權。</li>
@@ -3161,20 +3161,20 @@ fn main() {
 <p>實際上，透過呼叫 <code>pop_front()</code>，不斷移除第一個節點，並使用 <code>is_some()</code> 檢查是否仍有節點，幾乎可以達到同樣的 drop 效果，而且更簡潔易懂。差別僅在於，相較於前個實作自己處理 call stack，這個實作每次移除元素都需要 <code>pop_front()</code> 與 <code>is_some()</code> 的 stack，多了些微小的開銷。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
     fn drop(&amp;mut self) {
         while self.pop_front().is_some() {}
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#iterator-and-intoiterator-traits" id="iterator-and-intoiterator-traits">Iterator and IntoIterator traits</a></h3>
 <p>既然鏈結串列是一種序列（sequence，有序的資料結構），少不了實作 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html">Iterator</a>、<a href="https://doc.rust-lang.org/std/iter/trait.IntoIterator.html">IntoIterator</a> 等 trait，使串列可以輕鬆使用 for-in loop 遍歷（traverse）。</p>
 <p>首先，先定義幾個迭代器的 struct。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct IntoIter&lt;T&gt;(SinglyLinkedList&lt;T&gt;);
 
 pub struct Iter&lt;'a, T: 'a&gt; {
@@ -3185,7 +3185,7 @@ pub struct IterMut&lt;'a, T: 'a&gt; {
     next: Option&lt;&amp;'a mut Node&lt;T&gt;&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>建立這三個 iterator struct 是常見的 Rust 設計模式。</p>
 <ul>
 <li><code>IntoIter</code>：產生 <code>T</code>，實作會吃掉元素所有權的 <code>IntoIterator</code> trait</li>
@@ -3201,7 +3201,7 @@ pub struct IterMut&lt;'a, T: 'a&gt; {
 <p>先來看 <code>IntoIter</code> 實作。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct IntoIter&lt;T&gt;(SinglyLinkedList&lt;T&gt;);      // 1
 
 impl&lt;T&gt; Iterator for IntoIter&lt;T&gt; {                // 2
@@ -3219,7 +3219,7 @@ impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt; {    // 3
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>宣告一個 tuple struct，唯一的成員是 <code>SinglyLinkedList</code>。</li>
 <li>實作 <code>Iterator</code> trait 的 required method <code>next</code>，為了達成 <em>Into</em> 會消耗原始資料，轉換所有權的特性，我們利用 <code>pop_front()</code> 將節點的資料依序刪除（pop）。</li>
@@ -3231,7 +3231,7 @@ impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt; {    // 3
 <p>再來看看 <code>Iter</code> 怎麼實踐。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct Iter&lt;'a, T: 'a&gt; {                    // 1
     next: Option&lt;&amp;'a Node&lt;T&gt;&gt;,
 }
@@ -3257,7 +3257,7 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>這個 struct 的 <code>next</code> 是為了儲存 <code>Node</code> 資訊，方便記錄迭代器當前的狀態。加上生命週期 <code>'a</code> 是因編譯器無法推敲 <code>Option&lt;&amp;Node&lt;T&gt;&gt;</code> 會活多久，需要顯著標明 <code>&amp;Node</code> 至少與該迭代器同生共死。</li>
 <li>由於 <code>Iter</code> 是為了實作產生 <code>&amp;T</code> 的迭代器，associated type 設為  <code>&amp;'a T</code>。</li>
@@ -3287,7 +3287,7 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 <p>實作上我們用了 <code>iter</code> 成員函式把兩個串列 <code>zip</code> 在一起，在用 <code>all</code> 確認元素兩兩相等，十分 Rust 風格的作法。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T: PartialEq&gt; PartialEq for SinglyLinkedList&lt;T&gt; {
     fn eq(&amp;self, other: &amp;Self) -&gt; bool {
         if self.len() != other.len() {
@@ -3299,12 +3299,12 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#debug-trait" id="debug-trait">Debug trait</a></h3>
 <p>為了方便修復臭蟲，通常會實作 <a href="https://doc.rust-lang.org/std/fmt/trait.Debug.html">Debug trait</a> 印出有助於解決問題的資料。歸功於 <code>Iterator</code> 的實踐，我們可以快速用 <code>self.iter()</code> 印出所有節點內的元素，客製化 <code>Debug</code> 的顯示方式。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
     fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter) -&gt; std::fmt::Result {
         for elem in self.iter() {
@@ -3314,7 +3314,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h2><a class="header" href="#效能-16" id="效能-16">效能</a></h2>
 <table><thead><tr><th>Operation</th><th>Complexity</th></tr></thead><tbody>
 <tr><td>get</td><td>$O(n)$</td></tr>
@@ -3589,7 +3589,7 @@ $k$：雜湊表配置的儲存空間（bucket 總數）。</p>
 <p>要實作雜湊函數，當然可以自幹計算雜湊值的函式來用，那為什麼還要使用 Rust 定義好的 <a href="https://doc.rust-lang.org/std/hash/trait.Hash.html"><code>Hash</code></a> 呢？當然是希望將雜湊的介面抽象化，只要型別宣告符合 <code>Hash</code> trait，任何人都可以輕鬆計算雜湊值。而實作 <a href="https://doc.rust-lang.org/std/hash/trait.Hash.html"><code>Hash</code></a> 很簡單，只要寫一個 <code>fn hash()</code>，呼叫端就能透過它計算雜湊，例如：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>use std::hash::{Hash, Hasher};
 
 struct Car {
@@ -3602,13 +3602,13 @@ impl Hash for Car {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>光是計算雜湊值還不夠，要確定「當鍵相等時，其雜湊值也相等」這極為重要的雜湊特性，這時候除了實作 <code>Hash</code> trait，<code>Eq</code> trait 也要同時實作，該型別才能夠「被比較」，標準函式庫的 <code>HashMap</code> 的鍵就是實作 <code>Hash + Eq</code> 的型別，詳情請參閱 trait 的文件說明。</p>
 <p>綜合以上，可以大膽定論，我們將實作的雜湊表的 key 一定符合 <code>K: Hash + Eq</code>，key 本身才能相互比較（實作 <code>Eq</code>），並開放呼叫端自定義型別實作不同的雜湊計算方式（實作 <code>Hash</code>）。</p>
 <p>為了方便計算雜湊值，我們寫了一個輔助函式，以達成雜湊兩步驟：<strong>計算雜湊值﹢取模</strong>。其中，我們使用了 Rust 預設的雜湊演算法 <a href="https://doc.rust-lang.org/std/collections/hash_map/struct.DefaultHasher.html">DefaultHasher</a>，省下實作雜湊函數的功夫。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn make_hash&lt;X&gt;(x: &amp;X, len: usize) -&gt; Option&lt;usize&gt;
     where X: Hash + ?Sized,                   // 1
 {
@@ -3618,7 +3618,7 @@ fn main() {
     Some(hasher.finish() as usize % len)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li><code>X</code> 泛型參數除了 <code>Hash</code>，還必須是 <a href="https://doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait">Dynamically Sized Type</a>（DST，型別記作 <code>?Sized</code>）</li>
 <li>防止以 0 取模（<code>%</code> modulo），除數不能為 0。</li>
@@ -3631,16 +3631,16 @@ fn main() {
 <p>我們嘗試建立可以儲存 key-value pair 的結構體，裡面配置一個 bucket array <code>buckets</code>。其中 <code>K</code> 泛型參數是準備計算雜湊的鍵，而 <code>V</code> 則是與鍵配對的資料。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
     buckets: Vec&lt;(K, V)&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>可是，用單一 <code>Vec</code> 儲存所有資料，萬一雜湊碰撞，不同鍵指向同個索引值該如何？這次先挑選相對容易的方案 separate chaining 處理碰撞，並以 <code>Vec</code> 動態陣列作為每個 bucket 儲存碰撞元素的容器，因此，<code>buckets</code> 陣列裡面改存 <code>Bucket</code> 陣列，而 <code>Bucket</code> 則儲存真正的 key-value pair。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>type Bucket&lt;K, V&gt; = Vec&lt;(K, V)&gt;;              // 1
 
 pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
@@ -3648,7 +3648,7 @@ pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
    len: usize,                                // 3
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>宣告 bucket 的型別 <code>Bucket</code>，實際上是一個 type alias 指向儲存鍵值 <code>(K, V)</code> 的動態陣列。</li>
 <li>將 <code>HashMap.buckets</code> 改為儲存 <code>Bucket</code> 的動態陣列。</li>
@@ -3681,7 +3681,7 @@ pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
 <p>雜湊表初始化相對容易，一樣慣例使用 <code>new</code>。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;K, V&gt; HashMap&lt;K, V&gt; where K: Hash + Eq {
     pub fn new() -&gt; Self {
         Default::default()
@@ -3697,7 +3697,7 @@ impl&lt;K, V&gt; Default for HashMap&lt;K, V&gt;
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>這裡為了符合人因工程，使用了 <a href="https://doc.rust-lang.org/std/default/trait.Default.html"><code>Default</code></a> trait 設定初始值。此外，由於 Rust 的容器型別慣例上沒有任何元素時，不會配置任何記憶體空間，僅有初始的 pointer。 HashMap 初始化後，記憶體空間僅需</p>
 <ul>
 <li><code>buckets</code> 的 <code>Vec</code> 佔據 3 個 usize 大小（一個 heap 指標，兩個記錄容量與長度的 usize。</li>
@@ -3707,7 +3707,7 @@ impl&lt;K, V&gt; Default for HashMap&lt;K, V&gt;
 <p>為了後續實作 resize 容易些，同時實作了指定 bucket 數目的建構式。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn with_capacity(cap: usize) -&gt; Self {
     let mut buckets: Vec&lt;Bucket&lt;K, V&gt;&gt; =  Vec::new();
     for _ in 0..cap {
@@ -3716,7 +3716,7 @@ fn main() {
     Self { buckets, len: 0 }
 } 
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>很清楚地，同樣建立一個空的 bucket array，再預先配置給定數量的 <code>Bucket</code> 。<code>len</code> 則因為沒有開始增加新值，而設定為 0。</p>
 <h3><a class="header" href="#存取單一元素" id="存取單一元素">存取單一元素</a></h3>
 <p>存取元素的實作也非常直觀，</p>
@@ -3727,7 +3727,7 @@ fn main() {
 </ol>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn get(&amp;self, key: &amp;K) -&gt; Option&lt;&amp;V&gt; {
     let index = self.make_hash(key)?;
     self.buckets.get(index).and_then(|bucket|
@@ -3737,12 +3737,12 @@ fn main() {
     )
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>事實上，這個 <code>get</code> 不是非常方便使用，當我們透過 <code>HashMep::get</code> 搜尋特定鍵時，必須傳入一模一樣的型別，例如 <code>HashMap&lt;&amp;str, u8&gt;</code> 就只能透過相同的 borrowed value <code>&amp;str</code> 搜索，而不能透過 owned value <code>&amp;String</code> 尋找，就算兩個型別可無痛轉換也無法。</p>
 <p>因此我們可以參考 Rust 標準函式庫為泛型參數 <code>K</code> 實作 <a href="https://doc.rust-lang.org/stable/std/borrow/trait.Borrow.html">Borrow</a> trait，抽象化 owned 與 borrowed 間的型別，讓呼叫端無論傳 owned 或 borrowed 型別都可以有相同的行為。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn get&lt;Q&gt;(&amp;self, q: &amp;Q) -&gt; Option&lt;&amp;V&gt;
     where
         K: Borrow&lt;Q&gt;,
@@ -3756,7 +3756,7 @@ fn main() {
     )
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <blockquote>
 <p><code>fn get_mut()</code> 與 <code>fn get()</code> 的差異只在於呼叫了 <code>self.bucket.get_mut</code> 取得 mutable reference，這裡就不多做說明。</p>
 </blockquote>
@@ -3769,7 +3769,7 @@ fn main() {
 <p>先來看看刪除怎麼實作。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn remove&lt;Q&gt;(&amp;mut self, q: &amp;Q) -&gt; Option&lt;V&gt;
     where
         K: Borrow&lt;Q&gt;,
@@ -3786,7 +3786,7 @@ fn main() {
     })
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>所有涉及搜尋的操作，第一步一定是計算雜湊值。</li>
 <li>建立 mutable 的迭代器，利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.position"><code>posiion</code></a> 找到對應的鍵值對，再呼叫 <code>Vec::swap_remove</code> 移除。</li>
@@ -3798,7 +3798,7 @@ fn main() {
 <p>而插入與移除非常相似。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn insert(&amp;mut self, key: K, value: V) -&gt; Option&lt;V&gt; {
     self.try_resize();                                      // 1
     let index = self                                        // 2
@@ -3817,7 +3817,7 @@ fn main() {
     }                                                       // 4
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>嘗試調整雜湊表大小，以確保 load factor 在閾值之間。</li>
 <li>同樣地，根據鍵計算雜湊值，以取得對應的內部 bucket 位置。</li>
@@ -3845,7 +3845,7 @@ fn main() {
 <p>前情提要完畢，接下來就是程式碼的部分了。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn try_resize(&amp;mut self) {
     let entry_count = self.len();                               // 1
     let capacity = self.bucket_count();
@@ -3866,7 +3866,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>取得所有需要用到的長度資料。</li>
 <li>若當前容量為 0，表示尚未新增任何元素，我們 push 一個空 bucket 進去，讓其他操作可以正常新增鍵值對。</li>
@@ -3880,14 +3880,14 @@ fn main() {
 <p>根據之前其他方法的實作，要迭代整個雜湊表非常簡單，就是迭代所有 bucket，並利用 <code>flat_map</code> 打平 nested vector。簡單實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn iter() -&gt; std::slice::Iter&lt;(&amp;k, &amp;v)&gt; {
     self.buckets.iter_mut()
         .flat_map(|b| b)
         .map(|(k, v)| (k, v))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>但最終會發現，我們的程式完全無法編譯，也無法理解這麼長的閉包（closure）究竟要如何寫泛型型別。得了吧 Rust，老子學不動了！</p>
 <pre><code>error[E0308]: mismatched types
    --&gt; src/collections/hash_map/mod.rs:253:9
@@ -3904,14 +3904,14 @@ fn main() {
 <p>實作如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn iter(&amp;self) -&gt; impl Iterator&lt;Item = (&amp;K, &amp;V)&gt; {
     self.buckets.iter()
         .flat_map(|b| b)
         .map(|(k, v)| (k, v))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>更多 impl trait 相關資訊可以參考：</p>
 <ul>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/1522-conservative-impl-trait.md">Rust RFC: impl trait</a></li>
@@ -3977,7 +3977,7 @@ $v$：欲與鍵綁定的資料。<br />
 <p>既然選用雜湊表作為底層容器，集合的結構體就非常簡單了，我們可以將集合想像為在 HashMap 薄薄的一層封裝。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub struct HashSet&lt;T&gt;
 where
     T: Hash + Eq,
@@ -3985,7 +3985,7 @@ where
     hash_map: HashMap&lt;T, ()&gt;,
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>比較特別的是雜湊表的鍵值，這裡使用空的 tuple <code>()</code>，也就是以 <a href="https://doc.rust-lang.org/std/primitive.unit.html">unit type</a> 作為雜湊表之值，只要將集合的元素作為雜湊表鍵，忽略對應的值，就是貨真價實的集合結構。</p>
 <h3><a class="header" href="#不佔空間的-unit-type" id="不佔空間的-unit-type">不佔空間的 Unit Type</a></h3>
 <p>這樣多儲存一個 <code>()</code> 會不會造成額外的儲存空間負擔？事實上，Unit type <code>()</code> 在 Rust 語言中是一種 <a href="https://doc.rust-lang.org/nomicon/exotic-sizes.html#zero-sized-types-zsts">Zero Sized Types (ZSTs)</a>，在編譯時期 Rust 會將 ZST 當作一種型別來操作，但真正輸出的機器碼中，ZST 並不會佔用任何運算空間。<code>Set = HashMap&lt;T, ()&gt;</code> 完全體現了 Rust 零成本抽象的語言特性。</p>
@@ -4003,7 +4003,7 @@ where
 <p>這些基本操作的實作上，只是對雜湊表的簡單封裝，詳細實作可以參考 <a href="collections/set/../hash_map">HashMap</a>。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; HashSet&lt;T&gt;
 where
     T: Hash + Eq,
@@ -4041,7 +4041,7 @@ where
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li><code>insert</code> 將元素置於 key 上，value 則設為 <code>()</code>。</li>
 <li><code>contains</code> 利用 <code>HashMap::get</code> 回傳的 <code>Option&lt;()&gt;</code> 判斷是否已有該的元素。</li>
@@ -4069,7 +4069,7 @@ where
 <p>要取得兩個集合的聯集，最直覺的想法可能是創造一個新的集合，再把 A 和 B 兩個集合的元素通通 <code>insert</code> 進去，就像這樣：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// 利用 Clone 實現的聯集。完整實作見 bit.ly/caab7fb
 pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; HashSet&lt;T&gt; {
     // 複製一整份 other 到新的 set
@@ -4084,7 +4084,7 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; HashSet&lt;T&gt; {
     new_set
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>然而，上述做法有兩個缺點：</p>
 <ol>
 <li>建立了一個全新的 HashSet 實例，花了額外的時間與空間</li>
@@ -4104,7 +4104,7 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; HashSet&lt;T&gt; {
 <p>這樣其實就是 <code>other \ self</code> 這個差集，加上 <code>self</code> 自身，剛好就是聯集。程式碼如下：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// 使用 impl trait 語法，避免宣告不同迭代器型別的麻煩。
 pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     // 實際上就是差集
@@ -4113,7 +4113,7 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Ite
     self.iter().chain(other_but_not_self)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h4><a class="header" href="#lifetime-elision" id="lifetime-elision">Lifetime Elision</a></h4>
 <p>但很不幸地，Compiler error E0623（甚至查不到 E0623 是什麼）。</p>
 <pre><code class="language-bash">error[E0623]: lifetime mismatch
@@ -4128,22 +4128,22 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Ite
 <p>是 <code>self</code> 與 <code>other</code> 的生命週期不同導致，當這兩個集合的迭代器被 chain 起來後回傳，編譯器無法確認 Iterator 的 Item 生命週期多長。你可能很好奇為什麼 <code>self</code> 與 <code>other</code> 生命週期不同，事實上，Rust 為了讓語法輕鬆一點，允許函數省略部分生命週期標註，這個行為稱作 <a href="https://doc.rust-lang.org/nomicon/lifetime-elision.html">Lifetime Elision</a>，會在各種不同的條件下加註生命週期，其中有一條是「<strong>每個被省略的生命週期都會成為獨立的生命週期</strong>」。因此，<code>union()</code> 加上被省略的生命週期，會長得像：</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn union&lt;'a, 'b&gt;(&amp;'a self, other: &amp;'b HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;'a ??? &amp;'b ???T&gt;;
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>於是乎，編譯器無法理解 Iterator&lt;Item = &amp;T&gt; 的 <code>&amp;T</code> 到底生命週期是 ‘a 還是 ‘b，就不給編譯。</p>
 <p>解法也很簡單，合併 <code>self</code> 與 <code>other</code> 的生命週期到同一個，不論是語意上（兩個集合至少活得一樣長）還是編譯條件都說得通。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// 加上 'a ，讓 self、other 的生命週期至少在這個函數內一樣長
 pub fn union&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     let other_but_not_self = other.iter().filter(|item| !self.contains(item));
     self.iter().chain(other_but_not_self)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <blockquote>
 <p>更多 Lifetime Elision 的資訊，可以參考 <a href="https://doc.rust-lang.org/nomicon/lifetime-elision.html">Rust 黑魔法 Nomicon</a> 與 <a href="https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html#lifetime-elision">Rust TRPL 的解釋</a>，還有相關的 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0141-lifetime-elision.md">RFC</a> 可以看。</p>
 </blockquote>
@@ -4174,7 +4174,7 @@ help: to force the closure to take ownership of `self` (and any other referenced
 <p>編譯器也十分好心地提示，只要使用 <code>move</code> 關鍵字，將 <code>self</code> 的所有權轉移至 closure 中，就能避免生命週期不一致的問題。你可能有些疑惑，把 <code>self</code> move 進 closure 之後，<code>self</code> 不就會被 drop 釋放掉了？可以這樣理解，轉移進 closure 的型別是整個 <code>self</code>，也就是 <code>&amp;'a mut HashSet&lt;T&gt;</code> 型別，解讀為編譯器將 <code>self</code> 的型別看作新的 owned type，所有權可合法轉移，但底層仍保留指向原始資料的 borrow，巧妙避開生命週期問題。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn union&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     // 用 move 修飾 closure
     // self（&amp;'a HashSet&lt;T&gt;）被整個轉移進 closure
@@ -4182,54 +4182,54 @@ fn main() {
     self.iter().chain(other_but_not_self)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h3><a class="header" href="#實作交集差集與對稱差集" id="實作交集差集與對稱差集">實作交集、差集與對稱差集</a></h3>
 <p>呼，上面解決了最困難的生命週期和 borrow checker 問題，接下來的實作只要關注數學上的集合定義就能輕鬆解決了。</p>
 <p>首先，交集的定義為「你有，而且我也有的」，簡單，迭代 <code>self</code> 並過濾出 <code>other</code> 也有的元素就好，秒殺！</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn intersection&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     self.iter().filter(move |item| other.contains(item))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>再來是差集，概念是就是「我有，但你沒有的」，一樣迭代 <code>self</code> 並過濾出 <code>other</code> 沒有的元素。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn difference&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     self.iter().filter(move |item| !other.contains(item))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>剛剛實作 <code>union</code> 有用到差集，我們可以稍微改寫，讓 <code>union</code> 的程式碼更神清氣爽。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn union&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     // self ∪ (other \ self)
     self.iter().chain(other.difference(self))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>最後，對稱差集可以透過組合上面的操作算出，可以是：「我有加上你有的，減去我們共同有的」，也可以是「我有但你沒有的，加上你有但我沒有的」，這裡我們選擇第二種實作。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn symmetric_difference&lt;'a&gt;(&amp;'a self, other: &amp;'a HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     // (self \ other) ∪ (other \ self)
     self.difference(other).chain(other.difference(self))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>整個集合的基礎在這邊大功告成了！</p>
 <h3><a class="header" href="#子集超集與不交集" id="子集超集與不交集">子集、超集與不交集</a></h3>
 <p>經歷 Rust 編譯器的摧殘，來實作比較簡單的方法吧。集合運算常要比較兩個集合的關係，例如 A ⊆ B 代表 A 是 B 的子集，定義是 A 裡面的元素 B 都有。</p>
 <p>我們先來實作 <code>is_subset</code> 檢查 <code>self</code> 是否為 <code>other</code> 的子集。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn is_subset(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; bool {
     // 若 self 的元素比 other 多，就不可能是 self ⊆ other
     // 所以提前回傳 false
@@ -4240,26 +4240,26 @@ fn main() {
     self.iter().all(|item| other.contains(&amp;item))
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p><code>is_superset</code> 檢查 <code>self</code> 是否為 <code>other</code> 的超集就更簡單了，只要把 <code>is_subset</code> 反過來使用就行了。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn is_superset(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; bool {
     // self ⊇ other = other ⊆ self
     other.is_subset(self)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>最後，我們常會檢查兩個集合是否沒有交集（disjoint），這個方法只要檢查交集 <code>intersection()</code> 迭代器的長度是否為 0 就可以了。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn is_disjoint(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; bool {
     self.intersection(other).count() == 0
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h2><a class="header" href="#二元運算與運算子" id="二元運算與運算子">二元運算與運算子</a></h2>
 <p>上面的方法好冗，能不能和 <a href="https://docs.python.org/3/library/stdtypes.html#set">Python</a> 一樣，用簡單明瞭的語法操作集合的二元運算？當然行，Rust 的表達性很強，完全不輸 Python，透過<a href="https://en.wikipedia.org/wiki/Operator_overloading">運算子多載（operator overloading）</a>。</p>
 <h3><a class="header" href="#運算子多載" id="運算子多載">運算子多載</a></h3>
@@ -4273,7 +4273,7 @@ fn main() {
 <p>由於四個運算子實作的概念相同，這裡挑 <code>|</code> <strong>bitwise or</strong> 來解釋如何客製化運算子邏輯。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>// 實作 BitOr 多載 `|` 運算子
 impl&lt;'a, 'b, T&gt; BitOr&lt;&amp;'b HashSet&lt;T&gt;&gt; for &amp;'a HashSet&lt;T&gt;
 where
@@ -4287,7 +4287,7 @@ where
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>要多載 bit or 運算子，代表型別要實作 <code>BitOr</code> trait。</li>
 <li>由於運算子的 required method 通常會 consume <code>self</code> 的所有權，因此我們要在 impl 動手腳，改以 <code>&amp;HashSet&lt;T&gt;</code> 作為 <code>BitOr</code> 實作的對象。</li>
@@ -4321,7 +4321,7 @@ where
 </ol>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; PartialEq for HashSet&lt;T&gt;
 where
     T: Hash + Eq,
@@ -4339,7 +4339,7 @@ where
 /// `Eq` 並沒有 required method，只要實作 `Partial::eq` 方法，就能直接推斷出 `Eq`。
 impl&lt;T&gt; Eq for HashSet&lt;T&gt; where T: Hash + Eq {}
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>與相等關係相同，Rust 的排序關係同樣有理論依據，<code>Ord</code> 是數學上的 <a href="https://en.wikipedia.org/wiki/Total_order">Total order</a>，符合反對稱性、傳遞性，以及 <a href="https://en.wikipedia.org/wiki/Connex_relation">connex relation</a>；而 <code>ParitalOrd</code> 則接近數學上的 partial order，Rust 的文件中描述該 trait 須符合反對稱性與傳遞性。</p>
 <blockquote>
 <p>Connex relation：在集合 X 下，所有 (x, y) pair 都會符合 x ∼ y 或 y ∼ x 的關係。在排序關係上，意指不是 x ≥ y 就是 y ≥ x。</p>
@@ -4365,7 +4365,7 @@ impl&lt;T&gt; Eq for HashSet&lt;T&gt; where T: Hash + Eq {}
 </ol>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>impl&lt;T&gt; PartialOrd for HashSet&lt;T&gt;
 where
     T: Hash + Eq,
@@ -4382,7 +4382,7 @@ where
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>實作 <code>PartialEq</code>，<code>Eq</code> 與 <code>PartialOrd</code> 後，我們的集合型別終於能和 Python 的集合互別苗頭，有更高層次的表達性！</p>
 <blockquote>
 <p>有人可能會認為，比較運算還要透過 <code>partial_cmp</code> 判斷 <code>Option</code> 多麻煩，事實上，C++ 20 也帶來了 <code>&lt;=&gt;</code> 運算子以及 <a href="https://en.cppreference.com/w/cpp/language/operator_comparison#Three-way_comparison">three way comparison</a> 衍生的各種型別，partial order 或 parital equal 可說是更精確且必要的比較運算，也是一種趨勢。</p>

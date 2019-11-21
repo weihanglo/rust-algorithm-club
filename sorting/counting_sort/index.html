@@ -254,12 +254,12 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 <p>首先，我們先看函式如何宣告（function signature）。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key: F) 
     where F: Fn(&amp;T) -&gt; usize, 
           T: Clone,
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <p>這裡使用了四個參數：</p>
 <ul>
 <li><code>arr</code>：待排序陣列。</li>
@@ -275,7 +275,7 @@ fn main() {
 <p>再來，了解如何建立一個元素出現次數的陣列。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn counting_sort() {
     // ...
 
@@ -299,7 +299,7 @@ fn main() {
     // ...
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>建立一個長度為上下界之差的 count array。注意，這裡使用了 <code>Vec.resize</code>，因為 Rust initialize 空的 <code>Vec</code> 時並不會插入 0 或其他預設值。</li>
 <li>遍歷整個輸入資料，利用 <code>key</code> function 取出每筆資料的鍵值，出現一次就 +1。</li>
@@ -309,7 +309,7 @@ fn main() {
 <p>最後一步就是將 prefix sum 當作每個 element 的正確位置，把資料重頭排序。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>fn counting_sort() {
     // ...
 
@@ -320,7 +320,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>將輸入資料透過 <code>to_vec</code> 複製起來迭代，需要複製 <code>arr</code> 是因為之後要直接在 <code>arr</code> 插入新值，需要另一份原始輸入的拷貝。</li>
 <li>利用 <code>key</code> 擷取鍵值後，把資料複製給 <code>arra</code> 上對應 <code>prefix_sums[index]</code> 的位置。</li>
@@ -329,7 +329,7 @@ fn main() {
 <p>完成了！這裡再貼一次完整的程式碼。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>pub fn counting_sort&lt;F, T&gt;(arr: &amp;mut [T], min: usize, max: usize, key: F) 
     where F: Fn(&amp;T) -&gt; usize,
           T: Clone,
@@ -360,7 +360,7 @@ fn main() {
     }
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Counting_sort">Wiki: Counting sort</a></li>

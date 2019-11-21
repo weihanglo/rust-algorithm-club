@@ -224,7 +224,7 @@
 <p>話不多說，直接看程式碼。</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-fn main() {
+</span><span class="boring">fn main() {
 </span>use crate::searching::binary_search;
 
 pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&lt;usize, usize&gt;
@@ -249,7 +249,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
         .map_err(|index| lo + index)
 }
 <span class="boring">}
-</code></pre></pre>
+</span></code></pre></pre>
 <ol>
 <li>和二元搜尋同，遇到空序列就返回 <code>Err(0)</code> 告知呼叫端可新增資料在位置 0。</li>
 <li>決定搜尋上下界，只要 上界不超過序列長度，且 <code>arr[hi]</code> 小於目標值，就讓上界指數成長。這裡用位元左移運算子（bitwise left shift）實作乘以 2。<br />
