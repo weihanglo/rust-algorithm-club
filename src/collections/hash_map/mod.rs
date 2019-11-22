@@ -504,7 +504,6 @@ mod separate_chaining {
         assert!(vec.contains(&("dog", "loyal")));
         assert!(vec.contains(&("rat", "lovely")));
     }
-
 }
 
 #[cfg(test)]
