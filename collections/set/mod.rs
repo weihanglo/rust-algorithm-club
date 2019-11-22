@@ -588,11 +588,7 @@ mod set_relations {
         // ∀𝑨, 𝑨 ≠ ∅: 𝑨 ⊈ ∅
         let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
         let s2: HashSet<&str> = [].iter().cloned().collect();
-        assert_eq!(
-            s1.is_subset(&s2),
-            false,
-            "∀𝑨, 𝑨 ≠ ∅: 𝑨 ⊈ ∅"
-        );
+        assert_eq!(s1.is_subset(&s2), false, "∀𝑨, 𝑨 ≠ ∅: 𝑨 ⊈ ∅");
 
         // {cat} ⊆ {cat}
         let s1: HashSet<&str> = ["cat"].iter().cloned().collect();
@@ -621,11 +617,7 @@ mod set_relations {
         // ∀𝑨, 𝑨 ≠ ∅: ∅ ⊉ 𝑨
         let s1: HashSet<&str> = [].iter().cloned().collect();
         let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
-        assert_eq!(
-            s1.is_superset(&s2),
-            false,
-            "∀𝑨, 𝑨 ≠ ∅: ∅ ⊉ 𝑨"
-        );
+        assert_eq!(s1.is_superset(&s2), false, "∀𝑨, 𝑨 ≠ ∅: ∅ ⊉ 𝑨");
 
         // ∀𝑨: 𝑨 ⊇ ∅
         let s1: HashSet<&str> = ["cat"].iter().cloned().collect();

@@ -97,7 +97,7 @@ mod tests {
     }
 
     #[test]
-    fn test_pop(){
+    fn test_pop() {
         let mut stack = super::Stack::<u32>::with_capacity(1);
         stack.push(1u32);
         assert_eq!(Some(1u32), stack.pop());
