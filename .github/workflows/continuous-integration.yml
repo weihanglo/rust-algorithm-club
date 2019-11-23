@@ -1,0 +1,76 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Before cache
+        run: |
+          echo "USER:" $USER
+
+      - name: Cache rustup
+        uses: actions/cache@v1
+        with:
+          path: ~/.rustup
+          key: ${{ runner.os }}-rustup
+
+      - name: Cache cargo binaries
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/bin
+          key: ${{ runner.os }}-cargo-bin-${{ hashFiles('**/Cargo.lock') }}
+          restore-key: |
+            ${{ runner.os }}-cargo-bin-
+
+      - name: Cache cargo registry cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry/cache
+          key: ${{ runner.os }}-cargo-registry-cache-${{ hashFiles('**/Cargo.lock') }}
+          restore-key: |
+            ${{ runner.os }}-cargo-registry-cache-
+
+      - name: Cache cargo registry index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry/index
+          key: ${{ runner.os }}-cargo-registry-index-${{ hashFiles('**/Cargo.lock') }}
+          restore-key: |
+            ${{ runner.os }}-cargo-registry-index-
+
+      - name: Cache cargo git db
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git/db
+          key: ${{ runner.os }}-cargo-git-db-${{ hashFiles('**/Cargo.lock') }}
+          restore-key: |
+            ${{ runner.os }}-cargo-git-db-
+
+      - name: Cache cargo build
+        uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+          restore-key: |
+            ${{ runner.os }}-cargo-build-target-
+
+      - name: Install stable Rust
+        run: |
+          rustup set profile default
+          rustup update stable
+          rustup default stable
+
+      - name: Test and build
+        run: |
+          cargo test --verbose
+          cargo build --verbose
+
+      - name: Lint
+        run: cargo fmt -- --check # TODO: add clippy 
