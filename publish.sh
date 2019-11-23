@@ -22,11 +22,13 @@ echo "Removing existing files"
 rm -rf "${PUBLIC_DIR}/*"
 
 echo "Generating site"
-mdbook build -d _tmp_book
-cp -rp _tmp_book/* "${PUBLIC_DIR}/"
-rm -rf _tmp_book
+mdbook build -d __tmp_book
+cargo doc --lib --no-deps
+mv "target/doc" __tmp_book/
+cp -rp __tmp_book/* "${PUBLIC_DIR}/"
+rm -rf __tmp_book
 
 echo "Updating branch ${TARGET_BRANCH}"
 cd "${PUBLIC_DIR}" && git add --all && \
-    git commit -m "Publishing via publish.sh at $(date)" && \
+    git commit -m "Published via publish.sh at $(date)" && \
     git push $1
