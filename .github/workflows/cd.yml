@@ -1,14 +1,13 @@
-name: Deploy Book
+name: CD
 
-on: 
+on:
   push:
     branches:
       - master
 
 jobs:
-
   deploy:
-    name: Deploy to Github Page
+    name: Deploy to GitHub Pages
 
     runs-on: ubuntu-latest
 
