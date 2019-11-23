@@ -12,16 +12,16 @@ You can find out more on the [Rust Algorithm Club][main-site] main site. Just pi
 This project along with its source code are on [GitHub][source-code] and we are looking forward to your contributions.
 
 [![Rust Edition](https://img.shields.io/badge/Rust_Edition-2018-green.svg)][edition-guide]
-[![Build Status](https://travis-ci.com/weihanglo/rust-algorithm-club.svg?token=jBygxQ3kLkkfxSeAJnP2&branch=master)][ci-status]
+[![Build Status](https://github.com/weihanglo/rust-algorithm-club/workflows/CI/badge.svg)][ci-status]
 [![Documentation](https://img.shields.io/badge/doc-available-blue.svg)][generated-doc]
 
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
 [source-code]: https://github.com/weihanglo/rust-algorithm-club
 [main-site]: https://rust-algo.club
-[ci-status]: https://travis-ci.com/weihanglo/rust-algorithm-club
+[ci-status]: https://github.com/weihanglo/rust-algorithm-club/actions?query=workflow%3ACI
 [generated-doc]: https://rust-algo.club/doc/rust_algorithm_club/
-[edition-guide]: https://rust-lang-nursery.github.io/edition-guide/rust-2018
+[edition-guide]: https://rust-lang.github.io/edition-guide/rust-2018
 
 ## Important Links
 
