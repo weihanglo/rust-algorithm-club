@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches:
+    branches: 
       - master
 
 jobs:
@@ -28,11 +28,9 @@ jobs:
       - name: Build the book
         run: |
           ./mdbook --version # Show version info
-          ./mdbook build -d __tmp_book
+          ./mdbook build -d "${PUBLISH_DIR}"
           cargo doc --lib --no-deps
-          mv "target/doc" __tmp_book/
-          cp -rp __tmp_book/* "${PUBLISH_DIR}/"
-          rm -rf __tmp_book
+          mv target/doc "${PUBLISH_DIR}/"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v2.5.0
