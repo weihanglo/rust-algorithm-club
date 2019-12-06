@@ -15,8 +15,17 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Before cache
-        run: echo "USER:" $USER
+        # The pre-installed toolchain is under root permission, and this would
+        # make tarball fail to extract. Here we remove the symlink and install
+        # our own Rust toolchain if necessary.
+      - name: Cleanup pre-installed Rust toolchains
+        run: |
+          which rustup
+          which cargo
+          if [[ -L "$HOME/.cargo" && -L "$HOME/.rustup" ]]; then
+              rm -v "$HOME/.rustup"
+              rm -v "$HOME/.cargo"
+          fi
 
       - name: Cache rustup
         uses: actions/cache@v1
@@ -66,6 +75,11 @@ jobs:
 
       - name: Install stable Rust
         run: |
+          if [[ ! -d "$HOME/.cargo" || ! -d "$HOME/.rustup" ]]; then
+              curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup-init.sh
+              sh rustup-init.sh -yv --default-toolchain none
+              source "$HOME/.cargo/env"
+          fi
           rustup set profile default
           rustup update stable
           rustup default stable
