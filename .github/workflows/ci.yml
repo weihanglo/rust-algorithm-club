@@ -15,10 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Cleanup pre-installed Rust toolchains
         # The pre-installed toolchain is under root permission, and this would
         # make tarball fail to extract. Here we remove the symlink and install
         # our own Rust toolchain if necessary.
-      - name: Cleanup pre-installed Rust toolchains
         run: |
           which rustup
           which cargo
