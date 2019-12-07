@@ -6,5 +6,4 @@ implementors["rust_algorithm_club"] = [{text:"impl&lt;T&gt; Freeze for <a class=
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()
