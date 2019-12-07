@@ -26,12 +26,15 @@ jobs:
               rm -v "$HOME/.rustup"
               rm -v "$HOME/.cargo"
           fi
+          echo "::add-path::$HOME/.cargo/bin"
 
       - name: Cache rustup
         uses: actions/cache@v1
         with:
           path: ~/.rustup
-          key: ${{ runner.os }}-rustup
+          key: ${{ runner.os }}-rustup-${{ hashFiles('**/Cargo.lock') }}
+          restore-key: |
+              ${{ runner.os }}-rustup-
 
       - name: Cache cargo binaries
         uses: actions/cache@v1
@@ -77,10 +80,8 @@ jobs:
         run: |
           if [[ ! -d "$HOME/.cargo" || ! -d "$HOME/.rustup" ]]; then
               curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup-init.sh
-              sh rustup-init.sh -yv --default-toolchain none
-              source "$HOME/.cargo/env"
+              sh rustup-init.sh -y --default-toolchain none
           fi
-          rustup set profile default
           rustup update stable
           rustup default stable
 
