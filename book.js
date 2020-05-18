@@ -143,6 +143,11 @@ function playpen_text(playpen) {
         languages: [],      // Languages used for auto-detection
     });
 
+    let code_nodes = Array
+        .from(document.querySelectorAll('code'))
+        // Don't highlight `inline code` blocks in headers.
+        .filter(function (node) {return !node.parentElement.classList.contains("header"); });
+
     if (window.ace) {
         // language-rust class needs to be removed for editable
         // blocks or highlightjs will capture events
@@ -154,16 +159,12 @@ function playpen_text(playpen) {
             .from(document.querySelectorAll('code:not(.editable)'))
             .forEach(function (block) { hljs.highlightBlock(block); });
     } else {
-        Array
-            .from(document.querySelectorAll('code'))
-            .forEach(function (block) { hljs.highlightBlock(block); });
+        code_nodes.forEach(function (block) { hljs.highlightBlock(block); });
     }
 
     // Adding the hljs class gives code blocks the color css
     // even if highlighting doesn't apply
-    Array
-        .from(document.querySelectorAll('code'))
-        .forEach(function (block) { block.classList.add('hljs'); });
+    code_nodes.forEach(function (block) { block.classList.add('hljs'); });
 
     Array.from(document.querySelectorAll("code.language-rust")).forEach(function (block) {
 
@@ -284,13 +285,23 @@ function playpen_text(playpen) {
     function showThemes() {
         themePopup.style.display = 'block';
         themeToggleButton.setAttribute('aria-expanded', true);
-        themePopup.querySelector("button#" + document.body.className).focus();
+        themePopup.querySelector("button#" + get_theme()).focus();
     }
 
     function hideThemes() {
         themePopup.style.display = 'none';
         themeToggleButton.setAttribute('aria-expanded', false);
         themeToggleButton.focus();
+    }
+
+    function get_theme() {
+        var theme;
+        try { theme = localStorage.getItem('mdbook-theme'); } catch (e) { }
+        if (theme === null || theme === undefined) {
+            return default_theme;
+        } else {
+            return theme;
+        }
     }
 
     function set_theme(theme, store = true) {
@@ -324,9 +335,7 @@ function playpen_text(playpen) {
             });
         }
 
-        var previousTheme;
-        try { previousTheme = localStorage.getItem('mdbook-theme'); } catch (e) { }
-        if (previousTheme === null || previousTheme === undefined) { previousTheme = default_theme; }
+        var previousTheme = get_theme();
 
         if (store) {
             try { localStorage.setItem('mdbook-theme', theme); } catch (e) { }
@@ -337,9 +346,7 @@ function playpen_text(playpen) {
     }
 
     // Set theme
-    var theme;
-    try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
-    if (theme === null || theme === undefined) { theme = default_theme; }
+    var theme = get_theme();
 
     set_theme(theme, false);
 
@@ -408,7 +415,6 @@ function playpen_text(playpen) {
 (function sidebar() {
     var html = document.querySelector("html");
     var sidebar = document.getElementById("sidebar");
-    var sidebarScrollBox = document.getElementById("sidebar-scrollbox");
     var sidebarLinks = document.querySelectorAll('#sidebar a');
     var sidebarToggleButton = document.getElementById("sidebar-toggle");
     var sidebarResizeHandle = document.getElementById("sidebar-resize-handle");
@@ -505,9 +511,10 @@ function playpen_text(playpen) {
     }, { passive: true });
 
     // Scroll sidebar to current active section
-    var activeSection = sidebar.querySelector(".active");
+    var activeSection = document.getElementById("sidebar").querySelector(".active");
     if (activeSection) {
-        sidebarScrollBox.scrollTop = activeSection.offsetTop;
+        // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+        activeSection.scrollIntoView({ block: 'center' });
     }
 })();
 
@@ -580,26 +587,60 @@ function playpen_text(playpen) {
     });
 })();
 
-(function autoHideMenu() {
+(function controllMenu() {
     var menu = document.getElementById('menu-bar');
 
-    var previousScrollTop = document.scrollingElement.scrollTop;
-
-    document.addEventListener('scroll', function () {
-        if (menu.classList.contains('folded') && document.scrollingElement.scrollTop < previousScrollTop) {
-            menu.classList.remove('folded');
-        } else if (!menu.classList.contains('folded') && document.scrollingElement.scrollTop > previousScrollTop) {
-            menu.classList.add('folded');
-        }
-
-        if (!menu.classList.contains('bordered') && document.scrollingElement.scrollTop > 0) {
-            menu.classList.add('bordered');
-        }
-
-        if (menu.classList.contains('bordered') && document.scrollingElement.scrollTop === 0) {
-            menu.classList.remove('bordered');
-        }
-
-        previousScrollTop = Math.max(document.scrollingElement.scrollTop, 0);
-    }, { passive: true });
+    (function controllPosition() {
+        var scrollTop = document.scrollingElement.scrollTop;
+        var prevScrollTop = scrollTop;
+        var minMenuY = -menu.clientHeight - 50;
+        // When the script loads, the page can be at any scroll (e.g. if you reforesh it).
+        menu.style.top = scrollTop + 'px';
+        // Same as parseInt(menu.style.top.slice(0, -2), but faster
+        var topCache = menu.style.top.slice(0, -2);
+        menu.classList.remove('sticky');
+        var stickyCache = false; // Same as menu.classList.contains('sticky'), but faster
+        document.addEventListener('scroll', function () {
+            scrollTop = Math.max(document.scrollingElement.scrollTop, 0);
+            // `null` means that it doesn't need to be updated
+            var nextSticky = null;
+            var nextTop = null;
+            var scrollDown = scrollTop > prevScrollTop;
+            var menuPosAbsoluteY = topCache - scrollTop;
+            if (scrollDown) {
+                nextSticky = false;
+                if (menuPosAbsoluteY > 0) {
+                    nextTop = prevScrollTop;
+                }
+            } else {
+                if (menuPosAbsoluteY > 0) {
+                    nextSticky = true;
+                } else if (menuPosAbsoluteY < minMenuY) {
+                    nextTop = prevScrollTop + minMenuY;
+                }
+            }
+            if (nextSticky === true && stickyCache === false) {
+                menu.classList.add('sticky');
+                stickyCache = true;
+            } else if (nextSticky === false && stickyCache === true) {
+                menu.classList.remove('sticky');
+                stickyCache = false;
+            }
+            if (nextTop !== null) {
+                menu.style.top = nextTop + 'px';
+                topCache = nextTop;
+            }
+            prevScrollTop = scrollTop;
+        }, { passive: true });
+    })();
+    (function controllBorder() {
+        menu.classList.remove('bordered');
+        document.addEventListener('scroll', function () {
+            if (menu.offsetTop === 0) {
+                menu.classList.remove('bordered');
+            } else {
+                menu.classList.add('bordered');
+            }
+        }, { passive: true });
+    })();
 })();
