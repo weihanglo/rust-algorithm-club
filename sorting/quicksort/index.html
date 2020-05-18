@@ -169,7 +169,7 @@
 <ol>
 <li><strong>選擇 Pivot</strong>：在序列中任意選擇一個元素，稱為 <strong>Pivot</strong>。</li>
 <li><strong>分割序列</strong>：將序列重新排序，分為兩部分，比 pivot 小 的元素置換到 pivot 之前，比 pivot 大的元素置換到 pivot 之後，而 pivot 本身會座落在它最終的正確位置。</li>
-<li><strong>遞迴</strong>：分別將_比 pivot 小_，以及_比 pivot 大_ 兩部分分別重複上述步驟，直到新序列的長度小於等於 1，無法繼續分割為止，此時排序完成。</li>
+<li><strong>遞迴</strong>：分別將「比 pivot 小」及「比 pivot 大」兩部分重複上述步驟，直到新序列的長度小於等於 1，無法繼續分割為止，此時排序完成。</li>
 </ol>
 <h3><a class="header" href="#lomuto-partition-scheme" id="lomuto-partition-scheme">Lomuto partition scheme</a></h3>
 <p>為了達成上述條件，Quicksort 有許多不同的分割序列實作方案（partition scheme），其中以 Lomuto partition 最易理解，常被做為教材。</p>
