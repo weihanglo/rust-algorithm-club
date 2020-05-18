@@ -11,28 +11,22 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      PUBLISH_BRANCH: gh-pages # for peaceiris/actions-gh-pages
-      PUBLISH_DIR: .book # for peaceiris/actions-gh-pages
-      MDBOOK_VERSION: v0.3.5
-
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
-      - name: Download mdBook
-        run: |
-          export TARBALL="mdbook-${MDBOOK_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
-          export REPO="https://github.com/rust-lang/mdBook"
-          curl -L "${REPO}/releases/download/${MDBOOK_VERSION}/${TARBALL}" | tar zxv
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v1
+        with:
+          mdbook-version: '0.3.7'
 
       - name: Build the book
         run: |
-          ./mdbook --version # Show version info
-          ./mdbook build -d "${PUBLISH_DIR}"
+          mdbook build
           cargo doc --lib --no-deps
-          mv target/doc "${PUBLISH_DIR}/"
+          mv target/doc .book/
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v2.5.0
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: .book
