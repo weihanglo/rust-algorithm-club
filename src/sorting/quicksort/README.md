@@ -168,7 +168,7 @@ $$O(n \cdot 2 \log_2{n}) = O(n \log n)$$
 
 Quicksort 的空間複雜度取決於實作細節，由於**分割序列**步驟需 $O(1) $ 的空間複雜度，因此僅需分析遞迴式會在 call stack 產生多少 stack frame 即可。
 
-[前面提及](#最差情況)，最 naïve 的 Lomuto partition 最糟糕的情形下，會產生 $n - 1 $ 個嵌套遞迴，也就是需額外使用 $O(n) $ 的空間儲存 call stack frame，但只要 compiler 有支援 [尾端呼叫][tail-call]最佳化（tail-call optimization，TCO），Quicksort 很容易最佳化至 $O(\log n) $。
+[前面提及](#最差情況)，最 naïve 的 Lomuto partition 最糟糕的情形下，會產生 $n - 1 $ 個嵌套遞迴，也就是需額外使用 $O(n) $ 的空間儲存 call stack frame，但只要 compiler 有支援[尾端呼叫][tail-call]最佳化（tail-call optimization，TCO），Quicksort 很容易最佳化至 $O(\log n) $。
 
 [tail-call]: https://en.wikipedia.org/wiki/Tail_call
 
@@ -279,18 +279,21 @@ fn quicksort_helper_optimized(arr: &mut [i32], lo: isize, hi: isize) {
 2. 這是一個尾端呼叫，會展開。
 3. 這也是一個尾端呼叫。
 
-實際上，截至 2018.2，Rust Core Team 決定暫緩 TCO 的實作，目前 Rust 並沒有支援 TCO。但我們還是可以手動實作 TCO，減少 call stack。
+實際上，截至 2018.2，[Rust Core Team 決定暫緩 TCO 的實作][rust-rfc-1888]，目前 Rust 並沒有支援 TCO。但我們還是可以手動實作 TCO，減少 call stack。
+
+[rust-rfc-1888]: https://github.com/rust-lang/rfcs/pull/1888
 
 我們先把原始的 lomuto partition 實作改成手動 TCO 版本。利用 `while` loop，將 `lo` 替換成下一個遞迴的引數，減少部分的 call stack。
 
 ```diff
-- fn quicksort_helper_manual_tco(arr: &mut [i32], lo: isize, hi: isize) {
+- fn quicksort_helper(arr: &mut [i32], lo: isize, hi: isize) {
 + fn quicksort_helper_manual_tco(arr: &mut [i32], mut lo: isize, mut hi: isize) {
 -     if lo <= hi {
 +     while lo < hi {
           let pivot = partition(arr, lo, hi);
-          quicksort_helper(arr, lo, pivot - 1);
+-         quicksort_helper(arr, lo, pivot - 1);
 -         quicksort_helper(arr, pivot + 1, hi);
++         quicksort_helper_manual_tco(arr, lo, pivot - 1);
 +         lo = pivot + 1;
       }
   }
@@ -303,10 +306,10 @@ fn quicksort_helper_manual_tco(arr: &mut [i32], mut lo: isize, mut hi: isize) {
     while lo < hi {
         let pivot = partition(arr, lo, hi);
         if pivot - lo < hi - pivot {
-            quicksort_helper_optimized(arr, lo, pivot - 1);
+            quicksort_helper_manual_tco(arr, lo, pivot - 1);
             lo = pivot + 1;
         } else {
-            quicksort_helper_optimized(arr, pivot + 1, hi);
+            quicksort_helper_manual_tco(arr, pivot + 1, hi);
             hi = pivot - 1;
         }
     }
