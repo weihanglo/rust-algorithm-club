@@ -98,7 +98,7 @@ Mergesort 的缺點之一就是在合併子序列時，需要額外的空間依�
 
 Mergesort 的實作分為兩部分：
 
-- `mergesort` 主程式：對外的接口，負責分割序列。對應 Divide 功能。
+- `mergesort` 主程式：對外的介面，負責分割序列。對應 Divide 功能。
 - `merge`：合併子序列，對應到 Conquer 與 Combine 功能。
 
 先來看看如何分割序列。
