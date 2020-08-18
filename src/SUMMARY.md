@@ -43,6 +43,7 @@
     - [🚧 有序映射表 Ordered map](collections/ordered_map/README.md)
     - [🚧 多重映射表 Multimap](collections/multimap/README.md)
     - [集合 Set](collections/set/README.md)
+    - [布隆過濾器 Bloom filter](collections/bloom_filter/README.md)
 
 ------
 

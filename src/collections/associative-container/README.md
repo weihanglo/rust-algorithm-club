@@ -66,6 +66,10 @@ _（雜湊表示意圖）_
 
 [set-theory]: https://en.wikipedia.org/wiki/Set_theory
 
+### 布隆過濾器 Bloom Filter
+
+[布隆過濾器](../bloom_filter)是一種類似於集合，但只會回報「絕對不存在」或「可能存在」的機率資料結構，實作上節省空間，常用於在海量資料中確認成員是否存在，並能有一定容錯率的場景。
+
 ## 參考資料
 
 - [Wiki: Associative array](https://en.wikipedia.org/wiki/Associative_array)
