@@ -111,4 +111,4 @@
 - 程式碼與函式庫依據 [The MIT License (MIT)](https://github.com/weihanglo/rust-algorithm-club/blob/master/LICENSE) 授權條款發佈。
 - 文章與相關著作依據 [Creative Commons 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/) 授權條款發佈。
 
-Copyright © 2017 - 2018 Weihang Lo
+Copyright © 2017 - 2020 Weihang Lo

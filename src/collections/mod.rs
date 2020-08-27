@@ -11,3 +11,6 @@ pub use self::set::HashSet;
 
 mod stack;
 pub use self::stack::Stack;
+
+mod bloom_filter;
+pub use self::bloom_filter::BloomFilter;
