@@ -6,11 +6,11 @@ use std::marker::PhantomData;
 /// containment test with only false positive error.
 ///
 /// The false positive error probability _ε_ of a Bloom filter is defined as
-/// the probability that a Bloom filter claims an element is contained in it 
+/// the probability that a Bloom filter claims an element is contained in it
 /// but actually not.
 ///
 /// The count of hash functions denoted by _k_ indicates thant _k_ different
-/// hash functions that map _k_ position on the bit array. Typically _k_ is a 
+/// hash functions that map _k_ position on the bit array. Typically _k_ is a
 /// small constant depends on error probability _ε_.
 ///
 /// The underlying container is a bit array of _m_ bits, where the optimal _m_
@@ -136,7 +136,7 @@ impl<T: ?Sized> BloomFilter<T> {
     ///
     /// > g_i(x) = h1(x) + i * h2(x)
     ///
-    /// This function do the actual `hash` work with two independant hashers, 
+    /// This function do the actual `hash` work with two independant hashers,
     /// returing both h1(x) and h2(x) within a tuple.
     fn make_hash(&self, elem: &T) -> (u64, u64)
     where
