@@ -84,6 +84,7 @@
 - [🚧 有序映射表 Ordered map](collections/ordered_map)
 - [🚧 多重映射表 Multimap](collections/multimap)
 - [集合 Set](collections/set)
+- [布隆過濾器 Bloom filter](collections/bloom_filter/)
 
 ## 學習資源
 
