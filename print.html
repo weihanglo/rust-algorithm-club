@@ -2800,6 +2800,9 @@ use ::sorting::counting_sort;
 <p>鏈結串列是一種基本線性資料集合，每一個資料元素都是獨立的物件。儲存資料的方式和一般陣列配置連續物理記憶體空間不同，而是在各節點儲存額外的指標指向下一個節點。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Singly-linked-list.svg/612px-Singly-linked-list.svg.png" alt="" /></p>
 <p><em>(單向鏈結串列示意圖）</em></p>
+<blockquote>
+<p>本次實作的程式碼置於在 <a href="collections/linked_list//doc/rust_algorithm_club/collections/struct.SinglyLinkedList.html"><code>rust_algorithm_club::collections::SinglyLinkedList</code></a> API 文件中。</p>
+</blockquote>
 <h2><a class="header" href="#特性" id="特性">特性</a></h2>
 <p>鏈結串列有以下特性與優點：</p>
 <ul>
@@ -3416,6 +3419,9 @@ $i$：相對於整個容器的索引位置。</p>
 <li>效能與雜湊函數息息相關，較差的函數容易雜湊碰撞，較佳函數計算成本通常較高。</li>
 <li>只能以某種偽隨機的順序迭代雜湊表。</li>
 </ul>
+<blockquote>
+<p>本次實作的程式碼置於在 <a href="collections/hash_map//doc/rust_algorithm_club/collections/struct.HashMap.html"><code>rust_algorithm_club::collections::HashMap</code></a> API 文件中。</p>
+</blockquote>
 <h2><a class="header" href="#概念" id="概念">概念</a></h2>
 <p>建立雜湊表的第一步，就是配置一定大小的陣列（通常稱為 bucket array），來儲存對應索引的鍵值對。我們以建立電話簿為例，儲存人名與號碼的對應關係。</p>
 <pre><code>Create an empty phone book with some blank slots.
@@ -3971,7 +3977,7 @@ $v$：欲與鍵綁定的資料。<br />
 </ul>
 <p>一般來說，集合的實作會盡量貼近集合論中的有限集合定義，本次實作同樣遵照數學定義。</p>
 <blockquote>
-<p>本次實作的程式碼置於在 <a href="https://rust-algo.club/doc/rust_algorithm_club/collections/struct.HashSet.html">rust_algorithm_club::collections::HashSet</a> API 文件中。</p>
+<p>本次實作的程式碼置於在 <a href="collections/set//doc/rust_algorithm_club/collections/struct.HashSet.html"><code>rust_algorithm_club::collections::HashSet</code></a> API 文件中。</p>
 </blockquote>
 <h2><a class="header" href="#架構設計-2" id="架構設計-2">架構設計</a></h2>
 <h3><a class="header" href="#以雜湊表為底層容器" id="以雜湊表為底層容器">以雜湊表為底層容器</a></h3>
@@ -4439,6 +4445,9 @@ $v$：資料值。<br />
 </ul>
 <blockquote>
 <p>小知識：bloom 是開花之意，但 Bloom filter 和開花沒任何關係，只因發明人姓氏為 Bloom</p>
+</blockquote>
+<blockquote>
+<p>本次實作的程式碼置於在 <a href="collections/bloom_filter//doc/rust_algorithm_club/collections/struct.BloomFilter.html"><code>rust_algorithm_club::collections::BloomFilter</code></a> API 文件中。</p>
 </blockquote>
 <h2><a class="header" href="#概念-1" id="概念-1">概念</a></h2>
 <p>Bloom filter 由下列兩個部分組成：</p>
