@@ -7,9 +7,9 @@
 
 一般來說，集合的實作會盡量貼近集合論中的有限集合定義，本次實作同樣遵照數學定義。
 
-> 本次實作的程式碼置於在 [rust_algorithm_club::collections::HashSet][doc-hash-set] API 文件中。
+> 本次實作的程式碼置於在 [`rust_algorithm_club::collections::HashSet`][doc-hash-set] API 文件中。
 
-[doc-hash-set]: https://rust-algo.club/doc/rust_algorithm_club/collections/struct.HashSet.html
+[doc-hash-set]: /doc/rust_algorithm_club/collections/struct.HashSet.html
 
 ## 架構設計
 

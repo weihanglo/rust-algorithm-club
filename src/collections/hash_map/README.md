@@ -14,6 +14,10 @@
 - 效能與雜湊函數息息相關，較差的函數容易雜湊碰撞，較佳函數計算成本通常較高。
 - 只能以某種偽隨機的順序迭代雜湊表。
 
+> 本次實作的程式碼置於在 [`rust_algorithm_club::collections::HashMap`][doc-hash-map] API 文件中。
+
+[doc-hash-map]: /doc/rust_algorithm_club/collections/struct.HashMap.html
+
 ## 概念
 
 建立雜湊表的第一步，就是配置一定大小的陣列（通常稱為 bucket array），來儲存對應索引的鍵值對。我們以建立電話簿為例，儲存人名與號碼的對應關係。

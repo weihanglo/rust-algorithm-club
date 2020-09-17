@@ -25,6 +25,10 @@ Bloom filter 常見應用場景為：
 
 > 小知識：bloom 是開花之意，但 Bloom filter 和開花沒任何關係，只因發明人姓氏為 Bloom
 
+> 本次實作的程式碼置於在 [`rust_algorithm_club::collections::BloomFilter`][doc-bloom-filter] API 文件中。
+
+[doc-bloom-filter]: /doc/rust_algorithm_club/collections/struct.BloomFilter.html
+
 ## 概念
 
 Bloom filter 由下列兩個部分組成：
