@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/collections/bloom_filter/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../rust_algorithm_club/index.html'><div class='logo-container'><img src='https://rust-algo.club/favicon.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/collections/bloom_filter/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../rust_algorithm_club/index.html'><div class='logo-container'><img src='https://rust-algo.club/favicon.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -291,7 +292,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `capacity` - Expected size of elements will put in.</span>
     <span class="doccomment">/// * `err_rate` - False positive error probability.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">capacity</span>: <span class="ident">usize</span>, <span class="ident">err_rate</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">capacity</span>: <span class="ident">usize</span>, <span class="ident">err_rate</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">bits_count</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">optimal_bits_count</span>(<span class="ident">capacity</span>, <span class="ident">err_rate</span>);
         <span class="kw">let</span> <span class="ident">hash_fn_count</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">optimal_hashers_count</span>(<span class="ident">err_rate</span>);
         <span class="kw">let</span> <span class="ident">hashers</span> <span class="op">=</span> [
@@ -342,7 +343,7 @@
     <span class="doccomment">/// # Complexity</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Linear in the size of `hash_fn_count` _k_.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">elem</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">elem</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Hash</span>,
     {
@@ -363,7 +364,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that the usage fo `wrapping_` is acceptable here for a hash</span>
     <span class="doccomment">/// algorithm to get a valid slot.</span>
-    <span class="kw">fn</span> <span class="ident">get_index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, (<span class="ident">h1</span>, <span class="ident">h2</span>): (<span class="ident">u64</span>, <span class="ident">u64</span>), <span class="ident">fn_i</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">get_index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, (<span class="ident">h1</span>, <span class="ident">h2</span>): (<span class="ident">u64</span>, <span class="ident">u64</span>), <span class="ident">fn_i</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         (<span class="ident">h1</span>.<span class="ident">wrapping_add</span>(<span class="ident">fn_i</span>.<span class="ident">wrapping_mul</span>(<span class="ident">h2</span>)) <span class="op">%</span> <span class="self">self</span>.<span class="ident">bits</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span>) <span class="kw">as</span> <span class="ident">usize</span>
     }
 
@@ -375,7 +376,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function do the actual `hash` work with two independant hashers,</span>
     <span class="doccomment">/// returing both h1(x) and h2(x) within a tuple.</span>
-    <span class="kw">fn</span> <span class="ident">make_hash</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">elem</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u64</span>, <span class="ident">u64</span>)
+    <span class="kw">fn</span> <span class="ident">make_hash</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">elem</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-&gt;</span> (<span class="ident">u64</span>, <span class="ident">u64</span>)
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Hash</span>,
     {
@@ -393,7 +394,7 @@
     <span class="doccomment">/// See [Wikipedia: Bloom filter][1].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [1]: https://en.wikipedia.org/wiki/Bloom_filter#Optimal_number_of_hash_functions</span>
-    <span class="kw">fn</span> <span class="ident">optimal_bits_count</span>(<span class="ident">capacity</span>: <span class="ident">usize</span>, <span class="ident">err_rate</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">optimal_bits_count</span>(<span class="ident">capacity</span>: <span class="ident">usize</span>, <span class="ident">err_rate</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="ident">ln_2_2</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">f64</span>::<span class="ident">consts</span>::<span class="ident">LN_2</span>.<span class="ident">powf</span>(<span class="number">2f64</span>);
         (<span class="op">-</span><span class="number">1f64</span> <span class="op">*</span> <span class="ident">capacity</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">*</span> <span class="ident">err_rate</span>.<span class="ident">ln</span>() <span class="op">/</span> <span class="ident">ln_2_2</span>).<span class="ident">ceil</span>() <span class="kw">as</span> <span class="ident">usize</span>
     }
@@ -403,7 +404,7 @@
     <span class="doccomment">/// See [Wikipedia: Bloom filter][1].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [1]: https://en.wikipedia.org/wiki/Bloom_filter#Optimal_number_of_hash_functions</span>
-    <span class="kw">fn</span> <span class="ident">optimal_hashers_count</span>(<span class="ident">err_rate</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">optimal_hashers_count</span>(<span class="ident">err_rate</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         (<span class="op">-</span><span class="number">1f64</span> <span class="op">*</span> <span class="ident">err_rate</span>.<span class="ident">log2</span>()).<span class="ident">ceil</span>() <span class="kw">as</span> <span class="ident">usize</span>
     }
 }

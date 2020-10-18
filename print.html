@@ -2800,9 +2800,6 @@ use ::sorting::counting_sort;
 <p>鏈結串列是一種基本線性資料集合，每一個資料元素都是獨立的物件。儲存資料的方式和一般陣列配置連續物理記憶體空間不同，而是在各節點儲存額外的指標指向下一個節點。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Singly-linked-list.svg/612px-Singly-linked-list.svg.png" alt="" /></p>
 <p><em>(單向鏈結串列示意圖）</em></p>
-<blockquote>
-<p>本次實作的程式碼置於在 <a href="collections/linked_list//doc/rust_algorithm_club/collections/struct.SinglyLinkedList.html"><code>rust_algorithm_club::collections::SinglyLinkedList</code></a> API 文件中。</p>
-</blockquote>
 <h2><a class="header" href="#特性" id="特性">特性</a></h2>
 <p>鏈結串列有以下特性與優點：</p>
 <ul>
@@ -2898,6 +2895,9 @@ NULL &lt;--|        |&lt;--|        |&lt;--|        |
 </code></pre>
 <p>比起 <a href="collections/singly_linked_list/doubly.html">雙向鏈結串列</a>，單向鏈結串列少了一個額外的指標開銷，在基本操作的花費也較低。在不需要雙向迭代情形下單向鏈結串列很適用。</p>
 <p>此外，單向鏈結串列也支援 tail-sharing，也就是共享 sublist。藉由共享 sublist，單向鏈結串列很容易實作 <a href="https://en.wikipedia.org/wiki/Persistent_data_structure">persistent data structure</a>，再配合 immutable 特性，使得單向鏈結串列幾乎成為函數式程式語言最常見的集合型別之一。可以參考這篇 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/third.html">persistent immutable stack 實作</a>文章。</p>
+<blockquote>
+<p>本次實作的程式碼置於在 <a href="collections/singly_linked_list//doc/rust_algorithm_club/collections/struct.SinglyLinkedList.html"><code>rust_algorithm_club::collections::SinglyLinkedList</code></a> API 文件中。</p>
+</blockquote>
 <h2><a class="header" href="#實作設計" id="實作設計">實作設計</a></h2>
 <h3><a class="header" href="#node-1" id="node-1">Node</a></h3>
 <p>先建立最基本的節點 Node。</p>
