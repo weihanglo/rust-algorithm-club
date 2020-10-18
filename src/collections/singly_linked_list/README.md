@@ -17,6 +17,10 @@
 
 此外，單向鏈結串列也支援 tail-sharing，也就是共享 sublist。藉由共享 sublist，單向鏈結串列很容易實作 [persistent data structure](https://en.wikipedia.org/wiki/Persistent_data_structure)，再配合 immutable 特性，使得單向鏈結串列幾乎成為函數式程式語言最常見的集合型別之一。可以參考這篇 [persistent immutable stack 實作](http://cglab.ca/~abeinges/blah/too-many-lists/book/third.html)文章。
 
+> 本次實作的程式碼置於在 [`rust_algorithm_club::collections::SinglyLinkedList`][doc-singly-linked-list] API 文件中。
+
+[doc-singly-linked-list]: /doc/rust_algorithm_club/collections/struct.SinglyLinkedList.html
+
 ## 實作設計
 
 ### Node

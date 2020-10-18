@@ -6,10 +6,6 @@
 
 _(單向鏈結串列示意圖）_
 
-> 本次實作的程式碼置於在 [`rust_algorithm_club::collections::SinglyLinkedList`][doc-singly-linked-list] API 文件中。
-
-[doc-singly-linked-list]: /doc/rust_algorithm_club/collections/struct.SinglyLinkedList.html
-
 ## 特性
 
 鏈結串列有以下特性與優點：
