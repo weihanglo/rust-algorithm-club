@@ -5,13 +5,24 @@
         <meta charset="UTF-8">
         <title>單向鏈結串列 Singly linked list - Rust Algorithm Club</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Learn algorithms and data structures with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
         <link rel="shortcut icon" href="../../favicon.png">
+        
         <link rel="stylesheet" href="../../css/variables.css">
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
@@ -19,8 +30,9 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../highlight.css">
@@ -39,7 +51,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -84,7 +96,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li class="chapter-item expanded "><a href="../../searching/index.html">搜尋</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li class="chapter-item expanded "><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li class="chapter-item expanded "><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li class="chapter-item expanded "><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li class="chapter-item expanded "><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li class="chapter-item expanded "><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li class="chapter-item expanded "><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li class="chapter-item expanded "><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li class="chapter-item expanded "><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li class="chapter-item expanded "><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li class="chapter-item expanded "><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li class="chapter-item expanded "><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li class="chapter-item expanded "><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li class="chapter-item expanded "><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li class="chapter-item expanded "><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li class="chapter-item expanded "><a href="../../collections/queue/index.html">🚧 佇列 Queue</a></li><li class="chapter-item expanded "><a href="../../collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li class="chapter-item expanded "><a href="../../collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../collections/singly_linked_list/index.html" class="active">單向鏈結串列 Singly linked list</a></li><li class="chapter-item expanded "><a href="../../collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li class="chapter-item expanded "><a href="../../collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li class="chapter-item expanded "><a href="../../collections/associative-container/index.html">關聯容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li class="chapter-item expanded "><a href="../../collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li class="chapter-item expanded "><a href="../../collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li class="chapter-item expanded "><a href="../../collections/set/index.html">集合 Set</a></li><li class="chapter-item expanded "><a href="../../collections/bloom_filter/index.html">布隆過濾器 Bloom filter</a></li><li class="spacer"></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="chapter-item expanded affix "><a href="../../404.html">404</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">💡 基礎概念</li><li class="chapter-item expanded "><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🔍 搜尋</li><li class="chapter-item expanded "><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li class="chapter-item expanded "><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li class="chapter-item expanded "><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li class="chapter-item expanded "><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">📚 排序</li><li class="chapter-item expanded affix "><li class="part-title">簡單排序</li><li class="chapter-item expanded "><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li class="chapter-item expanded "><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li class="chapter-item expanded "><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li><li class="chapter-item expanded affix "><li class="part-title">高效排序</li><li class="chapter-item expanded "><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li class="chapter-item expanded "><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li class="chapter-item expanded "><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li><li class="chapter-item expanded affix "><li class="part-title">混合排序</li><li class="chapter-item expanded "><div>🚧 內省排序 Introsort</div></li><li class="chapter-item expanded "><div>🚧 自適應合併排序 Timsort</div></li><li class="chapter-item expanded "><div>🚧 模式消除快速排序 Pdqsort</div></li><li class="chapter-item expanded affix "><li class="part-title">特殊排序</li><li class="chapter-item expanded "><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li class="chapter-item expanded "><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🏠 資料結構</li><li class="chapter-item expanded affix "><li class="part-title">堆疊與佇列</li><li class="chapter-item expanded "><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li class="chapter-item expanded "><div>🚧 佇列 Queue</div></li><li class="chapter-item expanded "><div>🚧 雙端佇列 Deque</div></li><li class="chapter-item expanded affix "><li class="part-title">鏈結串列</li><li class="chapter-item expanded "><a href="../../collections/linked_list/index.html">鏈結串列概述</a></li><li class="chapter-item expanded "><a href="../../collections/singly_linked_list/index.html" class="active">單向鏈結串列 Singly linked list</a></li><li class="chapter-item expanded "><div>🚧 雙向鏈結串列 Doubly linked list</div></li><li class="chapter-item expanded "><div>🚧 循環鏈結串列 Circular linked list</div></li><li class="chapter-item expanded affix "><li class="part-title">關聯容器</li><li class="chapter-item expanded "><a href="../../collections/associative-container/index.html">關聯容器概述</a></li><li class="chapter-item expanded "><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li class="chapter-item expanded "><div>🚧 有序映射表 Ordered map</div></li><li class="chapter-item expanded "><div>🚧 多重映射表 Multimap</div></li><li class="chapter-item expanded "><a href="../../collections/set/index.html">集合 Set</a></li><li class="chapter-item expanded "><a href="../../collections/bloom_filter/index.html">布隆過濾器 Bloom filter</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="chapter-item expanded affix "><a href="../../404.html">404</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -173,8 +185,8 @@
 <h2><a class="header" href="#實作設計" id="實作設計">實作設計</a></h2>
 <h3><a class="header" href="#node" id="node">Node</a></h3>
 <p>先建立最基本的節點 Node。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// cannot compile
 struct Node&lt;T&gt; {
@@ -186,8 +198,8 @@ struct Node&lt;T&gt; {
 <p><code>Node.elem</code> 很直觀地儲存實際資料。而 <code>Node.next</code> 則是指向下個 Node。但這樣編譯不會成功，Rust 編譯時需要決定每個型別該配置多少記憶體空間，這種遞迴型別使得編譯器無限循環，無法決定配置大小。</p>
 <p><img src="node-recursive.svg" alt="node-recursive" /></p>
 <p>很簡單，我們使用 <a href="https://doc.rust-lang.org/std/boxed/index.html"><code>Box&lt;T&gt;</code></a> 這個<a href="https://doc.rust-lang.org/book/ch15-00-smart-pointers.html">智慧指標</a>，直接將 Node 配置在記憶體 heap 上。如此以來，編譯器就會知道 <code>next</code> 只佔了一個指標的空間。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Node&lt;T&gt; {
     elem: T,
@@ -197,8 +209,8 @@ struct Node&lt;T&gt; {
 </span></code></pre></pre>
 <p><img src="node-box.svg" alt="node-box" /></p>
 <p>由於 Rust 沒有 null pointer，但照鏈結串列的定義，<code>Node.next</code> 可以是 NULL，因此我們使用 <a href="https://doc.rust-lang.org/std/option/index.html"><code>Option&lt;T&gt;</code></a> 模擬 null pointer 的行為。最後，Node 的定義如下：</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Node&lt;T&gt; {
     elem: T,
@@ -208,8 +220,8 @@ struct Node&lt;T&gt; {
 </span></code></pre></pre>
 <h3><a class="header" href="#singlylinkedlist" id="singlylinkedlist">SinglyLinkedList</a></h3>
 <p>在開始實作各種增刪節點的操作之前，我們需要建立一個 struct 存放指向鏈結串列 head 的指標，同時，各種操作也會實作在這個 struct 上。事實上，這個 struct 就是對外公開的資料結構。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct SinglyLinkedList&lt;T&gt; {
     head: Option&lt;Box&lt;Node&lt;T&gt;&gt;&gt;,
@@ -231,8 +243,8 @@ struct Node&lt;T&gt; {
 </ul>
 <h3><a class="header" href="#初始化與清除資料" id="初始化與清除資料">初始化與清除資料</a></h3>
 <p>實做初始化與清除資料非常直觀。其中清除其實就只是將 <code>self</code> 指向新的串列實例。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
     pub fn new() -&gt; Self {
@@ -249,8 +261,8 @@ struct Node&lt;T&gt; {
 <p>和 C++ 的 RAII 一樣，Rust 有一個名叫 <code>drop</code> 的解構式，只要程式執行離開了資源擁有者的可視範圍（out of scope），就會自動呼叫 <code>drop</code>。我們在 <a href="#drop-trait">Drop trait</a> 一節會再深入探討。</p>
 <h3><a class="header" href="#增刪首個節點" id="增刪首個節點">增刪首個節點</a></h3>
 <p>單向鏈結串列在第一個節點前增加新節點，或是刪除第一個節點，都可以在常數時間完成。新增節點 <code>push_front</code> 的概念很簡單，1）建立新的節點，並把新節點 <code>next</code> 指標指向串列第一個節點。2）把串列的 head 指向新建立的節點。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn push_front(&amp;mut self, elem: T) {
     let next = self.head.take(); // 1
@@ -263,8 +275,8 @@ struct Node&lt;T&gt; {
 <li>建立一新節點，並將原本第一個節點所有權轉移給新節點。再將新節點所有權轉移到串列本身。</li>
 </ol>
 <p>刪除第一個節點 <code>pop_front</code> 的實作步驟如下：首先取得第一個節點的所有權，再將 head 指向第一個節點 <code>Node.next</code> 下一個節點，再返回第一個節點的資料給呼叫端。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn pop_front(&amp;mut self) -&gt; Option&lt;T&gt; {
     let head = self.head.take(); // 1
@@ -286,8 +298,8 @@ struct Node&lt;T&gt; {
 <h3><a class="header" href="#插入刪除任意節點" id="插入刪除任意節點">插入刪除任意節點</a></h3>
 <p>鏈結串列新增和刪除第一個節點都可以在 $O(1)$ 時間內做完，那為什麼插入刪除任意節點沒有辦法呢？原因是鏈結串列不支援隨機存取（random access），就是無法透過索引在常數時間內取得資料，每次的搜尋都只能從 head 開始。因此，當我們需要在某個索引的節點後新增一筆資料，我們會需要最差 $O(n)$ 的複雜度。</p>
 <p>實作插入 <code>insert_after</code> 分為幾個步驟：</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn insert_after(&amp;mut self, pos: usize, elem: T) -&gt; Result&lt;(), usize&gt; {
     let mut curr = &amp;mut self.head;
@@ -324,8 +336,8 @@ struct Node&lt;T&gt; {
 <li>把修改過的節點 A，重新賦值給指向節點 A 的指標 <code>curr</code>（可視為歸還所有權）。</li>
 </ol>
 <p>而實作刪除任意索引下的節點 <code>remove</code> 和插入非常相似。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn remove(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
     let mut curr = &amp;mut self.head;
@@ -357,8 +369,8 @@ struct Node&lt;T&gt; {
 </ol>
 <h3><a class="header" href="#反轉" id="反轉">反轉</a></h3>
 <p>反轉鏈結串列是工作面試時很常見的考題，這裡來實作看看。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn reverse(&amp;mut self) {
     let mut prev = None;              // 1: prev -&gt; Node P
@@ -412,8 +424,8 @@ a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
 </code></pre>
 <p>如果節點一多，肯定會 stack overflow，太可怕了！</p>
 <p>既然如此，那麼就透過 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html">Drop trait</a>，實作一個迭代版本的解構式，消弭可怕的 call stack 吧。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
     fn drop(&amp;mut self) {
@@ -435,8 +447,8 @@ a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
 <p>詳細思路過程可查看 Learning Rust With Entirely Too Many Linked Lists 的 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/first-drop.html">Drop</a> 章節，該章完整闡述為什麼不能用 tail recursive 來實作，但最大的原因是 Rust core team 暫時延緩實踐 <a href="https://github.com/rust-lang/rfcs/pull/1888">tail call optimization</a>。</p>
 </blockquote>
 <p>實際上，透過呼叫 <code>pop_front()</code>，不斷移除第一個節點，並使用 <code>is_some()</code> 檢查是否仍有節點，幾乎可以達到同樣的 drop 效果，而且更簡潔易懂。差別僅在於，相較於前個實作自己處理 call stack，這個實作每次移除元素都需要 <code>pop_front()</code> 與 <code>is_some()</code> 的 stack，多了些微小的開銷。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Drop for SinglyLinkedList&lt;T&gt; {
     fn drop(&amp;mut self) {
@@ -448,8 +460,8 @@ a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
 <h3><a class="header" href="#iterator-and-intoiterator-traits" id="iterator-and-intoiterator-traits">Iterator and IntoIterator traits</a></h3>
 <p>既然鏈結串列是一種序列（sequence，有序的資料結構），少不了實作 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html">Iterator</a>、<a href="https://doc.rust-lang.org/std/iter/trait.IntoIterator.html">IntoIterator</a> 等 trait，使串列可以輕鬆使用 for-in loop 遍歷（traverse）。</p>
 <p>首先，先定義幾個迭代器的 struct。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct IntoIter&lt;T&gt;(SinglyLinkedList&lt;T&gt;);
 
@@ -475,8 +487,8 @@ pub struct IterMut&lt;'a, T: 'a&gt; {
 <li><code>fn iter_mut(&amp;mut self) -&gt; IterMut&lt;T&gt;</code>：以 mutable reference 迭代串列。</li>
 </ul>
 <p>先來看 <code>IntoIter</code> 實作。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct IntoIter&lt;T&gt;(SinglyLinkedList&lt;T&gt;);      // 1
 
@@ -505,8 +517,8 @@ impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt; {    // 3
 <p>可能有人會疑惑，<code>IntoIter</code> 並沒有內部狀態記錄欄位，迭代器如何依據狀態產生下一筆資料？受惠於 <code>IntoIterator</code> 傳遞所有權的特性，<code>IntoIter</code> 可直接改變原始串列的內部狀態，例如 <code>pop_front</code> 會移除原始串列的節點。因此，相較於 <code>Iter</code>、<code>IterMut</code> 額外記錄狀態，<code>IntoIter</code> 不需自行記錄迭代器的迭代狀態。</p>
 </blockquote>
 <p>再來看看 <code>Iter</code> 怎麼實踐。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct Iter&lt;'a, T: 'a&gt; {                    // 1
     next: Option&lt;&amp;'a Node&lt;T&gt;&gt;,
@@ -561,8 +573,8 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 </ul>
 <p>則稱 Sa 與 Sb 有 partial equiavalence（<code>Sa == Sb</code>）。</p>
 <p>實作上我們用了 <code>iter</code> 成員函式把兩個串列 <code>zip</code> 在一起，在用 <code>all</code> 確認元素兩兩相等，十分 Rust 風格的作法。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T: PartialEq&gt; PartialEq for SinglyLinkedList&lt;T&gt; {
     fn eq(&amp;self, other: &amp;Self) -&gt; bool {
@@ -578,8 +590,8 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 </span></code></pre></pre>
 <h3><a class="header" href="#debug-trait" id="debug-trait">Debug trait</a></h3>
 <p>為了方便修復臭蟲，通常會實作 <a href="https://doc.rust-lang.org/std/fmt/trait.Debug.html">Debug trait</a> 印出有助於解決問題的資料。歸功於 <code>Iterator</code> 的實踐，我們可以快速用 <code>self.iter()</code> 印出所有節點內的元素，客製化 <code>Debug</code> 的顯示方式。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
     fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter) -&gt; std::fmt::Result {
@@ -627,7 +639,7 @@ $i$：相對於整個容器的索引位置。</p>
                         
 
                         
-                            <a rel="next" href="../../collections/doubly_linked_list/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../collections/associative-container/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -645,7 +657,7 @@ $i$：相對於整個容器的索引位置。</p>
                 
 
                 
-                    <a rel="next" href="../../collections/doubly_linked_list/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../collections/associative-container/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -658,10 +670,10 @@ $i$：相對於整個容器的索引位置。</p>
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

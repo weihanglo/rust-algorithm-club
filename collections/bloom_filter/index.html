@@ -5,13 +5,24 @@
         <meta charset="UTF-8">
         <title>布隆過濾器 Bloom filter - Rust Algorithm Club</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Learn algorithms and data structures with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
         <link rel="shortcut icon" href="../../favicon.png">
+        
         <link rel="stylesheet" href="../../css/variables.css">
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
@@ -19,8 +30,9 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../highlight.css">
@@ -39,7 +51,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -84,7 +96,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../../concepts/index.html">基礎概念</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li></ol></li><li class="chapter-item expanded "><a href="../../searching/index.html">搜尋</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li class="chapter-item expanded "><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li class="chapter-item expanded "><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li class="chapter-item expanded "><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li></ol></li><li class="chapter-item expanded "><a href="../../sorting/index.html">排序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sorting/simple-sorts.html">簡單排序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li class="chapter-item expanded "><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li class="chapter-item expanded "><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li></ol></li><li class="chapter-item expanded "><a href="../../sorting/efficient-sorts.html">高效排序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li class="chapter-item expanded "><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li class="chapter-item expanded "><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li></ol></li><li class="chapter-item expanded "><a href="../../sorting/hybrid-sorts.html">混合排序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sorting/introsort/index.html">🚧 內省排序 Introsort</a></li><li class="chapter-item expanded "><a href="../../sorting/timsort/index.html">🚧 自適應合併排序 Timsort</a></li><li class="chapter-item expanded "><a href="../../sorting/pdqsort/index.html">🚧 模式消除快速排序 Pdqsort</a></li></ol></li><li class="chapter-item expanded "><a href="../../sorting/special-purpose-sorts.html">特殊排序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li class="chapter-item expanded "><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../collections/index.html">資料結構</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../collections/stack-queue.html">堆疊與佇列</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li class="chapter-item expanded "><a href="../../collections/queue/index.html">🚧 佇列 Queue</a></li><li class="chapter-item expanded "><a href="../../collections/deque/index.html">🚧 雙端佇列 Deque</a></li></ol></li><li class="chapter-item expanded "><a href="../../collections/linked_list/index.html">鏈結串列</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li class="chapter-item expanded "><a href="../../collections/doubly_linked_list/index.html">🚧 雙向鏈結串列 Doubly linked list</a></li><li class="chapter-item expanded "><a href="../../collections/circular_linked_list/index.html">🚧 循環鏈結串列 Circular linked list</a></li></ol></li><li class="chapter-item expanded "><a href="../../collections/associative-container/index.html">關聯容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li class="chapter-item expanded "><a href="../../collections/ordered_map/index.html">🚧 有序映射表 Ordered map</a></li><li class="chapter-item expanded "><a href="../../collections/multimap/index.html">🚧 多重映射表 Multimap</a></li><li class="chapter-item expanded "><a href="../../collections/set/index.html">集合 Set</a></li><li class="chapter-item expanded "><a href="../../collections/bloom_filter/index.html" class="active">布隆過濾器 Bloom filter</a></li><li class="spacer"></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="chapter-item expanded affix "><a href="../../404.html">404</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">💡 基礎概念</li><li class="chapter-item expanded "><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🔍 搜尋</li><li class="chapter-item expanded "><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li class="chapter-item expanded "><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li class="chapter-item expanded "><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li class="chapter-item expanded "><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">📚 排序</li><li class="chapter-item expanded affix "><li class="part-title">簡單排序</li><li class="chapter-item expanded "><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li class="chapter-item expanded "><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li class="chapter-item expanded "><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li><li class="chapter-item expanded affix "><li class="part-title">高效排序</li><li class="chapter-item expanded "><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li class="chapter-item expanded "><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li class="chapter-item expanded "><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li><li class="chapter-item expanded affix "><li class="part-title">混合排序</li><li class="chapter-item expanded "><div>🚧 內省排序 Introsort</div></li><li class="chapter-item expanded "><div>🚧 自適應合併排序 Timsort</div></li><li class="chapter-item expanded "><div>🚧 模式消除快速排序 Pdqsort</div></li><li class="chapter-item expanded affix "><li class="part-title">特殊排序</li><li class="chapter-item expanded "><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li class="chapter-item expanded "><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🏠 資料結構</li><li class="chapter-item expanded affix "><li class="part-title">堆疊與佇列</li><li class="chapter-item expanded "><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li class="chapter-item expanded "><div>🚧 佇列 Queue</div></li><li class="chapter-item expanded "><div>🚧 雙端佇列 Deque</div></li><li class="chapter-item expanded affix "><li class="part-title">鏈結串列</li><li class="chapter-item expanded "><a href="../../collections/linked_list/index.html">鏈結串列概述</a></li><li class="chapter-item expanded "><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li class="chapter-item expanded "><div>🚧 雙向鏈結串列 Doubly linked list</div></li><li class="chapter-item expanded "><div>🚧 循環鏈結串列 Circular linked list</div></li><li class="chapter-item expanded affix "><li class="part-title">關聯容器</li><li class="chapter-item expanded "><a href="../../collections/associative-container/index.html">關聯容器概述</a></li><li class="chapter-item expanded "><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li class="chapter-item expanded "><div>🚧 有序映射表 Ordered map</div></li><li class="chapter-item expanded "><div>🚧 多重映射表 Multimap</div></li><li class="chapter-item expanded "><a href="../../collections/set/index.html">集合 Set</a></li><li class="chapter-item expanded "><a href="../../collections/bloom_filter/index.html" class="active">布隆過濾器 Bloom filter</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="chapter-item expanded affix "><a href="../../404.html">404</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -222,8 +234,8 @@
 <h3><a class="header" href="#利用-vec-儲存位元" id="利用-vec-儲存位元">利用 <code>Vec</code> 儲存位元</a></h3>
 <p>Bloom filter 底層以位元陣列作為儲存容器，如果目標是最省空間，該用 Rust 的什麼型別來儲存位元呢？</p>
 <p>直觀作法是在 struct 新增一個 <code>bits</code> 位元陣列的 <code>array</code> 型別：</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct BloomFilter {
   bits: [bool; N]
@@ -232,8 +244,8 @@
 </span></code></pre></pre>
 <p>雖然非常省空間，用了多少 bits 這個 struct 就佔多大，但這語法並非不合法，因為 <code>N</code> 未定義，無法編譯，<a href="https://doc.rust-lang.org/std/primitive.array.html">array</a> 的 <code>N</code> 必須是編譯期就決定的常數，BloomFilter 若寫死 <code>N</code> 就不夠泛用了（除非參考 <a href="https://doc.rust-lang.org/alloc/macro.vec.html"><code>vec!</code></a> 透過 macro 建立）。</p>
 <p>不如換個方向，不用 fixed size array，給定動態大小的 <code>slice</code> 試試看。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct BloomFilter {
   bits: [bool]
@@ -241,7 +253,7 @@
 <span class="boring">}
 </span></code></pre></pre>
 <p>嗯，可以編譯通過，但如果嘗試建立一個 struct 呢？</p>
-<pre><pre class="playpen"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust">fn main() {
     let input_len = 5;
     let bits = [true; input_len];
     BloomFilter { bits };
@@ -262,8 +274,8 @@ error[E0277]: the size for values of type `[bool]` cannot be known at compilatio
 </code></pre>
 <p>原因有二，其一同樣是 array <code>bits</code> 需要一個常數長度；其二則是 <code>bits</code> 是一個 <a href="https://doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait">Dynamic Sized Types（Dsts）</a> ，長度無法在編譯時決定，編譯期就無法得知 BloomFilter 的所佔記憶體用量。</p>
 <p>看來得放棄用 <code>array</code> 或 <code>slice</code> 這些方法，改用最暴力的 <code>Vec</code> 作為位元陣列儲存容器，<code>Vec</code> 雖可動態調整大小，背後其實是一個 pointer + 一個 <code>usize</code> 的 <code>capacity</code> + 一個 <code>usize</code> 的 <code>len</code> 組成，若是在 64 位元的機器上，<a href="https://cheats.rs/#general-purpose-heap-storage">一個 <code>Vec</code> 就會佔 24 位元組</a>，比起 <code>array</code> 多耗費兩個 2 * 8 個位元組空間，幸好這額外的 16 個位元組是固定支出，不隨著 $m$ 和 $n$ 成長。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct BloomFilter {
   bits: Vec&lt;bool&gt;
@@ -273,8 +285,8 @@ error[E0277]: the size for values of type `[bool]` cannot be known at compilatio
 <h3><a class="header" href="#儲存兩個雜湊函數" id="儲存兩個雜湊函數">儲存兩個雜湊函數</a></h3>
 <p>再來，要在 <code>BloomFilter</code> 儲存兩個 hasher，也就是實作前面提及<a href="https://www.eecs.harvard.edu/%7Emichaelm/postscripts/rsa2008.pdf">用兩個雜湊函數模擬 $k$ 個</a>論文中的兩個 hasher，這兩個在 <code>BloomFilter</code> 建構時同時建立，並在操作 <code>BloomFilter</code> 的方法上共用。</p>
 <p>這次直接使用標準函式庫內預設雜湊演算法 <a href="http://doc.rust-lang.org/std/collections/hash_map/struct.DefaultHasher.html"><code>DefaultHasher</code></a> 作為隨機的兩個雜湊函數 <code>BloomFilter.hashers</code>。由於是模擬 $k$ 個函數的雜湊行為，仍需另闢欄位，儲存 $k$ 實際上是多少個雜湊函數 <code>BloomFilter.hash_fn_count</code>。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::hash_map::DefaultHasher;
 
@@ -294,8 +306,8 @@ pub struct BloomFilter {
 <p>有趣的是，作為一個容器，Bloom filter 其實不儲存元素本身，而是記錄元素是否「曾經新增至」該容器中。這給了一些想像空間：如何提供型別參數給 Bloom filter？提供兩個方向：</p>
 <ol>
 <li><strong>泛型型別參數宣告跟著 struct：</strong> 也就是 <code>struct BloomFilter&lt;T&gt;</code>，如此一來，一個容器實例只能操作一種型別，而且在編譯期就決定。
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let bf = BloomFilter::new();
 bf.insert(&amp;1);            // infer the type T is i32
@@ -304,8 +316,8 @@ bf.insert(&quot;wront type&quot;);  // compile error: &amp;str is not compatible
 </span></code></pre></pre>
 </li>
 <li><strong>泛型型別跟著 struct 的方法，struct 本身不宣告：</strong> 很難想像容器裡面儲存不同的型別，但 BloomFilter 實際上只需要一個 <code>Vec&lt;bool&gt;</code> 記錄存在與否，到底新增了什麼型別的元素其實不重要，型別有實作雜湊就行。這個作法下，你可能會看到這種邪魔歪道：
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let bf = BloomFilter::new();
 bf.insert(&amp;1);
@@ -333,8 +345,8 @@ bf.insert(vec![3.14159]);   // it also works
   = help: consider removing `T`, referring to it in a field, or using a marker such as `std::marker::PhantomData`
 </code></pre>
 <p>因為 Rust 編譯器認為 <code>BloomFilter</code> 並不實際擁有 <code>T</code> 相關欄位，因此編譯不通過，我們可以利用 <a href="https://doc.rust-lang.org/core/marker/struct.PhantomData.html"><code>std::marker::PhantomData</code></a>，<code>PhantomData</code> 是一個 Zero-Sized Type 不佔空間，就是為了取悅編譯器，製造出 struct 擁有 <code>T</code> 的假象。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::hash_map::DefaultHasher;
 use std::marker::PhantomData;
@@ -379,15 +391,15 @@ use std::marker::PhantomData;
 <p>Bloom filter 有四個參數 $m$、$n$、$k$、$\epsilon$ 可以調整（詳見 <a href="#%E6%95%88%E8%83%BD">效能</a>一節），對使用者來說，有幾個雜湊函數或底層是多少個位元都是實作細節了，更關心的可能是</p>
 <p><em>「我有一百萬筆資料需要驗證存在，容錯率需要在 0.1%，我需要多大的儲存空間？」</em></p>
 <p>因此，建構函數 <code>new</code> 提供輸入預期儲存元素個數 $n$ 和預期的假陽性機率 $\epsilon$ 是天經地義的事：</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn new(capacity: usize, err_rate: f64) -&gt; Self;
 <span class="boring">}
 </span></code></pre></pre>
 <p>接下來，會實作<a href="#%E6%A6%82%E5%BF%B5">概念</a>一節的數學公式，找出最適位元數和最適雜湊函數個數。這兩個函數都是以 Rust 表達數學公式，可注意的點是，<a href="http://doc.rust-lang.org/std/f32/consts/index.html"><code>std::f32::consts</code></a> 和 <a href="http://doc.rust-lang.org/std/f64/consts/index.html"><code>std::f64::consts</code></a>，提供許多數學上常見的常數老朋友，操作浮點數和雙精度浮點數就不用自己手動重算了。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// m = -1 * (n * ln ε) / (ln 2)^2
 fn optimal_bits_count(capacity: usize, err_rate: f64) -&gt; usize {
@@ -402,8 +414,8 @@ fn optimal_hashers_count(err_rate: f64) -&gt; usize {
 <span class="boring">}
 </span></code></pre></pre>
 <p>目前為止，<code>BloomFilter::new</code> 長這樣：</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn new(capacity: usize, err_rate: f64) -&gt; Self {
     let bits_count = Self::optimal_bits_count(capacity, err_rate);
@@ -412,8 +424,8 @@ fn optimal_hashers_count(err_rate: f64) -&gt; usize {
 <span class="boring">}
 </span></code></pre></pre>
 <p>最後，按照前述<a href="https://www.eecs.harvard.edu/%7Emichaelm/postscripts/rsa2008.pdf">兩個雜湊函數恰恰好</a>的道理，建立兩個不同的雜湊函數，並初始化位元陣列，大功告成！</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn new(capacity: usize, err_rate: f64) -&gt; Self {
     // #1 Get optimal count of bit
@@ -444,8 +456,8 @@ fn optimal_hashers_count(err_rate: f64) -&gt; usize {
 <h3><a class="header" href="#新增" id="新增">新增</a></h3>
 <p>新增一個元素到 Bloom filter，說穿了就做一件事：將元素透過 $k$ 個雜湊函數，產出 $k$ 個索引位置，並將位元陣列上這些位置的位元翻轉至 1。</p>
 <p>整個 <code>insert</code> 函數即為計算 $g_i(x) = h_1(x) + ih_2(x)$ 模擬 $k$ 個雜湊函數的過程：</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn insert(&amp;mut self, elem: &amp;T)
 where
@@ -466,8 +478,8 @@ where
 <li>將索引位置下的位元設定為 1</li>
 </ol>
 <p>這裡有兩個內部方法，先講解如何計算 $h_1(x)$ 和 $h_2(x)$：</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn make_hash(&amp;self, elem: &amp;T) -&gt; (u64, u64)
 where
@@ -492,8 +504,8 @@ where
 <li>輸出雜湊值，由於 <a href="http://doc.rust-lang.org/core/hash/trait.Hasher.html#tymethod.finish"><code>Hasher::finish</code></a> 不會重設 hasher 內部狀態，所以需要步驟一 <code>clone</code> 來保留 hasher 的原始狀態</li>
 </ol>
 <p>再來是實作計算索引位置 $g_i(x) = h_1(x) + ih_2(x)$，這個函數非常單純，就是輸入 <code>make_hash</code> 所得之雜湊值，然後帶入公式中。為了防止輸出的索引位置超過位元陣列的位元數，這裡以位元數 $m$ 取模（<code>%</code> modulo），加上使用 <code>wrapping_ops</code> 這些 modular arithmetic operation 達成。</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn get_index(&amp;self, (h1, h2): (u64, u64), fn_i: u64) -&gt; usize {
     (h1.wrapping_add(fn_i.wrapping_mul(h2)) % self.bits.len() as u64) as usize
@@ -503,8 +515,8 @@ where
 <h3><a class="header" href="#查詢" id="查詢">查詢</a></h3>
 <p>查詢元素是否在 Bloom filter 裡面，就是看看該元素透過 $k$ 個雜湊函數輸出的每個索引位置<strong>全部為 1</strong>，則可能存在；否則就是絕對不存在。</p>
 <p>實作步驟和插入非常相似：</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn contains(&amp;self, elem: &amp;T) -&gt; bool
 where
@@ -525,8 +537,8 @@ where
 <li>回傳索引位置下的位元 <code>bool</code> 值，此值會匯集起來，於步驟二確認命中全部 $k$ 個索引，即為元素存在</li>
 </ol>
 <p>完整程式碼如下，或轉駕到 <a href="/doc/rust_algorithm_club/collections/struct.BloomFilter.html">API 文件</a>：</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct BloomFilter&lt;T: ?Sized&gt; {
     bits: Vec&lt;bool&gt;,
@@ -735,10 +747,10 @@ $$</p>
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 
