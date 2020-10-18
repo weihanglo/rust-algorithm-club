@@ -23,10 +23,6 @@ This project along with its source code are on [GitHub][source-code] and we are 
 [generated-doc]: https://rust-algo.club/doc/rust_algorithm_club/
 [edition-guide]: https://rust-lang.github.io/edition-guide/rust-2018
 
-## Important Links
-
-- [Getting Started](GETTING_STARTED.md)
-
 ## General Concepts
 
 - [Asymptotic Notation](src/concepts/asymptotic-notation)
