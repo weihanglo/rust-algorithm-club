@@ -63,8 +63,6 @@ Special-purpose sorts:
 - [Bucket sort](src/sorting/bucket_sort)
 - [Radix sort](src/sorting/radix_sort)
 
-### Searching
-
 ## Data Structures
 
 ### Stack and Queue
