@@ -25,7 +25,7 @@
 
 ### 萊文斯坦的遞迴函數
 
-編輯距離愛拿 kitten 和 sitting，舉例，這兩個單字的編輯距離為 3，可以透過以下步驟，算出 kitten 與 sitting 轉換會經歷三個編輯操作：
+編輯距離愛拿 kitten 和 sitting 當例子，這兩個單字的編輯距離為 3，可以透過以下步驟，算出 kitten 與 sitting 轉換會經歷三個編輯操作：
 
 1. **s**itting -> **k**itting：置換 /k
 2. kitt**i**ng -> kitt**e**ng：置換 i/e
