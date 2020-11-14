@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["collections","Collections."],["searching","Searching algorithms."],["sorting","Sorting algorithms."]]});
+initSidebarItems({"fn":[["levenshtein_distance","Calculate Levenshtein distance for two strings."],["levenshtein_distance_naive","Naïvely calculate Levenshtein distance using the whole distance matrix to store information for all substrings."]],"mod":[["collections","Collections."],["searching","Searching algorithms."],["sorting","Sorting algorithms."]]});
