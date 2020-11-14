@@ -1,6 +1,6 @@
 use std::cmp;
 
-/// Calculate Levenshtein distance for two strings.
+/// Calculate Levenshtein distance for two UTF-8 encoded strings.
 ///
 /// Returns a minimum number of edits to transform from source to target string.
 ///
