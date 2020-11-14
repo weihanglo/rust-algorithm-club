@@ -86,6 +86,12 @@
 - [集合 Set](collections/set)
 - [布隆過濾器 Bloom filter](collections/bloom_filter/)
 
+### 字串處理
+
+- [🚧 漢明距離 Hamming distance](hamming_distance)
+- [萊文斯坦距離 Levenshtein distance](levenshtein_distance)
+- [🚧 最長共同子字串 Longest common substring](longest_common_substring)
+
 ## 學習資源
 
 有許多優秀的網站與學習資源，分享給大家學習演算法。
