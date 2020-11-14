@@ -456,10 +456,14 @@ $$</p>
 <p>樹中每一條路徑都代表任意搜尋會經過的步驟，總共有 7 種不同的搜尋路徑，最短路徑僅需要 $\lfloor{\log_2 n} = 3 \rfloor$ 個操作，也就是需要執行「樹高」次的操作。</p>
 <h2><a class="header" href="#實作-1" id="實作-1">實作</a></h2>
 <h3><a class="header" href="#函式宣告" id="函式宣告">函式宣告</a></h3>
-<p>二元搜尋概念看似簡單，實際上誤區一堆，不易寫出完全正確的演算法。我們參考 <a href="https://doc.rust-lang.org/std/primitive.slice.html#method.binary_search">Rust slice binary_search</a> 的實作。先來看看 function signature（函式的宣告）。</p>
-<pre><code>pub fn binary_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&lt;usize, usize&gt;
+<p>二元搜尋概念看似簡單，實際上誤區一堆，不易寫出完全正確的演算法。我們參考 <a href="https://doc.rust-lang.org/std/primitive.slice.html#method.binary_search">Rust slice binary_search</a> 的實作。先來看看函式宣告的簽名（function signature）。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn binary_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&lt;usize, usize&gt;
     where T: PartialOrd
-</code></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>二元搜尋函式宣告中，回傳值大概是最特別的部分。如果有找到目標元素，<code>Result</code> 會是 <code>Ok(目標索引位置)</code>，如果沒有找到則回傳 <code>Err(目標值若插入後，不會影響序列排序的位置)</code>。<code>Err</code> 回傳值提供了插入點，非常方便。</p>
 <p>再來，<code>T</code> 泛型參數需是 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>，這是由於二元搜尋使用排序過後的元素，比起線性搜尋，仍需元素之間相互比較。</p>
 <h3><a class="header" href="#函式主體" id="函式主體">函式主體</a></h3>
@@ -1944,8 +1948,8 @@ fn quicksort_helper(arr: &amp;mut [i32], lo: isize, hi: isize) {
 <p>$$
 T(n) =
 \begin{cases}
-1                   &amp; \text{if } n = 1, \
-2T(\frac{n}{2}) + n &amp; \text{otherwise}.
+1                   &amp; \text{if } n = 1, \\
+2T(\frac{n}{2}) + n &amp; \text{otherwise.}
 \end{cases}
 $$</p>
 <p>根據 <a href="sorting/mergesort/master-theorem">Master Theorem</a>，可得複雜度為 $O(n \log n) $。</p>
@@ -2827,7 +2831,7 @@ NULL &lt;--|        |&lt;--|        |&lt;--|        |
 <p>比起 <a href="collections/singly_linked_list/doubly.html">雙向鏈結串列</a>，單向鏈結串列少了一個額外的指標開銷，在基本操作的花費也較低。在不需要雙向迭代情形下單向鏈結串列很適用。</p>
 <p>此外，單向鏈結串列也支援 tail-sharing，也就是共享 sublist。藉由共享 sublist，單向鏈結串列很容易實作 <a href="https://en.wikipedia.org/wiki/Persistent_data_structure">persistent data structure</a>，再配合 immutable 特性，使得單向鏈結串列幾乎成為函數式程式語言最常見的集合型別之一。可以參考這篇 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/third.html">persistent immutable stack 實作</a>文章。</p>
 <blockquote>
-<p>本次實作的程式碼置於在 <a href="collections/singly_linked_list//doc/rust_algorithm_club/collections/struct.SinglyLinkedList.html"><code>rust_algorithm_club::collections::SinglyLinkedList</code></a> API 文件中。</p>
+<p>本次實作的程式碼置於 <a href="collections/singly_linked_list//doc/rust_algorithm_club/collections/struct.SinglyLinkedList.html"><code>rust_algorithm_club::collections::SinglyLinkedList</code></a> API 文件中。</p>
 </blockquote>
 <h2><a class="header" href="#實作設計" id="實作設計">實作設計</a></h2>
 <h3><a class="header" href="#node-1" id="node-1">Node</a></h3>
@@ -3345,7 +3349,7 @@ $i$：相對於整個容器的索引位置。</p>
 <li>只能以某種偽隨機的順序迭代雜湊表。</li>
 </ul>
 <blockquote>
-<p>本次實作的程式碼置於在 <a href="collections/hash_map//doc/rust_algorithm_club/collections/struct.HashMap.html"><code>rust_algorithm_club::collections::HashMap</code></a> API 文件中。</p>
+<p>本次實作的程式碼置於 <a href="collections/hash_map//doc/rust_algorithm_club/collections/struct.HashMap.html"><code>rust_algorithm_club::collections::HashMap</code></a> API 文件中。</p>
 </blockquote>
 <h2><a class="header" href="#概念" id="概念">概念</a></h2>
 <p>建立雜湊表的第一步，就是配置一定大小的陣列（通常稱為 bucket array），來儲存對應索引的鍵值對。我們以建立電話簿為例，儲存人名與號碼的對應關係。</p>
@@ -3898,7 +3902,7 @@ $v$：欲與鍵綁定的資料。<br />
 </ul>
 <p>一般來說，集合的實作會盡量貼近集合論中的有限集合定義，本次實作同樣遵照數學定義。</p>
 <blockquote>
-<p>本次實作的程式碼置於在 <a href="collections/set//doc/rust_algorithm_club/collections/struct.HashSet.html"><code>rust_algorithm_club::collections::HashSet</code></a> API 文件中。</p>
+<p>本次實作的程式碼置於 <a href="collections/set//doc/rust_algorithm_club/collections/struct.HashSet.html"><code>rust_algorithm_club::collections::HashSet</code></a> API 文件中。</p>
 </blockquote>
 <h2><a class="header" href="#架構設計-2" id="架構設計-2">架構設計</a></h2>
 <h3><a class="header" href="#以雜湊表為底層容器" id="以雜湊表為底層容器">以雜湊表為底層容器</a></h3>
@@ -4368,7 +4372,7 @@ $v$：資料值。<br />
 <p>小知識：bloom 是開花之意，但 Bloom filter 和開花沒任何關係，只因發明人姓氏為 Bloom</p>
 </blockquote>
 <blockquote>
-<p>本次實作的程式碼置於在 <a href="collections/bloom_filter//doc/rust_algorithm_club/collections/struct.BloomFilter.html"><code>rust_algorithm_club::collections::BloomFilter</code></a> API 文件中。</p>
+<p>本次實作的程式碼置於 <a href="collections/bloom_filter//doc/rust_algorithm_club/collections/struct.BloomFilter.html"><code>rust_algorithm_club::collections::BloomFilter</code></a> API 文件中。</p>
 </blockquote>
 <h2><a class="header" href="#概念-1" id="概念-1">概念</a></h2>
 <p>Bloom filter 由下列兩個部分組成：</p>

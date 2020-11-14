@@ -236,10 +236,14 @@ $$</p>
 <p>樹中每一條路徑都代表任意搜尋會經過的步驟，總共有 7 種不同的搜尋路徑，最短路徑僅需要 $\lfloor{\log_2 n} = 3 \rfloor$ 個操作，也就是需要執行「樹高」次的操作。</p>
 <h2><a class="header" href="#實作" id="實作">實作</a></h2>
 <h3><a class="header" href="#函式宣告" id="函式宣告">函式宣告</a></h3>
-<p>二元搜尋概念看似簡單，實際上誤區一堆，不易寫出完全正確的演算法。我們參考 <a href="https://doc.rust-lang.org/std/primitive.slice.html#method.binary_search">Rust slice binary_search</a> 的實作。先來看看 function signature（函式的宣告）。</p>
-<pre><code>pub fn binary_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&lt;usize, usize&gt;
+<p>二元搜尋概念看似簡單，實際上誤區一堆，不易寫出完全正確的演算法。我們參考 <a href="https://doc.rust-lang.org/std/primitive.slice.html#method.binary_search">Rust slice binary_search</a> 的實作。先來看看函式宣告的簽名（function signature）。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn binary_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&lt;usize, usize&gt;
     where T: PartialOrd
-</code></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>二元搜尋函式宣告中，回傳值大概是最特別的部分。如果有找到目標元素，<code>Result</code> 會是 <code>Ok(目標索引位置)</code>，如果沒有找到則回傳 <code>Err(目標值若插入後，不會影響序列排序的位置)</code>。<code>Err</code> 回傳值提供了插入點，非常方便。</p>
 <p>再來，<code>T</code> 泛型參數需是 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>，這是由於二元搜尋使用排序過後的元素，比起線性搜尋，仍需元素之間相互比較。</p>
 <h3><a class="header" href="#函式主體" id="函式主體">函式主體</a></h3>
