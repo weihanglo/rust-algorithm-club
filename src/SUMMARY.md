@@ -74,6 +74,14 @@
 
 ------
 
+# 🧵 字串處理
+
+- [🚧 漢明距離 Hamming distance]()
+- [萊文斯坦距離 Levenshtein distance](levenshtein_distance/README.md)
+- [🚧 最長共同子字串 Longest common substring]()
+
+------
+
 [貢獻指南](CONTRIBUTING.md)
 
 [404](404.md)
