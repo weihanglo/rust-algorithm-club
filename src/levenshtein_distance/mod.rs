@@ -18,33 +18,34 @@ use std::cmp;
 pub fn levenshtein_distance(source: &str, target: &str) -> usize {
     // 1
     if source.is_empty() {
-        return target.len()
+        return target.len();
     }
     if target.is_empty() {
-        return source.len()
+        return source.len();
     }
 
     // 2
     let mut distances = (0..=target.chars().count()).collect::<Vec<_>>();
 
     for (i, ch1) in source.chars().enumerate() {
-        let mut sub = i;                // 3
-        distances[0] = sub + 1;         // 4
+        let mut sub = i; // 3
+        distances[0] = sub + 1; // 4
         for (j, ch2) in target.chars().enumerate() {
-            let dist = cmp::min(        // 5
+            let dist = cmp::min(
+                // 5
                 cmp::min(
-                    distances[j],               // insert
-                    distances[j + 1],           // delete
+                    distances[j],     // insert
+                    distances[j + 1], // delete
                 ) + 1,
-                sub + (ch1 != ch2) as usize,    // substitute
+                sub + (ch1 != ch2) as usize, // substitute
             );
 
-            sub = distances[j + 1];     // 6
-            distances[j + 1] = dist;    // 7
+            sub = distances[j + 1]; // 6
+            distances[j + 1] = dist; // 7
         }
     }
 
-    *distances.last().unwrap()          // 8
+    *distances.last().unwrap() // 8
 }
 // ANCHOR_END: lev_dist
 
@@ -53,10 +54,10 @@ pub fn levenshtein_distance(source: &str, target: &str) -> usize {
 // ANCHOR: naive
 pub fn levenshtein_distance_naive(source: &str, target: &str) -> usize {
     if source.is_empty() {
-        return target.len()
+        return target.len();
     }
     if target.is_empty() {
-        return source.len()
+        return source.len();
     }
 
     // ANCHOR: naive_init
@@ -65,7 +66,8 @@ pub fn levenshtein_distance_naive(source: &str, target: &str) -> usize {
 
     let mut distances = vec![vec![0; target_count + 1]; source_count + 1]; // 2
 
-    for i in 1..=source_count { // 3
+    // 3
+    for i in 1..=source_count {
         distances[i][0] = i;
     }
 
@@ -84,7 +86,8 @@ pub fn levenshtein_distance_naive(source: &str, target: &str) -> usize {
         }
     }
 
-    *distances.last().and_then(|d|d.last()).unwrap() // 5
+    // 5
+    *distances.last().and_then(|d| d.last()).unwrap()
     // ANCHOR_END: naive_calc
 }
 // ANCHOR_END: naive
@@ -94,13 +97,7 @@ mod base {
     use super::*;
 
     fn test_equality(f: impl Fn(&str, &str) -> usize) {
-        let cases = [
-            "",
-            "r",
-            "ru",
-            "rus",
-            "rust",
-        ];
+        let cases = ["", "r", "ru", "rus", "rust"];
         for &s in &cases {
             assert_eq!(f(s, s), 0);
         }
