@@ -6,13 +6,13 @@
 
 > 本次實作的程式碼置於
 >
-> - [`rust_algorithm_club::hamming_distance`][doc-hamming-dist]
-> - [`rust_algorithm_club::hamming_distance_str`][doc-hamming-dist-naive]
+> - [`rust_algorithm_club::hamming_distance`][]
+> - [`rust_algorithm_club::hamming_distance_str`][]
 >
 > API 文件中。
 
-[doc-hamming-dist]: /doc/rust_algorithm_club/fn.hamming_distance.html
-[doc-hamming-dist-str]: /doc/rust_algorithm_club/fn.hamming_distance_str.html
+[`rust_algorithm_club::hamming_distance`]: /doc/rust_algorithm_club/fn.hamming_distance.html
+[`rust_algorithm_club::hamming_distance_str`]: /doc/rust_algorithm_club/fn.hamming_distance_str.html
 
 ## 位元版實作
 
