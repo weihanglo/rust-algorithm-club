@@ -70,4 +70,5 @@ pub fn hamming_distance(source: u64, target: u64) -> u32 {
 ## 參考資料
 
 - [Wiki: Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance)
-- [演算法筆記：Correction](https://web.ntnu.edu.tw/~algo/Correction.html)
+- [錯誤更正碼簡介](https://web.math.sinica.edu.tw/math_media/d184/18404.pdf)
+
