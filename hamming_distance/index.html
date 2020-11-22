@@ -173,6 +173,14 @@
                         <h1><a class="header" href="#漢明距離-hamming-distance" id="漢明距離-hamming-distance">漢明距離 Hamming distance</a></h1>
 <p>漢明距離（Hamming distance）是指兩個相同長度的序列（sequence）在相同位置上，有多少個數值不同，對二進位序列來說就是「相異位元的數目」。漢明距離同時也是一種編輯距離，即是將一個字串轉換成另一個字串，需要經過多少次置換操作（substitute）。</p>
 <p>漢明距離多應用於編碼理論中的錯誤更正（error-correcting），漢明碼（Hammming code）中計算距離的演算法即為漢明距離。</p>
+<blockquote>
+<p>本次實作的程式碼置於</p>
+<ul>
+<li><a href="/doc/rust_algorithm_club/fn.hamming_distance.html"><code>rust_algorithm_club::hamming_distance</code></a></li>
+<li>[<code>rust_algorithm_club::hamming_distance_str</code>][doc-hamming-dist-naive]</li>
+</ul>
+<p>API 文件中。</p>
+</blockquote>
 <h2><a class="header" href="#位元版實作" id="位元版實作">位元版實作</a></h2>
 <p>計算相異位元的數目其實就是一堆位元運算，如下：</p>
 <pre><pre class="playground"><code class="language-rust">
