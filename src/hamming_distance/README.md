@@ -4,6 +4,16 @@
 
 漢明距離多應用於編碼理論中的錯誤更正（error-correcting），漢明碼（Hammming code）中計算距離的演算法即為漢明距離。
 
+> 本次實作的程式碼置於
+>
+> - [`rust_algorithm_club::hamming_distance`][doc-hamming-dist]
+> - [`rust_algorithm_club::hamming_distance_str`][doc-hamming-dist-naive]
+>
+> API 文件中。
+
+[doc-hamming-dist]: /doc/rust_algorithm_club/fn.hamming_distance.html
+[doc-hamming-dist-str]: /doc/rust_algorithm_club/fn.hamming_distance_str.html
+
 ## 位元版實作
 
 計算相異位元的數目其實就是一堆位元運算，如下：
