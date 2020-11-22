@@ -3,11 +3,13 @@
 pub fn hamming_distance(source: u64, target: u64) -> u32 {
     let mut count = 0;
     let mut xor = source ^ target; // 1
+
     // 2
     while xor != 0 {
         count += xor & 1; // 3
         xor >>= 1; // 4
     }
+
     count as u32
 }
 // ANCHOR_END: bit
@@ -19,6 +21,7 @@ pub fn hamming_distance_str(source: &str, target: &str) -> usize {
     // 1
     let mut source = source.chars();
     let mut target = target.chars();
+
     loop {
         // 2
         match (source.next(), target.next()) {
@@ -32,6 +35,7 @@ pub fn hamming_distance_str(source: &str, target: &str) -> usize {
             _ => continue,
         }
     }
+
     count
 }
 // ANCHOR_END: str
