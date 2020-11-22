@@ -1,0 +1,337 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>漢明距離 Hamming distance - Rust Algorithm Club</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Learn algorithms and data structures with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">💡 基礎概念</li><li class="chapter-item expanded "><a href="../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🔍 搜尋</li><li class="chapter-item expanded "><a href="../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li class="chapter-item expanded "><a href="../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li class="chapter-item expanded "><a href="../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li class="chapter-item expanded "><a href="../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">📚 排序</li><li class="chapter-item expanded affix "><li class="part-title">簡單排序</li><li class="chapter-item expanded "><a href="../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li class="chapter-item expanded "><a href="../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li class="chapter-item expanded "><a href="../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li class="chapter-item expanded "><a href="../sorting/shellsort/index.html">希爾排序 Shellsort</a></li><li class="chapter-item expanded affix "><li class="part-title">高效排序</li><li class="chapter-item expanded "><a href="../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li class="chapter-item expanded "><a href="../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li class="chapter-item expanded "><a href="../sorting/mergesort/index.html">合併排序 Mergesort</a></li><li class="chapter-item expanded affix "><li class="part-title">混合排序</li><li class="chapter-item expanded "><div>🚧 內省排序 Introsort</div></li><li class="chapter-item expanded "><div>🚧 自適應合併排序 Timsort</div></li><li class="chapter-item expanded "><div>🚧 模式消除快速排序 Pdqsort</div></li><li class="chapter-item expanded affix "><li class="part-title">特殊排序</li><li class="chapter-item expanded "><a href="../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li class="chapter-item expanded "><a href="../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li class="chapter-item expanded "><a href="../sorting/radix_sort/index.html">基數排序 Radix sort</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🏠 資料結構</li><li class="chapter-item expanded affix "><li class="part-title">堆疊與佇列</li><li class="chapter-item expanded "><a href="../collections/stack/index.html">堆疊 Stack</a></li><li class="chapter-item expanded "><div>🚧 佇列 Queue</div></li><li class="chapter-item expanded "><div>🚧 雙端佇列 Deque</div></li><li class="chapter-item expanded affix "><li class="part-title">鏈結串列</li><li class="chapter-item expanded "><a href="../collections/linked_list/index.html">鏈結串列概述</a></li><li class="chapter-item expanded "><a href="../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li class="chapter-item expanded "><div>🚧 雙向鏈結串列 Doubly linked list</div></li><li class="chapter-item expanded "><div>🚧 循環鏈結串列 Circular linked list</div></li><li class="chapter-item expanded affix "><li class="part-title">關聯容器</li><li class="chapter-item expanded "><a href="../collections/associative-container/index.html">關聯容器概述</a></li><li class="chapter-item expanded "><a href="../collections/hash_map/index.html">雜湊表 Hash map</a></li><li class="chapter-item expanded "><div>🚧 有序映射表 Ordered map</div></li><li class="chapter-item expanded "><div>🚧 多重映射表 Multimap</div></li><li class="chapter-item expanded "><a href="../collections/set/index.html">集合 Set</a></li><li class="chapter-item expanded "><a href="../collections/bloom_filter/index.html">布隆過濾器 Bloom filter</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🧵 字串處理</li><li class="chapter-item expanded "><a href="../hamming_distance/index.html" class="active">漢明距離 Hamming distance</a></li><li class="chapter-item expanded "><a href="../levenshtein_distance/index.html">萊文斯坦距離 Levenshtein distance</a></li><li class="chapter-item expanded "><div>🚧 最長共同子字串 Longest common substring</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../CONTRIBUTING.html">貢獻指南</a></li><li class="chapter-item expanded affix "><a href="../404.html">404</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust Algorithm Club</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/weihanglo/rust-algorithm-club" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#漢明距離-hamming-distance" id="漢明距離-hamming-distance">漢明距離 Hamming distance</a></h1>
+<p>漢明距離（Hamming distance）是指兩個相同長度的序列（sequence）在相同位置上，有多少個數值不同，對二進位序列來說就是「相異位元的數目」。漢明距離同時也是一種編輯距離，即是將一個字串轉換成另一個字串，需要經過多少次置換操作（substitute）。</p>
+<p>漢明距離多應用於編碼理論中的錯誤更正（error-correcting），漢明碼（Hammming code）中計算距離的演算法即為漢明距離。</p>
+<h2><a class="header" href="#位元版實作" id="位元版實作">位元版實作</a></h2>
+<p>計算相異位元的數目其實就是一堆位元運算，如下：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn hamming_distance(source: u64, target: u64) -&gt; u32 {
+    let mut count = 0;
+    let mut xor = source ^ target; // 1
+
+    // 2
+    while xor != 0 {
+        count += xor &amp; 1; // 3
+        xor &gt;&gt;= 1; // 4
+    }
+
+    count as u32
+}
+<span class="boring">}
+</span></code></pre></pre>
+<ol>
+<li>透過 XOR 操作，讓兩序列相異位元為 1，相同位元為 0。</li>
+<li>如果 XOR 操作不為零，表示還有相異位元，繼續計算。</li>
+<li>將 XOR 結果和 1 做 AND 運算，看最低有效位（least significant digit）是否為 1。</li>
+<li>將 XOR 做位元右移，捨棄最低有效位，並回到步驟二。</li>
+</ol>
+<blockquote>
+<p>根據 <a href="https://doc.rust-lang.org/reference/expressions/operator-expr.html#arithmetic-and-logical-binary-operators">《The Rust Reference》</a> 指出，Rust 的位元右移在</p>
+<ul>
+<li>無符號整數（unsigned）是邏輯右移（logical right shift），也就是直接在最高有效位補 0；</li>
+<li>有符號整數（signed）則是算術右移（arithmetic right shift），右移之後符號會被保留。</li>
+</ul>
+</blockquote>
+<p>實際上，Rust 提供了一個原生的計算整數有多少個零的方法 <a href="https://doc.rust-lang.org/stable/std/?search=count_ones"><code>{integer_type}::count_ones</code></a>，可以省去自己做位元運算的麻煩，實作如下，帥：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn hamming_distance(source: u64, target: u64) -&gt; u32 {
+     (source ^ target).count_ones()
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#字串版實作" id="字串版實作">字串版實作</a></h2>
+<p>字串版的漢明距離就相對好懂了。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn hamming_distance_str(source: &amp;str, target: &amp;str) -&gt; usize {
+    let mut count = 0;
+    // 1
+    let mut source = source.chars();
+    let mut target = target.chars();
+
+    loop {
+        // 2
+        match (source.next(), target.next()) {
+            // 3
+            (Some(c1), Some(c2)) if c1 != c2 =&gt; count += 1,
+            // 4
+            (None, Some(_)) | (Some(_), None) =&gt; panic!(&quot;Must have the same length&quot;),
+            // 5
+            (None, None) =&gt; break,
+            // 6
+            _ =&gt; continue,
+        }
+    }
+
+    count
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>字串版同樣吃 <code>source</code> 和 <code>target</code> 兩個輸入。</p>
+<ol>
+<li>用 <a href="http://doc.rust-lang.org/std/primitive.str.html#method.chars"><code>str::chars</code></a> 讓漢明距離可以比對 Unicode 字串，而非只有 ASCII，而 <code>str::chars</code> 是 <code>Iterator</code>，所以透過 <code>Iterator::next</code> 逐一比較每個字元。</li>
+<li>這裡 <code>if c1 != c2</code> 叫做 <a href="https://doc.rust-lang.org/reference/expressions/match-expr.html#match-guards">match guard</a>，是在模式匹配之外，額外條件式檢查，因此，只有 <code>source</code> 和 <code>target</code> 都有下一個字元而且兩字元不相等才會進入這個匹配分支。</li>
+<li>若有任何一個是 <code>None</code>，另外一個是 <code>Some</code>，標示輸入字串的長度不同，直接噴錯。</li>
+<li>如果都沒有下一個字元，直接結束迴圈。</li>
+<li>其他情況，例如兩個字元相同，就繼續疊代。</li>
+</ol>
+<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<p>長度為 n 的序列，計算漢明距離的時間複雜度為 $O(n)$，空間複雜度為 $O(1)$。</p>
+<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Hamming_distance">Wiki: Hamming distance</a></li>
+<li><a href="https://web.ntnu.edu.tw/%7Ealgo/Correction.html">演算法筆記：Correction</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../collections/bloom_filter/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../levenshtein_distance/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../collections/bloom_filter/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../levenshtein_distance/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../theme/custom.js"></script>
+        
+
+        
+
+    </body>
+</html>
