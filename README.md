@@ -91,7 +91,7 @@ Special-purpose sorts:
 
 ### String Manipulation
 
-- [🚧 Hamming distance](src/hamming_distance)
+- [Hamming distance](src/hamming_distance)
 - [Levenshtein distance](src/levenshtein_distance)
 - [🚧 Longest common substring](src/longest_common_substring)
 
