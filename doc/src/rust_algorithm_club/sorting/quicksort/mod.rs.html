@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/sorting/quicksort/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../rust_algorithm_club/index.html'><div class='logo-container'><img src='https://rust-algo.club/favicon.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/sorting/quicksort/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../rust_algorithm_club/index.html'><div class='logo-container'><img src='https://rust-algo.club/favicon.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -227,7 +229,7 @@
 
 <span class="doccomment">/// Recursion helper</span>
 <span class="kw">fn</span> <span class="ident">quicksort_helper</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) {
-    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;=</span> <span class="ident">hi</span> {
+    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">hi</span> {
         <span class="kw">let</span> <span class="ident">pivot</span> <span class="op">=</span> <span class="ident">partition</span>(<span class="ident">arr</span>, <span class="ident">lo</span>, <span class="ident">hi</span>);
         <span class="ident">quicksort_helper</span>(<span class="ident">arr</span>, <span class="ident">lo</span>, <span class="ident">pivot</span> <span class="op">-</span> <span class="number">1</span>);
         <span class="ident">quicksort_helper</span>(<span class="ident">arr</span>, <span class="ident">pivot</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">hi</span>);
@@ -245,7 +247,7 @@
 <span class="doccomment">/// Can achieve O(log n) auxiliary space complexity if Rust compiler is</span>
 <span class="doccomment">/// implemented with tail-call optimization in the future).</span>
 <span class="kw">fn</span> <span class="ident">quicksort_helper_optimized</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) {
-    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;=</span> <span class="ident">hi</span> {
+    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">hi</span> {
         <span class="kw">let</span> <span class="ident">pivot</span> <span class="op">=</span> <span class="ident">partition</span>(<span class="ident">arr</span>, <span class="ident">lo</span>, <span class="ident">hi</span>);
         <span class="kw">if</span> <span class="ident">pivot</span> <span class="op">-</span> <span class="ident">lo</span> <span class="op">&lt;</span> <span class="ident">hi</span> <span class="op">-</span> <span class="ident">pivot</span> {
             <span class="comment">// 1</span>
@@ -284,7 +286,7 @@
 <span class="doccomment">/// Lomuto partition scheme</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Return index of the pivot.</span>
-<span class="kw">fn</span> <span class="ident">partition</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) <span class="op">-&gt;</span> <span class="ident">isize</span> {
+<span class="kw">fn</span> <span class="ident">partition</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">isize</span> {
     <span class="comment">// -- Determine the pivot --</span>
     <span class="comment">// In Lomuto parition scheme,</span>
     <span class="comment">// the latest element is always chosen as the pivot.</span>
@@ -295,7 +297,7 @@
     <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="ident">lo</span>..<span class="ident">hi</span> {
         <span class="kw">if</span> <span class="ident">arr</span>[<span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">&lt;</span> <span class="ident">pivot</span> {
             <span class="ident">arr</span>.<span class="ident">swap</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>);
-            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
     }
     <span class="comment">// Swap pivot to the middle of two piles.</span>
@@ -315,7 +317,7 @@
 
 <span class="doccomment">/// Recursion helper</span>
 <span class="kw">fn</span> <span class="ident">quicksort_helper_3way</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) {
-    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;=</span> <span class="ident">hi</span> {
+    <span class="kw">if</span> <span class="ident">lo</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">hi</span> {
         <span class="kw">let</span> (<span class="ident">smaller</span>, <span class="ident">larger</span>) <span class="op">=</span> <span class="ident">partition_3way</span>(<span class="ident">arr</span>, <span class="ident">lo</span>, <span class="ident">hi</span>);
         <span class="ident">quicksort_helper_3way</span>(<span class="ident">arr</span>, <span class="ident">lo</span>, <span class="ident">smaller</span> <span class="op">-</span> <span class="number">1</span>);
         <span class="ident">quicksort_helper_3way</span>(<span class="ident">arr</span>, <span class="ident">larger</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">hi</span>);
@@ -325,23 +327,23 @@
 <span class="doccomment">/// 3-way paritition scheme</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Return smaller and larger index. (to avoid redundant work on identical elements)</span>
-<span class="kw">fn</span> <span class="ident">partition_3way</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) <span class="op">-&gt;</span> (<span class="ident">isize</span>, <span class="ident">isize</span>) {
+<span class="kw">fn</span> <span class="ident">partition_3way</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">isize</span>, <span class="ident">hi</span>: <span class="ident">isize</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">isize</span>, <span class="ident">isize</span>) {
     <span class="kw">let</span> <span class="ident">pivot</span> <span class="op">=</span> <span class="ident">arr</span>[<span class="ident">hi</span> <span class="kw">as</span> <span class="ident">usize</span>];
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="ident">lo</span>; <span class="comment">// smaller</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">j</span> <span class="op">=</span> <span class="ident">lo</span>; <span class="comment">// equal</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">k</span> <span class="op">=</span> <span class="ident">hi</span>; <span class="comment">// large</span>
 
-    <span class="kw">while</span> <span class="ident">j</span> <span class="op">&lt;=</span> <span class="ident">k</span> {
+    <span class="kw">while</span> <span class="ident">j</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">k</span> {
         <span class="kw">if</span> <span class="ident">arr</span>[<span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">&lt;</span> <span class="ident">pivot</span> {
             <span class="ident">arr</span>.<span class="ident">swap</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>);
-            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
-            <span class="ident">j</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">j</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">arr</span>[<span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">&gt;</span> <span class="ident">pivot</span> {
             <span class="ident">arr</span>.<span class="ident">swap</span>(<span class="ident">k</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="ident">j</span> <span class="kw">as</span> <span class="ident">usize</span>);
-            <span class="ident">k</span> <span class="op">-=</span> <span class="number">1</span>;
+            <span class="ident">k</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         } <span class="kw">else</span> {
             <span class="comment">// No swap when identicial.</span>
-            <span class="ident">j</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">j</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
     }
 
@@ -377,7 +379,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Note that the return value is not necessarily be the index of the pivot,</span>
 <span class="doccomment">/// and the pivot is located somewhere of the first partition.</span>
-<span class="kw">fn</span> <span class="ident">partition_hoare</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">usize</span>, <span class="ident">hi</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+<span class="kw">fn</span> <span class="ident">partition_hoare</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">i32</span>], <span class="ident">lo</span>: <span class="ident">usize</span>, <span class="ident">hi</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
     <span class="kw">let</span> <span class="ident">pivot</span> <span class="op">=</span> <span class="ident">arr</span>[<span class="ident">lo</span>];
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="ident">lo</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">j</span> <span class="op">=</span> <span class="ident">hi</span>;
@@ -385,19 +387,19 @@
     <span class="kw">loop</span> {
         <span class="comment">// Find element &gt;= pivot from leftmost element.</span>
         <span class="kw">while</span> <span class="ident">arr</span>[<span class="ident">i</span>] <span class="op">&lt;</span> <span class="ident">pivot</span> {
-            <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="comment">// Find element &lt;= pivot from rightmost element.</span>
         <span class="kw">while</span> <span class="ident">arr</span>[<span class="ident">j</span>] <span class="op">&gt;</span> <span class="ident">pivot</span> {
-            <span class="ident">j</span> <span class="op">-=</span> <span class="number">1</span>;
+            <span class="ident">j</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         }
-        <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;=</span> <span class="ident">j</span> {
+        <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">j</span> {
             <span class="kw">return</span> <span class="ident">j</span>;
         }
         <span class="comment">// Two elements are misplaced, swap them.</span>
         <span class="ident">arr</span>.<span class="ident">swap</span>(<span class="ident">i</span>, <span class="ident">j</span>);
-        <span class="ident">i</span> <span class="op">+=</span> <span class="number">1</span>;
-        <span class="ident">j</span> <span class="op">-=</span> <span class="number">1</span>;
+        <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="ident">j</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
     }
 }
 
