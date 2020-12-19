@@ -98,9 +98,9 @@ $$
 
 ### 函式宣告
 
-二元搜尋概念看似簡單，實際上誤區一堆，不易寫出完全正確的演算法。我們參考 [Rust slice binary_search][rust-slice-binary-search] 的實作。先來看看 function signature（函式的宣告）。
+二元搜尋概念看似簡單，實際上誤區一堆，不易寫出完全正確的演算法。我們參考 [Rust slice binary_search][rust-slice-binary-search] 的實作。先來看看函式宣告的簽名（function signature）。
 
-```
+```rust
 pub fn binary_search<T>(arr: &[T], target: &T) -> Result<usize, usize>
     where T: PartialOrd
 ```

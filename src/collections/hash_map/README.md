@@ -14,7 +14,7 @@
 - 效能與雜湊函數息息相關，較差的函數容易雜湊碰撞，較佳函數計算成本通常較高。
 - 只能以某種偽隨機的順序迭代雜湊表。
 
-> 本次實作的程式碼置於在 [`rust_algorithm_club::collections::HashMap`][doc-hash-map] API 文件中。
+> 本次實作的程式碼置於 [`rust_algorithm_club::collections::HashMap`][doc-hash-map] API 文件中。
 
 [doc-hash-map]: /doc/rust_algorithm_club/collections/struct.HashMap.html
 

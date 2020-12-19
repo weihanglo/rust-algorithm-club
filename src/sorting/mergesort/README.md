@@ -79,8 +79,8 @@ Recursively merge subarray respecting the order.
 $$
   T(n) =
   \begin{cases}
-    1                   & \text{if } n = 1, \\
-    2T(\frac{n}{2}) + n & \text{otherwise}.
+    1                   & \text{if } n = 1, \\\\
+    2T(\frac{n}{2}) + n & \text{otherwise.}
   \end{cases}
 $$
 

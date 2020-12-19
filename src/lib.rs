@@ -11,3 +11,9 @@
 pub mod collections;
 pub mod searching;
 pub mod sorting;
+
+mod levenshtein_distance;
+pub use levenshtein_distance::{levenshtein_distance, levenshtein_distance_naive};
+
+mod hamming_distance;
+pub use hamming_distance::{hamming_distance, hamming_distance_str};
