@@ -21,7 +21,7 @@ pub struct Queue<T> {
 }
 ```
 
-以 `items` 保存加入佇列的資料。再來我們將 `items[0]` 當作 rear，並將 `items[length-1]` 當作 front，所以並不需要定義 front 和 rear 在 struct 裡面。
+以 `items` 保存加入佇列的資料。網路上其他陣列實作的佇列可能會有 `front` 和 `rear` 兩個欄位負責保存指向佇列開頭和尾端的索引，作為佇列新增刪除資料的依據。但是透過 Rust 的 Vector，我們可以直接取得佇列第一個以及最後一個資料，所以這邊實作忽略這兩個欄位。
 
 ### 定義佇列
 
@@ -38,9 +38,8 @@ pub fn new() -> Self {
 ### 將新資料加入佇列
 
 ```rust
-pub fn enqueue(&mut self, item: T) -> bool {
+pub fn enqueue(&mut self, item: T) {
     self.items.push(item);
-    true
 }
 ```
 
