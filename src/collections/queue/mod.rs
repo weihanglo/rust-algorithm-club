@@ -6,9 +6,7 @@ pub struct Queue<T> {
 impl<T> Queue<T> {
     /// Initialize a queue with empty vector
     pub fn new() -> Self {
-        Self {
-            items: Vec::new(),
-        }
+        Self { items: Vec::new() }
     }
 
     /// Adds an element into queue
