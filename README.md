@@ -89,6 +89,12 @@ Special-purpose sorts:
 - [Set](src/collections/set)
 - [Bloom filter](src/collections/bloom_filter)
 
+### String Manipulation
+
+- [Hamming distance](src/hamming_distance)
+- [Levenshtein distance](src/levenshtein_distance)
+- [🚧 Longest common substring](src/longest_common_substring)
+
 ## Learning Resources
 
 For learning more, you may check out following online resources:

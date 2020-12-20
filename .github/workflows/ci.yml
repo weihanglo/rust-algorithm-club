@@ -26,14 +26,14 @@ jobs:
               rm -v "$HOME/.rustup"
               rm -v "$HOME/.cargo"
           fi
-          echo "::add-path::$HOME/.cargo/bin"
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
       - name: Cache rustup
         uses: actions/cache@v1
         with:
           path: ~/.rustup
           key: ${{ runner.os }}-rustup-${{ hashFiles('**/Cargo.lock') }}
-          restore-key: |
+          restore-keys: |
               ${{ runner.os }}-rustup-
 
       - name: Cache cargo binaries
@@ -41,7 +41,7 @@ jobs:
         with:
           path: ~/.cargo/bin
           key: ${{ runner.os }}-cargo-bin-${{ hashFiles('**/Cargo.lock') }}
-          restore-key: |
+          restore-keys: |
             ${{ runner.os }}-cargo-bin-
 
       - name: Cache cargo registry cache
@@ -49,7 +49,7 @@ jobs:
         with:
           path: ~/.cargo/registry/cache
           key: ${{ runner.os }}-cargo-registry-cache-${{ hashFiles('**/Cargo.lock') }}
-          restore-key: |
+          restore-keys: |
             ${{ runner.os }}-cargo-registry-cache-
 
       - name: Cache cargo registry index
@@ -57,7 +57,7 @@ jobs:
         with:
           path: ~/.cargo/registry/index
           key: ${{ runner.os }}-cargo-registry-index-${{ hashFiles('**/Cargo.lock') }}
-          restore-key: |
+          restore-keys: |
             ${{ runner.os }}-cargo-registry-index-
 
       - name: Cache cargo git db
@@ -65,7 +65,7 @@ jobs:
         with:
           path: ~/.cargo/git/db
           key: ${{ runner.os }}-cargo-git-db-${{ hashFiles('**/Cargo.lock') }}
-          restore-key: |
+          restore-keys: |
             ${{ runner.os }}-cargo-git-db-
 
       - name: Cache cargo build
@@ -73,7 +73,7 @@ jobs:
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
-          restore-key: |
+          restore-keys: |
             ${{ runner.os }}-cargo-build-target-
 
       - name: Install stable Rust
