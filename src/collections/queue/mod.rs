@@ -10,9 +10,8 @@ impl<T> Queue<T> {
     }
 
     /// Adds an element into queue
-    pub fn enqueue(&mut self, item: T) -> bool {
+    pub fn enqueue(&mut self, item: T) {
         self.items.push(item);
-        true
     }
 
     /// Removes the oldest added element in queue
@@ -45,14 +44,14 @@ mod tests {
     fn test_enqueue() {
         let mut queue = super::Queue::<i32>::new();
         queue.enqueue(32i32);
-        assert_eq!(Some(&32i32), queue.peek());
+        assert_eq!(Some(&32), queue.peek());
         assert_eq!(1, queue.size());
     }
     #[test]
     fn test_dequeue() {
         let mut queue = super::Queue::<i32>::new();
         queue.enqueue(32i32);
-        assert_eq!(Some(32i32), queue.dequeue());
+        assert_eq!(Some(32), queue.dequeue());
         assert_eq!(None, queue.dequeue());
     }
     #[test]
@@ -60,7 +59,7 @@ mod tests {
         let mut queue = super::Queue::<i32>::new();
         queue.enqueue(-20i32);
         assert_eq!(1, queue.size());
-        assert_eq!(Some(&-20i32), queue.peek());
+        assert_eq!(Some(&-20), queue.peek());
     }
     #[test]
     fn test_integration() {
@@ -69,10 +68,10 @@ mod tests {
         queue.enqueue(2);
         queue.enqueue(3);
         assert_eq!(3, queue.size());
-        assert_eq!(Some(1i32), queue.dequeue());
-        assert_eq!(Some(&2i32), queue.peek());
-        assert_eq!(Some(2i32), queue.dequeue());
-        assert_eq!(Some(3i32), queue.dequeue());
+        assert_eq!(Some(1), queue.dequeue());
+        assert_eq!(Some(&2), queue.peek());
+        assert_eq!(Some(2), queue.dequeue());
+        assert_eq!(Some(3), queue.dequeue());
         assert_eq!(0, queue.size());
     }
 }
