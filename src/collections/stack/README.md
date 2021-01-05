@@ -34,12 +34,7 @@ pub struct Stack<T> {
 ### 定義一個空間有限的堆疊
 
 ```rust
-pub fn with_capacity(maxsize: usize) -> Stack<T> {
-    Stack {
-        maxsize,
-        items: Vec::with_capacity(maxsize),
-    }
-}
+{{#include mod.rs:with_capacity}}
 ```
 
 初始化一個帶有預先分配空間 Vector 的堆疊。
@@ -49,13 +44,7 @@ pub fn with_capacity(maxsize: usize) -> Stack<T> {
 ### 將新資料加入資料結構
 
 ```rust
-pub fn push(&mut self, item: T) -> bool {
-    if self.items.len() == self.maxsize {
-        return false;
-    }
-    self.items.push(item);
-    return true;
-}
+{{#include mod.rs:push}}
 ```
 
 由於 `push` 操作會改變 `items`，因此需要堆疊的 mutable reference。由於 Rust 的 vector 有重新分配的特性，在將資料正式加入堆疊之前，必須先檢查堆疊初始化時設定的空間是否已經被塞滿了。如果結果為是，則拒絕將資料加入堆疊。
@@ -63,9 +52,7 @@ pub fn push(&mut self, item: T) -> bool {
 ### 將最新加入的資料移出資料結構
 
 ```rust
-pub fn pop(&mut self) -> Option<T> {
-    self.items.pop()
-}
+{{#include mod.rs:pop}}
 ```
 
 堆疊有可能是空的，在此以 `Option` 表現這個情況。如果針對一個空堆疊進行 `pop` 操作，將會得到 `None`。
@@ -73,9 +60,7 @@ pub fn pop(&mut self) -> Option<T> {
 ### 取得堆疊的大小
 
 ```rust
-pub fn size(&self) -> usize {
-    self.items.len()
-}
+{{#include mod.rs:size}}
 ```
 
 一個空堆疊的大小是 0，加入一筆資料後是 1⋯⋯以此類推。注意容量 capcity 與大小 size 是兩個不同的概念。容量是這個堆疊最多可以塞下多少資料，大小則是這個堆疊已經被塞入了多少資料。由於 `push` 的檢查機制，堆疊的大小永遠不會超過 `maxsize`。
@@ -83,9 +68,7 @@ pub fn size(&self) -> usize {
 ### 在不將資料退出堆疊的情況下偷看最後加入堆疊的資料
 
 ```rust
-pub fn peek(&self) -> Option<&T> {
-    self.items.last()
-}
+{{#include mod.rs:peek}}
 ```
 
 與 `pop` 操作類似，但不會對堆疊造成任何影響。如果偷看的是一個空堆疊，會得到 `None`。
