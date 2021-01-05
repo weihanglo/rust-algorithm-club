@@ -6,6 +6,10 @@
 
 佇列常見實作方式有：陣列 array、鏈結串列 linked list。為了使概念容易理解，我們選擇以類似陣列的 Vector 實作。
 
+> 本次實作的程式碼置於 [`rust_algorithm_club::collections::Queue`][doc] API 文件中。
+
+[doc]: /doc/rust_algorithm_club/collections/struct.Queue.html
+
 ## 架構設計
 
 ```rust
@@ -13,7 +17,6 @@
 ```
 
 以 `items` 保存加入佇列的資料。大部分用陣列實作的佇列可能會有 `front` 和 `rear` 兩個欄位負責保存指向佇列開頭和尾端的索引，作為佇列新增刪除資料的依據，但是透過 Rust 的 [`std::vec::Vec`][]（線形動態成長的陣列容器），我們可以直接取得佇列第一以及最後一筆資料，所以這邊實作忽略這兩個欄位。
-
 
 [`std::vec::Vec`]: https://doc.rust-lang.org/std/vec/struct.Vec.html
 

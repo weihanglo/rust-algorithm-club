@@ -10,6 +10,10 @@
 
 堆疊 stack 有兩種實作方式：陣列 array 與鏈結串列 linked list，在此選擇以類似陣列的 Vector 實現。
 
+> 本次實作的程式碼置於 [`rust_algorithm_club::collections::Stack`][doc] API 文件中。
+
+[doc]: /doc/rust_algorithm_club/collections/struct.Stack.html
+
 ## 架構設計
 
 ```rust
