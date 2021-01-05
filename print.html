@@ -2652,6 +2652,9 @@ use ::sorting::counting_sort;
 <p>堆疊的底部與頂部都是抽象的概念，頂部是資料被加入、移除、較為繁忙的那一端，底部即另一端。</p>
 <p>堆疊的空間可能是有限的，亦即也有可能實現空間無限的堆疊。有鑑於有限空間的堆疊較為常見，我們選擇實作空間有限的堆疊。</p>
 <p>堆疊 stack 有兩種實作方式：陣列 array 與鏈結串列 linked list，在此選擇以類似陣列的 Vector 實現。</p>
+<blockquote>
+<p>本次實作的程式碼置於 <a href="collections/stack//doc/rust_algorithm_club/collections/struct.Stack.html"><code>rust_algorithm_club::collections::Stack</code></a> API 文件中。</p>
+</blockquote>
 <h2><a class="header" href="#架構設計" id="架構設計">架構設計</a></h2>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -2746,6 +2749,9 @@ use ::sorting::counting_sort;
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Data_Queue.svg/450px-Data_Queue.svg.png" alt="Queue - Wiki" /></p>
 <p>佇列是一個具有<em>先進先出</em> FIFO 特性的資料結構。從 Wikipedia 上的圖為例，一個資料從左邊進入佇列並從右邊離開，最先進入佇列的資料會最先被取出。</p>
 <p>佇列常見實作方式有：陣列 array、鏈結串列 linked list。為了使概念容易理解，我們選擇以類似陣列的 Vector 實作。</p>
+<blockquote>
+<p>本次實作的程式碼置於 <a href="collections/queue//doc/rust_algorithm_club/collections/struct.Queue.html"><code>rust_algorithm_club::collections::Queue</code></a> API 文件中。</p>
+</blockquote>
 <h2><a class="header" href="#架構設計-1" id="架構設計-1">架構設計</a></h2>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]

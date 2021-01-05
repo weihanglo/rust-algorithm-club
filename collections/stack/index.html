@@ -176,6 +176,9 @@
 <p>堆疊的底部與頂部都是抽象的概念，頂部是資料被加入、移除、較為繁忙的那一端，底部即另一端。</p>
 <p>堆疊的空間可能是有限的，亦即也有可能實現空間無限的堆疊。有鑑於有限空間的堆疊較為常見，我們選擇實作空間有限的堆疊。</p>
 <p>堆疊 stack 有兩種實作方式：陣列 array 與鏈結串列 linked list，在此選擇以類似陣列的 Vector 實現。</p>
+<blockquote>
+<p>本次實作的程式碼置於 <a href="/doc/rust_algorithm_club/collections/struct.Stack.html"><code>rust_algorithm_club::collections::Stack</code></a> API 文件中。</p>
+</blockquote>
 <h2><a class="header" href="#架構設計" id="架構設計">架構設計</a></h2>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
