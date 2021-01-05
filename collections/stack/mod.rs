@@ -13,10 +13,12 @@
 ///
 /// * [Stack (abstract data type)](https://en.wikipedia.org/wiki/Stack_\(abstract_data_type\))
 /// * [Big-O Algorithm Complexity Cheat Sheet](http://bigocheatsheet.com/)
+// ANCHOR: struct
 pub struct Stack<T> {
     maxsize: usize,
     items: Vec<T>,
 }
+// ANCHOR_END: struct
 
 impl<T> Stack<T> {
     /// Initialize a stack of certain capacity.
@@ -25,12 +27,14 @@ impl<T> Stack<T> {
     ///
     /// * `maxsize`: Capacity of the collection. It limits how many items can
     /// be stored.
+    // ANCHOR: with_capacity
     pub fn with_capacity(maxsize: usize) -> Self {
         Self {
             maxsize,
             items: Vec::with_capacity(maxsize),
         }
     }
+    // ANCHOR_END: with_capacity
 
     /// Removes the most recently added element that was not yet removed.
     ///
@@ -41,9 +45,11 @@ impl<T> Stack<T> {
     /// # Complexity
     ///
     /// Constant.
+    // ANCHOR: pop
     pub fn pop(&mut self) -> Option<T> {
         self.items.pop()
     }
+    // ANCHOR_END: pop
 
     /// Adds an element to the collection.
     ///
@@ -55,6 +61,7 @@ impl<T> Stack<T> {
     /// # Complexity
     ///
     /// Constant.
+    // ANCHOR: push
     pub fn push(&mut self, item: T) -> bool {
         if self.items.len() == self.maxsize {
             return false;
@@ -62,6 +69,7 @@ impl<T> Stack<T> {
         self.items.push(item);
         return true;
     }
+    // ANCHOR_END: push
 
     /// # Returns
     ///
@@ -73,9 +81,11 @@ impl<T> Stack<T> {
     /// Size and capacity are different concepts.
     /// Capacity limits how many items can be stored, while size indicates how
     /// many items is currently stored.
+    // ANCHOR: size
     pub fn size(&self) -> usize {
         self.items.len()
     }
+    // ANCHOR_END: size
 
     /// Peeks the last element added without tampering the collection.
     ///
@@ -83,9 +93,11 @@ impl<T> Stack<T> {
     ///
     /// Returns the most recently added item. If nothing was added, `None` will
     /// be returned.
+    // ANCHOR: peek
     pub fn peek(&self) -> Option<&T> {
         self.items.last()
     }
+    // ANCHOR_END: peek
 }
 
 #[cfg(test)]

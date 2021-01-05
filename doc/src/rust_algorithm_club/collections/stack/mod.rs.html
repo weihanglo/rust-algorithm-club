@@ -133,6 +133,18 @@
 <span id="130">130</span>
 <span id="131">131</span>
 <span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">/// A stack-like data structure implemented through a `Vec`.</span>
 <span class="doccomment">///</span>
@@ -149,10 +161,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// * [Stack (abstract data type)](https://en.wikipedia.org/wiki/Stack_\(abstract_data_type\))</span>
 <span class="doccomment">/// * [Big-O Algorithm Complexity Cheat Sheet](http://bigocheatsheet.com/)</span>
+<span class="comment">// ANCHOR: struct</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Stack</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="ident">maxsize</span>: <span class="ident">usize</span>,
     <span class="ident">items</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
 }
+<span class="comment">// ANCHOR_END: struct</span>
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Stack</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Initialize a stack of certain capacity.</span>
@@ -161,12 +175,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `maxsize`: Capacity of the collection. It limits how many items can</span>
     <span class="doccomment">/// be stored.</span>
+    <span class="comment">// ANCHOR: with_capacity</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_capacity</span>(<span class="ident">maxsize</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">maxsize</span>,
             <span class="ident">items</span>: <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">maxsize</span>),
         }
     }
+    <span class="comment">// ANCHOR_END: with_capacity</span>
 
     <span class="doccomment">/// Removes the most recently added element that was not yet removed.</span>
     <span class="doccomment">///</span>
@@ -177,9 +193,11 @@
     <span class="doccomment">/// # Complexity</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Constant.</span>
+    <span class="comment">// ANCHOR: pop</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">items</span>.<span class="ident">pop</span>()
     }
+    <span class="comment">// ANCHOR_END: pop</span>
 
     <span class="doccomment">/// Adds an element to the collection.</span>
     <span class="doccomment">///</span>
@@ -191,6 +209,7 @@
     <span class="doccomment">/// # Complexity</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Constant.</span>
+    <span class="comment">// ANCHOR: push</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">item</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">items</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">maxsize</span> {
             <span class="kw">return</span> <span class="bool-val">false</span>;
@@ -198,6 +217,7 @@
         <span class="self">self</span>.<span class="ident">items</span>.<span class="ident">push</span>(<span class="ident">item</span>);
         <span class="kw">return</span> <span class="bool-val">true</span>;
     }
+    <span class="comment">// ANCHOR_END: push</span>
 
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
@@ -209,9 +229,11 @@
     <span class="doccomment">/// Size and capacity are different concepts.</span>
     <span class="doccomment">/// Capacity limits how many items can be stored, while size indicates how</span>
     <span class="doccomment">/// many items is currently stored.</span>
+    <span class="comment">// ANCHOR: size</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">items</span>.<span class="ident">len</span>()
     }
+    <span class="comment">// ANCHOR_END: size</span>
 
     <span class="doccomment">/// Peeks the last element added without tampering the collection.</span>
     <span class="doccomment">///</span>
@@ -219,9 +241,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns the most recently added item. If nothing was added, `None` will</span>
     <span class="doccomment">/// be returned.</span>
+    <span class="comment">// ANCHOR: peek</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">peek</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">items</span>.<span class="ident">last</span>()
     }
+    <span class="comment">// ANCHOR_END: peek</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
