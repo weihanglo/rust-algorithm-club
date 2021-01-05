@@ -68,7 +68,7 @@ Special-purpose sorts:
 ### Stack and Queue
 
 - [Stack](src/collections/stack)
-- [🚧 Queue](src/collections/queue)
+- [Queue](src/collections/queue)
 - [🚧 Deque](src/collections/deque)
 
 ### Linked List
@@ -113,6 +113,7 @@ All contributions are welcome, including typo fix! Please read the [contrubuting
 - [@weihanglo](https://github.com/weihanglo)
 - [@choznerol](https://github.com/choznerol)
 - [@henry40408](https://github.com/henry40408)
+- [@wiasliaw77210](https://github.com/wiasliaw77210)
 
 ## License
 
@@ -121,4 +122,4 @@ This project is released under different licenses based on type of the content.
 - Source code is licensed under [The MIT License (MIT)](LICENSE).
 - Articles and creative works are licensed under [Creative Commons 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
-Copyright © 2017 - 2020 Weihang Lo
+Copyright © 2017 - 2021 Weihang Lo

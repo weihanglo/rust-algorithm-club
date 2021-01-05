@@ -53,7 +53,7 @@
 # 堆疊與佇列
 
 - [堆疊 Stack](collections/stack/README.md)
-- [🚧 佇列 Queue]()
+- [佇列 Queue](collections/queue/README.md)
 - [🚧 雙端佇列 Deque]()
 
 # 鏈結串列
