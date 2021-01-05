@@ -7,54 +7,66 @@
 /// References:
 ///
 /// - [Queue (abstract data type)](<https://en.wikipedia.org/wiki/Queue_(abstract_data_type)>)
+// ANCHOR: struct
 pub struct Queue<T> {
     items: Vec<T>,
 }
+// ANCHOR_END: struct
 
 impl<T> Queue<T> {
     /// Initialize a queue with empty vector
+    // ANCHOR: new
     pub fn new() -> Self {
         Self { items: Vec::new() }
     }
+    // ANCHOR_END: new
 
     /// Adds an element into queue.
     ///
     /// # Complexity
     ///
     /// Constant.
+    // ANCHOR: enqueue
     pub fn enqueue(&mut self, item: T) {
         self.items.push(item);
     }
+    // ANCHOR_END: enqueue
 
     /// Removes the oldest added element in queue.
     ///
     /// # Complexity
     ///
     /// Linear in the size of the container.
+    // ANCHOR: dequeue
     pub fn dequeue(&mut self) -> Option<T> {
         match self.items.is_empty() {
             false => Some(self.items.remove(0)),
             true => None,
         }
     }
+    // ANCHOR_END: dequeue
 
     /// Retrieves the least recently added element without dequeuing.
     ///
     /// # Complexity
     ///
     /// Constant.
+    // ANCHOR: peek
     pub fn peek(&self) -> Option<&T> {
         self.items.first()
     }
+    // ANCHOR_END: peek
 
     /// Retrieves the size of the queue.
     ///
     /// # Complexity
     ///
     /// Constant.
+    // ANCHOR: size
     pub fn size(&self) -> usize {
         self.items.len()
     }
+    // ANCHOR_END: size
 }
 
 #[cfg(test)]
