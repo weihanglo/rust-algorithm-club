@@ -1,7 +1,7 @@
 /// A queue-like data structure implement through [`std::vec::Vec`][].
 ///
 /// This is a naive implementation whose insertion time complexity is `O(n)`,
-/// which can be improved trivially by using a [`Deque`](crate::collections::Deque) 
+/// which can be improved trivially by using a `Deque` or
 /// [`SinglyLinkedList`](crate::collections::SinglyLinkedList).
 ///
 /// References:
