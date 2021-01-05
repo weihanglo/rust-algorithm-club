@@ -113,6 +113,7 @@ All contributions are welcome, including typo fix! Please read the [contrubuting
 - [@weihanglo](https://github.com/weihanglo)
 - [@choznerol](https://github.com/choznerol)
 - [@henry40408](https://github.com/henry40408)
+- [@wiasliaw77210](https://github.com/wiasliaw77210)
 
 ## License
 
