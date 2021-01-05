@@ -17,10 +17,7 @@
 ## 架構設計
 
 ```rust
-pub struct Stack<T> {
-    maxsize: usize,
-    items: Vec<T>,
-}
+{{#include mod.rs:struct}}
 ```
 
 `maxsize` 用於模擬堆疊空間有限的特性；`items` 負責保存加入堆疊的資料。
