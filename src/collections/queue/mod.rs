@@ -1,4 +1,12 @@
-/// A queue-like data structure implement through Vector
+/// A queue-like data structure implement through [`std::vec::Vec`][].
+///
+/// This is a naive implementation whose insertion time complexity is `O(n)`,
+/// which can be improved trivially by using a [`Deque`](crate::collections::Deque) 
+/// [`SinglyLinkedList`](crate::collections::SinglyLinkedList).
+///
+/// References:
+///
+/// - [Queue (abstract data type)](<https://en.wikipedia.org/wiki/Queue_(abstract_data_type)>)
 pub struct Queue<T> {
     items: Vec<T>,
 }
@@ -9,12 +17,20 @@ impl<T> Queue<T> {
         Self { items: Vec::new() }
     }
 
-    /// Adds an element into queue
+    /// Adds an element into queue.
+    ///
+    /// # Complexity
+    ///
+    /// Constant.
     pub fn enqueue(&mut self, item: T) {
         self.items.push(item);
     }
 
-    /// Removes the oldest added element in queue
+    /// Removes the oldest added element in queue.
+    ///
+    /// # Complexity
+    ///
+    /// Linear in the size of the container.
     pub fn dequeue(&mut self) -> Option<T> {
         match self.items.is_empty() {
             false => Some(self.items.remove(0)),
@@ -22,48 +38,59 @@ impl<T> Queue<T> {
         }
     }
 
-    /// Retrieves the element that is the oldest added without dequeue
+    /// Retrieves the least recently added element without dequeuing.
+    ///
+    /// # Complexity
+    ///
+    /// Constant.
     pub fn peek(&self) -> Option<&T> {
         self.items.first()
     }
 
-    /// Retrieves the size of the queue
+    /// Retrieves the size of the queue.
+    ///
+    /// # Complexity
+    ///
+    /// Constant.
     pub fn size(&self) -> usize {
         self.items.len()
     }
 }
 
 #[cfg(test)]
-mod tests {
+mod impl_by_vec {
+    use super::*;
+
     #[test]
-    fn test_new() {
-        let queue = super::Queue::<i32>::new();
+    fn new() {
+        let queue = Queue::<()>::new();
         assert!(queue.items.is_empty());
     }
+
     #[test]
-    fn test_enqueue() {
-        let mut queue = super::Queue::<i32>::new();
-        queue.enqueue(32i32);
+    fn enqueue() {
+        let mut queue = Queue::new();
+        queue.enqueue(32);
         assert_eq!(Some(&32), queue.peek());
         assert_eq!(1, queue.size());
     }
     #[test]
-    fn test_dequeue() {
-        let mut queue = super::Queue::<i32>::new();
-        queue.enqueue(32i32);
+    fn dequeue() {
+        let mut queue = Queue::new();
+        queue.enqueue(32);
         assert_eq!(Some(32), queue.dequeue());
         assert_eq!(None, queue.dequeue());
     }
     #[test]
-    fn test_size() {
-        let mut queue = super::Queue::<i32>::new();
-        queue.enqueue(-20i32);
+    fn size() {
+        let mut queue = Queue::new();
+        queue.enqueue(-20);
         assert_eq!(1, queue.size());
         assert_eq!(Some(&-20), queue.peek());
     }
     #[test]
-    fn test_integration() {
-        let mut queue = super::Queue::<i32>::new();
+    fn integration() {
+        let mut queue = Queue::new();
         queue.enqueue(1);
         queue.enqueue(2);
         queue.enqueue(3);
