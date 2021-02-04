@@ -213,7 +213,7 @@ impl<T> SinglyLinkedList<T> {
     /// Creates an iterator that yields mutable reference of each element.
     pub fn iter_mut(&mut self) -> IterMut<T> {
         IterMut {
-            next: self.head.as_deref_mut()
+            next: self.head.as_deref_mut(),
         }
     }
 }
