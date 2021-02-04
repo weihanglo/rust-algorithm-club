@@ -401,11 +401,27 @@ impl<T> SinglyLinkedList<T> {
 
 最後，`IterMut` 與 `Iter` 迭代器實作上大同小異。把 `Iter` 用到 `Option.as_ref()` 改為 `Option.as_mut()`，其他 `&` 改成 `&mut` 即可。
 
-> Rust 1.14.0为Option新增了`as_deref()`和`as_deref_mut()`两种新的方法。可以直接将`Option<T>`或`&Option<T>`转换为`Option<&T>`类型，第4条的内容可以。因此，新的实现如下
+> Rust 1.14.0为Option新增了`as_deref()`和`as_deref_mut()`两种新的方法。可以直接将`Option<T>`或`&Option<T>`转换为`Option<&T>`类型，可以不再用3、4两条的方法了。因此，新的实现如下
 > ```Rust
-//        Iter { next: self.head.as_ref().map(|node| &**node) } // old
-          Iter { next: self.head.as_deref() } //new
-```
+> impl<T> Iterator for Iter<'a, T> {
+>    type Item = &'a T;                          // 2
+>    fn next(&mut self) -> Option<Self::Item> {
+>        match self.next {
+>            Some(node) => {
+>                // self.next = node.next.as_ref().map(|node| &**node); // old
+>                self.next = node.next.as_deref();  //new
+>                Some(&node.elem)
+>            }
+>            None => None,
+>        }
+>     }
+> }
+> // ....
+>       pub fn iter(&self) -> Iter<T> {
+> //        Iter { next: self.head.as_ref().map(|node| &**node) } // old
+>           Iter { next: self.head.as_deref() } //new
+>       }
+> ```
 > 参考: [Rust文档](https://doc.rust-lang.org/std/option/enum.Option.html#method.as_deref)
 
 ### PartialEq trait
