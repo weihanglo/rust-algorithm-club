@@ -401,6 +401,13 @@ impl<T> SinglyLinkedList<T> {
 
 最後，`IterMut` 與 `Iter` 迭代器實作上大同小異。把 `Iter` 用到 `Option.as_ref()` 改為 `Option.as_mut()`，其他 `&` 改成 `&mut` 即可。
 
+> Rust 1.14.0为Option新增了`as_deref()`和`as_deref_mut()`两种新的方法。可以直接将`Option<T>`或`&Option<T>`转换为`Option<&T>`类型，第4条的内容可以。因此，新的实现如下
+> ```Rust
+//        Iter { next: self.head.as_ref().map(|node| &**node) } // old
+          Iter { next: self.head.as_deref() } //new
+```
+> 参考: [Rust文档](https://doc.rust-lang.org/std/option/enum.Option.html#method.as_deref)
+
 ### PartialEq trait
 
 [PartialEq trait](https://doc.rust-lang.org/std/cmp/trait.PartialEq.html) 是用來實現兩個串列是否能夠比較，而我們在此定義如下：
