@@ -111,6 +111,7 @@
 - [@choznerol](https://github.com/choznerol)
 - [@henry40408](https://github.com/henry40408)
 - [@wiasliaw77210](https://github.com/wiasliaw77210)
+- [@LebranceBW](https://github.com/LebranceBW)
 
 ## 授權條款
 
