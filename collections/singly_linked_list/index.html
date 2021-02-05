@@ -568,6 +568,29 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 <li>產生迭代器初始化狀態，和第三步一模一樣。</li>
 </ol>
 <p>最後，<code>IterMut</code> 與 <code>Iter</code> 迭代器實作上大同小異。把 <code>Iter</code> 用到 <code>Option.as_ref()</code> 改為 <code>Option.as_mut()</code>，其他 <code>&amp;</code> 改成 <code>&amp;mut</code> 即可。</p>
+<blockquote>
+<p>Rust 1.14.0为Option新增了<code>as_deref()</code>和<code>as_deref_mut()</code>两种新的方法。可以直接将<code>Option&lt;T&gt;</code>或<code>&amp;Option&lt;T&gt;</code>转换为<code>Option&lt;&amp;T&gt;</code>类型，可以不再用3、4两条的方法了。因此，新的实现如下</p>
+<pre><code class="language-Rust">impl&lt;T&gt; Iterator for Iter&lt;'a, T&gt; {
+   type Item = &amp;'a T;                          // 2
+   fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt; {
+       match self.next {
+           Some(node) =&gt; {
+               // self.next = node.next.as_ref().map(|node| &amp;**node); // old
+               self.next = node.next.as_deref();  //new
+               Some(&amp;node.elem)
+           }
+           None =&gt; None,
+       }
+    }
+}
+// ....
+      pub fn iter(&amp;self) -&gt; Iter&lt;T&gt; {
+//        Iter { next: self.head.as_ref().map(|node| &amp;**node) } // old
+          Iter { next: self.head.as_deref() } //new
+      }
+</code></pre>
+<p>参考: <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.as_deref">Rust文档</a></p>
+</blockquote>
 <h3><a class="header" href="#partialeq-trait" id="partialeq-trait">PartialEq trait</a></h3>
 <p><a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html">PartialEq trait</a> 是用來實現兩個串列是否能夠比較，而我們在此定義如下：</p>
 <p>有兩個 <code>SinglyLinkedList</code> Sa、Sb，Sa、Sb 的元素皆符合 <code>PartialEq</code> trait。當</p>
