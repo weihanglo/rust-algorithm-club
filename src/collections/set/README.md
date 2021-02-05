@@ -49,7 +49,7 @@ where
 - `insert`：新增一個元素。
 - `remove`：移除特定元素。
 - `len`：檢查集合內的元素數目。
-- `iter`：產生一個迭代集合內所有元素的迭代器。
+- `iter`：產生一個疊代集合內所有元素的疊代器。
 
 這些基本操作的實作上，只是對雜湊表的簡單封裝，詳細實作可以參考 [HashMap](../hash_map)。
 
@@ -156,19 +156,19 @@ pub fn union(&self, other: &HashSet<T>) -> HashSet<T> {
 
 #### 第二次嘗試 - Lazy Iterator
 
-有了第一次嘗試的經驗，第二次決定讓 `union()` 回傳一個 lazy iterator，會迭代聯集的元素，必要才從迭代器收集所有元素，再建立新的集合，如此可以節省許多運算資源。
+有了第一次嘗試的經驗，第二次決定讓 `union()` 回傳一個 lazy iterator，會疊代聯集的元素，必要才從疊代器收集所有元素，再建立新的集合，如此可以節省許多運算資源。
 
 至於實作步驟，我們可以：
 
-1. 先製造一個迭代器，包含所有 `other` 集合的元素，但過濾掉與 `self` 共有的元素。
-2. 再將 `self` 的迭代器與步驟一產生的迭代器，利用 [`Iterator::chain`][rust-iterator-chain] 連起來。
+1. 先製造一個疊代器，包含所有 `other` 集合的元素，但過濾掉與 `self` 共有的元素。
+2. 再將 `self` 的疊代器與步驟一產生的疊代器，利用 [`Iterator::chain`][rust-iterator-chain] 連起來。
 
 
 這樣其實就是 `other \ self` 這個差集，加上 `self` 自身，剛好就是聯集。程式碼如下：
 
 
 ```rust
-// 使用 impl trait 語法，避免宣告不同迭代器型別的麻煩。
+// 使用 impl trait 語法，避免宣告不同疊代器型別的麻煩。
 pub fn union(&self, other: &HashSet<T>) -> impl Iterator<Item = &T> {
     // 實際上就是差集
     let other_but_not_self = other.iter().filter(|item| !self.contains(item));
@@ -192,7 +192,7 @@ error[E0623]: lifetime mismatch
     |                                this parameter and the return type are declared with different lifetimes...
 ```
 
-是 `self` 與 `other` 的生命週期不同導致，當這兩個集合的迭代器被 chain 起來後回傳，編譯器無法確認 Iterator 的 Item 生命週期多長。你可能很好奇為什麼 `self` 與 `other` 生命週期不同，事實上，Rust 為了讓語法輕鬆一點，允許函數省略部分生命週期標註，這個行為稱作 [Lifetime Elision][nomicon-lifetime-elision]，會在各種不同的條件下加註生命週期，其中有一條是「**每個被省略的生命週期都會成為獨立的生命週期**」。因此，`union()` 加上被省略的生命週期，會長得像：
+是 `self` 與 `other` 的生命週期不同導致，當這兩個集合的疊代器被 chain 起來後回傳，編譯器無法確認 Iterator 的 Item 生命週期多長。你可能很好奇為什麼 `self` 與 `other` 生命週期不同，事實上，Rust 為了讓語法輕鬆一點，允許函數省略部分生命週期標註，這個行為稱作 [Lifetime Elision][nomicon-lifetime-elision]，會在各種不同的條件下加註生命週期，其中有一條是「**每個被省略的生命週期都會成為獨立的生命週期**」。因此，`union()` 加上被省略的生命週期，會長得像：
 
 ```rust
 pub fn union<'a, 'b>(&'a self, other: &'b HashSet<T>) -> impl Iterator<Item = &'a ??? &'b ???T>;
@@ -265,7 +265,7 @@ pub fn union<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
 
 呼，上面解決了最困難的生命週期和 borrow checker 問題，接下來的實作只要關注數學上的集合定義就能輕鬆解決了。
 
-首先，交集的定義為「你有，而且我也有的」，簡單，迭代 `self` 並過濾出 `other` 也有的元素就好，秒殺！
+首先，交集的定義為「你有，而且我也有的」，簡單，疊代 `self` 並過濾出 `other` 也有的元素就好，秒殺！
 
 ```rust
 pub fn intersection<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
@@ -273,7 +273,7 @@ pub fn intersection<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item =
 }
 ```
 
-再來是差集，概念是就是「我有，但你沒有的」，一樣迭代 `self` 並過濾出 `other` 沒有的元素。
+再來是差集，概念是就是「我有，但你沒有的」，一樣疊代 `self` 並過濾出 `other` 沒有的元素。
 
 ```rust
 pub fn difference<'a>(&'a self, other: &'a HashSet<T>) -> impl Iterator<Item = &T> {
@@ -328,7 +328,7 @@ pub fn is_superset(&self, other: &HashSet<T>) -> bool {
 }
 ```
 
-最後，我們常會檢查兩個集合是否沒有交集（disjoint），這個方法只要檢查交集 `intersection()` 迭代器的長度是否為 0 就可以了。
+最後，我們常會檢查兩個集合是否沒有交集（disjoint），這個方法只要檢查交集 `intersection()` 疊代器的長度是否為 0 就可以了。
 
 ```rust
 pub fn is_disjoint(&self, other: &HashSet<T>) -> bool {
@@ -399,7 +399,7 @@ Rust 中的相等關係有其理論背景，`Eq` 就是數學上的 [Equivalence
 回到集合，集合論中的集合相等（set equality）定義為：x = y ⇒ ∀z, (z ∈ x ⇔ z ∈ y)，也就所有屬於集合 x 的元素必屬於集合 y，反之亦然。因此，集合相等具有自反性、對稱性、傳遞性。實作 `==` 運算子，我們會
 
 1. 比較集合 x, y 內元素數目（cardinality）是否一致，以及
-2. 迭代集合 x，並檢查是否每個屬於 x 的元素都屬於 y。
+2. 疊代集合 x，並檢查是否每個屬於 x 的元素都屬於 y。
 
 ```rust
 impl<T> PartialEq for HashSet<T>

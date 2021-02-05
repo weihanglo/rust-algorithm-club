@@ -12,7 +12,7 @@
 
 - 資料量不夠大時，單一操作需要雜湊計算，開銷相對高。
 - 效能與雜湊函數息息相關，較差的函數容易雜湊碰撞，較佳函數計算成本通常較高。
-- 只能以某種偽隨機的順序迭代雜湊表。
+- 只能以某種偽隨機的順序疊代雜湊表。
 
 > 本次實作的程式碼置於 [`rust_algorithm_club::collections::HashMap`][doc-hash-map] API 文件中。
 
@@ -312,7 +312,7 @@ pub struct HashMap<K, V> where K: Hash + Eq {
 2. 將 `HashMap.buckets` 改為儲存 `Bucket` 的動態陣列。
 3. 新增 `len` 記錄容器當前鍵值對數目，在增刪資料時， `len` 都會同步更新。
 
-之所以使用額外的成員記錄資料數目，是為了計算數目能在 O(1) 時間內完成，nested array 動態迭代每個 `Bucket` 計算的成本太高。
+之所以使用額外的成員記錄資料數目，是為了計算數目能在 O(1) 時間內完成，nested array 動態疊代每個 `Bucket` 計算的成本太高。
 
 這就是 **Vector-based separate chaining HashMap** 的記憶體佈局，來看張精美的雜湊表架構佈局圖吧！
 
@@ -455,7 +455,7 @@ pub fn remove<Q>(&mut self, q: &Q) -> Option<V>
 ```
 
 1. 所有涉及搜尋的操作，第一步一定是計算雜湊值。
-2. 建立 mutable 的迭代器，利用 [`posiion`][rust-iterator-position] 找到對應的鍵值對，再呼叫 `Vec::swap_remove` 移除。
+2. 建立 mutable 的疊代器，利用 [`posiion`][rust-iterator-position] 找到對應的鍵值對，再呼叫 `Vec::swap_remove` 移除。
 3. 前一步驟若有 return value 產生，表示移除一個元素，因此 `self.len` 需手動減一。
 
 > `Vec::swap_remove` 不需要 resize array，而是取得最後一個元素填補該空間，由於雜湊表的排序不重要，我們選擇 `swap_remove` 減少一點開銷。
@@ -484,7 +484,7 @@ pub fn insert(&mut self, key: K, value: V) -> Option<V> {
 
 1. 嘗試調整雜湊表大小，以確保 load factor 在閾值之間。
 2. 同樣地，根據鍵計算雜湊值，以取得對應的內部 bucket 位置。
-3. 迭代整個 bucket 尋找鍵相同的鍵值對。
+3. 疊代整個 bucket 尋找鍵相同的鍵值對。
     1. 若找到，使用 [`mem::replace`][rust-mem-replace] 資料部分，不需取代整個鍵值對。
     2. 若找無，則新增一組新鍵值對到該 bucket 中，並將長度加一。
 4. 若插入操作實際上是更新原有資料，則回傳被更新前的舊資料 `Some((K, V))`，反之則回傳 `None`。
@@ -532,17 +532,17 @@ fn try_resize(&mut self) {
 2. 若當前容量為 0，表示尚未新增任何元素，我們 push 一個空 bucket 進去，讓其他操作可以正常新增鍵值對。
 3. 判斷 load factor，決定需不需要動態調整大小。
 4. 透過 `HashMap::with_capacity` 建立容量兩倍大的空雜湊表。
-5. 開始迭代舊的 bucket，並利用 [`flat_map`][rust-iterator-flat-map] 打平 nested vector，再利用 [`for_each`][rust-iterator-for-each] 將每個元素重新 insert 到新雜湊表。
+5. 開始疊代舊的 bucket，並利用 [`flat_map`][rust-iterator-flat-map] 打平 nested vector，再利用 [`for_each`][rust-iterator-for-each] 將每個元素重新 insert 到新雜湊表。
 6. 把 `self` 的值指向新雜湊表，舊雜湊表的記憶體空間會被釋放。
 
 [rust-iterator-flat-map]: https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flat_map
 [rust-iterator-for-each]: https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.for_each
 
-### 實作迭代器方法
+### 實作疊代器方法
 
-一個集合型別當然少不了簡易的產生迭代器實作。
+一個集合型別當然少不了簡易的產生疊代器實作。
 
-根據之前其他方法的實作，要迭代整個雜湊表非常簡單，就是迭代所有 bucket，並利用 `flat_map` 打平 nested vector。簡單實作如下：
+根據之前其他方法的實作，要疊代整個雜湊表非常簡單，就是疊代所有 bucket，並利用 `flat_map` 打平 nested vector。簡單實作如下：
 
 ```rust
 fn iter() -> std::slice::Iter<(&k, &v)> {

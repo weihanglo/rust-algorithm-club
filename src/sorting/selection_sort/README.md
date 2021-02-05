@@ -32,7 +32,7 @@ _Joestape89 - CC BY-SA 3.0_
 [2a, 3, 4, 2b, 1]
 ```
 
-開始迭代找出最小值並指環。
+開始疊代找出最小值並指環。
 
 ```bash
  *             *
@@ -49,7 +49,7 @@ _Joestape89 - CC BY-SA 3.0_
 
 首先，回想一下穩定排序的定義：**相同鍵值的元素，排序後相對位置不改變。**
 
-問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 $O(1) $ insertion 的資料結構，不然就會多出額外 $O(n^2) $ 的寫入成本。
+問題出在 naïve selection sort 是以置換的方式排序每次疊代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 $O(1) $ insertion 的資料結構，不然就會多出額外 $O(n^2) $ 的寫入成本。
 ## 效能
 
 |              | Complexity    |
@@ -59,7 +59,7 @@ _Joestape89 - CC BY-SA 3.0_
 | Average      | $O(n^2) $ |
 | Worst space  | $O(1) $ auxiliary |
 
-對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 $n - 1 $ 次比較，第二個 $n - 2 $ 次，總比較次數如下：
+對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序疊代。第一個元素要做 $n - 1 $ 次比較，第二個 $n - 2 $ 次，總比較次數如下：
 
 $$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$
 
@@ -88,7 +88,7 @@ pub fn selection_sort(arr: &mut [i32]) {
 2. 內層迴圈負責在 unsorted pile 範圍 [`i`, `len`) 找最小值。
 3. 外層迴圈在找到最小值之後，置換兩元素。
 
-眼尖的人會發現，內外兩層迴圈的 upper bound 都是 `len`，這樣是否內側迴圈會 out of bound？Rust 的 range operator（`core::ops::Range`）實作 [`Iterator`][impl-iterator] trait 時，有檢查 `range.start < range.end`，因此這個寫法並不會有出界問題，但會多跑一次無意義的迭代。
+眼尖的人會發現，內外兩層迴圈的 upper bound 都是 `len`，這樣是否內側迴圈會 out of bound？Rust 的 range operator（`core::ops::Range`）實作 [`Iterator`][impl-iterator] trait 時，有檢查 `range.start < range.end`，因此這個寫法並不會有出界問題，但會多跑一次無意義的疊代。
 
 [impl-iterator]: https://doc.rust-lang.org/core/ops/struct.Range.html#impl-Iterator
 
