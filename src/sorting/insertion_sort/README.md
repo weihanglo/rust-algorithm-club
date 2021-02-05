@@ -67,7 +67,7 @@ pub fn insertion_sort(arr: &mut [i32]) {
 }
 ```
 
-1. 外層迴圈迭代整個序列。並取出 index `i`，`arr[i]` 是待排序的元素，index 比 `i` 小的元素則組成已排序的部分序列。
+1. 外層迴圈疊代整個序列。並取出 index `i`，`arr[i]` 是待排序的元素，index 比 `i` 小的元素則組成已排序的部分序列。
 2. 內層迴圈負責元素比較，決定待排序元素該從何處插入，若前一個元素比待排元素大，則置換兩元素，並繼續往下尋找正確的插入點。直到 `j == 0` 或待排元素比任何已排序元素都大為止。
 
 ## 變形
@@ -99,7 +99,7 @@ pub fn binary_insertion_sort(arr: &mut [i32]) {
 
 1. 先限制 `binary_search` 範圍，取出 sorted pile `arr[..i]`。再對 slice 執行 `binary_search`。
 2. `binary_search` 回傳一個 `Result<usize, usize>` 型別，找到時回傳 `Ok(index 值)`，找無時回傳 `Err(不影響排序穩定度的插入點)`，這個 `Err` 的設計巧妙解決新值插入的問題。
-3. 和普通 insertion sort 雷同，從插入點至 sorted pile 迭代到末端以進行排序，省下不少比較操作。
+3. 和普通 insertion sort 雷同，從插入點至 sorted pile 疊代到末端以進行排序，省下不少比較操作。
 
 [wiki-binary-search]: https://en.wikipedia.org/wiki/Binary_search
 

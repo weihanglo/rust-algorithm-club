@@ -22,10 +22,10 @@ Quicksort 是一個分治演算法（divide-and-conquer），不斷遞迴下列�
 為了達成上述條件，Quicksort 有許多不同的分割序列實作方案（partition scheme），其中以 Lomuto partition 最易理解，常被做為教材。
 
 1. 以序列最後一個元素當做 pivot。
-2. 利用兩個指標 `i` `j`，其中 `j` 從頭迭代整個序列
+2. 利用兩個指標 `i` `j`，其中 `j` 從頭疊代整個序列
     - 若有序列第 j 個元素小於 pivot，則與第 i 個元素置換。
     - 第 i 個元素已落在小於 pivot 的範圍，將 i 指標往後移一個，處理下個元素。
-3. 迭代完成後，小於 pivot 的元素全都置換至序列前端，此時將 pivot 與第 i 個元素置換，pivot 會剛好在最終正確位置上（符合不等式）。
+3. 疊代完成後，小於 pivot 的元素全都置換至序列前端，此時將 pivot 與第 i 個元素置換，pivot 會剛好在最終正確位置上（符合不等式）。
 
 ASCII 畫出來的分割圖如下：
 
@@ -36,7 +36,7 @@ ASCII 畫出來的分割圖如下：
 
 - `arr[low...i]` 包含所有小於等於 pivot 的元素。
 - `arr[i+1...j-1]` 包含所有大於 pivot 的元素。
-- `arr[j...high-1]` 包含所有尚未迭代的元素。
+- `arr[j...high-1]` 包含所有尚未疊代的元素。
 - `arr[high]` pivot 本身。
 
 ## 說明
@@ -238,7 +238,7 @@ fn partition(arr: &mut [i32], lo: isize, hi: isize) -> isize {
 ```
 
 1. Lomuto scheme 選擇 pivot 的方式很直接，就是選擇最後一個元素。
-2. 利用 `i`、`j` 兩個指標迭代指定的序列範圍，若第 j 個值小於 pivot 時，則於第 i 個元素置換。
+2. 利用 `i`、`j` 兩個指標疊代指定的序列範圍，若第 j 個值小於 pivot 時，則於第 i 個元素置換。
 3. `i` 指標加一，繼續處理下個元素。
 4. 最後置換第 i 個元素於 pivot，此時 pivot 已落在最終正確的位置。
 

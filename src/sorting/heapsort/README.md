@@ -128,9 +128,9 @@ Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n) $，同�
 
 建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。
 
-**Heapify** 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 **sift down**，在[實作](#實作)一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。
+**Heapify** 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 **sift down**，在[實作](#實作)一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續疊代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。
 
-Heapify 從最末個元素開始反向迭代，每個元素都呼叫 `sift_down` 調整 heap 符合 heap ordering。總共要做 $n $ 次 `sift_down` 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為
+Heapify 從最末個元素開始反向疊代，每個元素都呼叫 `sift_down` 調整 heap 符合 heap ordering。總共要做 $n $ 次 `sift_down` 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為
 
 $$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$
 
@@ -169,8 +169,8 @@ pub fn heapsort(arr: &mut [i32]) {
 }
 ```
 
-1. 這部分是 heapify，從最小 non-leaf node 開始（`end` / 2），修正序列至滿足 heap order，再反向迭代做 heapify。
-2. 這部分負責排序，每次迭代都將排序 heap 的 root 元素，步驟如 3 - 4：
+1. 這部分是 heapify，從最小 non-leaf node 開始（`end` / 2），修正序列至滿足 heap order，再反向疊代做 heapify。
+2. 這部分負責排序，每次疊代都將排序 heap 的 root 元素，步驟如 3 - 4：
 3. 不斷將 max-heap 中最大值（在 root 上）與 heap 最後一個元素 `end` 置換，
 4. 並利用 `sift_down` 將序列修正至 max-heap 資料結構，依照定義，此時 unsorted pile 首個元素成為 max-heap root，是最大值。
 
@@ -210,9 +210,9 @@ fn sift_down(arr: &mut [i32], start: usize, end: usize) {
 
 再來看看 `sift_down` 實作內容，`loop` 中幹的活就是不斷將 `start` index 上的元素與其子樹比較，若不符合 heap ordering，則兩者置換。
 
-1. **是否有子結點**：依照 binary heap 的定義找出 root 的左子樹（left substree），若左子樹的 index `child` 比 `end` 還大，表示沒有 heap 沒有子結點，停止迭代。
+1. **是否有子結點**：依照 binary heap 的定義找出 root 的左子樹（left substree），若左子樹的 index `child` 比 `end` 還大，表示沒有 heap 沒有子結點，停止疊代。
 2. **檢查右子樹值較大**：若 root 下有右子樹且較大，我們會標記右子樹，並在下一步對右子樹進行處理。
-3. **置換**：若 `root` 元素比 `child` 的元素小，則置換兩者，並將 `child` 設置為下個迭代的 `root`，繼續檢查最初的 `start` 元素是否滿足 heap ordering。
+3. **置換**：若 `root` 元素比 `child` 的元素小，則置換兩者，並將 `child` 設置為下個疊代的 `root`，繼續檢查最初的 `start` 元素是否滿足 heap ordering。
 
 以上就是簡單的 `sift_down` 實作，也是整個 heapsort 的精髓。
 

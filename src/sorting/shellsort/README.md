@@ -16,7 +16,7 @@ Shellsort 特性如下：
 Shellsort 分為兩個步驟：
 
 1. 決定一組 gap sequence。
-2. 迭代 gap sequence 進行分組排序，每次執行有間隔的 insertion sort。也就是每個元素與其相鄰 gap 的元素比較與置換。
+2. 疊代 gap sequence 進行分組排序，每次執行有間隔的 insertion sort。也就是每個元素與其相鄰 gap 的元素比較與置換。
 
 > 最後一次排序（gap = 1）會退化為 insertion sort，完成整個排序。
 
@@ -126,8 +126,8 @@ pub const MARCIN_GAPS: [usize; 8] = [701, 301, 132, 57, 23, 10, 4, 1];
 
 再來就是主程式的部分，總共會有三個迴圈，
 
-- 最外層是迭代 gap sequence，
-- 中間層是迭代整個資料序列，
+- 最外層是疊代 gap sequence，
+- 中間層是疊代整個資料序列，
 - 內層就是每個元素的插入排序動作。
 
 ```rust
@@ -148,8 +148,8 @@ pub fn shellsort(arr: &mut [i32]) {
 }
 ```
 
-1. 最外層的迴圈，利用 `iter()` trait 產生迭代器，迭代 gap sequence。
-2. 中間層迴圈，控制 `i` 是否超出資料序列，以迭代整合資料序列。
+1. 最外層的迴圈，利用 `iter()` trait 產生疊代器，疊代 gap sequence。
+2. 中間層迴圈，控制 `i` 是否超出資料序列，以疊代整合資料序列。
 3. 最內層迴圈，執行插入動作，將每個元素置換到正確位置。
 4. 由於 `gap` 的型別是 `&usize`，需透過 `*gap` dereference 得到 `usize` 型別。
 

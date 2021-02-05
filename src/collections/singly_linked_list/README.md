@@ -13,7 +13,7 @@
 +--------+   +--------+   +--------+
 ```
 
-比起 [雙向鏈結串列](doubly.md)，單向鏈結串列少了一個額外的指標開銷，在基本操作的花費也較低。在不需要雙向迭代情形下單向鏈結串列很適用。
+比起 [雙向鏈結串列](doubly.md)，單向鏈結串列少了一個額外的指標開銷，在基本操作的花費也較低。在不需要雙向疊代情形下單向鏈結串列很適用。
 
 此外，單向鏈結串列也支援 tail-sharing，也就是共享 sublist。藉由共享 sublist，單向鏈結串列很容易實作 [persistent data structure](https://en.wikipedia.org/wiki/Persistent_data_structure)，再配合 immutable 特性，使得單向鏈結串列幾乎成為函數式程式語言最常見的集合型別之一。可以參考這篇 [persistent immutable stack 實作](http://cglab.ca/~abeinges/blah/too-many-lists/book/third.html)文章。
 
@@ -228,16 +228,16 @@ pub fn reverse(&mut self) {
 }
 ```
 
-1. 先建立一個暫時變數 `prev`，儲存迭代時的前一個節點。
+1. 先建立一個暫時變數 `prev`，儲存疊代時的前一個節點。
 2. 從串列 head 取得第一個節點的所有權。
-3. 依序迭代整個串列
+3. 依序疊代整個串列
     1. 將節點 A 的後一個節點 B 暫存起來。
     2. 節點 A 的 `next` 指向暫存在變數 `prev` 的節點 P。
-    3. 節點 A 暫存在變數 `prev` 內，保留到下一個迭代使用。
+    3. 節點 A 暫存在變數 `prev` 內，保留到下一個疊代使用。
     4. 將節點 B 儲存在變數 `curr` 內。此時  
        `prev`：節點 A，A 的 `next` 指向 P，  
        `curr`：節點 B，B 的 `next` 指向 A。
-4. 最後一次迭代時，變數 `prev` 會儲存原始串列末端節點，這時轉移所有權到 head，完成反轉。
+4. 最後一次疊代時，變數 `prev` 會儲存原始串列末端節點，這時轉移所有權到 head，完成反轉。
 
 ## Traits
 
@@ -269,7 +269,7 @@ a -> b -> c -> x -> y -> z
 
 如果節點一多，肯定會 stack overflow，太可怕了！
 
-既然如此，那麼就透過 [Drop trait](https://doc.rust-lang.org/std/ops/trait.Drop.html)，實作一個迭代版本的解構式，消弭可怕的 call stack 吧。
+既然如此，那麼就透過 [Drop trait](https://doc.rust-lang.org/std/ops/trait.Drop.html)，實作一個疊代版本的解構式，消弭可怕的 call stack 吧。
 
 ```rust
 impl<T> Drop for SinglyLinkedList<T> {
@@ -303,7 +303,7 @@ impl<T> Drop for SinglyLinkedList<T> {
 
 既然鏈結串列是一種序列（sequence，有序的資料結構），少不了實作 [Iterator](https://doc.rust-lang.org/std/iter/trait.Iterator.html)、[IntoIterator](https://doc.rust-lang.org/std/iter/trait.IntoIterator.html) 等 trait，使串列可以輕鬆使用 for-in loop 遍歷（traverse）。
 
-首先，先定義幾個迭代器的 struct。
+首先，先定義幾個疊代器的 struct。
 
 ```rust
 pub struct IntoIter<T>(SinglyLinkedList<T>);
@@ -325,9 +325,9 @@ pub struct IterMut<'a, T: 'a> {
 
 相對應的，`SinglyLinkedList` 則新增三個成員函式：
 
-- `fn into_iter(self) -> IntoIter<T>`：轉移所有權的迭代器。_Into_ 一詞慣例上指涉所有權移轉。
-- `fn iter(&self) -> Iter<T>`：以 immutable reference 迭代串列。
-- `fn iter_mut(&mut self) -> IterMut<T>`：以 mutable reference 迭代串列。
+- `fn into_iter(self) -> IntoIter<T>`：轉移所有權的疊代器。_Into_ 一詞慣例上指涉所有權移轉。
+- `fn iter(&self) -> Iter<T>`：以 immutable reference 疊代串列。
+- `fn iter_mut(&mut self) -> IterMut<T>`：以 mutable reference 疊代串列。
 
 先來看 `IntoIter` 實作。
 
@@ -354,7 +354,7 @@ impl<T> IntoIterator for SinglyLinkedList<T> {    // 3
 2. 實作 `Iterator` trait 的 required method `next`，為了達成 _Into_ 會消耗原始資料，轉換所有權的特性，我們利用 `pop_front()` 將節點的資料依序刪除（pop）。
 3. `IntoInterator` 的 required method 傳遞 `self` 進來，所以無論怎麼實作 `IntoIter` struct，呼叫 `into_iter()` 後，外部就無法再次存取此 `SinglyLinkedList` 實例，達到所有權轉移的目標。
 
-> 可能有人會疑惑，`IntoIter` 並沒有內部狀態記錄欄位，迭代器如何依據狀態產生下一筆資料？受惠於 `IntoIterator` 傳遞所有權的特性，`IntoIter` 可直接改變原始串列的內部狀態，例如 `pop_front` 會移除原始串列的節點。因此，相較於 `Iter`、`IterMut` 額外記錄狀態，`IntoIter` 不需自行記錄迭代器的迭代狀態。
+> 可能有人會疑惑，`IntoIter` 並沒有內部狀態記錄欄位，疊代器如何依據狀態產生下一筆資料？受惠於 `IntoIterator` 傳遞所有權的特性，`IntoIter` 可直接改變原始串列的內部狀態，例如 `pop_front` 會移除原始串列的節點。因此，相較於 `Iter`、`IterMut` 額外記錄狀態，`IntoIter` 不需自行記錄疊代器的疊代狀態。
 
 
 再來看看 `Iter` 怎麼實踐。
@@ -386,9 +386,9 @@ impl<T> SinglyLinkedList<T> {
 }
 ```
 
-1. 這個 struct 的 `next` 是為了儲存 `Node` 資訊，方便記錄迭代器當前的狀態。加上生命週期 `'a` 是因編譯器無法推敲 `Option<&Node<T>>` 會活多久，需要顯著標明 `&Node` 至少與該迭代器同生共死。
-2. 由於 `Iter` 是為了實作產生 `&T` 的迭代器，associated type 設為  `&'a T`。
-3. 將當前節點的後一個節點設為 `Iter` 迭代器的狀態。並回傳當前節點的資料。  
+1. 這個 struct 的 `next` 是為了儲存 `Node` 資訊，方便記錄疊代器當前的狀態。加上生命週期 `'a` 是因編譯器無法推敲 `Option<&Node<T>>` 會活多久，需要顯著標明 `&Node` 至少與該疊代器同生共死。
+2. 由於 `Iter` 是為了實作產生 `&T` 的疊代器，associated type 設為  `&'a T`。
+3. 將當前節點的後一個節點設為 `Iter` 疊代器的狀態。並回傳當前節點的資料。  
     這邊用了 `as_ref()` 肇因於 `Option.map` 的泛型型別與 `Option<T>` 一樣，所以會產生所有權轉移至 `map` 的 `FnOnce` 內部。`as_ref()` 將 `Option<T>` 轉換成 `Option<&T>`，`map` 就不會發生所有權的問題。
 4. 此外，`map` 連續使用兩個 deref 與一個轉為 reference 的操作，是將型別以下列順序轉換。  
     - `Option<&Box<Node<T>>>` → `map`
@@ -396,10 +396,10 @@ impl<T> SinglyLinkedList<T> {
     - → `Box<Node<T>>` → `**node`
     - → `Node<T>` → `&**node`
     - → `&Node<T>`（至此型別才符合回傳值）
-5. 在 `SinglyLinkedList` 上加 `iter()` 成員函式回傳 `Iter` 迭代器。
-6. 產生迭代器初始化狀態，和第三步一模一樣。
+5. 在 `SinglyLinkedList` 上加 `iter()` 成員函式回傳 `Iter` 疊代器。
+6. 產生疊代器初始化狀態，和第三步一模一樣。
 
-最後，`IterMut` 與 `Iter` 迭代器實作上大同小異。把 `Iter` 用到 `Option.as_ref()` 改為 `Option.as_mut()`，其他 `&` 改成 `&mut` 即可。
+最後，`IterMut` 與 `Iter` 疊代器實作上大同小異。把 `Iter` 用到 `Option.as_ref()` 改為 `Option.as_mut()`，其他 `&` 改成 `&mut` 即可。
 
 > Rust 1.14.0为Option新增了`as_deref()`和`as_deref_mut()`两种新的方法。可以直接将`Option<T>`或`&Option<T>`转换为`Option<&T>`类型，可以不再用3、4两条的方法了。因此，新的实现如下
 > ```Rust
