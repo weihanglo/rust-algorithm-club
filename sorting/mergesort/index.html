@@ -315,7 +315,7 @@ $$</p>
 <li>取最小值，避免下標超出邊界，並且維持除了最後一組，其他子序列長度恆為 <code>width</code>。</li>
 <li>複製這部分排序結果 <code>ret</code> 到原始的 <code>arr</code> 中。</li>
 <li>繼續下兩個子序列的合併步驟。</li>
-<li>將下個迭代的子序列長度加倍，繼續合併。</li>
+<li>將下個疊代的子序列長度加倍，繼續合併。</li>
 </ol>
 <h3><a class="header" href="#the-merge-part" id="the-merge-part">The merge part</a></h3>
 <p>無論是 Top-down 還是 Buttom-up 版本的解法，皆免不了 <code>merge</code> 這個共同步驟，將子序列合併為較大的序列。</p>

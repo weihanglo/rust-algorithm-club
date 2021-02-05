@@ -232,7 +232,7 @@ $$</p>
 <p>內插搜尋的實作共分為幾部分：</p>
 <ol>
 <li>處理空序列狀況。</li>
-<li>建立迴圈迭代共用的變數。</li>
+<li>建立迴圈疊代共用的變數。</li>
 <li>計算線性插值的主要迴圈。</li>
 <li>將內插值映射到結果的 <code>Result</code>。</li>
 </ol>
@@ -270,9 +270,9 @@ $$</p>
 </span></code></pre></pre>
 <ul>
 <li><code>hi</code>、<code>lo</code> 兩個變數劃定的搜尋範圍上下界。</li>
-<li><code>interpolant</code> 儲存線性插值，代表每次迭代的搜尋位置。</li>
+<li><code>interpolant</code> 儲存線性插值，代表每次疊代的搜尋位置。</li>
 </ul>
-<p>接下來就是主要的迴圈，負責迭代計算內插值。分為三個部分，直接看程式碼先。</p>
+<p>接下來就是主要的迴圈，負責疊代計算內插值。分為三個部分，直接看程式碼先。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

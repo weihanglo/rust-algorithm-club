@@ -225,7 +225,7 @@
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>外層迴圈迭代整個序列。並取出 index <code>i</code>，<code>arr[i]</code> 是待排序的元素，index 比 <code>i</code> 小的元素則組成已排序的部分序列。</li>
+<li>外層迴圈疊代整個序列。並取出 index <code>i</code>，<code>arr[i]</code> 是待排序的元素，index 比 <code>i</code> 小的元素則組成已排序的部分序列。</li>
 <li>內層迴圈負責元素比較，決定待排序元素該從何處插入，若前一個元素比待排元素大，則置換兩元素，並繼續往下尋找正確的插入點。直到 <code>j == 0</code> 或待排元素比任何已排序元素都大為止。</li>
 </ol>
 <h2><a class="header" href="#變形" id="變形">變形</a></h2>
@@ -255,7 +255,7 @@
 <ol>
 <li>先限制 <code>binary_search</code> 範圍，取出 sorted pile <code>arr[..i]</code>。再對 slice 執行 <code>binary_search</code>。</li>
 <li><code>binary_search</code> 回傳一個 <code>Result&lt;usize, usize&gt;</code> 型別，找到時回傳 <code>Ok(index 值)</code>，找無時回傳 <code>Err(不影響排序穩定度的插入點)</code>，這個 <code>Err</code> 的設計巧妙解決新值插入的問題。</li>
-<li>和普通 insertion sort 雷同，從插入點至 sorted pile 迭代到末端以進行排序，省下不少比較操作。</li>
+<li>和普通 insertion sort 雷同，從插入點至 sorted pile 疊代到末端以進行排序，省下不少比較操作。</li>
 </ol>
 <h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
 <ul>

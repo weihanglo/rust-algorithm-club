@@ -190,13 +190,13 @@
 <p>為了達成上述條件，Quicksort 有許多不同的分割序列實作方案（partition scheme），其中以 Lomuto partition 最易理解，常被做為教材。</p>
 <ol>
 <li>以序列最後一個元素當做 pivot。</li>
-<li>利用兩個指標 <code>i</code> <code>j</code>，其中 <code>j</code> 從頭迭代整個序列
+<li>利用兩個指標 <code>i</code> <code>j</code>，其中 <code>j</code> 從頭疊代整個序列
 <ul>
 <li>若有序列第 j 個元素小於 pivot，則與第 i 個元素置換。</li>
 <li>第 i 個元素已落在小於 pivot 的範圍，將 i 指標往後移一個，處理下個元素。</li>
 </ul>
 </li>
-<li>迭代完成後，小於 pivot 的元素全都置換至序列前端，此時將 pivot 與第 i 個元素置換，pivot 會剛好在最終正確位置上（符合不等式）。</li>
+<li>疊代完成後，小於 pivot 的元素全都置換至序列前端，此時將 pivot 與第 i 個元素置換，pivot 會剛好在最終正確位置上（符合不等式）。</li>
 </ol>
 <p>ASCII 畫出來的分割圖如下：</p>
 <pre><code>[ values &lt;= pivot | values &gt; pivot | not checked yet | pivot ]
@@ -205,7 +205,7 @@
 <ul>
 <li><code>arr[low...i]</code> 包含所有小於等於 pivot 的元素。</li>
 <li><code>arr[i+1...j-1]</code> 包含所有大於 pivot 的元素。</li>
-<li><code>arr[j...high-1]</code> 包含所有尚未迭代的元素。</li>
+<li><code>arr[j...high-1]</code> 包含所有尚未疊代的元素。</li>
 <li><code>arr[high]</code> pivot 本身。</li>
 </ul>
 <h2><a class="header" href="#說明" id="說明">說明</a></h2>
@@ -362,7 +362,7 @@ fn quicksort_helper(arr: &amp;mut [i32], lo: isize, hi: isize) {
 </span></code></pre></pre>
 <ol>
 <li>Lomuto scheme 選擇 pivot 的方式很直接，就是選擇最後一個元素。</li>
-<li>利用 <code>i</code>、<code>j</code> 兩個指標迭代指定的序列範圍，若第 j 個值小於 pivot 時，則於第 i 個元素置換。</li>
+<li>利用 <code>i</code>、<code>j</code> 兩個指標疊代指定的序列範圍，若第 j 個值小於 pivot 時，則於第 i 個元素置換。</li>
 <li><code>i</code> 指標加一，繼續處理下個元素。</li>
 <li>最後置換第 i 個元素於 pivot，此時 pivot 已落在最終正確的位置。</li>
 </ol>

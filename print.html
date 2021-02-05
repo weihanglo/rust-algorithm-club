@@ -357,7 +357,7 @@
 <li><a href="http://program-lover.blogspot.com/2008/10/complexity-analysis.html">Infinite Loop: Complexity Analysis</a></li>
 </ul>
 <h1><a class="header" href="#線性搜尋-linear-search" id="線性搜尋-linear-search">線性搜尋 Linear Search</a></h1>
-<p>線性搜尋，又稱為循序搜尋（sequential search），是一個在序列中找尋目標的方法。正如字面上的意義，線性搜尋會按照順序迭代序列，挨家挨戶比對每個元素與目標值是否相等，若相等則停止迭代，並回傳搜尋所得結果。</p>
+<p>線性搜尋，又稱為循序搜尋（sequential search），是一個在序列中找尋目標的方法。正如字面上的意義，線性搜尋會按照順序疊代序列，挨家挨戶比對每個元素與目標值是否相等，若相等則停止疊代，並回傳搜尋所得結果。</p>
 <p>線性搜尋乍看之下，是最簡單實作也最 naïve 的實作，效能應該不怎麼好。事實上，在資料量不多時（少於 100 個元素），線性搜尋的效能也不會太差，因為其他搜尋演算法可能需要建立特殊資料結構，就會導致時空間初始開銷暴增，複雜度的常數項成本變大。</p>
 <h2><a class="header" href="#效能" id="效能">效能</a></h2>
 <table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
@@ -368,7 +368,7 @@
 </tbody></table>
 <p>若序列中總共有 $n$ 個元素，則線性搜尋最差的狀況為元素不在序列中，就是全部元素都比較一次，共比較 $n - 1$ 次，最差複雜度為  $O(n)$。</p>
 <h2><a class="header" href="#實作" id="實作">實作</a></h2>
-<p>線性搜尋就是用一個 for-loop 解決。要注意的是，<code>T</code> 泛型參數至少要實作 <code>PartialEq</code> 才能比較。程式碼中使用了迭代器的 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.enumerate">enumerate</a>，建立一個新迭代器，每次迭代產生迭代次數與對應的值。</p>
+<p>線性搜尋就是用一個 for-loop 解決。要注意的是，<code>T</code> 泛型參數至少要實作 <code>PartialEq</code> 才能比較。程式碼中使用了疊代器的 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.enumerate">enumerate</a>，建立一個新疊代器，每次疊代產生疊代次數與對應的值。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -621,7 +621,7 @@ $$</p>
 <p>內插搜尋的實作共分為幾部分：</p>
 <ol>
 <li>處理空序列狀況。</li>
-<li>建立迴圈迭代共用的變數。</li>
+<li>建立迴圈疊代共用的變數。</li>
 <li>計算線性插值的主要迴圈。</li>
 <li>將內插值映射到結果的 <code>Result</code>。</li>
 </ol>
@@ -659,9 +659,9 @@ $$</p>
 </span></code></pre></pre>
 <ul>
 <li><code>hi</code>、<code>lo</code> 兩個變數劃定的搜尋範圍上下界。</li>
-<li><code>interpolant</code> 儲存線性插值，代表每次迭代的搜尋位置。</li>
+<li><code>interpolant</code> 儲存線性插值，代表每次疊代的搜尋位置。</li>
 </ul>
-<p>接下來就是主要的迴圈，負責迭代計算內插值。分為三個部分，直接看程式碼先。</p>
+<p>接下來就是主要的迴圈，負責疊代計算內插值。分為三個部分，直接看程式碼先。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -955,7 +955,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>外層迴圈迭代整個序列。並取出 index <code>i</code>，<code>arr[i]</code> 是待排序的元素，index 比 <code>i</code> 小的元素則組成已排序的部分序列。</li>
+<li>外層迴圈疊代整個序列。並取出 index <code>i</code>，<code>arr[i]</code> 是待排序的元素，index 比 <code>i</code> 小的元素則組成已排序的部分序列。</li>
 <li>內層迴圈負責元素比較，決定待排序元素該從何處插入，若前一個元素比待排元素大，則置換兩元素，並繼續往下尋找正確的插入點。直到 <code>j == 0</code> 或待排元素比任何已排序元素都大為止。</li>
 </ol>
 <h2><a class="header" href="#變形" id="變形">變形</a></h2>
@@ -985,7 +985,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <ol>
 <li>先限制 <code>binary_search</code> 範圍，取出 sorted pile <code>arr[..i]</code>。再對 slice 執行 <code>binary_search</code>。</li>
 <li><code>binary_search</code> 回傳一個 <code>Result&lt;usize, usize&gt;</code> 型別，找到時回傳 <code>Ok(index 值)</code>，找無時回傳 <code>Err(不影響排序穩定度的插入點)</code>，這個 <code>Err</code> 的設計巧妙解決新值插入的問題。</li>
-<li>和普通 insertion sort 雷同，從插入點至 sorted pile 迭代到末端以進行排序，省下不少比較操作。</li>
+<li>和普通 insertion sort 雷同，從插入點至 sorted pile 疊代到末端以進行排序，省下不少比較操作。</li>
 </ol>
 <h2><a class="header" href="#參考資料-5" id="參考資料-5">參考資料</a></h2>
 <ul>
@@ -1019,7 +1019,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <p>假定有一個序列要遞增排序，其中有重複的 <code>2</code> 元素，我們將其標上 <code>2a</code>、<code>2b</code> 以利辨識。</p>
 <pre><code>[2a, 3, 4, 2b, 1]
 </code></pre>
-<p>開始迭代找出最小值並指環。</p>
+<p>開始疊代找出最小值並指環。</p>
 <pre><code class="language-bash"> *             *
 [1, 3, 4, 2b, 2a] # 1. 置換 2a, 1
 
@@ -1031,7 +1031,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 </code></pre>
 <p>有沒有發現，<code>2a</code> 與 <code>2b</code> 的相對順序顛倒了呢？</p>
 <p>首先，回想一下穩定排序的定義：<strong>相同鍵值的元素，排序後相對位置不改變。</strong></p>
-<p>問題出在 naïve selection sort 是以置換的方式排序每次迭代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 $O(1) $ insertion 的資料結構，不然就會多出額外 $O(n^2) $ 的寫入成本。</p>
+<p>問題出在 naïve selection sort 是以置換的方式排序每次疊代的最小值。若我們將置換（swap）改為插入（insert），那麼 selection sort 就會是穩定排序，但相對地，需要位移剩餘未排序的元素，除非使用 linked list 或其他提供 $O(1) $ insertion 的資料結構，不然就會多出額外 $O(n^2) $ 的寫入成本。</p>
 <h2><a class="header" href="#效能-5" id="效能-5">效能</a></h2>
 <table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(n^2) $</td></tr>
@@ -1039,7 +1039,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <tr><td>Average</td><td>$O(n^2) $</td></tr>
 <tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
-<p>對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序迭代。第一個元素要做 $n - 1 $ 次比較，第二個 $n - 2 $ 次，總比較次數如下：</p>
+<p>對於接近排序完成的序列，selector sort 並無法有自適應的方式加快排序疊代。第一個元素要做 $n - 1 $ 次比較，第二個 $n - 2 $ 次，總比較次數如下：</p>
 <p>$$ (n -1) + (n-2) + \cdots + 1 = \sum_{i=1}^{n-1} i = \frac{n(n - 1)}{2}$$</p>
 <p>因此無論序列是否排序完成，selection sort 仍需執行 $n^2 $ 次比較，時間複雜度為 $O(n^2) $。</p>
 <h2><a class="header" href="#實作-5" id="實作-5">實作</a></h2>
@@ -1066,7 +1066,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <li>內層迴圈負責在 unsorted pile 範圍 [<code>i</code>, <code>len</code>) 找最小值。</li>
 <li>外層迴圈在找到最小值之後，置換兩元素。</li>
 </ol>
-<p>眼尖的人會發現，內外兩層迴圈的 upper bound 都是 <code>len</code>，這樣是否內側迴圈會 out of bound？Rust 的 range operator（<code>core::ops::Range</code>）實作 <a href="https://doc.rust-lang.org/core/ops/struct.Range.html#impl-Iterator"><code>Iterator</code></a> trait 時，有檢查 <code>range.start &lt; range.end</code>，因此這個寫法並不會有出界問題，但會多跑一次無意義的迭代。</p>
+<p>眼尖的人會發現，內外兩層迴圈的 upper bound 都是 <code>len</code>，這樣是否內側迴圈會 out of bound？Rust 的 range operator（<code>core::ops::Range</code>）實作 <a href="https://doc.rust-lang.org/core/ops/struct.Range.html#impl-Iterator"><code>Iterator</code></a> trait 時，有檢查 <code>range.start &lt; range.end</code>，因此這個寫法並不會有出界問題，但會多跑一次無意義的疊代。</p>
 <h2><a class="header" href="#變形-1" id="變形-1">變形</a></h2>
 <h3><a class="header" href="#heapsort" id="heapsort">Heapsort</a></h3>
 <p><a href="sorting/selection_sort/../heapsort/">Heapsort</a> 是一個高效的排序法，使用 selection sort 融合 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">heap</a> 這種半排序的資料結構，讓時間複雜度進化至 $O(n \log n) $。更多詳情可以參考<a href="sorting/selection_sort/../heapsort/">這篇介紹</a>。</p>
@@ -1088,13 +1088,13 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <ol>
 <li>比較兩個相鄰元素，若首個元素比次個元素大，置換兩者的位置。</li>
 <li>依序對相鄰元素執行步驟一，直到抵達序列頂端，此時頂端元素排序完成。</li>
-<li>重複步驟 1 - 2 的整個序列迭代，直到任何一次迭代沒有執行元素置換。</li>
+<li>重複步驟 1 - 2 的整個序列疊代，直到任何一次疊代沒有執行元素置換。</li>
 </ol>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="" />
 <em>Swfung8 - CC BY-SA 3.0</em></p>
 <h2><a class="header" href="#說明-4" id="說明-4">說明</a></h2>
 <p>給定一組序列 <code>[5, 3, 8, 7, 2]</code>，以 bubble sort 遞增排序。以 ASCII diagram 表示：</p>
-<p><strong>第一次迭代</strong></p>
+<p><strong>第一次疊代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
 [5, 3, 8, 7, 4] -&gt; [3, 5, 8, 7, 4] # 置換 3 與 5
 
@@ -1107,7 +1107,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
           *  *               *  *
 [3, 5, 7, 8, 4] -&gt; [3, 5, 7, 4, 8] # 置換 4 與 8，8 已排好序
 </code></pre>
-<p><strong>第二次迭代</strong></p>
+<p><strong>第二次疊代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
 [3, 5, 7, 4, 8] -&gt; [3, 5, 7, 4, 8] # 不需置換
 
@@ -1123,7 +1123,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <blockquote>
 <p>naïve bubble sort 會跑完整個序列，即是已排序完成。</p>
 </blockquote>
-<p><strong>第三次迭代</strong></p>
+<p><strong>第三次疊代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
 [3, 5, 4, 7, 8] -&gt; [3, 5, 4, 7, 8] # 不需置換
 
@@ -1136,7 +1136,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
           *  *               *  *
 [3, 5, 4, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
 </code></pre>
-<p><strong>第四次迭代</strong></p>
+<p><strong>第四次疊代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
 [3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
 
@@ -1158,10 +1158,10 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
 <h3><a class="header" href="#time-complexity" id="time-complexity">Time complexity</a></h3>
-<p>Bubble sort 總共需要 $n - 1 $ 次迭代，每次迭代至少需要執行 $n - 1 - i $ 置換（ $i $ 為第幾次迭代），總共需要迭代</p>
+<p>Bubble sort 總共需要 $n - 1 $ 次疊代，每次疊代至少需要執行 $n - 1 - i $ 置換（ $i $ 為第幾次疊代），總共需要疊代</p>
 <p>$$\sum_{i=0}^{n-1} (n - i - 1) = n^2 - \sum_{i=0}^{n-1}i - n = n^2 - \frac{n(n - 1)}{2} - n = \frac{n^2}{2} - \frac{n}{2}$$</p>
 <p>次，因此，時間複雜度為 $O(n^2) $。</p>
-<p>Bubble sort 在已排序完成的序列上，只需要迭代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
+<p>Bubble sort 在已排序完成的序列上，只需要疊代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
 <h2><a class="header" href="#實作-6" id="實作-6">實作</a></h2>
 <p>Bubble sort 簡單實作如下：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -1182,11 +1182,11 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>建立一個旗標，標誌該次迭代是否有元素置換。</li>
+<li>建立一個旗標，標誌該次疊代是否有元素置換。</li>
 <li>內層迴圈依序比較兩兩相鄰元素。</li>
 <li>若有任何置換動作，將旗標標誌為「已置換（<code>true</code>）」。</li>
 </ol>
-<p>倘若記錄已排好序的元素位置，雖然複雜度仍是 $O(n^2) $，但如此以來，每次迭代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
+<p>倘若記錄已排好序的元素位置，雖然複雜度仍是 $O(n^2) $，但如此以來，每次疊代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1213,7 +1213,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <li>將當前的序列長度記錄到 <code>len</code>。</li>
 <li>內層迴圈負責比較、置換，以及記錄未排序部分的序列長度到 <code>new_len</code>。</li>
 <li>若未排序部分 <code>new_len</code> 為零，代表排序完成。</li>
-<li>外層迴圈將新長度值 <code>new_len</code> 賦予 <code>len</code>，下一次迭代就可少做一次比較。</li>
+<li>外層迴圈將新長度值 <code>new_len</code> 賦予 <code>len</code>，下一次疊代就可少做一次比較。</li>
 </ol>
 <h2><a class="header" href="#參考資料-7" id="參考資料-7">參考資料</a></h2>
 <ul>
@@ -1234,7 +1234,7 @@ pub fn exponential_search&lt;T&gt;(arr: &amp;[T], target: &amp;T) -&gt; Result&l
 <p>Shellsort 分為兩個步驟：</p>
 <ol>
 <li>決定一組 gap sequence。</li>
-<li>迭代 gap sequence 進行分組排序，每次執行有間隔的 insertion sort。也就是每個元素與其相鄰 gap 的元素比較與置換。</li>
+<li>疊代 gap sequence 進行分組排序，每次執行有間隔的 insertion sort。也就是每個元素與其相鄰 gap 的元素比較與置換。</li>
 </ol>
 <blockquote>
 <p>最後一次排序（gap = 1）會退化為 insertion sort，完成整個排序。</p>
@@ -1325,8 +1325,8 @@ pub const MARCIN_GAPS: [usize; 8] = [701, 301, 132, 57, 23, 10, 4, 1];
 </span></code></pre></pre>
 <p>再來就是主程式的部分，總共會有三個迴圈，</p>
 <ul>
-<li>最外層是迭代 gap sequence，</li>
-<li>中間層是迭代整個資料序列，</li>
+<li>最外層是疊代 gap sequence，</li>
+<li>中間層是疊代整個資料序列，</li>
 <li>內層就是每個元素的插入排序動作。</li>
 </ul>
 <pre><pre class="playground"><code class="language-rust">
@@ -1350,8 +1350,8 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>最外層的迴圈，利用 <code>iter()</code> trait 產生迭代器，迭代 gap sequence。</li>
-<li>中間層迴圈，控制 <code>i</code> 是否超出資料序列，以迭代整合資料序列。</li>
+<li>最外層的迴圈，利用 <code>iter()</code> trait 產生疊代器，疊代 gap sequence。</li>
+<li>中間層迴圈，控制 <code>i</code> 是否超出資料序列，以疊代整合資料序列。</li>
 <li>最內層迴圈，執行插入動作，將每個元素置換到正確位置。</li>
 <li>由於 <code>gap</code> 的型別是 <code>&amp;usize</code>，需透過 <code>*gap</code> dereference 得到 <code>usize</code> 型別。</li>
 </ol>
@@ -1463,8 +1463,8 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <p>Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n) $，同樣分為兩部分簡單解釋。</p>
 <h3><a class="header" href="#build-heap-heapify" id="build-heap-heapify">Build heap (heapify)</a></h3>
 <p>建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。</p>
-<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="sorting/heapsort/index.html#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。</p>
-<p>Heapify 從最末個元素開始反向迭代，每個元素都呼叫 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
+<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="sorting/heapsort/index.html#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續疊代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。</p>
+<p>Heapify 從最末個元素開始反向疊代，每個元素都呼叫 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
 <p>$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$</p>
 <blockquote>
 <p>實際上，build heap 步驟的複雜度可達到 $O(n) $，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
@@ -1497,8 +1497,8 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>這部分是 heapify，從最小 non-leaf node 開始（<code>end</code> / 2），修正序列至滿足 heap order，再反向迭代做 heapify。</li>
-<li>這部分負責排序，每次迭代都將排序 heap 的 root 元素，步驟如 3 - 4：</li>
+<li>這部分是 heapify，從最小 non-leaf node 開始（<code>end</code> / 2），修正序列至滿足 heap order，再反向疊代做 heapify。</li>
+<li>這部分負責排序，每次疊代都將排序 heap 的 root 元素，步驟如 3 - 4：</li>
 <li>不斷將 max-heap 中最大值（在 root 上）與 heap 最後一個元素 <code>end</code> 置換，</li>
 <li>並利用 <code>sift_down</code> 將序列修正至 max-heap 資料結構，依照定義，此時 unsorted pile 首個元素成為 max-heap root，是最大值。</li>
 </ol>
@@ -1538,9 +1538,9 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <p><code>sift_down</code> 有些假設條件：從 <code>start</code> index 出發的子樹，除了 <code>start</code> 本身以外，其他皆符合 heap ordering。</p>
 <p>再來看看 <code>sift_down</code> 實作內容，<code>loop</code> 中幹的活就是不斷將 <code>start</code> index 上的元素與其子樹比較，若不符合 heap ordering，則兩者置換。</p>
 <ol>
-<li><strong>是否有子結點</strong>：依照 binary heap 的定義找出 root 的左子樹（left substree），若左子樹的 index <code>child</code> 比 <code>end</code> 還大，表示沒有 heap 沒有子結點，停止迭代。</li>
+<li><strong>是否有子結點</strong>：依照 binary heap 的定義找出 root 的左子樹（left substree），若左子樹的 index <code>child</code> 比 <code>end</code> 還大，表示沒有 heap 沒有子結點，停止疊代。</li>
 <li><strong>檢查右子樹值較大</strong>：若 root 下有右子樹且較大，我們會標記右子樹，並在下一步對右子樹進行處理。</li>
-<li><strong>置換</strong>：若 <code>root</code> 元素比 <code>child</code> 的元素小，則置換兩者，並將 <code>child</code> 設置為下個迭代的 <code>root</code>，繼續檢查最初的 <code>start</code> 元素是否滿足 heap ordering。</li>
+<li><strong>置換</strong>：若 <code>root</code> 元素比 <code>child</code> 的元素小，則置換兩者，並將 <code>child</code> 設置為下個疊代的 <code>root</code>，繼續檢查最初的 <code>start</code> 元素是否滿足 heap ordering。</li>
 </ol>
 <p>以上就是簡單的 <code>sift_down</code> 實作，也是整個 heapsort 的精髓。</p>
 <h2><a class="header" href="#參考資料-9" id="參考資料-9">參考資料</a></h2>
@@ -1570,13 +1570,13 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <p>為了達成上述條件，Quicksort 有許多不同的分割序列實作方案（partition scheme），其中以 Lomuto partition 最易理解，常被做為教材。</p>
 <ol>
 <li>以序列最後一個元素當做 pivot。</li>
-<li>利用兩個指標 <code>i</code> <code>j</code>，其中 <code>j</code> 從頭迭代整個序列
+<li>利用兩個指標 <code>i</code> <code>j</code>，其中 <code>j</code> 從頭疊代整個序列
 <ul>
 <li>若有序列第 j 個元素小於 pivot，則與第 i 個元素置換。</li>
 <li>第 i 個元素已落在小於 pivot 的範圍，將 i 指標往後移一個，處理下個元素。</li>
 </ul>
 </li>
-<li>迭代完成後，小於 pivot 的元素全都置換至序列前端，此時將 pivot 與第 i 個元素置換，pivot 會剛好在最終正確位置上（符合不等式）。</li>
+<li>疊代完成後，小於 pivot 的元素全都置換至序列前端，此時將 pivot 與第 i 個元素置換，pivot 會剛好在最終正確位置上（符合不等式）。</li>
 </ol>
 <p>ASCII 畫出來的分割圖如下：</p>
 <pre><code>[ values &lt;= pivot | values &gt; pivot | not checked yet | pivot ]
@@ -1585,7 +1585,7 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <ul>
 <li><code>arr[low...i]</code> 包含所有小於等於 pivot 的元素。</li>
 <li><code>arr[i+1...j-1]</code> 包含所有大於 pivot 的元素。</li>
-<li><code>arr[j...high-1]</code> 包含所有尚未迭代的元素。</li>
+<li><code>arr[j...high-1]</code> 包含所有尚未疊代的元素。</li>
 <li><code>arr[high]</code> pivot 本身。</li>
 </ul>
 <h2><a class="header" href="#說明-7" id="說明-7">說明</a></h2>
@@ -1742,7 +1742,7 @@ fn quicksort_helper(arr: &amp;mut [i32], lo: isize, hi: isize) {
 </span></code></pre></pre>
 <ol>
 <li>Lomuto scheme 選擇 pivot 的方式很直接，就是選擇最後一個元素。</li>
-<li>利用 <code>i</code>、<code>j</code> 兩個指標迭代指定的序列範圍，若第 j 個值小於 pivot 時，則於第 i 個元素置換。</li>
+<li>利用 <code>i</code>、<code>j</code> 兩個指標疊代指定的序列範圍，若第 j 個值小於 pivot 時，則於第 i 個元素置換。</li>
 <li><code>i</code> 指標加一，繼續處理下個元素。</li>
 <li>最後置換第 i 個元素於 pivot，此時 pivot 已落在最終正確的位置。</li>
 </ol>
@@ -2043,7 +2043,7 @@ $$</p>
 <li>取最小值，避免下標超出邊界，並且維持除了最後一組，其他子序列長度恆為 <code>width</code>。</li>
 <li>複製這部分排序結果 <code>ret</code> 到原始的 <code>arr</code> 中。</li>
 <li>繼續下兩個子序列的合併步驟。</li>
-<li>將下個迭代的子序列長度加倍，繼續合併。</li>
+<li>將下個疊代的子序列長度加倍，繼續合併。</li>
 </ol>
 <h3><a class="header" href="#the-merge-part" id="the-merge-part">The merge part</a></h3>
 <p>無論是 Top-down 還是 Buttom-up 版本的解法，皆免不了 <code>merge</code> 這個共同步驟，將子序列合併為較大的序列。</p>
@@ -2264,7 +2264,7 @@ Prefix Sum: 0 0 1 3 3 3 4 4 4 5
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>將輸入資料透過 <code>to_vec</code> 複製起來迭代，需要複製 <code>arr</code> 是因為之後要直接在 <code>arr</code> 插入新值，需要另一份原始輸入的拷貝。</li>
+<li>將輸入資料透過 <code>to_vec</code> 複製起來疊代，需要複製 <code>arr</code> 是因為之後要直接在 <code>arr</code> 插入新值，需要另一份原始輸入的拷貝。</li>
 <li>利用 <code>key</code> 擷取鍵值後，把資料複製給 <code>arra</code> 上對應 <code>prefix_sums[index]</code> 的位置。</li>
 <li>將該 <code>prefix_sums[index]</code> 的值加一，以便元素重複時，可以正常複製到下一個位置。</li>
 </ol>
@@ -2487,7 +2487,7 @@ impl&lt;H, T&gt; Bucket&lt;H, T&gt; {
 </span></code></pre></pre>
 <ol>
 <li>一般來說，第一步會配置完所有桶子，但這裡實作僅建立儲存桶子們的容器 <code>buckets</code>，這是由於實作了 <code>hasher</code> 函式，元素對應桶子的邏輯交由外部決定，因此桶子不需事先配置，而是交給第二步驟時 <strong>on-the-fly</strong> 建立。</li>
-<li>迭代輸入的 <code>arr</code>，將元素散佈到桶子中。
+<li>疊代輸入的 <code>arr</code>，將元素散佈到桶子中。
 <ol>
 <li>使用元素值 <code>value</code> 取得雜湊值。</li>
 <li>從一堆桶子內 <code>buckets</code> 尋找對應雜湊值的桶子，如有對應桶子，則將待排序元素插入桶中；若無對應桶子，則馬上建立桶子，並插入待排序元素。</li>
@@ -2931,7 +2931,7 @@ NULL &lt;--|        |&lt;--|        |&lt;--|        |
 |        |   |        |   |        |
 +--------+   +--------+   +--------+
 </code></pre>
-<p>比起 <a href="collections/singly_linked_list/doubly.html">雙向鏈結串列</a>，單向鏈結串列少了一個額外的指標開銷，在基本操作的花費也較低。在不需要雙向迭代情形下單向鏈結串列很適用。</p>
+<p>比起 <a href="collections/singly_linked_list/doubly.html">雙向鏈結串列</a>，單向鏈結串列少了一個額外的指標開銷，在基本操作的花費也較低。在不需要雙向疊代情形下單向鏈結串列很適用。</p>
 <p>此外，單向鏈結串列也支援 tail-sharing，也就是共享 sublist。藉由共享 sublist，單向鏈結串列很容易實作 <a href="https://en.wikipedia.org/wiki/Persistent_data_structure">persistent data structure</a>，再配合 immutable 特性，使得單向鏈結串列幾乎成為函數式程式語言最常見的集合型別之一。可以參考這篇 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/third.html">persistent immutable stack 實作</a>文章。</p>
 <blockquote>
 <p>本次實作的程式碼置於 <a href="collections/singly_linked_list//doc/rust_algorithm_club/collections/struct.SinglyLinkedList.html"><code>rust_algorithm_club::collections::SinglyLinkedList</code></a> API 文件中。</p>
@@ -3140,19 +3140,19 @@ struct Node&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>先建立一個暫時變數 <code>prev</code>，儲存迭代時的前一個節點。</li>
+<li>先建立一個暫時變數 <code>prev</code>，儲存疊代時的前一個節點。</li>
 <li>從串列 head 取得第一個節點的所有權。</li>
-<li>依序迭代整個串列
+<li>依序疊代整個串列
 <ol>
 <li>將節點 A 的後一個節點 B 暫存起來。</li>
 <li>節點 A 的 <code>next</code> 指向暫存在變數 <code>prev</code> 的節點 P。</li>
-<li>節點 A 暫存在變數 <code>prev</code> 內，保留到下一個迭代使用。</li>
+<li>節點 A 暫存在變數 <code>prev</code> 內，保留到下一個疊代使用。</li>
 <li>將節點 B 儲存在變數 <code>curr</code> 內。此時<br />
 <code>prev</code>：節點 A，A 的 <code>next</code> 指向 P，<br />
 <code>curr</code>：節點 B，B 的 <code>next</code> 指向 A。</li>
 </ol>
 </li>
-<li>最後一次迭代時，變數 <code>prev</code> 會儲存原始串列末端節點，這時轉移所有權到 head，完成反轉。</li>
+<li>最後一次疊代時，變數 <code>prev</code> 會儲存原始串列末端節點，這時轉移所有權到 head，完成反轉。</li>
 </ol>
 <h2><a class="header" href="#traits" id="traits">Traits</a></h2>
 <p>除了基本操作，<code>SinglyLinkedList</code> 實作了許多 trait，使用上更方便更符合 Rust 的慣例。</p>
@@ -3177,7 +3177,7 @@ a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
 (a.dropped
 </code></pre>
 <p>如果節點一多，肯定會 stack overflow，太可怕了！</p>
-<p>既然如此，那麼就透過 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html">Drop trait</a>，實作一個迭代版本的解構式，消弭可怕的 call stack 吧。</p>
+<p>既然如此，那麼就透過 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html">Drop trait</a>，實作一個疊代版本的解構式，消弭可怕的 call stack 吧。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3213,7 +3213,7 @@ a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
 </span></code></pre></pre>
 <h3><a class="header" href="#iterator-and-intoiterator-traits" id="iterator-and-intoiterator-traits">Iterator and IntoIterator traits</a></h3>
 <p>既然鏈結串列是一種序列（sequence，有序的資料結構），少不了實作 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html">Iterator</a>、<a href="https://doc.rust-lang.org/std/iter/trait.IntoIterator.html">IntoIterator</a> 等 trait，使串列可以輕鬆使用 for-in loop 遍歷（traverse）。</p>
-<p>首先，先定義幾個迭代器的 struct。</p>
+<p>首先，先定義幾個疊代器的 struct。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3236,9 +3236,9 @@ pub struct IterMut&lt;'a, T: 'a&gt; {
 </ul>
 <p>相對應的，<code>SinglyLinkedList</code> 則新增三個成員函式：</p>
 <ul>
-<li><code>fn into_iter(self) -&gt; IntoIter&lt;T&gt;</code>：轉移所有權的迭代器。<em>Into</em> 一詞慣例上指涉所有權移轉。</li>
-<li><code>fn iter(&amp;self) -&gt; Iter&lt;T&gt;</code>：以 immutable reference 迭代串列。</li>
-<li><code>fn iter_mut(&amp;mut self) -&gt; IterMut&lt;T&gt;</code>：以 mutable reference 迭代串列。</li>
+<li><code>fn into_iter(self) -&gt; IntoIter&lt;T&gt;</code>：轉移所有權的疊代器。<em>Into</em> 一詞慣例上指涉所有權移轉。</li>
+<li><code>fn iter(&amp;self) -&gt; Iter&lt;T&gt;</code>：以 immutable reference 疊代串列。</li>
+<li><code>fn iter_mut(&amp;mut self) -&gt; IterMut&lt;T&gt;</code>：以 mutable reference 疊代串列。</li>
 </ul>
 <p>先來看 <code>IntoIter</code> 實作。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -3268,7 +3268,7 @@ impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt; {    // 3
 <li><code>IntoInterator</code> 的 required method 傳遞 <code>self</code> 進來，所以無論怎麼實作 <code>IntoIter</code> struct，呼叫 <code>into_iter()</code> 後，外部就無法再次存取此 <code>SinglyLinkedList</code> 實例，達到所有權轉移的目標。</li>
 </ol>
 <blockquote>
-<p>可能有人會疑惑，<code>IntoIter</code> 並沒有內部狀態記錄欄位，迭代器如何依據狀態產生下一筆資料？受惠於 <code>IntoIterator</code> 傳遞所有權的特性，<code>IntoIter</code> 可直接改變原始串列的內部狀態，例如 <code>pop_front</code> 會移除原始串列的節點。因此，相較於 <code>Iter</code>、<code>IterMut</code> 額外記錄狀態，<code>IntoIter</code> 不需自行記錄迭代器的迭代狀態。</p>
+<p>可能有人會疑惑，<code>IntoIter</code> 並沒有內部狀態記錄欄位，疊代器如何依據狀態產生下一筆資料？受惠於 <code>IntoIterator</code> 傳遞所有權的特性，<code>IntoIter</code> 可直接改變原始串列的內部狀態，例如 <code>pop_front</code> 會移除原始串列的節點。因此，相較於 <code>Iter</code>、<code>IterMut</code> 額外記錄狀態，<code>IntoIter</code> 不需自行記錄疊代器的疊代狀態。</p>
 </blockquote>
 <p>再來看看 <code>Iter</code> 怎麼實踐。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -3301,9 +3301,9 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>這個 struct 的 <code>next</code> 是為了儲存 <code>Node</code> 資訊，方便記錄迭代器當前的狀態。加上生命週期 <code>'a</code> 是因編譯器無法推敲 <code>Option&lt;&amp;Node&lt;T&gt;&gt;</code> 會活多久，需要顯著標明 <code>&amp;Node</code> 至少與該迭代器同生共死。</li>
-<li>由於 <code>Iter</code> 是為了實作產生 <code>&amp;T</code> 的迭代器，associated type 設為  <code>&amp;'a T</code>。</li>
-<li>將當前節點的後一個節點設為 <code>Iter</code> 迭代器的狀態。並回傳當前節點的資料。<br />
+<li>這個 struct 的 <code>next</code> 是為了儲存 <code>Node</code> 資訊，方便記錄疊代器當前的狀態。加上生命週期 <code>'a</code> 是因編譯器無法推敲 <code>Option&lt;&amp;Node&lt;T&gt;&gt;</code> 會活多久，需要顯著標明 <code>&amp;Node</code> 至少與該疊代器同生共死。</li>
+<li>由於 <code>Iter</code> 是為了實作產生 <code>&amp;T</code> 的疊代器，associated type 設為  <code>&amp;'a T</code>。</li>
+<li>將當前節點的後一個節點設為 <code>Iter</code> 疊代器的狀態。並回傳當前節點的資料。<br />
 這邊用了 <code>as_ref()</code> 肇因於 <code>Option.map</code> 的泛型型別與 <code>Option&lt;T&gt;</code> 一樣，所以會產生所有權轉移至 <code>map</code> 的 <code>FnOnce</code> 內部。<code>as_ref()</code> 將 <code>Option&lt;T&gt;</code> 轉換成 <code>Option&lt;&amp;T&gt;</code>，<code>map</code> 就不會發生所有權的問題。</li>
 <li>此外，<code>map</code> 連續使用兩個 deref 與一個轉為 reference 的操作，是將型別以下列順序轉換。
 <ul>
@@ -3314,10 +3314,10 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 <li>→ <code>&amp;Node&lt;T&gt;</code>（至此型別才符合回傳值）</li>
 </ul>
 </li>
-<li>在 <code>SinglyLinkedList</code> 上加 <code>iter()</code> 成員函式回傳 <code>Iter</code> 迭代器。</li>
-<li>產生迭代器初始化狀態，和第三步一模一樣。</li>
+<li>在 <code>SinglyLinkedList</code> 上加 <code>iter()</code> 成員函式回傳 <code>Iter</code> 疊代器。</li>
+<li>產生疊代器初始化狀態，和第三步一模一樣。</li>
 </ol>
-<p>最後，<code>IterMut</code> 與 <code>Iter</code> 迭代器實作上大同小異。把 <code>Iter</code> 用到 <code>Option.as_ref()</code> 改為 <code>Option.as_mut()</code>，其他 <code>&amp;</code> 改成 <code>&amp;mut</code> 即可。</p>
+<p>最後，<code>IterMut</code> 與 <code>Iter</code> 疊代器實作上大同小異。把 <code>Iter</code> 用到 <code>Option.as_ref()</code> 改為 <code>Option.as_mut()</code>，其他 <code>&amp;</code> 改成 <code>&amp;mut</code> 即可。</p>
 <blockquote>
 <p>Rust 1.14.0为Option新增了<code>as_deref()</code>和<code>as_deref_mut()</code>两种新的方法。可以直接将<code>Option&lt;T&gt;</code>或<code>&amp;Option&lt;T&gt;</code>转换为<code>Option&lt;&amp;T&gt;</code>类型，可以不再用3、4两条的方法了。因此，新的实现如下</p>
 <pre><code class="language-Rust">impl&lt;T&gt; Iterator for Iter&lt;'a, T&gt; {
@@ -3447,7 +3447,7 @@ $i$：相對於整個容器的索引位置。</p>
 <h3><a class="header" href="#有序映射表-ordered-map" id="有序映射表-ordered-map">有序映射表 Ordered Map</a></h3>
 <p><a href="collections/associative-container/../ordered_map">有序映射表</a>係一種有特定排序方式的映射表。常見兩種排序方式，其一是依照插入映射表的先後順序；其二則是依照鍵的大小。不同排序的底層資料結構各異，操作複雜度也不盡相同，如依鍵大小排序的映射表通常使用搜索樹實作，因此「新增」操作的複雜度為較差的 $O(\log n)$。</p>
 <h3><a class="header" href="#多重映射表-multimap" id="多重映射表-multimap">多重映射表 Multimap</a></h3>
-<p><a href="collections/associative-container/../multimap">多重映射表</a>允許鍵值對重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的介面來操作或迭代整張映射表。</p>
+<p><a href="collections/associative-container/../multimap">多重映射表</a>允許鍵值對重複，一個鍵可對應多個值（一對多）。類似於映射表內放入陣列，但能以較方便輕鬆的介面來操作或疊代整張映射表。</p>
 <h3><a class="header" href="#集合-set" id="集合-set">集合 Set</a></h3>
 <p><a href="collections/associative-container/../set">集合</a>實際上並無鍵值「關聯」，可將其想像成普通的映射表。只關心鍵而值不重要。集合借用了數學<a href="https://en.wikipedia.org/wiki/Set_theory">集合論（set theory）</a>中有限集合的概念，常應用於需要操作交集、聯集、差集等集合運算場景。</p>
 <h3><a class="header" href="#布隆過濾器-bloom-filter" id="布隆過濾器-bloom-filter">布隆過濾器 Bloom Filter</a></h3>
@@ -3472,7 +3472,7 @@ $i$：相對於整個容器的索引位置。</p>
 <ul>
 <li>資料量不夠大時，單一操作需要雜湊計算，開銷相對高。</li>
 <li>效能與雜湊函數息息相關，較差的函數容易雜湊碰撞，較佳函數計算成本通常較高。</li>
-<li>只能以某種偽隨機的順序迭代雜湊表。</li>
+<li>只能以某種偽隨機的順序疊代雜湊表。</li>
 </ul>
 <blockquote>
 <p>本次實作的程式碼置於 <a href="collections/hash_map//doc/rust_algorithm_club/collections/struct.HashMap.html"><code>rust_algorithm_club::collections::HashMap</code></a> API 文件中。</p>
@@ -3718,7 +3718,7 @@ pub struct HashMap&lt;K, V&gt; where K: Hash + Eq {
 <li>將 <code>HashMap.buckets</code> 改為儲存 <code>Bucket</code> 的動態陣列。</li>
 <li>新增 <code>len</code> 記錄容器當前鍵值對數目，在增刪資料時， <code>len</code> 都會同步更新。</li>
 </ol>
-<p>之所以使用額外的成員記錄資料數目，是為了計算數目能在 O(1) 時間內完成，nested array 動態迭代每個 <code>Bucket</code> 計算的成本太高。</p>
+<p>之所以使用額外的成員記錄資料數目，是為了計算數目能在 O(1) 時間內完成，nested array 動態疊代每個 <code>Bucket</code> 計算的成本太高。</p>
 <p>這就是 <strong>Vector-based separate chaining HashMap</strong> 的記憶體佈局，來看張精美的雜湊表架構佈局圖吧！</p>
 <p><img src="collections/hash_map/layout.svg" alt="" /></p>
 <h2><a class="header" href="#基本操作-3" id="基本操作-3">基本操作</a></h2>
@@ -3853,7 +3853,7 @@ impl&lt;K, V&gt; Default for HashMap&lt;K, V&gt;
 </span></code></pre></pre>
 <ol>
 <li>所有涉及搜尋的操作，第一步一定是計算雜湊值。</li>
-<li>建立 mutable 的迭代器，利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.position"><code>posiion</code></a> 找到對應的鍵值對，再呼叫 <code>Vec::swap_remove</code> 移除。</li>
+<li>建立 mutable 的疊代器，利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.position"><code>posiion</code></a> 找到對應的鍵值對，再呼叫 <code>Vec::swap_remove</code> 移除。</li>
 <li>前一步驟若有 return value 產生，表示移除一個元素，因此 <code>self.len</code> 需手動減一。</li>
 </ol>
 <blockquote>
@@ -3885,7 +3885,7 @@ impl&lt;K, V&gt; Default for HashMap&lt;K, V&gt;
 <ol>
 <li>嘗試調整雜湊表大小，以確保 load factor 在閾值之間。</li>
 <li>同樣地，根據鍵計算雜湊值，以取得對應的內部 bucket 位置。</li>
-<li>迭代整個 bucket 尋找鍵相同的鍵值對。
+<li>疊代整個 bucket 尋找鍵相同的鍵值對。
 <ol>
 <li>若找到，使用 <a href="https://doc.rust-lang.org/stable/std/mem/fn.replace.html"><code>mem::replace</code></a> 資料部分，不需取代整個鍵值對。</li>
 <li>若找無，則新增一組新鍵值對到該 bucket 中，並將長度加一。</li>
@@ -3936,12 +3936,12 @@ impl&lt;K, V&gt; Default for HashMap&lt;K, V&gt;
 <li>若當前容量為 0，表示尚未新增任何元素，我們 push 一個空 bucket 進去，讓其他操作可以正常新增鍵值對。</li>
 <li>判斷 load factor，決定需不需要動態調整大小。</li>
 <li>透過 <code>HashMap::with_capacity</code> 建立容量兩倍大的空雜湊表。</li>
-<li>開始迭代舊的 bucket，並利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flat_map"><code>flat_map</code></a> 打平 nested vector，再利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.for_each"><code>for_each</code></a> 將每個元素重新 insert 到新雜湊表。</li>
+<li>開始疊代舊的 bucket，並利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flat_map"><code>flat_map</code></a> 打平 nested vector，再利用 <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.for_each"><code>for_each</code></a> 將每個元素重新 insert 到新雜湊表。</li>
 <li>把 <code>self</code> 的值指向新雜湊表，舊雜湊表的記憶體空間會被釋放。</li>
 </ol>
-<h3><a class="header" href="#實作迭代器方法" id="實作迭代器方法">實作迭代器方法</a></h3>
-<p>一個集合型別當然少不了簡易的產生迭代器實作。</p>
-<p>根據之前其他方法的實作，要迭代整個雜湊表非常簡單，就是迭代所有 bucket，並利用 <code>flat_map</code> 打平 nested vector。簡單實作如下：</p>
+<h3><a class="header" href="#實作疊代器方法" id="實作疊代器方法">實作疊代器方法</a></h3>
+<p>一個集合型別當然少不了簡易的產生疊代器實作。</p>
+<p>根據之前其他方法的實作，要疊代整個雜湊表非常簡單，就是疊代所有 bucket，並利用 <code>flat_map</code> 打平 nested vector。簡單實作如下：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4058,7 +4058,7 @@ where
 <li><code>insert</code>：新增一個元素。</li>
 <li><code>remove</code>：移除特定元素。</li>
 <li><code>len</code>：檢查集合內的元素數目。</li>
-<li><code>iter</code>：產生一個迭代集合內所有元素的迭代器。</li>
+<li><code>iter</code>：產生一個疊代集合內所有元素的疊代器。</li>
 </ul>
 <p>這些基本操作的實作上，只是對雜湊表的簡單封裝，詳細實作可以參考 <a href="collections/set/../hash_map">HashMap</a>。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -4155,17 +4155,17 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; HashSet&lt;T&gt; {
 <p>更多詳情可參考實作過程的<a href="https://github.com/weihanglo/rust-algorithm-club/pull/15#issuecomment-427587785">討論串</a>與<a href="https://github.com/weihanglo/rust-algorithm-club/pull/15/commits/caab7fbc5323e09eb1e30ea374eb21a59f955bad">第一次嘗試的完整實作</a>。</p>
 </blockquote>
 <h4><a class="header" href="#第二次嘗試---lazy-iterator" id="第二次嘗試---lazy-iterator">第二次嘗試 - Lazy Iterator</a></h4>
-<p>有了第一次嘗試的經驗，第二次決定讓 <code>union()</code> 回傳一個 lazy iterator，會迭代聯集的元素，必要才從迭代器收集所有元素，再建立新的集合，如此可以節省許多運算資源。</p>
+<p>有了第一次嘗試的經驗，第二次決定讓 <code>union()</code> 回傳一個 lazy iterator，會疊代聯集的元素，必要才從疊代器收集所有元素，再建立新的集合，如此可以節省許多運算資源。</p>
 <p>至於實作步驟，我們可以：</p>
 <ol>
-<li>先製造一個迭代器，包含所有 <code>other</code> 集合的元素，但過濾掉與 <code>self</code> 共有的元素。</li>
-<li>再將 <code>self</code> 的迭代器與步驟一產生的迭代器，利用 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.chain"><code>Iterator::chain</code></a> 連起來。</li>
+<li>先製造一個疊代器，包含所有 <code>other</code> 集合的元素，但過濾掉與 <code>self</code> 共有的元素。</li>
+<li>再將 <code>self</code> 的疊代器與步驟一產生的疊代器，利用 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.chain"><code>Iterator::chain</code></a> 連起來。</li>
 </ol>
 <p>這樣其實就是 <code>other \ self</code> 這個差集，加上 <code>self</code> 自身，剛好就是聯集。程式碼如下：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 使用 impl trait 語法，避免宣告不同迭代器型別的麻煩。
+</span>// 使用 impl trait 語法，避免宣告不同疊代器型別的麻煩。
 pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
     // 實際上就是差集
     let other_but_not_self = other.iter().filter(|item| !self.contains(item));
@@ -4185,7 +4185,7 @@ pub fn union(&amp;self, other: &amp;HashSet&lt;T&gt;) -&gt; impl Iterator&lt;Ite
     |                                |               ...but data from `other` is returned here
     |                                this parameter and the return type are declared with different lifetimes...
 </code></pre>
-<p>是 <code>self</code> 與 <code>other</code> 的生命週期不同導致，當這兩個集合的迭代器被 chain 起來後回傳，編譯器無法確認 Iterator 的 Item 生命週期多長。你可能很好奇為什麼 <code>self</code> 與 <code>other</code> 生命週期不同，事實上，Rust 為了讓語法輕鬆一點，允許函數省略部分生命週期標註，這個行為稱作 <a href="https://doc.rust-lang.org/nomicon/lifetime-elision.html">Lifetime Elision</a>，會在各種不同的條件下加註生命週期，其中有一條是「<strong>每個被省略的生命週期都會成為獨立的生命週期</strong>」。因此，<code>union()</code> 加上被省略的生命週期，會長得像：</p>
+<p>是 <code>self</code> 與 <code>other</code> 的生命週期不同導致，當這兩個集合的疊代器被 chain 起來後回傳，編譯器無法確認 Iterator 的 Item 生命週期多長。你可能很好奇為什麼 <code>self</code> 與 <code>other</code> 生命週期不同，事實上，Rust 為了讓語法輕鬆一點，允許函數省略部分生命週期標註，這個行為稱作 <a href="https://doc.rust-lang.org/nomicon/lifetime-elision.html">Lifetime Elision</a>，會在各種不同的條件下加註生命週期，其中有一條是「<strong>每個被省略的生命週期都會成為獨立的生命週期</strong>」。因此，<code>union()</code> 加上被省略的生命週期，會長得像：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4245,7 +4245,7 @@ help: to force the closure to take ownership of `self` (and any other referenced
 </span></code></pre></pre>
 <h3><a class="header" href="#實作交集差集與對稱差集" id="實作交集差集與對稱差集">實作交集、差集與對稱差集</a></h3>
 <p>呼，上面解決了最困難的生命週期和 borrow checker 問題，接下來的實作只要關注數學上的集合定義就能輕鬆解決了。</p>
-<p>首先，交集的定義為「你有，而且我也有的」，簡單，迭代 <code>self</code> 並過濾出 <code>other</code> 也有的元素就好，秒殺！</p>
+<p>首先，交集的定義為「你有，而且我也有的」，簡單，疊代 <code>self</code> 並過濾出 <code>other</code> 也有的元素就好，秒殺！</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4254,7 +4254,7 @@ help: to force the closure to take ownership of `self` (and any other referenced
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>再來是差集，概念是就是「我有，但你沒有的」，一樣迭代 <code>self</code> 並過濾出 <code>other</code> 沒有的元素。</p>
+<p>再來是差集，概念是就是「我有，但你沒有的」，一樣疊代 <code>self</code> 並過濾出 <code>other</code> 沒有的元素。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4311,7 +4311,7 @@ help: to force the closure to take ownership of `self` (and any other referenced
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>最後，我們常會檢查兩個集合是否沒有交集（disjoint），這個方法只要檢查交集 <code>intersection()</code> 迭代器的長度是否為 0 就可以了。</p>
+<p>最後，我們常會檢查兩個集合是否沒有交集（disjoint），這個方法只要檢查交集 <code>intersection()</code> 疊代器的長度是否為 0 就可以了。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4377,7 +4377,7 @@ where
 <p>回到集合，集合論中的集合相等（set equality）定義為：x = y ⇒ ∀z, (z ∈ x ⇔ z ∈ y)，也就所有屬於集合 x 的元素必屬於集合 y，反之亦然。因此，集合相等具有自反性、對稱性、傳遞性。實作 <code>==</code> 運算子，我們會</p>
 <ol>
 <li>比較集合 x, y 內元素數目（cardinality）是否一致，以及</li>
-<li>迭代集合 x，並檢查是否每個屬於 x 的元素都屬於 y。</li>
+<li>疊代集合 x，並檢查是否每個屬於 x 的元素都屬於 y。</li>
 </ol>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -4778,7 +4778,7 @@ where
 </span></code></pre></pre>
 <ol>
 <li>取得 $h_1(x)$ 和 $h_2(x)$ 的雜湊輸出結果。</li>
-<li>迭代 <code>i</code> 次，<code>i</code> 上限為 $k$：初始化時所得的最適雜湊函數個數</li>
+<li>疊代 <code>i</code> 次，<code>i</code> 上限為 $k$：初始化時所得的最適雜湊函數個數</li>
 <li>計算 $g_i(x) = h_1(x) + ih_2(x)$ 取得索引位置</li>
 <li>將索引位置下的位元設定為 1</li>
 </ol>
@@ -4837,7 +4837,7 @@ where
 </span></code></pre></pre>
 <ol>
 <li>取得 $h_1(x)$ 和 $h_2(x)$ 的雜湊輸出結果。</li>
-<li>使用 <a href="http://doc.rust-lang.org/1.45.2/core/iter/trait.Iterator.html#method.all">Iterator::all</a> 迭代收集 $k$ 個雜湊函數的輸出</li>
+<li>使用 <a href="http://doc.rust-lang.org/1.45.2/core/iter/trait.Iterator.html#method.all">Iterator::all</a> 疊代收集 $k$ 個雜湊函數的輸出</li>
 <li>計算 $g_i(x) = h_1(x) + ih_2(x)$ 取得索引位置</li>
 <li>回傳索引位置下的位元 <code>bool</code> 值，此值會匯集起來，於步驟二確認命中全部 $k$ 個索引，即為元素存在</li>
 </ol>

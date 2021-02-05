@@ -182,13 +182,13 @@
 <ol>
 <li>比較兩個相鄰元素，若首個元素比次個元素大，置換兩者的位置。</li>
 <li>依序對相鄰元素執行步驟一，直到抵達序列頂端，此時頂端元素排序完成。</li>
-<li>重複步驟 1 - 2 的整個序列迭代，直到任何一次迭代沒有執行元素置換。</li>
+<li>重複步驟 1 - 2 的整個序列疊代，直到任何一次疊代沒有執行元素置換。</li>
 </ol>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="" />
 <em>Swfung8 - CC BY-SA 3.0</em></p>
 <h2><a class="header" href="#說明" id="說明">說明</a></h2>
 <p>給定一組序列 <code>[5, 3, 8, 7, 2]</code>，以 bubble sort 遞增排序。以 ASCII diagram 表示：</p>
-<p><strong>第一次迭代</strong></p>
+<p><strong>第一次疊代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
 [5, 3, 8, 7, 4] -&gt; [3, 5, 8, 7, 4] # 置換 3 與 5
 
@@ -201,7 +201,7 @@
           *  *               *  *
 [3, 5, 7, 8, 4] -&gt; [3, 5, 7, 4, 8] # 置換 4 與 8，8 已排好序
 </code></pre>
-<p><strong>第二次迭代</strong></p>
+<p><strong>第二次疊代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
 [3, 5, 7, 4, 8] -&gt; [3, 5, 7, 4, 8] # 不需置換
 
@@ -217,7 +217,7 @@
 <blockquote>
 <p>naïve bubble sort 會跑完整個序列，即是已排序完成。</p>
 </blockquote>
-<p><strong>第三次迭代</strong></p>
+<p><strong>第三次疊代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
 [3, 5, 4, 7, 8] -&gt; [3, 5, 4, 7, 8] # 不需置換
 
@@ -230,7 +230,7 @@
           *  *               *  *
 [3, 5, 4, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
 </code></pre>
-<p><strong>第四次迭代</strong></p>
+<p><strong>第四次疊代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
 [3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
 
@@ -252,10 +252,10 @@
 <tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
 <h3><a class="header" href="#time-complexity" id="time-complexity">Time complexity</a></h3>
-<p>Bubble sort 總共需要 $n - 1 $ 次迭代，每次迭代至少需要執行 $n - 1 - i $ 置換（ $i $ 為第幾次迭代），總共需要迭代</p>
+<p>Bubble sort 總共需要 $n - 1 $ 次疊代，每次疊代至少需要執行 $n - 1 - i $ 置換（ $i $ 為第幾次疊代），總共需要疊代</p>
 <p>$$\sum_{i=0}^{n-1} (n - i - 1) = n^2 - \sum_{i=0}^{n-1}i - n = n^2 - \frac{n(n - 1)}{2} - n = \frac{n^2}{2} - \frac{n}{2}$$</p>
 <p>次，因此，時間複雜度為 $O(n^2) $。</p>
-<p>Bubble sort 在已排序完成的序列上，只需要迭代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
+<p>Bubble sort 在已排序完成的序列上，只需要疊代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
 <h2><a class="header" href="#實作" id="實作">實作</a></h2>
 <p>Bubble sort 簡單實作如下：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -276,11 +276,11 @@
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>建立一個旗標，標誌該次迭代是否有元素置換。</li>
+<li>建立一個旗標，標誌該次疊代是否有元素置換。</li>
 <li>內層迴圈依序比較兩兩相鄰元素。</li>
 <li>若有任何置換動作，將旗標標誌為「已置換（<code>true</code>）」。</li>
 </ol>
-<p>倘若記錄已排好序的元素位置，雖然複雜度仍是 $O(n^2) $，但如此以來，每次迭代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
+<p>倘若記錄已排好序的元素位置，雖然複雜度仍是 $O(n^2) $，但如此以來，每次疊代都可少一次元素比較，對比較操作成本高的語言或實作來說，仍不失為最佳化的方法。程式碼如下：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -307,7 +307,7 @@
 <li>將當前的序列長度記錄到 <code>len</code>。</li>
 <li>內層迴圈負責比較、置換，以及記錄未排序部分的序列長度到 <code>new_len</code>。</li>
 <li>若未排序部分 <code>new_len</code> 為零，代表排序完成。</li>
-<li>外層迴圈將新長度值 <code>new_len</code> 賦予 <code>len</code>，下一次迭代就可少做一次比較。</li>
+<li>外層迴圈將新長度值 <code>new_len</code> 賦予 <code>len</code>，下一次疊代就可少做一次比較。</li>
 </ol>
 <h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
 <ul>

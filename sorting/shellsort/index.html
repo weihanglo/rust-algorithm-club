@@ -184,7 +184,7 @@
 <p>Shellsort 分為兩個步驟：</p>
 <ol>
 <li>決定一組 gap sequence。</li>
-<li>迭代 gap sequence 進行分組排序，每次執行有間隔的 insertion sort。也就是每個元素與其相鄰 gap 的元素比較與置換。</li>
+<li>疊代 gap sequence 進行分組排序，每次執行有間隔的 insertion sort。也就是每個元素與其相鄰 gap 的元素比較與置換。</li>
 </ol>
 <blockquote>
 <p>最後一次排序（gap = 1）會退化為 insertion sort，完成整個排序。</p>
@@ -275,8 +275,8 @@ pub const MARCIN_GAPS: [usize; 8] = [701, 301, 132, 57, 23, 10, 4, 1];
 </span></code></pre></pre>
 <p>再來就是主程式的部分，總共會有三個迴圈，</p>
 <ul>
-<li>最外層是迭代 gap sequence，</li>
-<li>中間層是迭代整個資料序列，</li>
+<li>最外層是疊代 gap sequence，</li>
+<li>中間層是疊代整個資料序列，</li>
 <li>內層就是每個元素的插入排序動作。</li>
 </ul>
 <pre><pre class="playground"><code class="language-rust">
@@ -300,8 +300,8 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>最外層的迴圈，利用 <code>iter()</code> trait 產生迭代器，迭代 gap sequence。</li>
-<li>中間層迴圈，控制 <code>i</code> 是否超出資料序列，以迭代整合資料序列。</li>
+<li>最外層的迴圈，利用 <code>iter()</code> trait 產生疊代器，疊代 gap sequence。</li>
+<li>中間層迴圈，控制 <code>i</code> 是否超出資料序列，以疊代整合資料序列。</li>
 <li>最內層迴圈，執行插入動作，將每個元素置換到正確位置。</li>
 <li>由於 <code>gap</code> 的型別是 <code>&amp;usize</code>，需透過 <code>*gap</code> dereference 得到 <code>usize</code> 型別。</li>
 </ol>

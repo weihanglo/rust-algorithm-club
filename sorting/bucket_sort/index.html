@@ -349,7 +349,7 @@ impl&lt;H, T&gt; Bucket&lt;H, T&gt; {
 </span></code></pre></pre>
 <ol>
 <li>一般來說，第一步會配置完所有桶子，但這裡實作僅建立儲存桶子們的容器 <code>buckets</code>，這是由於實作了 <code>hasher</code> 函式，元素對應桶子的邏輯交由外部決定，因此桶子不需事先配置，而是交給第二步驟時 <strong>on-the-fly</strong> 建立。</li>
-<li>迭代輸入的 <code>arr</code>，將元素散佈到桶子中。
+<li>疊代輸入的 <code>arr</code>，將元素散佈到桶子中。
 <ol>
 <li>使用元素值 <code>value</code> 取得雜湊值。</li>
 <li>從一堆桶子內 <code>buckets</code> 尋找對應雜湊值的桶子，如有對應桶子，則將待排序元素插入桶中；若無對應桶子，則馬上建立桶子，並插入待排序元素。</li>

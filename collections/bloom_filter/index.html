@@ -477,7 +477,7 @@ where
 </span></code></pre></pre>
 <ol>
 <li>取得 $h_1(x)$ 和 $h_2(x)$ 的雜湊輸出結果。</li>
-<li>迭代 <code>i</code> 次，<code>i</code> 上限為 $k$：初始化時所得的最適雜湊函數個數</li>
+<li>疊代 <code>i</code> 次，<code>i</code> 上限為 $k$：初始化時所得的最適雜湊函數個數</li>
 <li>計算 $g_i(x) = h_1(x) + ih_2(x)$ 取得索引位置</li>
 <li>將索引位置下的位元設定為 1</li>
 </ol>
@@ -536,7 +536,7 @@ where
 </span></code></pre></pre>
 <ol>
 <li>取得 $h_1(x)$ 和 $h_2(x)$ 的雜湊輸出結果。</li>
-<li>使用 <a href="http://doc.rust-lang.org/1.45.2/core/iter/trait.Iterator.html#method.all">Iterator::all</a> 迭代收集 $k$ 個雜湊函數的輸出</li>
+<li>使用 <a href="http://doc.rust-lang.org/1.45.2/core/iter/trait.Iterator.html#method.all">Iterator::all</a> 疊代收集 $k$ 個雜湊函數的輸出</li>
 <li>計算 $g_i(x) = h_1(x) + ih_2(x)$ 取得索引位置</li>
 <li>回傳索引位置下的位元 <code>bool</code> 值，此值會匯集起來，於步驟二確認命中全部 $k$ 個索引，即為元素存在</li>
 </ol>

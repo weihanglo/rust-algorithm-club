@@ -272,8 +272,8 @@
 <p>Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n) $，同樣分為兩部分簡單解釋。</p>
 <h3><a class="header" href="#build-heap-heapify" id="build-heap-heapify">Build heap (heapify)</a></h3>
 <p>建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。</p>
-<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續迭代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。</p>
-<p>Heapify 從最末個元素開始反向迭代，每個元素都呼叫 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
+<p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續疊代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。</p>
+<p>Heapify 從最末個元素開始反向疊代，每個元素都呼叫 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
 <p>$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$</p>
 <blockquote>
 <p>實際上，build heap 步驟的複雜度可達到 $O(n) $，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
@@ -306,8 +306,8 @@
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>這部分是 heapify，從最小 non-leaf node 開始（<code>end</code> / 2），修正序列至滿足 heap order，再反向迭代做 heapify。</li>
-<li>這部分負責排序，每次迭代都將排序 heap 的 root 元素，步驟如 3 - 4：</li>
+<li>這部分是 heapify，從最小 non-leaf node 開始（<code>end</code> / 2），修正序列至滿足 heap order，再反向疊代做 heapify。</li>
+<li>這部分負責排序，每次疊代都將排序 heap 的 root 元素，步驟如 3 - 4：</li>
 <li>不斷將 max-heap 中最大值（在 root 上）與 heap 最後一個元素 <code>end</code> 置換，</li>
 <li>並利用 <code>sift_down</code> 將序列修正至 max-heap 資料結構，依照定義，此時 unsorted pile 首個元素成為 max-heap root，是最大值。</li>
 </ol>
@@ -347,9 +347,9 @@
 <p><code>sift_down</code> 有些假設條件：從 <code>start</code> index 出發的子樹，除了 <code>start</code> 本身以外，其他皆符合 heap ordering。</p>
 <p>再來看看 <code>sift_down</code> 實作內容，<code>loop</code> 中幹的活就是不斷將 <code>start</code> index 上的元素與其子樹比較，若不符合 heap ordering，則兩者置換。</p>
 <ol>
-<li><strong>是否有子結點</strong>：依照 binary heap 的定義找出 root 的左子樹（left substree），若左子樹的 index <code>child</code> 比 <code>end</code> 還大，表示沒有 heap 沒有子結點，停止迭代。</li>
+<li><strong>是否有子結點</strong>：依照 binary heap 的定義找出 root 的左子樹（left substree），若左子樹的 index <code>child</code> 比 <code>end</code> 還大，表示沒有 heap 沒有子結點，停止疊代。</li>
 <li><strong>檢查右子樹值較大</strong>：若 root 下有右子樹且較大，我們會標記右子樹，並在下一步對右子樹進行處理。</li>
-<li><strong>置換</strong>：若 <code>root</code> 元素比 <code>child</code> 的元素小，則置換兩者，並將 <code>child</code> 設置為下個迭代的 <code>root</code>，繼續檢查最初的 <code>start</code> 元素是否滿足 heap ordering。</li>
+<li><strong>置換</strong>：若 <code>root</code> 元素比 <code>child</code> 的元素小，則置換兩者，並將 <code>child</code> 設置為下個疊代的 <code>root</code>，繼續檢查最初的 <code>start</code> 元素是否滿足 heap ordering。</li>
 </ol>
 <p>以上就是簡單的 <code>sift_down</code> 實作，也是整個 heapsort 的精髓。</p>
 <h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
