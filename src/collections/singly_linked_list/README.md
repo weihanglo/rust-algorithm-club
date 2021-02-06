@@ -369,7 +369,7 @@ impl<T> Iterator for Iter<'a, T> {
     fn next(&mut self) -> Option<Self::Item> {
         match self.next {
             Some(node) => {
-                self.next = node.next.as_ref().map(|node| &**node); // 3, 4
+                self.next = node.next.as_deref(); // 3
                 Some(&node.elem)
             }
             None => None,
@@ -380,8 +380,10 @@ impl<T> Iterator for Iter<'a, T> {
 impl<T> SinglyLinkedList<T> {
     // ...
 
-    pub fn iter(&self) -> Iter<T> {             // 5
-        Iter { next: self.head.as_ref().map(|node| &**node) } // 6
+    pub fn iter(&self) -> Iter<T> {             // 4
+        Iter {
+            next: self.head.as_deref(),         // 5
+        }
     }
 }
 ```
@@ -389,40 +391,15 @@ impl<T> SinglyLinkedList<T> {
 1. 這個 struct 的 `next` 是為了儲存 `Node` 資訊，方便記錄疊代器當前的狀態。加上生命週期 `'a` 是因編譯器無法推敲 `Option<&Node<T>>` 會活多久，需要顯著標明 `&Node` 至少與該疊代器同生共死。
 2. 由於 `Iter` 是為了實作產生 `&T` 的疊代器，associated type 設為  `&'a T`。
 3. 將當前節點的後一個節點設為 `Iter` 疊代器的狀態。並回傳當前節點的資料。  
-    這邊用了 `as_ref()` 肇因於 `Option.map` 的泛型型別與 `Option<T>` 一樣，所以會產生所有權轉移至 `map` 的 `FnOnce` 內部。`as_ref()` 將 `Option<T>` 轉換成 `Option<&T>`，`map` 就不會發生所有權的問題。
-4. 此外，`map` 連續使用兩個 deref 與一個轉為 reference 的操作，是將型別以下列順序轉換。  
-    - `Option<&Box<Node<T>>>` → `map`
-    - → `&Box<Node<T>>` → `*node`
-    - → `Box<Node<T>>` → `**node`
-    - → `Node<T>` → `&**node`
-    - → `&Node<T>`（至此型別才符合回傳值）
-5. 在 `SinglyLinkedList` 上加 `iter()` 成員函式回傳 `Iter` 疊代器。
-6. 產生疊代器初始化狀態，和第三步一模一樣。
+    這邊用了 [`Option::as_deref()`]，可直接將 `Option<T>` 轉換成 `Option<&T>`，若 `T` 有實作 [`Deref`] 特徵，更可以將 `T` 轉為 `Deref::Target`，例如這裡就是藉由 [`Box::deref()`] 將 `Box<Node<T>>` 轉換為 `&Node<T>`。
+4. 在 `SinglyLinkedList` 上加 `iter()` 成員函式回傳 `Iter` 疊代器。
+5. 產生疊代器初始化狀態，和第三步一模一樣。
 
-最後，`IterMut` 與 `Iter` 疊代器實作上大同小異。把 `Iter` 用到 `Option.as_ref()` 改為 `Option.as_mut()`，其他 `&` 改成 `&mut` 即可。
+最後，`IterMut` 與 `Iter` 疊代器實作上大同小異。把 `Iter` 用到 `Option::as_deref()` 改為 `Option::as_deref_mut()`，其他 `&` 改成 `&mut` 即可。
 
-> Rust 1.14.0为Option新增了`as_deref()`和`as_deref_mut()`两种新的方法。可以直接将`Option<T>`或`&Option<T>`转换为`Option<&T>`类型，可以不再用3、4两条的方法了。因此，新的实现如下
-> ```Rust
-> impl<T> Iterator for Iter<'a, T> {
->    type Item = &'a T;                          // 2
->    fn next(&mut self) -> Option<Self::Item> {
->        match self.next {
->            Some(node) => {
->                // self.next = node.next.as_ref().map(|node| &**node); // old
->                self.next = node.next.as_deref();  //new
->                Some(&node.elem)
->            }
->            None => None,
->        }
->     }
-> }
-> // ....
->       pub fn iter(&self) -> Iter<T> {
-> //        Iter { next: self.head.as_ref().map(|node| &**node) } // old
->           Iter { next: self.head.as_deref() } //new
->       }
-> ```
-> 参考: [Rust文档](https://doc.rust-lang.org/std/option/enum.Option.html#method.as_deref)
+[`Option::as_deref()`]: http://doc.rust-lang.org/std/option/enum.Option.html#method.as_deref
+[`Deref`]: http://doc.rust-lang.org/core/ops/trait.Deref.html
+[`Box::deref()`]: http://doc.rust-lang.org/alloc/boxed/struct.Box.html#method.deref
 
 ### PartialEq trait
 
