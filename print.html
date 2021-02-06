@@ -3284,7 +3284,7 @@ impl&lt;T&gt; Iterator for Iter&lt;'a, T&gt; {
     fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt; {
         match self.next {
             Some(node) =&gt; {
-                self.next = node.next.as_ref().map(|node| &amp;**node); // 3, 4
+                self.next = node.next.as_deref(); // 3
                 Some(&amp;node.elem)
             }
             None =&gt; None,
@@ -3295,8 +3295,10 @@ impl&lt;T&gt; Iterator for Iter&lt;'a, T&gt; {
 impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
     // ...
 
-    pub fn iter(&amp;self) -&gt; Iter&lt;T&gt; {             // 5
-        Iter { next: self.head.as_ref().map(|node| &amp;**node) } // 6
+    pub fn iter(&amp;self) -&gt; Iter&lt;T&gt; {             // 4
+        Iter {
+            next: self.head.as_deref(),         // 5
+        }
     }
 }
 <span class="boring">}
@@ -3305,43 +3307,11 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 <li>這個 struct 的 <code>next</code> 是為了儲存 <code>Node</code> 資訊，方便記錄疊代器當前的狀態。加上生命週期 <code>'a</code> 是因編譯器無法推敲 <code>Option&lt;&amp;Node&lt;T&gt;&gt;</code> 會活多久，需要顯著標明 <code>&amp;Node</code> 至少與該疊代器同生共死。</li>
 <li>由於 <code>Iter</code> 是為了實作產生 <code>&amp;T</code> 的疊代器，associated type 設為  <code>&amp;'a T</code>。</li>
 <li>將當前節點的後一個節點設為 <code>Iter</code> 疊代器的狀態。並回傳當前節點的資料。<br />
-這邊用了 <code>as_ref()</code> 肇因於 <code>Option.map</code> 的泛型型別與 <code>Option&lt;T&gt;</code> 一樣，所以會產生所有權轉移至 <code>map</code> 的 <code>FnOnce</code> 內部。<code>as_ref()</code> 將 <code>Option&lt;T&gt;</code> 轉換成 <code>Option&lt;&amp;T&gt;</code>，<code>map</code> 就不會發生所有權的問題。</li>
-<li>此外，<code>map</code> 連續使用兩個 deref 與一個轉為 reference 的操作，是將型別以下列順序轉換。
-<ul>
-<li><code>Option&lt;&amp;Box&lt;Node&lt;T&gt;&gt;&gt;</code> → <code>map</code></li>
-<li>→ <code>&amp;Box&lt;Node&lt;T&gt;&gt;</code> → <code>*node</code></li>
-<li>→ <code>Box&lt;Node&lt;T&gt;&gt;</code> → <code>**node</code></li>
-<li>→ <code>Node&lt;T&gt;</code> → <code>&amp;**node</code></li>
-<li>→ <code>&amp;Node&lt;T&gt;</code>（至此型別才符合回傳值）</li>
-</ul>
-</li>
+這邊用了 <a href="http://doc.rust-lang.org/std/option/enum.Option.html#method.as_deref"><code>Option::as_deref()</code></a>，可直接將 <code>Option&lt;T&gt;</code> 轉換成 <code>Option&lt;&amp;T&gt;</code>，若 <code>T</code> 有實作 <a href="http://doc.rust-lang.org/core/ops/trait.Deref.html"><code>Deref</code></a> 特徵，更可以將 <code>T</code> 轉為 <code>Deref::Target</code>，例如這裡就是藉由 <a href="http://doc.rust-lang.org/alloc/boxed/struct.Box.html#method.deref"><code>Box::deref()</code></a> 將 <code>Box&lt;Node&lt;T&gt;&gt;</code> 轉換為 <code>&amp;Node&lt;T&gt;</code>。</li>
 <li>在 <code>SinglyLinkedList</code> 上加 <code>iter()</code> 成員函式回傳 <code>Iter</code> 疊代器。</li>
 <li>產生疊代器初始化狀態，和第三步一模一樣。</li>
 </ol>
-<p>最後，<code>IterMut</code> 與 <code>Iter</code> 疊代器實作上大同小異。把 <code>Iter</code> 用到 <code>Option.as_ref()</code> 改為 <code>Option.as_mut()</code>，其他 <code>&amp;</code> 改成 <code>&amp;mut</code> 即可。</p>
-<blockquote>
-<p>Rust 1.14.0为Option新增了<code>as_deref()</code>和<code>as_deref_mut()</code>两种新的方法。可以直接将<code>Option&lt;T&gt;</code>或<code>&amp;Option&lt;T&gt;</code>转换为<code>Option&lt;&amp;T&gt;</code>类型，可以不再用3、4两条的方法了。因此，新的实现如下</p>
-<pre><code class="language-Rust">impl&lt;T&gt; Iterator for Iter&lt;'a, T&gt; {
-   type Item = &amp;'a T;                          // 2
-   fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt; {
-       match self.next {
-           Some(node) =&gt; {
-               // self.next = node.next.as_ref().map(|node| &amp;**node); // old
-               self.next = node.next.as_deref();  //new
-               Some(&amp;node.elem)
-           }
-           None =&gt; None,
-       }
-    }
-}
-// ....
-      pub fn iter(&amp;self) -&gt; Iter&lt;T&gt; {
-//        Iter { next: self.head.as_ref().map(|node| &amp;**node) } // old
-          Iter { next: self.head.as_deref() } //new
-      }
-</code></pre>
-<p>参考: <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.as_deref">Rust文档</a></p>
-</blockquote>
+<p>最後，<code>IterMut</code> 與 <code>Iter</code> 疊代器實作上大同小異。把 <code>Iter</code> 用到 <code>Option::as_deref()</code> 改為 <code>Option::as_deref_mut()</code>，其他 <code>&amp;</code> 改成 <code>&amp;mut</code> 即可。</p>
 <h3><a class="header" href="#partialeq-trait" id="partialeq-trait">PartialEq trait</a></h3>
 <p><a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html">PartialEq trait</a> 是用來實現兩個串列是否能夠比較，而我們在此定義如下：</p>
 <p>有兩個 <code>SinglyLinkedList</code> Sa、Sb，Sa、Sb 的元素皆符合 <code>PartialEq</code> trait。當</p>
