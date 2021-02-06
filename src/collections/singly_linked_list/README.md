@@ -53,10 +53,7 @@ struct Node<T> {
 由於 Rust 沒有 null pointer，但照鏈結串列的定義，`Node.next` 可以是 NULL，因此我們使用 [`Option<T>`][rust-option] 模擬 null pointer 的行為。最後，Node 的定義如下：
 
 ```rust
-struct Node<T> {
-    elem: T,
-    next: Option<Box<Node<T>>>,
-}
+{{#include mod.rs:node_layout}}
 ```
 
 [rust-box]: https://doc.rust-lang.org/std/boxed/index.html
@@ -67,9 +64,7 @@ struct Node<T> {
 在開始實作各種增刪節點的操作之前，我們需要建立一個 struct 存放指向鏈結串列 head 的指標，同時，各種操作也會實作在這個 struct 上。事實上，這個 struct 就是對外公開的資料結構。
 
 ```rust
-pub struct SinglyLinkedList<T> {
-    head: Option<Box<Node<T>>>,
-}
+{{#include mod.rs:list_layout}}
 ```
 
 選擇把操作串列的函式寫在另一個 struct 而非 Node 上有幾個原因，1）外部並不需知道串列內部如何實作，公開 Node 會暴露實作。2）每個 Node 都帶有成員函式的話，函式指標會佔用太多額外資源。
@@ -93,13 +88,9 @@ pub struct SinglyLinkedList<T> {
 
 ```rust
 impl<T> SinglyLinkedList<T> {
-    pub fn new() -> Self {
-        Self { head: None }
-    }
+{{#include mod.rs:list_new}}
 
-    pub fn clear(&mut self) {
-        *self = Self::new();
-    }
+{{#include mod.rs:list_clear}}
 }
 ```
 
@@ -112,10 +103,7 @@ impl<T> SinglyLinkedList<T> {
 單向鏈結串列在第一個節點前增加新節點，或是刪除第一個節點，都可以在常數時間完成。新增節點 `push_front` 的概念很簡單，1）建立新的節點，並把新節點 `next` 指標指向串列第一個節點。2）把串列的 head 指向新建立的節點。
 
 ```rust
-pub fn push_front(&mut self, elem: T) {
-    let next = self.head.take(); // 1
-    self.head = Some(Box::new(Node { elem, next })); // 2
-}
+{{#include mod.rs:list_push_front}}
 ```
 
 1. 釋放 SinglyLinkedList 對第一個節點的所有權
@@ -124,21 +112,14 @@ pub fn push_front(&mut self, elem: T) {
 刪除第一個節點 `pop_front` 的實作步驟如下：首先取得第一個節點的所有權，再將 head 指向第一個節點 `Node.next` 下一個節點，再返回第一個節點的資料給呼叫端。
 
 ```rust
-pub fn pop_front(&mut self) -> Option<T> {
-    let head = self.head.take(); // 1
-    match head {
-        Some(node) => {
-            self.head = node.next;  // 2
-            Some(node.elem)         // 3
-        }
-        None => None,
-    }
-}
+{{#include mod.rs:list_pop_front}}
 ```
 
-1. 取得第一個元素的所有權。
+1. 取得第一個元素的所有權，若無首個元素，表示串列為空，此處利用 [`?` 運算子]直接回傳 `None`。
 2. 將 head 指向下一個節點。
 3. 返回即將刪除節點的資料。
+
+[`?` 運算子]: http://doc.rust-lang.org/edition-guide/rust-2018/error-handling-and-panics/the-question-mark-operator-for-easier-error-handling.html
 
 ### 插入刪除任意節點
 
@@ -147,31 +128,7 @@ pub fn pop_front(&mut self) -> Option<T> {
 實作插入 `insert_after` 分為幾個步驟：
 
 ```rust
-pub fn insert_after(&mut self, pos: usize, elem: T) -> Result<(), usize> {
-    let mut curr = &mut self.head;
-    let mut pos_ = pos;
-
-    while pos_ > 0 {                        // 1
-        curr = match curr.as_mut() {
-            Some(node) => &mut node.next,
-            None => return Err(pos - pos_),
-        };
-        pos_ -= 1;
-    }
-
-    match curr.take() {                     // 2
-        Some(mut node) => {   // Node A
-            let new_node = Box::new(Node {  // 3: Node B
-                elem,
-                next: node.next,
-            });
-            node.next = Some(new_node);     // 4
-            *curr = Some(node);             // 5
-        }
-        None => return Err(pos - pos_)
-    }
-    Ok(())
-}
+{{#include mod.rs:list_insert_after}}
 ```
 
 1. 找到對應索引值的節點 A，若找不到則回傳這個串列的資料長度。
@@ -183,26 +140,7 @@ pub fn insert_after(&mut self, pos: usize, elem: T) -> Result<(), usize> {
 而實作刪除任意索引下的節點 `remove` 和插入非常相似。
 
 ```rust
-pub fn remove(&mut self, pos: usize) -> Option<T> {
-    let mut curr = &mut self.head;
-    let mut pos = pos;
-
-    while pos > 0 {                // 1
-        curr = match curr.as_mut() {
-            Some(node) => &mut node.next,
-            None => return None,
-        };
-        pos -= 1;
-    }
-
-    match curr.take() {            // 2
-        Some(node) => { // Node A
-            *curr = node.next;     // 3: node.next is Node B
-            Some(node.elem)        // 4
-        }
-        None => None
-    }
-}
+{{#include mod.rs:list_remove}}
 ```
 
 1. 找到對應索引值的節點 A，若找不到則回傳 `None`。
@@ -215,17 +153,7 @@ pub fn remove(&mut self, pos: usize) -> Option<T> {
 反轉鏈結串列是工作面試時很常見的考題，這裡來實作看看。
 
 ```rust
-pub fn reverse(&mut self) {
-    let mut prev = None;              // 1: prev -> Node P
-    let mut curr = self.head.take();  // 2
-    while let Some(mut node) = curr { // 3: node -> Node A
-        let next = node.next;         // 3-1: next -> Node B
-        node.next = prev.take();      // 3-2
-        prev = Some(node);            // 3-3
-        curr = next;                  // 3-4
-    }
-    self.head = prev.take(); // 4
-}
+{{#include mod.rs:list_reverse}}
 ```
 
 1. 先建立一個暫時變數 `prev`，儲存疊代時的前一個節點。
@@ -272,14 +200,7 @@ a -> b -> c -> x -> y -> z
 既然如此，那麼就透過 [Drop trait](https://doc.rust-lang.org/std/ops/trait.Drop.html)，實作一個疊代版本的解構式，消弭可怕的 call stack 吧。
 
 ```rust
-impl<T> Drop for SinglyLinkedList<T> {
-    fn drop(&mut self) {
-        let mut link = self.head.take();  // 1
-        while let Some(mut node) = link { // 2
-            link = node.next.take();      // 3
-        }                                 // 4
-    }
-}
+{{#include mod.rs:list_drop}}
 ```
 
 1. 取得 head 的所有權。
@@ -289,7 +210,7 @@ impl<T> Drop for SinglyLinkedList<T> {
 
 > 詳細思路過程可查看 Learning Rust With Entirely Too Many Linked Lists 的 [Drop](http://cglab.ca/~abeinges/blah/too-many-lists/book/first-drop.html) 章節，該章完整闡述為什麼不能用 tail recursive 來實作，但最大的原因是 Rust core team 暫時延緩實踐 [tail call optimization](https://github.com/rust-lang/rfcs/pull/1888)。
 
-實際上，透過呼叫 `pop_front()`，不斷移除第一個節點，並使用 `is_some()` 檢查是否仍有節點，幾乎可以達到同樣的 drop 效果，而且更簡潔易懂。差別僅在於，相較於前個實作自己處理 call stack，這個實作每次移除元素都需要 `pop_front()` 與 `is_some()` 的 stack，多了些微小的開銷。
+實際上，透過呼叫 `pop_front()`，不斷移除第一個節點，並使用 `is_some()` 檢查是否仍有節點，幾乎可以達到同樣的 drop 效果，而且更簡潔易懂。差別僅在於，相較於前個實作自己處理 call stack，這個實作每次移除元素都需要 `pop_front()` 與 `is_some()` 的 stack，多了些微小的開銷，雖然可透過 [`#[inline]`][inline-attr] attribute 提示編譯器，但終究只是提示。
 
 ```rust
 impl<T> Drop for SinglyLinkedList<T> {
@@ -299,6 +220,8 @@ impl<T> Drop for SinglyLinkedList<T> {
 }
 ```
 
+[inline-attr]: https://doc.rust-lang.org/1.49.0/reference/attributes/codegen.html#the-inline-attribute
+
 ### Iterator and IntoIterator traits
 
 既然鏈結串列是一種序列（sequence，有序的資料結構），少不了實作 [Iterator](https://doc.rust-lang.org/std/iter/trait.Iterator.html)、[IntoIterator](https://doc.rust-lang.org/std/iter/trait.IntoIterator.html) 等 trait，使串列可以輕鬆使用 for-in loop 遍歷（traverse）。
@@ -306,15 +229,11 @@ impl<T> Drop for SinglyLinkedList<T> {
 首先，先定義幾個疊代器的 struct。
 
 ```rust
-pub struct IntoIter<T>(SinglyLinkedList<T>);
+{{#include mod.rs:IntoIter_layout}}
 
-pub struct Iter<'a, T: 'a> {
-    next: Option<&'a Node<T>>,
-}
+{{#include mod.rs:Iter_layout}}
 
-pub struct IterMut<'a, T: 'a> {
-    next: Option<&'a mut Node<T>>,
-}
+{{#include mod.rs:IterMut_layout}}
 ```
 
 建立這三個 iterator struct 是常見的 Rust 設計模式。
@@ -332,22 +251,14 @@ pub struct IterMut<'a, T: 'a> {
 先來看 `IntoIter` 實作。
 
 ```rust
-pub struct IntoIter<T>(SinglyLinkedList<T>);      // 1
+// 1
+{{#include mod.rs:IntoIter_layout}}
 
-impl<T> Iterator for IntoIter<T> {                // 2
-    type Item = T;
-    fn next(&mut self) -> Option<Self::Item> {
-        self.0.pop_front()
-    }
-}
+// 2
+{{#include mod.rs:IntoIter}}
 
-impl<T> IntoIterator for SinglyLinkedList<T> {    // 3
-    type Item = T;
-    type IntoIter = IntoIter<T>;
-    fn into_iter(self) -> Self::IntoIter {
-        IntoIter(self)
-    }
-}
+// 3
+{{#include mod.rs:IntoIterator}}
 ```
 
 1. 宣告一個 tuple struct，唯一的成員是 `SinglyLinkedList`。
@@ -360,31 +271,14 @@ impl<T> IntoIterator for SinglyLinkedList<T> {    // 3
 再來看看 `Iter` 怎麼實踐。
 
 ```rust
-pub struct Iter<'a, T: 'a> {                    // 1
-    next: Option<&'a Node<T>>,
-}
+{{#include mod.rs:Iter_layout}}
 
-impl<T> Iterator for Iter<'a, T> {
-    type Item = &'a T;                          // 2
-    fn next(&mut self) -> Option<Self::Item> {
-        match self.next {
-            Some(node) => {
-                self.next = node.next.as_deref(); // 3
-                Some(&node.elem)
-            }
-            None => None,
-        }
-    }
-}
+{{#include mod.rs:Iter}}
 
 impl<T> SinglyLinkedList<T> {
     // ...
 
-    pub fn iter(&self) -> Iter<T> {             // 4
-        Iter {
-            next: self.head.as_deref(),         // 5
-        }
-    }
+{{#include mod.rs:list_iter}}
 }
 ```
 
@@ -415,16 +309,7 @@ impl<T> SinglyLinkedList<T> {
 實作上我們用了 `iter` 成員函式把兩個串列 `zip` 在一起，在用 `all` 確認元素兩兩相等，十分 Rust 風格的作法。
 
 ```rust
-impl<T: PartialEq> PartialEq for SinglyLinkedList<T> {
-    fn eq(&self, other: &Self) -> bool {
-        if self.len() != other.len() {
-            return false;
-        }
-        self.iter()
-            .zip(other.iter())
-            .all(|pair| pair.0 == pair.1)
-    }
-}
+{{#include mod.rs:PartialEq}}
 ```
 
 ### Debug trait
@@ -432,14 +317,7 @@ impl<T: PartialEq> PartialEq for SinglyLinkedList<T> {
 為了方便修復臭蟲，通常會實作 [Debug trait](https://doc.rust-lang.org/std/fmt/trait.Debug.html) 印出有助於解決問題的資料。歸功於 `Iterator` 的實踐，我們可以快速用 `self.iter()` 印出所有節點內的元素，客製化 `Debug` 的顯示方式。
 
 ```rust
-impl<T: std::fmt::Debug> std::fmt::Debug for SinglyLinkedList<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        for elem in self.iter() {
-            write!(f, "{:?} -> ", elem)?
-        }
-        Ok(())
-    }
-}
+{{#include mod.rs:Debug}}
 ```
 
 ## 效能
