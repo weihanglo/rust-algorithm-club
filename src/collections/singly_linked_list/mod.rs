@@ -87,14 +87,10 @@ impl<T> SinglyLinkedList<T> {
     /// Constant.
     // ANCHOR: list_pop_front
     pub fn pop_front(&mut self) -> Option<T> {
-        let head = self.head.take(); // Take ownership of head;
-        match head {
-            Some(node) => {
-                self.head = node.next;
-                Some(node.elem)
-            }
-            None => None,
-        }
+        // Take ownership of head
+        let head = self.head.take()?; // 1
+        self.head = head.next;        // 2
+        Some(head.elem)               // 3
     }
     // ANCHOR_END: list_pop_front
 
@@ -160,22 +156,15 @@ impl<T> SinglyLinkedList<T> {
         let mut pos = pos;
 
         // Find the node at `pos`.
-        while pos > 0 {
-            curr = match curr.as_mut() {
-                Some(node) => &mut node.next,
-                None => return None,
-            };
+        while pos > 0 {                         // 1
+            curr = &mut curr.as_mut()?.next;
             pos -= 1;
         }
 
-        match curr.take() {
-            Some(node) => {
-                // Assign next node to previous node.next pointer.
-                *curr = node.next;
-                Some(node.elem)
-            }
-            None => None,
-        }
+        // Assign next node to previous node.next pointer.
+        let node = curr.take()?;                // 2: Node A
+        *curr = node.next;                      // 3: node.next is Node B
+        Some(node.elem)                         // 4
     }
     // ANCHOR_END: list_remove
 
@@ -256,32 +245,27 @@ impl<T> Drop for SinglyLinkedList<T> {
 
 // ANCHOR: Iter
 impl<'a, T> Iterator for Iter<'a, T> {
-    type Item = &'a T;
+    type Item = &'a T;                      // 2
 
     fn next(&mut self) -> Option<Self::Item> {
-        match self.next {
-            Some(node) => {
-                self.next = node.next.as_deref();
-                Some(&node.elem)
-            }
-            None => None,
-        }
+        let node = self.next?;
+        self.next = node.next.as_deref();   // 3
+        Some(&node.elem)
     }
 }
 // ANCHOR_END: Iter
 
+// ANCHOR: IterMut
 impl<'a, T> Iterator for IterMut<'a, T> {
     type Item = &'a mut T;
+
     fn next(&mut self) -> Option<Self::Item> {
-        match self.next.take() {
-            Some(node) => {
-                self.next = node.next.as_deref_mut();
-                Some(&mut node.elem)
-            }
-            None => None,
-        }
+        let node = self.next.take()?;
+        self.next = node.next.as_deref_mut();
+        Some(&mut node.elem)
     }
 }
+// ANCHOR_END: IterMut
 
 // ANCHOR: IntoIter
 impl<T> Iterator for IntoIter<T> {
