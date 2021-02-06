@@ -31,7 +31,7 @@ pub struct IntoIter<T>(SinglyLinkedList<T>);
 /// This struct is created by the `iter` method on `SinglyLinkedList`.
 // ANCHOR: Iter_layout
 pub struct Iter<'a, T> {
-    next: Option<&'a Node<T>>,              // 1
+    next: Option<&'a Node<T>>, // 1
 }
 // ANCHOR_END: Iter_layout
 
@@ -74,7 +74,7 @@ impl<T> SinglyLinkedList<T> {
     /// Constant.
     // ANCHOR: list_push_front
     pub fn push_front(&mut self, elem: T) {
-        let next = self.head.take();                     // 1
+        let next = self.head.take(); // 1
         self.head = Some(Box::new(Node { elem, next })); // 2
     }
     // ANCHOR_END: list_push_front
@@ -89,8 +89,8 @@ impl<T> SinglyLinkedList<T> {
     pub fn pop_front(&mut self) -> Option<T> {
         // Take ownership of head
         let head = self.head.take()?; // 1
-        self.head = head.next;        // 2
-        Some(head.elem)               // 3
+        self.head = head.next; // 2
+        Some(head.elem) // 3
     }
     // ANCHOR_END: list_pop_front
 
@@ -113,7 +113,8 @@ impl<T> SinglyLinkedList<T> {
         let mut pos_ = pos;
 
         // Find the node at `pos`.
-        while pos_ > 0 {                        // 1
+        while pos_ > 0 {
+            // 1
             curr = match curr.as_mut() {
                 Some(node) => &mut node.next,
                 None => return Err(pos - pos_),
@@ -122,18 +123,21 @@ impl<T> SinglyLinkedList<T> {
         }
 
         // Take the ownership of current node.
-        match curr.take() {                     // 2
-            Some(mut node) => {                 // Node A
+        match curr.take() {
+            // 2
+            Some(mut node) => {
+                // Node A
                 // Create new node.
-                let new_node = Box::new(Node {  // 3: Node B
+                let new_node = Box::new(Node {
+                    // 3: Node B
                     elem,
                     next: node.next,
                 });
                 // Re-link new node and current node.
-                node.next = Some(new_node);     // 4
+                node.next = Some(new_node); // 4
 
                 // Assign current node back to the list.
-                *curr = Some(node);             // 5
+                *curr = Some(node); // 5
             }
             None => return Err(pos - pos_),
         }
@@ -156,15 +160,16 @@ impl<T> SinglyLinkedList<T> {
         let mut pos = pos;
 
         // Find the node at `pos`.
-        while pos > 0 {                         // 1
+        while pos > 0 {
+            // 1
             curr = &mut curr.as_mut()?.next;
             pos -= 1;
         }
 
         // Assign next node to previous node.next pointer.
-        let node = curr.take()?;                // 2: Node A
-        *curr = node.next;                      // 3: node.next is Node B
-        Some(node.elem)                         // 4
+        let node = curr.take()?; // 2: Node A
+        *curr = node.next; // 3: node.next is Node B
+        Some(node.elem) // 4
     }
     // ANCHOR_END: list_remove
 
@@ -202,13 +207,14 @@ impl<T> SinglyLinkedList<T> {
     /// Linear in the size of the container.
     // ANCHOR: list_reverse
     pub fn reverse(&mut self) {
-        let mut prev = None;              // 1: prev -> Node P
-        let mut curr = self.head.take();  // 2
-        while let Some(mut node) = curr { // 3: node -> Node A
-            let next = node.next;         // 3-1: next -> Node B
-            node.next = prev.take();      // 3-2: Take ownership from previous node.
-            prev = Some(node);            // 3-3: Transfer ownership from current node to previous.
-            curr = next;                  // 3-4: curr references to next node for next iteration.
+        let mut prev = None; // 1: prev -> Node P
+        let mut curr = self.head.take(); // 2
+        while let Some(mut node) = curr {
+            // 3: node -> Node A
+            let next = node.next; // 3-1: next -> Node B
+            node.next = prev.take(); // 3-2: Take ownership from previous node.
+            prev = Some(node); // 3-3: Transfer ownership from current node to previous.
+            curr = next; // 3-4: curr references to next node for next iteration.
         }
         self.head = prev.take(); // 4
     }
@@ -216,9 +222,10 @@ impl<T> SinglyLinkedList<T> {
 
     /// Creates an iterator that yields immutable reference of each element.
     // ANCHOR: list_iter
-    pub fn iter(&self) -> Iter<T> {         // 4
+    pub fn iter(&self) -> Iter<T> {
+        // 4
         Iter {
-            next: self.head.as_deref(),     // 5
+            next: self.head.as_deref(), // 5
         }
     }
     // ANCHOR_END: list_iter
@@ -234,9 +241,10 @@ impl<T> SinglyLinkedList<T> {
 // ANCHOR: list_drop
 impl<T> Drop for SinglyLinkedList<T> {
     fn drop(&mut self) {
-        let mut link = self.head.take();  // 1
-        while let Some(mut node) = link { // 2
-            link = node.next.take();      // 3: Take ownership of next `link` here.
+        let mut link = self.head.take(); // 1
+        while let Some(mut node) = link {
+            // 2
+            link = node.next.take(); // 3: Take ownership of next `link` here.
         }
         // 4: Previous `node` goes out of scope and gets dropped here.
     }
@@ -245,11 +253,11 @@ impl<T> Drop for SinglyLinkedList<T> {
 
 // ANCHOR: Iter
 impl<'a, T> Iterator for Iter<'a, T> {
-    type Item = &'a T;                      // 2
+    type Item = &'a T; // 2
 
     fn next(&mut self) -> Option<Self::Item> {
         let node = self.next?;
-        self.next = node.next.as_deref();   // 3
+        self.next = node.next.as_deref(); // 3
         Some(&node.elem)
     }
 }
