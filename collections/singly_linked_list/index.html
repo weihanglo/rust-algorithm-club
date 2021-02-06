@@ -255,9 +255,7 @@ struct Node&lt;T&gt; {
         Self { head: None }
     }
 
-    pub fn clear(&amp;mut self) {
-        *self = Self::new();
-    }
+
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -268,10 +266,10 @@ struct Node&lt;T&gt; {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn push_front(&amp;mut self, elem: T) {
-    let next = self.head.take(); // 1
-    self.head = Some(Box::new(Node { elem, next })); // 2
-}
+</span>    pub fn push_front(&amp;mut self, elem: T) {
+        let next = self.head.take();                     // 1
+        self.head = Some(Box::new(Node { elem, next })); // 2
+    }
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
@@ -282,20 +280,16 @@ struct Node&lt;T&gt; {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn pop_front(&amp;mut self) -&gt; Option&lt;T&gt; {
-    let head = self.head.take(); // 1
-    match head {
-        Some(node) =&gt; {
-            self.head = node.next;  // 2
-            Some(node.elem)         // 3
-        }
-        None =&gt; None,
+</span>    pub fn pop_front(&amp;mut self) -&gt; Option&lt;T&gt; {
+        // Take ownership of head
+        let head = self.head.take()?; // 1
+        self.head = head.next;        // 2
+        Some(head.elem)               // 3
     }
-}
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
-<li>取得第一個元素的所有權。</li>
+<li>取得第一個元素的所有權，若無首個元素，表示串列為空，此處利用 <a href="http://doc.rust-lang.org/edition-guide/rust-2018/error-handling-and-panics/the-question-mark-operator-for-easier-error-handling.html"><code>?</code> 運算子</a>直接回傳 <code>None</code>。</li>
 <li>將 head 指向下一個節點。</li>
 <li>返回即將刪除節點的資料。</li>
 </ol>
@@ -305,31 +299,37 @@ struct Node&lt;T&gt; {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn insert_after(&amp;mut self, pos: usize, elem: T) -&gt; Result&lt;(), usize&gt; {
-    let mut curr = &amp;mut self.head;
-    let mut pos_ = pos;
+</span>    pub fn insert_after(&amp;mut self, pos: usize, elem: T) -&gt; Result&lt;(), usize&gt; {
+        let mut curr = &amp;mut self.head;
+        let mut pos_ = pos;
 
-    while pos_ &gt; 0 {                        // 1
-        curr = match curr.as_mut() {
-            Some(node) =&gt; &amp;mut node.next,
-            None =&gt; return Err(pos - pos_),
-        };
-        pos_ -= 1;
-    }
-
-    match curr.take() {                     // 2
-        Some(mut node) =&gt; {   // Node A
-            let new_node = Box::new(Node {  // 3: Node B
-                elem,
-                next: node.next,
-            });
-            node.next = Some(new_node);     // 4
-            *curr = Some(node);             // 5
+        // Find the node at `pos`.
+        while pos_ &gt; 0 {                        // 1
+            curr = match curr.as_mut() {
+                Some(node) =&gt; &amp;mut node.next,
+                None =&gt; return Err(pos - pos_),
+            };
+            pos_ -= 1;
         }
-        None =&gt; return Err(pos - pos_)
+
+        // Take the ownership of current node.
+        match curr.take() {                     // 2
+            Some(mut node) =&gt; {                 // Node A
+                // Create new node.
+                let new_node = Box::new(Node {  // 3: Node B
+                    elem,
+                    next: node.next,
+                });
+                // Re-link new node and current node.
+                node.next = Some(new_node);     // 4
+
+                // Assign current node back to the list.
+                *curr = Some(node);             // 5
+            }
+            None =&gt; return Err(pos - pos_),
+        }
+        Ok(())
     }
-    Ok(())
-}
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
@@ -343,26 +343,21 @@ struct Node&lt;T&gt; {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn remove(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
-    let mut curr = &amp;mut self.head;
-    let mut pos = pos;
+</span>    pub fn remove(&amp;mut self, pos: usize) -&gt; Option&lt;T&gt; {
+        let mut curr = &amp;mut self.head;
+        let mut pos = pos;
 
-    while pos &gt; 0 {                // 1
-        curr = match curr.as_mut() {
-            Some(node) =&gt; &amp;mut node.next,
-            None =&gt; return None,
-        };
-        pos -= 1;
-    }
-
-    match curr.take() {            // 2
-        Some(node) =&gt; { // Node A
-            *curr = node.next;     // 3: node.next is Node B
-            Some(node.elem)        // 4
+        // Find the node at `pos`.
+        while pos &gt; 0 {                         // 1
+            curr = &amp;mut curr.as_mut()?.next;
+            pos -= 1;
         }
-        None =&gt; None
+
+        // Assign next node to previous node.next pointer.
+        let node = curr.take()?;                // 2: Node A
+        *curr = node.next;                      // 3: node.next is Node B
+        Some(node.elem)                         // 4
     }
-}
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
@@ -376,17 +371,17 @@ struct Node&lt;T&gt; {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn reverse(&amp;mut self) {
-    let mut prev = None;              // 1: prev -&gt; Node P
-    let mut curr = self.head.take();  // 2
-    while let Some(mut node) = curr { // 3: node -&gt; Node A
-        let next = node.next;         // 3-1: next -&gt; Node B
-        node.next = prev.take();      // 3-2
-        prev = Some(node);            // 3-3
-        curr = next;                  // 3-4
+</span>    pub fn reverse(&amp;mut self) {
+        let mut prev = None;              // 1: prev -&gt; Node P
+        let mut curr = self.head.take();  // 2
+        while let Some(mut node) = curr { // 3: node -&gt; Node A
+            let next = node.next;         // 3-1: next -&gt; Node B
+            node.next = prev.take();      // 3-2: Take ownership from previous node.
+            prev = Some(node);            // 3-3: Transfer ownership from current node to previous.
+            curr = next;                  // 3-4: curr references to next node for next iteration.
+        }
+        self.head = prev.take(); // 4
     }
-    self.head = prev.take(); // 4
-}
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
@@ -435,8 +430,9 @@ a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
     fn drop(&amp;mut self) {
         let mut link = self.head.take();  // 1
         while let Some(mut node) = link { // 2
-            link = node.next.take();      // 3
-        }                                 // 4
+            link = node.next.take();      // 3: Take ownership of next `link` here.
+        }
+        // 4: Previous `node` goes out of scope and gets dropped here.
     }
 }
 <span class="boring">}
@@ -450,7 +446,7 @@ a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
 <blockquote>
 <p>詳細思路過程可查看 Learning Rust With Entirely Too Many Linked Lists 的 <a href="http://cglab.ca/%7Eabeinges/blah/too-many-lists/book/first-drop.html">Drop</a> 章節，該章完整闡述為什麼不能用 tail recursive 來實作，但最大的原因是 Rust core team 暫時延緩實踐 <a href="https://github.com/rust-lang/rfcs/pull/1888">tail call optimization</a>。</p>
 </blockquote>
-<p>實際上，透過呼叫 <code>pop_front()</code>，不斷移除第一個節點，並使用 <code>is_some()</code> 檢查是否仍有節點，幾乎可以達到同樣的 drop 效果，而且更簡潔易懂。差別僅在於，相較於前個實作自己處理 call stack，這個實作每次移除元素都需要 <code>pop_front()</code> 與 <code>is_some()</code> 的 stack，多了些微小的開銷。</p>
+<p>實際上，透過呼叫 <code>pop_front()</code>，不斷移除第一個節點，並使用 <code>is_some()</code> 檢查是否仍有節點，幾乎可以達到同樣的 drop 效果，而且更簡潔易懂。差別僅在於，相較於前個實作自己處理 call stack，這個實作每次移除元素都需要 <code>pop_front()</code> 與 <code>is_some()</code> 的 stack，多了些微小的開銷，雖然可透過 <a href="https://doc.rust-lang.org/1.49.0/reference/attributes/codegen.html#the-inline-attribute"><code>#[inline]</code></a> attribute 提示編譯器，但終究只是提示。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -469,11 +465,11 @@ a -&gt; b -&gt; c -&gt; x -&gt; y -&gt; z
 </span><span class="boring">fn main() {
 </span>pub struct IntoIter&lt;T&gt;(SinglyLinkedList&lt;T&gt;);
 
-pub struct Iter&lt;'a, T: 'a&gt; {
-    next: Option&lt;&amp;'a Node&lt;T&gt;&gt;,
+pub struct Iter&lt;'a, T&gt; {
+    next: Option&lt;&amp;'a Node&lt;T&gt;&gt;,              // 1
 }
 
-pub struct IterMut&lt;'a, T: 'a&gt; {
+pub struct IterMut&lt;'a, T&gt; {
     next: Option&lt;&amp;'a mut Node&lt;T&gt;&gt;,
 }
 <span class="boring">}
@@ -494,18 +490,25 @@ pub struct IterMut&lt;'a, T: 'a&gt; {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct IntoIter&lt;T&gt;(SinglyLinkedList&lt;T&gt;);      // 1
+</span>// 1
+pub struct IntoIter&lt;T&gt;(SinglyLinkedList&lt;T&gt;);
 
-impl&lt;T&gt; Iterator for IntoIter&lt;T&gt; {                // 2
+// 2
+impl&lt;T&gt; Iterator for IntoIter&lt;T&gt; {
     type Item = T;
+
     fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt; {
         self.0.pop_front()
     }
 }
 
-impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt; {    // 3
+// 3
+impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt; {
     type Item = T;
     type IntoIter = IntoIter&lt;T&gt;;
+
+    /// Creates a consuming iterator, that is, one that moves each value out of
+    /// the list (from start to end). The list cannot be used after calling this.
     fn into_iter(self) -&gt; Self::IntoIter {
         IntoIter(self)
     }
@@ -524,29 +527,26 @@ impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt; {    // 3
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct Iter&lt;'a, T: 'a&gt; {                    // 1
-    next: Option&lt;&amp;'a Node&lt;T&gt;&gt;,
+</span>pub struct Iter&lt;'a, T&gt; {
+    next: Option&lt;&amp;'a Node&lt;T&gt;&gt;,              // 1
 }
 
-impl&lt;T&gt; Iterator for Iter&lt;'a, T&gt; {
-    type Item = &amp;'a T;                          // 2
+impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
+    type Item = &amp;'a T;                      // 2
+
     fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt; {
-        match self.next {
-            Some(node) =&gt; {
-                self.next = node.next.as_deref(); // 3
-                Some(&amp;node.elem)
-            }
-            None =&gt; None,
-        }
+        let node = self.next?;
+        self.next = node.next.as_deref();   // 3
+        Some(&amp;node.elem)
     }
 }
 
 impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
     // ...
 
-    pub fn iter(&amp;self) -&gt; Iter&lt;T&gt; {             // 4
+    pub fn iter(&amp;self) -&gt; Iter&lt;T&gt; {         // 4
         Iter {
-            next: self.head.as_deref(),         // 5
+            next: self.head.as_deref(),     // 5
         }
     }
 }
@@ -578,9 +578,7 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
         if self.len() != other.len() {
             return false;
         }
-        self.iter()
-            .zip(other.iter())
-            .all(|pair| pair.0 == pair.1)
+        self.iter().zip(other.iter()).all(|pair| pair.0 == pair.1)
     }
 }
 <span class="boring">}
@@ -592,8 +590,8 @@ impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
 </span><span class="boring">fn main() {
 </span>impl&lt;T: std::fmt::Debug&gt; std::fmt::Debug for SinglyLinkedList&lt;T&gt; {
     fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter) -&gt; std::fmt::Result {
-        for elem in self.iter() {
-            write!(f, &quot;{:?} -&gt; &quot;, elem)?
+        for node in self.iter() {
+            write!(f, &quot;{:?} -&gt; &quot;, node)?
         }
         Ok(())
     }

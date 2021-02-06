@@ -13,43 +13,55 @@
 /// [2]: http://cglab.ca/~abeinges/blah/too-many-lists/book/README.html
 /// [3]: https://stackoverflow.com/questions/51134192/
 /// [4]: https://codereview.stackexchange.com/questions/150906
+// ANCHOR: list_layout
 pub struct SinglyLinkedList<T> {
     head: Option<Box<Node<T>>>,
 }
+// ANCHOR_END: list_layout
 
 /// An owning iterator over the elements of a `SinglyLinkedList`.
 ///
 /// This struct is created by the `into_iter` method on `SinglyLinkedList`.
+// ANCHOR: IntoIter_layout
 pub struct IntoIter<T>(SinglyLinkedList<T>);
+// ANCHOR_END: IntoIter_layout
 
 /// A mutable iterator over the elements of a `SinglyLinkedList`.
 ///
 /// This struct is created by the `iter` method on `SinglyLinkedList`.
+// ANCHOR: Iter_layout
 pub struct Iter<'a, T> {
-    next: Option<&'a Node<T>>,
+    next: Option<&'a Node<T>>,              // 1
 }
+// ANCHOR_END: Iter_layout
 
 /// A mutable iterator over the elements of a `SinglyLinkedList`.
 ///
 /// This struct is created by the `iter_mut` method on `SinglyLinkedList`.
+// ANCHOR: IterMut_layout
 pub struct IterMut<'a, T> {
     next: Option<&'a mut Node<T>>,
 }
+// ANCHOR_END: IterMut_layout
 
 /// Internal node representation.
 #[derive(Debug)]
+// ANCHOR: node_layout
 struct Node<T> {
     elem: T,
     next: Option<Box<Node<T>>>,
 }
+// ANCHOR_END: node_layout
 
 impl<T> SinglyLinkedList<T> {
     /// Constructs a new, empty `SinglyLinkedList<T>`.
     ///
     /// The list will not allocate until elements are pushed onto it.
+    // ANCHOR: list_new
     pub fn new() -> Self {
         Self { head: None }
     }
+    // ANCHOR_END: list_new
 
     /// Prepends the given element value to the beginning of the container.
     ///
@@ -60,10 +72,12 @@ impl<T> SinglyLinkedList<T> {
     /// # Complexity
     ///
     /// Constant.
+    // ANCHOR: list_push_front
     pub fn push_front(&mut self, elem: T) {
-        let next = self.head.take();
-        self.head = Some(Box::new(Node { elem, next }));
+        let next = self.head.take();                     // 1
+        self.head = Some(Box::new(Node { elem, next })); // 2
     }
+    // ANCHOR_END: list_push_front
 
     /// Removes and returns the first element of the container.
     /// If there are no elements in the container, return `None`.
@@ -71,16 +85,14 @@ impl<T> SinglyLinkedList<T> {
     /// # Complexity
     ///
     /// Constant.
+    // ANCHOR: list_pop_front
     pub fn pop_front(&mut self) -> Option<T> {
-        let head = self.head.take(); // Take ownership of head;
-        match head {
-            Some(node) => {
-                self.head = node.next;
-                Some(node.elem)
-            }
-            None => None,
-        }
+        // Take ownership of head
+        let head = self.head.take()?; // 1
+        self.head = head.next;        // 2
+        Some(head.elem)               // 3
     }
+    // ANCHOR_END: list_pop_front
 
     /// Inserts an element after the specified position in the container.
     ///
@@ -95,12 +107,13 @@ impl<T> SinglyLinkedList<T> {
     /// # Complexity
     ///
     /// Search time O(n) + O(1).
+    // ANCHOR: list_insert_after
     pub fn insert_after(&mut self, pos: usize, elem: T) -> Result<(), usize> {
         let mut curr = &mut self.head;
         let mut pos_ = pos;
 
         // Find the node at `pos`.
-        while pos_ > 0 {
+        while pos_ > 0 {                        // 1
             curr = match curr.as_mut() {
                 Some(node) => &mut node.next,
                 None => return Err(pos - pos_),
@@ -109,23 +122,24 @@ impl<T> SinglyLinkedList<T> {
         }
 
         // Take the ownership of current node.
-        match curr.take() {
-            Some(mut node) => {
+        match curr.take() {                     // 2
+            Some(mut node) => {                 // Node A
                 // Create new node.
-                let new_node = Box::new(Node {
+                let new_node = Box::new(Node {  // 3: Node B
                     elem,
                     next: node.next,
                 });
                 // Re-link new node and current node.
-                node.next = Some(new_node);
+                node.next = Some(new_node);     // 4
 
                 // Assign current node back to the list.
-                *curr = Some(node);
+                *curr = Some(node);             // 5
             }
             None => return Err(pos - pos_),
         }
         Ok(())
     }
+    // ANCHOR_END: list_insert_after
 
     /// Removes and returns an element at specified position from the container.
     ///
@@ -136,28 +150,23 @@ impl<T> SinglyLinkedList<T> {
     /// # Complexity
     ///
     /// Search time O(n) + constant.
+    // ANCHOR: list_remove
     pub fn remove(&mut self, pos: usize) -> Option<T> {
         let mut curr = &mut self.head;
         let mut pos = pos;
 
         // Find the node at `pos`.
-        while pos > 0 {
-            curr = match curr.as_mut() {
-                Some(node) => &mut node.next,
-                None => return None,
-            };
+        while pos > 0 {                         // 1
+            curr = &mut curr.as_mut()?.next;
             pos -= 1;
         }
 
-        match curr.take() {
-            Some(node) => {
-                // Assign next node to previous node.next pointer.
-                *curr = node.next;
-                Some(node.elem)
-            }
-            None => None,
-        }
+        // Assign next node to previous node.next pointer.
+        let node = curr.take()?;                // 2: Node A
+        *curr = node.next;                      // 3: node.next is Node B
+        Some(node.elem)                         // 4
     }
+    // ANCHOR_END: list_remove
 
     /// Removes all elements from the container.
     ///
@@ -191,24 +200,28 @@ impl<T> SinglyLinkedList<T> {
     /// # Complexity
     ///
     /// Linear in the size of the container.
+    // ANCHOR: list_reverse
     pub fn reverse(&mut self) {
-        let mut prev = None;
-        let mut curr = self.head.take();
-        while let Some(mut node) = curr {
-            let next = node.next;
-            node.next = prev.take(); // Take ownership from previous node.
-            prev = Some(node); // Transfer ownership from current node to previous.
-            curr = next; // curr references to next node for next iteration.
+        let mut prev = None;              // 1: prev -> Node P
+        let mut curr = self.head.take();  // 2
+        while let Some(mut node) = curr { // 3: node -> Node A
+            let next = node.next;         // 3-1: next -> Node B
+            node.next = prev.take();      // 3-2: Take ownership from previous node.
+            prev = Some(node);            // 3-3: Transfer ownership from current node to previous.
+            curr = next;                  // 3-4: curr references to next node for next iteration.
         }
-        self.head = prev.take();
+        self.head = prev.take(); // 4
     }
+    // ANCHOR_END: list_reverse
 
     /// Creates an iterator that yields immutable reference of each element.
-    pub fn iter(&self) -> Iter<T> {
+    // ANCHOR: list_iter
+    pub fn iter(&self) -> Iter<T> {         // 4
         Iter {
-            next: self.head.as_deref(),
+            next: self.head.as_deref(),     // 5
         }
     }
+    // ANCHOR_END: list_iter
 
     /// Creates an iterator that yields mutable reference of each element.
     pub fn iter_mut(&mut self) -> IterMut<T> {
@@ -218,48 +231,53 @@ impl<T> SinglyLinkedList<T> {
     }
 }
 
+// ANCHOR: list_drop
 impl<T> Drop for SinglyLinkedList<T> {
     fn drop(&mut self) {
-        let mut link = self.head.take();
-        while let Some(mut node) = link {
-            link = node.next.take(); // Take ownership of next `link` here.
-        } // Previous `node` goes out of scope and gets dropped here.
-    }
-}
-
-impl<'a, T> Iterator for Iter<'a, T> {
-    type Item = &'a T;
-    fn next(&mut self) -> Option<Self::Item> {
-        match self.next {
-            Some(node) => {
-                self.next = node.next.as_deref();
-                Some(&node.elem)
-            }
-            None => None,
+        let mut link = self.head.take();  // 1
+        while let Some(mut node) = link { // 2
+            link = node.next.take();      // 3: Take ownership of next `link` here.
         }
+        // 4: Previous `node` goes out of scope and gets dropped here.
     }
 }
+// ANCHOR_END: list_drop
 
+// ANCHOR: Iter
+impl<'a, T> Iterator for Iter<'a, T> {
+    type Item = &'a T;                      // 2
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let node = self.next?;
+        self.next = node.next.as_deref();   // 3
+        Some(&node.elem)
+    }
+}
+// ANCHOR_END: Iter
+
+// ANCHOR: IterMut
 impl<'a, T> Iterator for IterMut<'a, T> {
     type Item = &'a mut T;
+
     fn next(&mut self) -> Option<Self::Item> {
-        match self.next.take() {
-            Some(node) => {
-                self.next = node.next.as_deref_mut();
-                Some(&mut node.elem)
-            }
-            None => None,
-        }
+        let node = self.next.take()?;
+        self.next = node.next.as_deref_mut();
+        Some(&mut node.elem)
     }
 }
+// ANCHOR_END: IterMut
 
+// ANCHOR: IntoIter
 impl<T> Iterator for IntoIter<T> {
     type Item = T;
+
     fn next(&mut self) -> Option<Self::Item> {
         self.0.pop_front()
     }
 }
+// ANCHOR_END: IntoIter
 
+// ANCHOR: IntoIterator
 impl<T> IntoIterator for SinglyLinkedList<T> {
     type Item = T;
     type IntoIter = IntoIter<T>;
@@ -270,7 +288,9 @@ impl<T> IntoIterator for SinglyLinkedList<T> {
         IntoIter(self)
     }
 }
+// ANCHOR_END: IntoIterator
 
+// ANCHOR: PartialEq
 impl<T: PartialEq> PartialEq for SinglyLinkedList<T> {
     fn eq(&self, other: &Self) -> bool {
         if self.len() != other.len() {
@@ -279,7 +299,9 @@ impl<T: PartialEq> PartialEq for SinglyLinkedList<T> {
         self.iter().zip(other.iter()).all(|pair| pair.0 == pair.1)
     }
 }
+// ANCHOR_END: PartialEq
 
+// ANCHOR: Debug
 impl<T: std::fmt::Debug> std::fmt::Debug for SinglyLinkedList<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         for node in self.iter() {
@@ -288,6 +310,7 @@ impl<T: std::fmt::Debug> std::fmt::Debug for SinglyLinkedList<T> {
         Ok(())
     }
 }
+// ANCHOR_END: Debug
 
 #[cfg(test)]
 mod tests {
