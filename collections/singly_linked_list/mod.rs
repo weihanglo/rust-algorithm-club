@@ -19,25 +19,25 @@ pub struct SinglyLinkedList<T> {
 }
 // ANCHOR_END: list_layout
 
-/// An owning iterator over the elements of a `SinglyLinkedList`.
+/// An owning iterator over the elements of a [`SinglyLinkedList`].
 ///
-/// This struct is created by the `into_iter` method on `SinglyLinkedList`.
+/// This struct is created by the `into_iter` method on [`SinglyLinkedList`].
 // ANCHOR: IntoIter_layout
 pub struct IntoIter<T>(SinglyLinkedList<T>);
 // ANCHOR_END: IntoIter_layout
 
-/// A mutable iterator over the elements of a `SinglyLinkedList`.
+/// A immutable iterator over the elements of a [`SinglyLinkedList`].
 ///
-/// This struct is created by the `iter` method on `SinglyLinkedList`.
+/// This struct is created by the `iter` method on [`SinglyLinkedList`].
 // ANCHOR: Iter_layout
 pub struct Iter<'a, T> {
     next: Option<&'a Node<T>>, // 1
 }
 // ANCHOR_END: Iter_layout
 
-/// A mutable iterator over the elements of a `SinglyLinkedList`.
+/// A mutable iterator over the elements of a [`SinglyLinkedList`].
 ///
-/// This struct is created by the `iter_mut` method on `SinglyLinkedList`.
+/// This struct is created by the `iter_mut` method on [`SinglyLinkedList`].
 // ANCHOR: IterMut_layout
 pub struct IterMut<'a, T> {
     next: Option<&'a mut Node<T>>,
@@ -222,7 +222,7 @@ impl<T> SinglyLinkedList<T> {
 
     /// Creates an iterator that yields immutable reference of each element.
     // ANCHOR: list_iter
-    pub fn iter(&self) -> impl Iterator<Item = &T> {
+    pub fn iter(&self) -> Iter<T> {
         // 4
         Iter {
             next: self.head.as_deref(), // 5
@@ -231,7 +231,7 @@ impl<T> SinglyLinkedList<T> {
     // ANCHOR_END: list_iter
 
     /// Creates an iterator that yields mutable reference of each element.
-    pub fn iter_mut(&mut self) -> impl Iterator<Item = &mut T> {
+    pub fn iter_mut(&mut self) -> IterMut<T> {
         IterMut {
             next: self.head.as_deref_mut(),
         }
