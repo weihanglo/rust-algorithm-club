@@ -222,7 +222,7 @@ impl<T> SinglyLinkedList<T> {
 
     /// Creates an iterator that yields immutable reference of each element.
     // ANCHOR: list_iter
-    pub fn iter(&self) -> Iter<T> {
+    pub fn iter(&self) -> impl Iterator<Item = &T> {
         // 4
         Iter {
             next: self.head.as_deref(), // 5
@@ -231,7 +231,7 @@ impl<T> SinglyLinkedList<T> {
     // ANCHOR_END: list_iter
 
     /// Creates an iterator that yields mutable reference of each element.
-    pub fn iter_mut(&mut self) -> IterMut<T> {
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = &mut T> {
         IterMut {
             next: self.head.as_deref_mut(),
         }
