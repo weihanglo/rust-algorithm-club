@@ -222,7 +222,7 @@ impl<T> SinglyLinkedList<T> {
 
     /// Creates an iterator that yields immutable reference of each element.
     // ANCHOR: list_iter
-    pub fn iter(&self) -> Iter<T> {
+    pub fn iter(&self) -> impl Iterator<Item = &T> {
         // 4
         Iter {
             next: self.head.as_deref(), // 5
@@ -231,7 +231,7 @@ impl<T> SinglyLinkedList<T> {
     // ANCHOR_END: list_iter
 
     /// Creates an iterator that yields mutable reference of each element.
-    pub fn iter_mut(&mut self) -> IterMut<T> {
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = &mut T> {
         IterMut {
             next: self.head.as_deref_mut(),
         }
@@ -326,7 +326,7 @@ mod tests {
 
     #[test]
     fn basics() {
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::<()>::new();
         assert_eq!(l.len(), 0);
         assert_eq!(l.pop_front(), None);
         assert_eq!(l.len(), 0);
@@ -335,7 +335,7 @@ mod tests {
 
     #[test]
     fn push_pop() {
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::new();
         l.push_front(1);
         l.push_front(2);
         l.push_front(3);
@@ -369,34 +369,34 @@ mod tests {
 
     #[test]
     fn reverse() {
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::<()>::new();
         // 0 elements without crash;
         l.reverse();
-        let res = SinglyLinkedList::<i32>::new();
+        let res = SinglyLinkedList::new();
         assert!(l == res);
 
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::new();
         l.push_front(1);
         l.reverse();
-        let mut res = SinglyLinkedList::<i32>::new();
+        let mut res = SinglyLinkedList::new();
         res.push_front(1);
         assert!(l == res);
 
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::new();
         l.push_front(1);
         l.push_front(2);
         l.reverse();
-        let mut res = SinglyLinkedList::<i32>::new();
+        let mut res = SinglyLinkedList::new();
         res.push_front(2);
         res.push_front(1);
         assert!(l == res);
 
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::new();
         l.push_front(1);
         l.push_front(2);
         l.push_front(3);
         l.reverse();
-        let mut res = SinglyLinkedList::<i32>::new();
+        let mut res = SinglyLinkedList::new();
         res.push_front(3);
         res.push_front(2);
         res.push_front(1);
@@ -405,7 +405,7 @@ mod tests {
 
     #[test]
     fn iter() {
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::new();
         l.push_front(1);
         l.push_front(2);
         l.push_front(3);
@@ -418,7 +418,7 @@ mod tests {
 
     #[test]
     fn iter_mut() {
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::new();
         l.push_front(1);
         l.push_front(2);
         l.push_front(3);
@@ -427,7 +427,7 @@ mod tests {
             *elem *= *elem;
         }
 
-        let mut res = SinglyLinkedList::<i32>::new();
+        let mut res = SinglyLinkedList::new();
         res.push_front(1);
         res.push_front(4);
         res.push_front(9);
@@ -436,7 +436,7 @@ mod tests {
 
     #[test]
     fn into_iter() {
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::new();
         l.push_front(1);
         l.push_front(2);
         l.push_front(3);
@@ -449,7 +449,7 @@ mod tests {
 
     #[test]
     fn insert() {
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::new();
         l.push_front(1);
         l.push_front(2);
         l.push_front(3);
@@ -460,7 +460,7 @@ mod tests {
         // Insertion succeeded.
         assert!(l.insert_after(0, 10).is_ok());
 
-        let mut res = SinglyLinkedList::<i32>::new();
+        let mut res = SinglyLinkedList::new();
         res.push_front(1);
         res.push_front(2);
         res.push_front(10);
@@ -470,7 +470,7 @@ mod tests {
         // Insertion succeeded again.
         assert!(l.insert_after(3, 11).is_ok());
 
-        let mut res = SinglyLinkedList::<i32>::new();
+        let mut res = SinglyLinkedList::new();
         res.push_front(11);
         res.push_front(1);
         res.push_front(2);
@@ -481,7 +481,7 @@ mod tests {
 
     #[test]
     fn remove() {
-        let mut l = SinglyLinkedList::<i32>::new();
+        let mut l = SinglyLinkedList::new();
         l.push_front(1);
         l.push_front(2);
         l.push_front(3);
@@ -489,7 +489,7 @@ mod tests {
         assert_eq!(l.remove(1), Some(2));
 
         // Check remain list is in correct form.
-        let mut res = SinglyLinkedList::<i32>::new();
+        let mut res = SinglyLinkedList::new();
         res.push_front(1);
         res.push_front(3);
         assert_eq!(l, res);

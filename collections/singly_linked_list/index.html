@@ -551,7 +551,7 @@ impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
 impl&lt;T&gt; SinglyLinkedList&lt;T&gt; {
     // ...
 
-    pub fn iter(&amp;self) -&gt; Iter&lt;T&gt; {
+    pub fn iter(&amp;self) -&gt; impl Iterator&lt;Item = &amp;T&gt; {
         // 4
         Iter {
             next: self.head.as_deref(), // 5
