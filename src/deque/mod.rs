@@ -663,4 +663,11 @@ mod deque {
         assert_eq!(d[2], 1);
         assert_eq!(d[3], 4);
     }
+
+    #[test]
+    #[should_panic(expected = "Zero-sized allocation is not support")]
+    fn zero_sized() {
+        let mut d = Deque::new();
+        d.push_back(());
+    }
 }
