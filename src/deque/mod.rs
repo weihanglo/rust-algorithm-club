@@ -1,4 +1,4 @@
-use core::{mem, ptr};
+use core::{mem, ptr, slice};
 use std::alloc::{alloc, dealloc, realloc, Layout};
 
 // A double-ended queue (abbreviated to _deque_), for which elements can be
@@ -174,6 +174,30 @@ impl<T> Deque<T> {
     }
     // ANCHOR_END: is_full
 
+    /// Creates an iterator that yields immutable reference of each element.
+    // ANCHOR: iter
+    pub fn iter(&self) -> Iter<T> {
+        Iter {
+            head: self.head,
+            tail: self.tail,
+            // This is safe because will only read/write initialized contents.
+            ring_buf: unsafe { self.ring_buf.as_slice() },
+        }
+    }
+    // ANCHOR_END: iter
+
+    /// Creates an iterator that yields mutable reference of each element.
+    // ANCHOR: iter_mut
+    pub fn iter_mut(&mut self) -> IterMut<T> {
+        IterMut {
+            head: self.head,
+            tail: self.tail,
+            // This is safe because will only read/write initialized contents.
+            ring_buf: unsafe { self.ring_buf.as_mut_slice() },
+        }
+    }
+    // ANCHOR_END: iter_mut
+
     /// Resizes the underlying ring buffer if necessary.
     ///
     /// # Complexity
@@ -259,6 +283,108 @@ fn wrap_index(index: usize, size: usize) -> usize {
 }
 // ANCHOR_END: wrap_index
 
+/// An immutable iterator over the elements of a [`Deque`].
+///
+/// This struct is created by the `iter` method on [`Deque`].
+// ANCHOR: Iter_layout
+pub struct Iter<'a, T> {
+    head: usize,
+    tail: usize,
+    ring_buf: &'a [T],
+}
+// ANCHOR_END: Iter_layout
+
+// ANCHOR: Iter
+impl<'a, T> Iterator for Iter<'a, T> {
+    type Item = &'a T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.tail == self.head {
+            return None;
+        }
+        let tail = self.tail;
+        self.tail = wrap_index(self.tail.wrapping_add(1), self.ring_buf.len());
+        self.ring_buf.get(tail)
+    }
+}
+// ANCHOR_END: Iter
+
+/// A mutable iterator over the elements of a [`Deque`].
+///
+/// This struct is created by the `iter_mut` method on [`Deque`].
+// ANCHOR: IterMut_layout
+pub struct IterMut<'a, T> {
+    head: usize,
+    tail: usize,
+    ring_buf: &'a mut [T],
+}
+// ANCHOR_END: IterMut_layout
+
+// ANCHOR: IterMut
+impl<'a, T> Iterator for IterMut<'a, T> {
+    type Item = &'a mut T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.tail == self.head {
+            return None;
+        }
+        let tail = self.tail;
+        self.tail = wrap_index(self.tail.wrapping_add(1), self.ring_buf.len());
+        // TODO: unsafe
+        unsafe {
+            let elem = self.ring_buf.get_unchecked_mut(tail);
+            Some(&mut *(elem as *mut _))
+        }
+    }
+}
+// ANCHOR_END: IterMut
+
+/// An owning iterator over the elements of a [`Deque`].
+///
+/// This struct is created by the `into_iter` method on [`Deque`].
+// ANCHOR: IntoIter_layout
+pub struct IntoIter<T>(Deque<T>);
+// ANCHOR_END: IntoIter_layout
+
+// ANCHOR: IntoIter
+impl<T> Iterator for IntoIter<T> {
+    type Item = T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.0.pop_front()
+    }
+}
+// ANCHOR_END: IntoIter
+
+// ANCHOR: IntoIterator
+impl<T> IntoIterator for Deque<T> {
+    type Item = T;
+    type IntoIter = IntoIter<T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        IntoIter(self)
+    }
+}
+
+impl<'a, T> IntoIterator for &'a Deque<T> {
+    type Item = &'a T;
+    type IntoIter = Iter<'a, T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
+}
+
+impl<'a, T> IntoIterator for &'a mut Deque<T> {
+    type Item = &'a mut T;
+    type IntoIter = IterMut<'a, T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter_mut()
+    }
+}
+// ANCHOR_END: IntoIterator
+
 /// A growable, contiguous heap memory allocation that stores homogeneous elements.
 ///
 /// This is a simplified version of [`RawVec`] inside Rust Standard Library.
@@ -307,6 +433,25 @@ impl<T> RawVec<T> {
         self.cap = new_cap;
     }
     // ANCHOR_END: RawVec_resize
+    
+    /// Returns an immutable slice of underlying allocation memory block.
+    ///
+    /// This is unsafe because the block may or may have its contents intialized.
+    // ANCHOR: RawVec_as_slice
+    unsafe fn as_slice(&self) -> &[T] {
+        // This is safe because it just returns the underlying valid allocation.
+        slice::from_raw_parts(self.ptr.cast(), self.cap)
+    }
+    // ANCHOR_END: RawVec_as_slice
+
+    /// Returns a mutable slice of underlying allocation memory block.
+    ///
+    /// This is unsafe because the block may or may have its contents intialized.
+    // ANCHOR: RawVec_as_mut_slice
+    unsafe fn as_mut_slice(&self) -> &mut [T] {
+        slice::from_raw_parts_mut(self.ptr.cast(), self.cap)
+    }
+    // ANCHOR_END: RawVec_as_mut_slice
 }
 
 // ANCHOR: RawVec_drop
@@ -376,5 +521,95 @@ mod deque {
         assert_eq!(d.len(), 0);
         assert_eq!(d.front(), None);
         assert_eq!(d.back(), None);
+    }
+
+    #[test]
+    fn iter() {
+        let mut d = Deque::new();
+        d.push_back(1);
+        d.push_back(2);
+        d.push_front(3);
+        d.push_front(4);
+        d.push_front(5);
+        d.push_front(6);
+        d.push_back(7);
+        d.push_back(8);
+        // [6, 5, 4, 3, 1, 2, 7, 8]
+
+        let mut iter = d.iter();
+        assert_eq!(iter.next(), Some(&6));
+        assert_eq!(iter.next(), Some(&5));
+        assert_eq!(iter.next(), Some(&4));
+        assert_eq!(iter.next(), Some(&3));
+        assert_eq!(iter.next(), Some(&1));
+        assert_eq!(iter.next(), Some(&2));
+        assert_eq!(iter.next(), Some(&7));
+        assert_eq!(iter.next(), Some(&8));
+        assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn iter_mut() {
+        let mut d = Deque::new();
+        d.push_back(1);
+        d.push_back(2);
+        d.push_front(3);
+        d.push_front(4);
+        // [4, 3, 1, 2]
+
+        for elem in d.iter_mut() {
+            *elem *= *elem;
+        }
+
+        let mut iter = d.iter_mut();
+        assert_eq!(iter.next(), Some(&mut 16));
+        assert_eq!(iter.next(), Some(&mut 9));
+        assert_eq!(iter.next(), Some(&mut 1));
+        assert_eq!(iter.next(), Some(&mut 4));
+        assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn into_iter() {
+        let mut d = Deque::new();
+        d.push_back(1);
+        d.push_back(2);
+        d.push_front(3);
+        d.push_front(4);
+        // [4, 3, 1, 2]
+
+        let l = d.into_iter().collect::<Vec<_>>();
+        assert_eq!(&[4, 3, 1, 2], &l[..]);
+
+
+        let mut d = Deque::new();
+        d.push_back(1);
+        d.push_back(2);
+        d.push_front(3);
+        d.push_front(4);
+        // [4, 3, 1, 2]
+        let mut l = vec![];
+        for elem in &d {
+            l.push(elem);
+        }
+        assert_eq!(&[&4, &3, &1, &2], &l[..]);
+
+        let mut d = Deque::new();
+        d.push_back(1);
+        d.push_back(2);
+        d.push_front(3);
+        d.push_front(4);
+        // [4, 3, 1, 2]
+
+        for elem in &mut d {
+            *elem *= *elem;
+        }
+
+        let mut iter = d.iter_mut();
+        assert_eq!(iter.next(), Some(&mut 16));
+        assert_eq!(iter.next(), Some(&mut 9));
+        assert_eq!(iter.next(), Some(&mut 1));
+        assert_eq!(iter.next(), Some(&mut 4));
+        assert_eq!(iter.next(), None);
     }
 }
