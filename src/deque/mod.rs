@@ -1,4 +1,4 @@
-use core::{mem, ptr, slice};
+use core::{fmt, mem, ptr, slice};
 use core::ops::{Index, IndexMut};
 use std::alloc::{alloc, dealloc, realloc, Layout};
 
@@ -423,6 +423,14 @@ impl<T> IndexMut<usize> for Deque<T> {
     }
 }
 // ANCHOR_END: IndexMut
+
+// ANCHOR: Debug
+impl<T: fmt::Debug> fmt::Debug for Deque<T> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+// ANCHOR_END: Debug
 
 impl<T> RawVec<T> {
     /// Allocates on the heap with a certain capacity.
