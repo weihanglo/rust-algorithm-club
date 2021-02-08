@@ -1,5 +1,5 @@
-use core::{fmt, mem, ptr, slice};
 use core::ops::{Index, IndexMut};
+use core::{fmt, mem, ptr, slice};
 use std::alloc::{alloc, dealloc, realloc, Layout};
 
 // A double-ended queue (abbreviated to _deque_), for which elements can be
@@ -275,7 +275,7 @@ impl<T> Deque<T> {
 
 /// Returns the actual index of the underlying ring buffer for a given logical index.
 ///
-/// To ensure all bits of `size - 1` is set to 1, here the size must always be 
+/// To ensure all bits of `size - 1` is set to 1, here the size must always be
 /// power of two.
 // ANCHOR: wrap_index
 fn wrap_index(index: usize, size: usize) -> usize {
@@ -466,7 +466,7 @@ impl<T> RawVec<T> {
         self.cap = new_cap;
     }
     // ANCHOR_END: RawVec_resize
-    
+
     /// Returns an immutable slice of underlying allocation memory block.
     ///
     /// This is unsafe because the block may or may have its contents intialized.
@@ -613,7 +613,6 @@ mod deque {
 
         let l = d.into_iter().collect::<Vec<_>>();
         assert_eq!(&[4, 3, 1, 2], &l[..]);
-
 
         let mut d = Deque::new();
         d.push_back(1);
