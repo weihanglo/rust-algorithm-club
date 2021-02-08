@@ -1,4 +1,5 @@
 use core::{mem, ptr, slice};
+use core::ops::{Index, IndexMut};
 use std::alloc::{alloc, dealloc, realloc, Layout};
 
 // A double-ended queue (abbreviated to _deque_), for which elements can be
@@ -399,6 +400,30 @@ struct RawVec<T> {
 }
 // ANCHOR_END: RawVec
 
+// ANCHOR: Index
+impl<T> Index<usize> for Deque<T> {
+    type Output = T;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        assert!(index < self.len(), "Out of bound");
+        let index = self.wrapping_add(self.tail, index);
+        // This is safe because the offset is wrapped inside available memory by `wrap_index()`.
+        unsafe { &*self.ptr().add(index) }
+    }
+}
+// ANCHOR_END: Index
+
+// ANCHOR: IndexMut
+impl<T> IndexMut<usize> for Deque<T> {
+    fn index_mut(&mut self, index: usize) -> &mut T {
+        assert!(index < self.len(), "Out of bound");
+        let index = self.wrapping_add(self.tail, index);
+        // This is safe because the offset is wrapped inside available memory by `wrap_index()`.
+        unsafe { &mut *self.ptr().add(index) }
+    }
+}
+// ANCHOR_END: IndexMut
+
 impl<T> RawVec<T> {
     /// Allocates on the heap with a certain capacity.
     ///
@@ -611,5 +636,23 @@ mod deque {
         assert_eq!(iter.next(), Some(&mut 1));
         assert_eq!(iter.next(), Some(&mut 4));
         assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn index() {
+        let mut d = Deque::new();
+        d.push_back(1);
+        d.push_back(2);
+        d.push_front(3);
+        d.push_front(4);
+        // [4, 3, 1, 2]
+
+        for i in 0..d.len() {
+            d[i] *= d[i];
+        }
+        assert_eq!(d[0], 16);
+        assert_eq!(d[1], 9);
+        assert_eq!(d[2], 1);
+        assert_eq!(d[3], 4);
     }
 }
