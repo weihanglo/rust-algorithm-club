@@ -273,6 +273,14 @@ impl<T> Deque<T> {
     // ANCHOR_END: cap
 }
 
+// ANCHOR: Drop
+impl<T> Drop for Deque<T> {
+    fn drop(&mut self) {
+        while let Some(_) = self.pop_back() {}
+    }
+}
+// ANCHOR_END: Drop
+
 /// Returns the actual index of the underlying ring buffer for a given logical index.
 ///
 /// To ensure all bits of `size - 1` is set to 1, here the size must always be
@@ -493,6 +501,8 @@ impl<T> Drop for RawVec<T> {
     /// and number of elements.
     ///
     /// This method only deallocates when containing actual sized elements.
+    ///
+    /// Note that this only drop the vector itself but not its actual content.
     fn drop(&mut self) {
         let size = mem::size_of::<T>() * self.cap;
         if size > 0 {
@@ -668,5 +678,26 @@ mod deque {
     fn zero_sized() {
         let mut d = Deque::new();
         d.push_back(());
+    #[test]
+    fn drop() {
+        static mut DROPS: u32 = 0;
+        struct S;
+        impl Drop for S {
+            fn drop(&mut self) {
+                unsafe {
+                    DROPS += 1;
+                }
+            }
+        }
+        let mut d = Deque::new();
+        d.push_back(S);
+        d.push_back(S);
+        d.push_back(S);
+        d.push_front(S);
+        d.push_front(S);
+        core::mem::drop(d);
+        unsafe {
+            assert_eq!(DROPS, 5);
+        }
     }
 }
