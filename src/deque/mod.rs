@@ -209,7 +209,7 @@ impl<T> Deque<T> {
     fn try_resize(&mut self) {
         if self.is_full() {
             let old_cap = self.cap();
-            self.ring_buf.grow();
+            self.ring_buf.try_grow();
 
             if self.tail > self.head {
                 // Make the ring buffer contiguous.
@@ -268,7 +268,7 @@ impl<T> Deque<T> {
     // ANCHOR: cap
     #[inline]
     fn cap(&self) -> usize {
-        self.ring_buf.cap
+        self.ring_buf.cap()
     }
     // ANCHOR_END: cap
 }
@@ -443,54 +443,84 @@ struct RawVec<T> {
 impl<T> RawVec<T> {
     /// Allocates on the heap with a certain capacity.
     ///
-    /// Note that this does not support zero-sized allocations.
-    /// For more, see [The Rustonomicon: Handling Zero-Sized Types][1].
-    /// [1]: https://doc.rust-lang.org/nomicon/vec-zsts.html
+    /// This method allocates non-zero sized types with at least one capacity.
     // ANCHOR: RawVec_with_capacity
-    fn with_capacity(cap: usize) -> Self {
+    pub fn with_capacity(cap: usize) -> Self {
         let layout = Layout::array::<T>(cap).unwrap();
-        assert!(layout.size() > 0, "Zero-sized allocation is not support");
-
-        // This is safe because it conforms to the [safety contracts][1].
-        //
-        // [1] https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-1
-        let ptr = unsafe { alloc(layout).cast() };
-        Self { ptr, cap }
+        if layout.size() == 0 {
+            let ptr = ptr::NonNull::dangling().as_ptr();
+            Self { ptr, cap: 0 }
+        } else {
+            // This is safe because it conforms to the [safety contracts][1].
+            //
+            // [1] https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-1
+            let ptr = unsafe { alloc(layout).cast() };
+            Self { ptr, cap }
+        }
     }
     // ANCHOR_END: RawVec_with_capacity
 
-    // Doubles the size of the memory region to a certain capacity of elements.
-    // ANCHOR: RawVec_resize
-    fn grow(&mut self) {
-        let new_cap = if self.cap == 0 { 1 } else { self.cap * 2 };
+    // Doubles the size of the memory region.
+    //
+    // This method maybe reallocates non-zero sized types only.
+    // ANCHOR: RawVec_try_grow
+    pub fn try_grow(&mut self) {
+        if mem::size_of::<T>() == 0 {
+            return;
+        }
+
+        if self.cap == 0 {
+            *self = Self::with_capacity(1);
+            return;
+        }
+
         let old_layout = Layout::array::<T>(self.cap).unwrap();
+        let new_cap = if self.cap == 0 { 1 } else { self.cap * 2 };
+        let new_size = old_layout.size() * new_cap;
         // This is safe because it conforms to the [safety contracts][1].
         //
         // [1] https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-4
-        let ptr = unsafe { realloc(self.ptr.cast(), old_layout, old_layout.align() * new_cap) };
+        let ptr = unsafe { realloc(self.ptr.cast(), old_layout, new_size).cast() };
         // ...Old allocation is unusable and may be released from here.
 
-        self.ptr = ptr.cast();
+        self.ptr = ptr;
         self.cap = new_cap;
     }
-    // ANCHOR_END: RawVec_resize
+    // ANCHOR_END: RawVec_try_grow
+
+    /// Gets the capacity of the allocation.
+    ///
+    /// This will always be `usize::MAX` if `T` is zero-sized.
+    // ANCHOR: RawVec_cap
+    #[inline]
+    pub fn cap(&self) -> usize {
+        if mem::size_of::<T>() == 0 {
+            // Largest possible power of two. Equals to `(usize::MAX + 1) / 2`.
+            // Ref: https://github.com/rust-lang/rust/blob/f7534b/library/alloc/src/collections/vec_deque/mod.rs#L61
+            1usize << (mem::size_of::<usize>() * 8 - 1)
+        } else {
+            self.cap
+        }
+    }
+    // ANCHOR_END: RawVec_cap
 
     /// Returns an immutable slice of underlying allocation memory block.
     ///
-    /// This is unsafe because the block may or may have its contents intialized.
+    /// This is unsafe because the block may not have all its contents initialized.
     // ANCHOR: RawVec_as_slice
-    unsafe fn as_slice(&self) -> &[T] {
-        // This is safe because it just returns the underlying valid allocation.
-        slice::from_raw_parts(self.ptr.cast(), self.cap)
+    #[inline]
+    pub unsafe fn as_slice(&self) -> &[T] {
+        slice::from_raw_parts(self.ptr.cast(), self.cap())
     }
     // ANCHOR_END: RawVec_as_slice
 
     /// Returns a mutable slice of underlying allocation memory block.
     ///
-    /// This is unsafe because the block may or may have its contents intialized.
+    /// This is unsafe because the block may not have all its contents initialized.
     // ANCHOR: RawVec_as_mut_slice
-    unsafe fn as_mut_slice(&self) -> &mut [T] {
-        slice::from_raw_parts_mut(self.ptr.cast(), self.cap)
+    #[inline]
+    pub unsafe fn as_mut_slice(&self) -> &mut [T] {
+        slice::from_raw_parts_mut(self.ptr.cast(), self.cap())
     }
     // ANCHOR_END: RawVec_as_mut_slice
 }
@@ -575,9 +605,7 @@ mod deque {
         d.push_front(4);
         d.push_front(5);
         d.push_front(6);
-        d.push_back(7);
-        d.push_back(8);
-        // [6, 5, 4, 3, 1, 2, 7, 8]
+        // [6, 5, 4, 3, 1, 2]
 
         let mut iter = d.iter();
         assert_eq!(iter.next(), Some(&6));
@@ -586,8 +614,6 @@ mod deque {
         assert_eq!(iter.next(), Some(&3));
         assert_eq!(iter.next(), Some(&1));
         assert_eq!(iter.next(), Some(&2));
-        assert_eq!(iter.next(), Some(&7));
-        assert_eq!(iter.next(), Some(&8));
         assert_eq!(iter.next(), None);
     }
 
@@ -674,10 +700,21 @@ mod deque {
     }
 
     #[test]
-    #[should_panic(expected = "Zero-sized allocation is not support")]
     fn zero_sized() {
         let mut d = Deque::new();
         d.push_back(());
+        d.push_front(());
+        d.push_front(());
+        d.push_back(());
+        assert_eq!(d.len(), 4);
+        assert_eq!(d.pop_back(), Some(()));
+        assert_eq!(d.pop_back(), Some(()));
+        assert_eq!(d.len(), 2);
+        assert_eq!((d[0], d[1]), ((), ()));
+        assert_eq!(d.front(), Some(&()));
+        assert_eq!(d.back(), Some(&()));
+        assert_eq!(d.into_iter().collect::<Vec<_>>(), vec![(), ()],);
+    }
     #[test]
     fn drop() {
         static mut DROPS: u32 = 0;
