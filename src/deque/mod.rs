@@ -715,6 +715,21 @@ mod deque {
         assert_eq!(d.back(), Some(&()));
         assert_eq!(d.into_iter().collect::<Vec<_>>(), vec![(), ()],);
     }
+
+    #[test]
+    fn complex_data() {
+        let mut d = Deque::new();
+        assert_eq!(d.len(), 0);
+        d.push_front(vec![]);
+        d.push_back(vec![Box::new(())]);
+        d.push_back(vec![Box::new(()), Box::new(())]);
+        d.push_front(vec![Box::new(()), Box::new(()), Box::new(())]);
+        assert_eq!(d[0].len(), 3);
+        assert_eq!(d[1].len(), 0);
+        assert_eq!(d[2].len(), 1);
+        assert_eq!(d[3].len(), 2);
+    }
+
     #[test]
     fn drop() {
         static mut DROPS: u32 = 0;
