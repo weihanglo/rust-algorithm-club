@@ -386,20 +386,6 @@ impl<'a, T> IntoIterator for &'a mut Deque<T> {
 }
 // ANCHOR_END: IntoIterator
 
-/// A growable, contiguous heap memory allocation that stores homogeneous elements.
-///
-/// This is a simplified version of [`RawVec`] inside Rust Standard Library.
-/// Use at your own risk.
-///
-/// [`RawVec`]: https://github.com/rust-lang/rust/blob/ff6ee2a7/library/alloc/src/raw_vec.rs
-#[derive(Debug)]
-// ANCHOR: RawVec
-struct RawVec<T> {
-    ptr: *mut T,
-    cap: usize,
-}
-// ANCHOR_END: RawVec
-
 // ANCHOR: Index
 impl<T> Index<usize> for Deque<T> {
     type Output = T;
@@ -431,6 +417,20 @@ impl<T: fmt::Debug> fmt::Debug for Deque<T> {
     }
 }
 // ANCHOR_END: Debug
+
+/// A growable, contiguous heap memory allocation that stores homogeneous elements.
+///
+/// This type can be seen as a simplified version of [`RawVec`] inside Rust
+/// Standard Library. Use at your own risk.
+///
+/// [`RawVec`]: https://github.com/rust-lang/rust/blob/ff6ee2a7/library/alloc/src/raw_vec.rs
+#[derive(Debug)]
+// ANCHOR: RawVec
+struct RawVec<T> {
+    ptr: *mut T,
+    cap: usize,
+}
+// ANCHOR_END: RawVec
 
 impl<T> RawVec<T> {
     /// Allocates on the heap with a certain capacity.
