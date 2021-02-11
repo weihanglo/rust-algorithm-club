@@ -1,6 +1,6 @@
 use core::ops::{Index, IndexMut};
 use core::{fmt, mem, ptr, slice};
-use std::alloc::{alloc, dealloc, realloc, Layout};
+use std::alloc::{alloc, dealloc, handle_alloc_error, realloc, Layout};
 
 // A double-ended queue (abbreviated to _deque_), for which elements can be
 // added or remove from both back and front ends.
@@ -448,14 +448,23 @@ impl<T> RawVec<T> {
     pub fn with_capacity(cap: usize) -> Self {
         let layout = Layout::array::<T>(cap).unwrap();
         if layout.size() == 0 {
+            // This is safe for zero sized types. However, be careful when facing
+            // zero capacity layouts. It must be replaced with an actual pointer
+            // before operations such as dereference or read/write.
             let ptr = ptr::NonNull::dangling().as_ptr();
             Self { ptr, cap: 0 }
         } else {
             // This is safe because it conforms to the [safety contracts][1].
             //
             // [1] https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-1
-            let ptr = unsafe { alloc(layout).cast() };
-            Self { ptr, cap }
+            let ptr = unsafe { alloc(layout) };
+            if ptr.is_null() {
+                handle_alloc_error(layout);
+            }
+            Self {
+                ptr: ptr.cast(),
+                cap,
+            }
         }
     }
     // ANCHOR_END: RawVec_with_capacity
@@ -481,10 +490,13 @@ impl<T> RawVec<T> {
         // This is safe because it conforms to the [safety contracts][1].
         //
         // [1] https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-4
-        let ptr = unsafe { realloc(self.ptr.cast(), old_layout, new_size).cast() };
-        // ...Old allocation is unusable and may be released from here.
+        let ptr = unsafe { realloc(self.ptr.cast(), old_layout, new_size) };
+        if ptr.is_null() {
+            handle_alloc_error(old_layout);
+        }
+        // ...Old allocation is unusable and may be released from here at anytime.
 
-        self.ptr = ptr;
+        self.ptr = ptr.cast();
         self.cap = new_cap;
     }
     // ANCHOR_END: RawVec_try_grow
