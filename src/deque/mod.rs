@@ -168,13 +168,6 @@ impl<T> Deque<T> {
     }
     // ANCHOR_END: len
 
-    /// Checks if underlying ring buffer is full.
-    // ANCHOR: is_full
-    fn is_full(&self) -> bool {
-        self.cap() - self.len() == 1
-    }
-    // ANCHOR_END: is_full
-
     /// Creates an iterator that yields immutable reference of each element.
     // ANCHOR: iter
     pub fn iter(&self) -> Iter<T> {
@@ -198,6 +191,13 @@ impl<T> Deque<T> {
         }
     }
     // ANCHOR_END: iter_mut
+
+    /// Checks if underlying ring buffer is full.
+    // ANCHOR: is_full
+    fn is_full(&self) -> bool {
+        self.cap() - self.len() == 1
+    }
+    // ANCHOR_END: is_full
 
     /// Resizes the underlying ring buffer if necessary.
     ///
