@@ -258,7 +258,6 @@ impl<T> Deque<T> {
 
     /// An abstraction for accessing the pointer of the ring buffer.
     // ANCHOR: ptr
-    #[inline]
     fn ptr(&self) -> *mut T {
         self.ring_buf.ptr
     }
@@ -266,7 +265,6 @@ impl<T> Deque<T> {
 
     /// An abstraction for accessing the capacity of the ring buffer.
     // ANCHOR: cap
-    #[inline]
     fn cap(&self) -> usize {
         self.ring_buf.cap()
     }
@@ -492,7 +490,6 @@ impl<T> RawVec<T> {
     ///
     /// This will always be `usize::MAX` if `T` is zero-sized.
     // ANCHOR: RawVec_cap
-    #[inline]
     pub fn cap(&self) -> usize {
         if mem::size_of::<T>() == 0 {
             // Largest possible power of two. Equals to `(usize::MAX + 1) / 2`.
@@ -508,7 +505,6 @@ impl<T> RawVec<T> {
     ///
     /// This is unsafe because the block may not have all its contents initialized.
     // ANCHOR: RawVec_as_slice
-    #[inline]
     pub unsafe fn as_slice(&self) -> &[T] {
         slice::from_raw_parts(self.ptr.cast(), self.cap())
     }
@@ -518,7 +514,6 @@ impl<T> RawVec<T> {
     ///
     /// This is unsafe because the block may not have all its contents initialized.
     // ANCHOR: RawVec_as_mut_slice
-    #[inline]
     pub unsafe fn as_mut_slice(&self) -> &mut [T] {
         slice::from_raw_parts_mut(self.ptr.cast(), self.cap())
     }
