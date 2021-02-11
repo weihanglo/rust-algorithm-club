@@ -441,7 +441,9 @@ struct RawVec<T> {
 impl<T> RawVec<T> {
     /// Allocates on the heap with a certain capacity.
     ///
-    /// This method allocates non-zero sized types with at least one capacity.
+    /// The `cap` argument would be ignored when allocating zero sized types
+    /// and use zero instead. The caller would see a quite large capacity.
+    /// See [`RawVec::cap`] for more.
     // ANCHOR: RawVec_with_capacity
     pub fn with_capacity(cap: usize) -> Self {
         let layout = Layout::array::<T>(cap).unwrap();
@@ -458,9 +460,10 @@ impl<T> RawVec<T> {
     }
     // ANCHOR_END: RawVec_with_capacity
 
-    // Doubles the size of the memory region.
-    //
-    // This method maybe reallocates non-zero sized types only.
+    /// Doubles the size of the memory region.
+    ///
+    /// This method maybe only reallocates non-zero sized types. Non-zero sized
+    /// types would not grow since they are not actually allocated.
     // ANCHOR: RawVec_try_grow
     pub fn try_grow(&mut self) {
         if mem::size_of::<T>() == 0 {
@@ -488,12 +491,13 @@ impl<T> RawVec<T> {
 
     /// Gets the capacity of the allocation.
     ///
-    /// This will always be `usize::MAX` if `T` is zero-sized.
+    /// If `T` is zero sized, this will always be the largest possible power of
+    /// two of `usize`. Currently `(usize::MAX + 1) / 2`.
+    ///
+    /// Ref: [https://github.com/rust-lang/rust/blob/f7534b/library/alloc/src/collections/vec_deque/mod.rs#L61]
     // ANCHOR: RawVec_cap
     pub fn cap(&self) -> usize {
         if mem::size_of::<T>() == 0 {
-            // Largest possible power of two. Equals to `(usize::MAX + 1) / 2`.
-            // Ref: https://github.com/rust-lang/rust/blob/f7534b/library/alloc/src/collections/vec_deque/mod.rs#L61
             1usize << (mem::size_of::<usize>() * 8 - 1)
         } else {
             self.cap
@@ -501,18 +505,18 @@ impl<T> RawVec<T> {
     }
     // ANCHOR_END: RawVec_cap
 
-    /// Returns an immutable slice of underlying allocation memory block.
+    /// Returns an immutable slice of underlying allocation.
     ///
-    /// This is unsafe because the block may not have all its contents initialized.
+    /// This is unsafe because the slice may not have all its contents initialized.
     // ANCHOR: RawVec_as_slice
     pub unsafe fn as_slice(&self) -> &[T] {
         slice::from_raw_parts(self.ptr.cast(), self.cap())
     }
     // ANCHOR_END: RawVec_as_slice
 
-    /// Returns a mutable slice of underlying allocation memory block.
+    /// Returns a mutable slice of underlying allocation.
     ///
-    /// This is unsafe because the block may not have all its contents initialized.
+    /// This is unsafe because the slice may not have all its contents initialized.
     // ANCHOR: RawVec_as_mut_slice
     pub unsafe fn as_mut_slice(&self) -> &mut [T] {
         slice::from_raw_parts_mut(self.ptr.cast(), self.cap())
@@ -527,7 +531,9 @@ impl<T> Drop for RawVec<T> {
     ///
     /// This method only deallocates when containing actual sized elements.
     ///
-    /// Note that this only drop the vector itself but not its actual content.
+    /// Note that this only drop the memory block allocated by `RawVec` itself
+    /// without dropping the contents. Callers may need to drop the contents
+    /// by themselves.
     fn drop(&mut self) {
         let size = mem::size_of::<T>() * self.cap;
         if size > 0 {
