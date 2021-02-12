@@ -7,5 +7,5 @@ description = "Learn algorithms and data structures with Rust"
 homepage = "https://rust-algo.club"
 repository = "https://github.com/weihanglo/rust-algorithm-club"
 
-[dev-dependencies]
+[dependencies]
 rand = "0.7"

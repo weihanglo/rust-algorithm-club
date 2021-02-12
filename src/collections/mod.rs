@@ -17,3 +17,6 @@ pub use self::bloom_filter::BloomFilter;
 
 mod queue;
 pub use self::queue::Queue;
+
+mod skip_list;
+pub use self::skip_list::SkipList;
