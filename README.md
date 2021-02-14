@@ -88,6 +88,7 @@ Special-purpose sorts:
 - [🚧 Multimap](src/collections/multimap)
 - [Set](src/collections/set)
 - [Bloom filter](src/collections/bloom_filter)
+- [🚧 Skip list](src/collections/skip_list)
 
 ### String Manipulation
 
