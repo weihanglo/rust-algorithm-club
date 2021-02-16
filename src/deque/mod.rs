@@ -52,10 +52,10 @@ impl<T> Deque<T> {
     /// Constant.
     // ANCHOR: push_front
     pub fn push_front(&mut self, elem: T) {
-        self.try_resize();
         self.tail = self.wrapping_sub(self.tail, 1);
         // This is safe because the offset is wrapped inside available memory by `wrap_index()`.
         unsafe { self.ptr().add(self.tail).write(elem) }
+        self.try_grow(); // 1
     }
     // ANCHOR_END: push_front
 
@@ -70,7 +70,7 @@ impl<T> Deque<T> {
     /// Constant.
     // ANCHOR: push_back
     pub fn push_back(&mut self, elem: T) {
-        self.try_resize();
+        self.try_grow(); // 1
         let head = self.head;
         self.head = self.wrapping_add(self.head, 1);
         // This is safe because the offset is wrapped inside available memory by `wrap_index()`.
@@ -201,44 +201,51 @@ impl<T> Deque<T> {
 
     /// Resizes the underlying ring buffer if necessary.
     ///
+    /// This method simply makes the ring buffer contiguous for the beneath
+    /// scenario (tail > head). For a thorough Implementation, please refer to
+    /// [`VecDeque::handle_capacity_increase`][1].
+    ///
+    /// ```console,ignore
+    /// Before:
+    ///          h   t
+    /// [o o o o x x o o]
+    ///
+    /// Resize:
+    ///          h   t
+    /// [o o o o x x o o | x x x x x x x x]
+    ///
+    /// Copy:
+    ///              t           h
+    /// [x x x x x x o o | o o o o x x x x]
+    ///  _ _ _ _           _ _ _ _
+    /// ```
+    ///
     /// # Complexity
     ///
     /// Linear in the size of the container.
     ///
-    // ANCHOR: try_resize
-    fn try_resize(&mut self) {
+    /// [1]: https://github.com/rust-lang/rust/blob/07194ff/library/alloc/src/collections/vec_deque/mod.rs#L405-L447
+    // ANCHOR: try_grow
+    fn try_grow(&mut self) {
         if self.is_full() {
-            let old_cap = self.cap();
-            self.ring_buf.try_grow();
+            let old_cap = self.cap(); // 1
+            self.ring_buf.try_grow(); // 2
 
+            // 3
             if self.tail > self.head {
-                // Make the ring buffer contiguous.
-                //
-                // The content of ring buffer won't overlapping, so
-                // `copy_nonoverlapping` is safe to called.
-                //
-                // Before:
-                //          h   t
-                // [o o o o x x o o]
-                //
-                // Resize:
-                //          h   t
-                // [o o o o x x o o | x x x x x x x x]
-                //
-                // Copy:
-                //              t           h
-                // [x x x x x x o o | o o o o x x x x]
-                //  _ _ _ _           _ _ _ _
+                // The content of ring buffer won't overlapped, so it's safe to
+                // call `copy_nonoverlapping`. It's also safe to advance the
+                // pointer by `old_cap` since the buffer has been doubled.
                 unsafe {
-                    let src = self.ptr();
-                    let dst = self.ptr().add(old_cap);
+                    let src = self.ptr(); // 4-1
+                    let dst = self.ptr().add(old_cap); // 4-2
                     ptr::copy_nonoverlapping(src, dst, self.head);
                 }
-                self.head += old_cap;
+                self.head += old_cap; // 5
             }
         }
     }
-    // ANCHOR_END: try_resize
+    // ANCHOR_END: try_grow
 
     /// Returns the actual index of the underlying ring buffer for a given
     /// logical index + addend.
