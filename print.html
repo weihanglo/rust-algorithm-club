@@ -2840,7 +2840,7 @@ use ::sorting::counting_sort;
 <p>雙端佇列常見用動態陣列或是鏈結串列實作，動態陣列的實作會因空間不夠，需要重新配置記憶體，但通常會支援隨機存取（random access）；鏈結串列的實作版本雖無法隨機存取，相對地增刪元素不需記憶體重配置。</p>
 <p>雙端佇列顯著的缺點是：無論以動態陣列或連結串列實作，基本款實作通常無法在 $O(k)$ 時間複雜度的情況下，選定範圍內 k 個元素並取得單一切片（slice）。這肇因於動態陣列的實作通常內部儲存空間經過多次增刪，空間利用會不連續；而用鏈結串列實作者，則因不支援隨機存取而無法達到相應的複雜度。</p>
 <blockquote>
-<p>本次實作的程式碼置於在 [<code>rust_algorithm_club::collections::Deque</code>] API 文件中。</p>
+<p>本次實作的程式碼置於在 <a href="collections/deque//doc/rust_algorithm_club/collections/struct.Deque.html"><code>rust_algorithm_club::collections::Deque</code></a> API 文件中。</p>
 </blockquote>
 <h2><a class="header" href="#架構設計-2" id="架構設計-2">架構設計</a></h2>
 <p>雙端佇列有個實作重點：可在<strong>常數時間</strong>從頭尾兩端增刪元素。在資料結構設計上，會儲存分別指向頭尾的兩個指標，長相可能如下：</p>
