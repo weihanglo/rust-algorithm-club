@@ -8,7 +8,7 @@
 
 > 本次實作的程式碼置於在 [`rust_algorithm_club::collections::Deque`] API 文件中。
 
-[`rust_algorithm_club::Deque`]: /doc/rust_algorithm_club/collections/struct.Deque.html
+[`rust_algorithm_club::collections::Deque`]: /doc/rust_algorithm_club/collections/struct.Deque.html
 [佇列]: ../queue
 [堆疊]: ../stack
 
