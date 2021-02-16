@@ -557,8 +557,8 @@ mod set_relations {
         // ∅, {cat} are disjoint.
         let s1: HashSet<&str> = [].iter().cloned().collect();
         let s2: HashSet<&str> = ["cat"].iter().cloned().collect();
-        assert!(s1.is_disjoint(&s2), "∅, {cat} are disjoint");
-        assert!(s2.is_disjoint(&s1), "∅, {cat} are disjoint");
+        assert!(s1.is_disjoint(&s2), "{}", "∅, {cat} are disjoint");
+        assert!(s2.is_disjoint(&s1), "{}", "∅, {cat} are disjoint");
 
         // {rat}, {cat} are disjoint.
         let s1: HashSet<&str> = ["rat"].iter().cloned().collect();
