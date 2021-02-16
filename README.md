@@ -69,7 +69,7 @@ Special-purpose sorts:
 
 - [Stack](src/collections/stack)
 - [Queue](src/collections/queue)
-- [🚧 Deque](src/collections/deque)
+- [Deque](src/deque)
 
 ### Linked List
 

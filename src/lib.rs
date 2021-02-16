@@ -9,6 +9,10 @@
 #![doc(html_logo_url = "https://rust-algo.club/favicon.png")]
 
 pub mod collections;
+
+mod deque;
+pub use deque::Deque;
+
 pub mod searching;
 pub mod sorting;
 
