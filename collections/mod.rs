@@ -1,4 +1,4 @@
-//! Collections.
+//! Colletions are general-purpose or specialized data structures in which elements store.
 
 mod singly_linked_list;
 pub use self::singly_linked_list::SinglyLinkedList;
