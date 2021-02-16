@@ -15,5 +15,8 @@ pub use self::stack::Stack;
 mod bloom_filter;
 pub use self::bloom_filter::BloomFilter;
 
+mod deque;
+pub use self::deque::Deque;
+
 mod queue;
 pub use self::queue::Queue;

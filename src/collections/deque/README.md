@@ -6,11 +6,11 @@
 
 雙端佇列顯著的缺點是：無論以動態陣列或連結串列實作，基本款實作通常無法在 $O(k)$ 時間複雜度的情況下，選定範圍內 k 個元素並取得單一切片（slice）。這肇因於動態陣列的實作通常內部儲存空間經過多次增刪，空間利用會不連續；而用鏈結串列實作者，則因不支援隨機存取而無法達到相應的複雜度。
 
-> 本次實作的程式碼置於在 [`rust_algorithm_club::Deque`] API 文件中。
+> 本次實作的程式碼置於在 [`rust_algorithm_club::collections::Deque`] API 文件中。
 
-[`rust_algorithm_club::Deque`]: /doc/rust_algorithm_club/struct.Deque.html
-[佇列]: ../collections/queue
-[堆疊]: ../collections/stack
+[`rust_algorithm_club::Deque`]: /doc/rust_algorithm_club/collections/struct.Deque.html
+[佇列]: ../queue
+[堆疊]: ../stack
 
 ## 架構設計
 
@@ -546,28 +546,28 @@ impl<'a, T> Iterator for IterMut<'a, T> {
 
 ```console
 error[E0495]: cannot infer an appropriate lifetime for autoref due to conflicting requirements
-   --> src/deque/mod.rs:353:23
+   --> src/collections/deque/mod.rs:353:23
     |
 353 |         self.ring_buf.get_mut(tail)
     |                       ^^^^^^^
     |
 note: first, the lifetime cannot outlive the anonymous lifetime #1 defined on the method body at 347:5...
-   --> src/deque/mod.rs:347:5
+   --> src/collections/deque/mod.rs:347:5
     |
 347 |     fn next(&mut self) -> Option<&'a mut T> {
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 note: ...so that reference does not outlive borrowed content
-   --> src/deque/mod.rs:353:9
+   --> src/collections/deque/mod.rs:353:9
     |
 353 |         self.ring_buf.get_mut(tail)
     |         ^^^^^^^^^^^^^
 note: but, the lifetime must be valid for the lifetime `'a` as defined on the impl at 344:6...
-   --> src/deque/mod.rs:344:6
+   --> src/collections/deque/mod.rs:344:6
     |
 344 | impl<'a, T> Iterator for IterMut<'a, T> {
     |      ^^
 note: ...so that the expression is assignable
-   --> src/deque/mod.rs:353:9
+   --> src/collections/deque/mod.rs:353:9
     |
 353 |         self.ring_buf.get_mut(tail)
     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -606,7 +606,7 @@ impl<'a, T> Iterator for IterMut<'a, T> {
 }
 
 // error[E0195]: lifetime parameters or bounds on method `next` do not match the trait declaration
-//    --> src/deque/mod.rs:347:12
+//    --> src/collections/deque/mod.rs:347:12
 //     |
 // 347 |     fn next<'b: 'a>(&'b mut self) -> Option<Self::Item> {
 //     |            ^^^^^^^^ lifetimes do not match method in trait
