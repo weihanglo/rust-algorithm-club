@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["rust_algorithm_club"] = [{"text":"impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt;","synthetic":false,"types":[]}];
+implementors["rust_algorithm_club"] = [{"text":"impl&lt;T&gt; IntoIterator for SinglyLinkedList&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T&gt; IntoIterator for Deque&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'a, T&gt; IntoIterator for &amp;'a Deque&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'a, T&gt; IntoIterator for &amp;'a mut Deque&lt;T&gt;","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
