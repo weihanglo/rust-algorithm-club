@@ -2,14 +2,14 @@ use core::ops::{Index, IndexMut};
 use core::{fmt, mem, ptr, slice};
 use std::alloc::{alloc, dealloc, handle_alloc_error, realloc, Layout};
 
-// A double-ended queue (abbreviated to _deque_), for which elements can be
-// added or remove from both back and front ends.
-//
-// Underneath the hood, this [`Deque`] uses a contiguous memory block as a ring
-// buffer to store values.
-//
-// References:
-//
+/// A double-ended queue (abbreviated to _deque_), for which elements can be
+/// added or remove from both back and front ends.
+///
+/// Underneath the hood, this [`Deque`] uses a contiguous memory block as a ring
+/// buffer to store values.
+///
+/// References:
+///
 /// - [Rust Standard Library: std::collections::VecDeque][1]
 /// - [Wikipedia: Circular buffer][2]
 ///

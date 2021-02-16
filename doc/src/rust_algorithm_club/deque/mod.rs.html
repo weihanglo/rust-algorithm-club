@@ -790,14 +790,14 @@
 <span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">fmt</span>, <span class="ident">mem</span>, <span class="ident">ptr</span>, <span class="ident">slice</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">alloc</span>::{<span class="ident">alloc</span>, <span class="ident">dealloc</span>, <span class="ident">handle_alloc_error</span>, <span class="ident">realloc</span>, <span class="ident">Layout</span>};
 
-<span class="comment">// A double-ended queue (abbreviated to _deque_), for which elements can be</span>
-<span class="comment">// added or remove from both back and front ends.</span>
-<span class="comment">//</span>
-<span class="comment">// Underneath the hood, this [`Deque`] uses a contiguous memory block as a ring</span>
-<span class="comment">// buffer to store values.</span>
-<span class="comment">//</span>
-<span class="comment">// References:</span>
-<span class="comment">//</span>
+<span class="doccomment">/// A double-ended queue (abbreviated to _deque_), for which elements can be</span>
+<span class="doccomment">/// added or remove from both back and front ends.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Underneath the hood, this [`Deque`] uses a contiguous memory block as a ring</span>
+<span class="doccomment">/// buffer to store values.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// References:</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// - [Rust Standard Library: std::collections::VecDeque][1]</span>
 <span class="doccomment">/// - [Wikipedia: Circular buffer][2]</span>
 <span class="doccomment">///</span>
