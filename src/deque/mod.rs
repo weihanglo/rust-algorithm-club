@@ -23,7 +23,7 @@ pub struct Deque<T> {
 }
 // ANCHOR_END: layout
 
-/// For testing convenience, set default capacity to 1 in order to trigger
+/// For demo purpose, set default capacity to 1 in order to trigger
 /// buffer expansions easily. This value must be power of 2.
 const DEFAULT_CAPACITY: usize = 1;
 
@@ -52,10 +52,11 @@ impl<T> Deque<T> {
     /// Constant.
     // ANCHOR: push_front
     pub fn push_front(&mut self, elem: T) {
-        self.tail = self.wrapping_sub(self.tail, 1);
-        // This is safe because the offset is wrapped inside available memory by `wrap_index()`.
-        unsafe { self.ptr().add(self.tail).write(elem) }
         self.try_grow(); // 1
+        self.tail = self.wrapping_sub(self.tail, 1); // 2
+
+        // This is safe because the offset is wrapped inside valid memory region.
+        unsafe { self.ptr().add(self.tail).write(elem) } // 3
     }
     // ANCHOR_END: push_front
 
@@ -72,9 +73,10 @@ impl<T> Deque<T> {
     pub fn push_back(&mut self, elem: T) {
         self.try_grow(); // 1
         let head = self.head;
-        self.head = self.wrapping_add(self.head, 1);
-        // This is safe because the offset is wrapped inside available memory by `wrap_index()`.
-        unsafe { self.ptr().add(head).write(elem) }
+        self.head = self.wrapping_add(self.head, 1); // 2
+
+        // This is safe because the offset is wrapped inside valid memory region.
+        unsafe { self.ptr().add(head).write(elem) } // 3
     }
     // ANCHOR_END: push_back
 
@@ -87,12 +89,14 @@ impl<T> Deque<T> {
     // ANCHOR: pop_front
     pub fn pop_front(&mut self) -> Option<T> {
         if self.is_empty() {
-            return None;
+            return None; // 1
         }
+
         let tail = self.tail;
-        self.tail = self.wrapping_add(self.tail, 1);
-        // This is safe because the offset is wrapped inside available memory by `wrap_index()`.
-        unsafe { Some(self.ptr().add(tail).read()) }
+        self.tail = self.wrapping_add(self.tail, 1); // 2
+
+        // This is safe because the offset is wrapped inside valid memory region.
+        unsafe { Some(self.ptr().add(tail).read()) } // 3
     }
     // ANCHOR_END: pop_front
 
@@ -105,11 +109,13 @@ impl<T> Deque<T> {
     // ANCHOR: push_back
     pub fn pop_back(&mut self) -> Option<T> {
         if self.is_empty() {
-            return None;
+            return None; // 1
         }
-        self.head = self.wrapping_sub(self.head, 1);
-        // This is safe because the offset is wrapped inside available memory by `wrap_index()`.
-        unsafe { Some(self.ptr().add(self.head).read()) }
+
+        self.head = self.wrapping_sub(self.head, 1); // 2
+
+        // This is safe because the offset is wrapped inside valid memory region.
+        unsafe { Some(self.ptr().add(self.head).read()) } // 3
     }
     // ANCHOR_END: push_back
 
@@ -124,7 +130,7 @@ impl<T> Deque<T> {
         if self.is_empty() {
             return None;
         }
-        // This is safe due to the offset is wrapped inside available memory by `wrap_index()`.
+        // This is safe because the offset is wrapped inside valid memory region.
         unsafe { Some(&*self.ptr().add(self.tail)) }
     }
     // ANCHOR_END: front
@@ -141,7 +147,7 @@ impl<T> Deque<T> {
             return None;
         }
         let head = self.wrapping_sub(self.head, 1);
-        // This is safe due to the offset is wrapped inside available memory by `wrap_index()`.
+        // This is safe because the offset is wrapped inside valid memory region.
         unsafe { Some(&*self.ptr().add(head)) }
     }
     // ANCHOR_END: back
@@ -164,7 +170,7 @@ impl<T> Deque<T> {
     /// Constant.
     // ANCHOR: len
     pub fn len(&self) -> usize {
-        self.head.wrapping_sub(self.tail) & self.cap() - 1
+        self.head.wrapping_sub(self.tail) & (self.cap() - 1)
     }
     // ANCHOR_END: len
 
@@ -174,7 +180,7 @@ impl<T> Deque<T> {
         Iter {
             head: self.head,
             tail: self.tail,
-            // This is safe because will only read/write initialized contents.
+            // This is safe because only initialized contents would be accessed.
             ring_buf: unsafe { self.ring_buf.as_slice() },
         }
     }
@@ -186,7 +192,7 @@ impl<T> Deque<T> {
         IterMut {
             head: self.head,
             tail: self.tail,
-            // This is safe because will only read/write initialized contents.
+            // This is safe because only initialized contents would be accessed.
             ring_buf: unsafe { self.ring_buf.as_mut_slice() },
         }
     }
@@ -314,11 +320,11 @@ impl<'a, T> Iterator for Iter<'a, T> {
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.tail == self.head {
-            return None;
+            return None; // 1
         }
-        let tail = self.tail;
-        self.tail = wrap_index(self.tail.wrapping_add(1), self.ring_buf.len());
-        self.ring_buf.get(tail)
+        let tail = self.tail; // 2
+        self.tail = wrap_index(self.tail.wrapping_add(1), self.ring_buf.len()); // 3
+        self.ring_buf.get(tail) // 4
     }
 }
 // ANCHOR_END: Iter
@@ -344,10 +350,14 @@ impl<'a, T> Iterator for IterMut<'a, T> {
         }
         let tail = self.tail;
         self.tail = wrap_index(self.tail.wrapping_add(1), self.ring_buf.len());
-        // TODO: unsafe
+        // This unsafe block is needed for solving the limitation of Iterator
+        // trait: the `&mut self` is bound to an anonymous lifetime which rustc
+        // cannot figure out whether it would outlive returning element. Hence
+        // the explicit pointer casting is required.
         unsafe {
-            let elem = self.ring_buf.get_unchecked_mut(tail);
-            Some(&mut *(elem as *mut _))
+            let ptr = self.ring_buf as *mut [T]; // 1
+            let slice = &mut *ptr; // 2
+            slice.get_mut(tail) // 3
         }
     }
 }
@@ -379,7 +389,9 @@ impl<T> IntoIterator for Deque<T> {
         IntoIter(self)
     }
 }
+// ANCHOR_END: IntoIterator
 
+// ANCHOR: IntoIterator_ref
 impl<'a, T> IntoIterator for &'a Deque<T> {
     type Item = &'a T;
     type IntoIter = Iter<'a, T>;
@@ -397,7 +409,7 @@ impl<'a, T> IntoIterator for &'a mut Deque<T> {
         self.iter_mut()
     }
 }
-// ANCHOR_END: IntoIterator
+// ANCHOR_END: IntoIterator_ref
 
 // ANCHOR: Index
 impl<T> Index<usize> for Deque<T> {
@@ -406,7 +418,7 @@ impl<T> Index<usize> for Deque<T> {
     fn index(&self, index: usize) -> &Self::Output {
         assert!(index < self.len(), "Out of bound");
         let index = self.wrapping_add(self.tail, index);
-        // This is safe because the offset is wrapped inside available memory by `wrap_index()`.
+        // This is safe because the offset is wrapped inside valid memory region.
         unsafe { &*self.ptr().add(index) }
     }
 }
@@ -417,7 +429,7 @@ impl<T> IndexMut<usize> for Deque<T> {
     fn index_mut(&mut self, index: usize) -> &mut T {
         assert!(index < self.len(), "Out of bound");
         let index = self.wrapping_add(self.tail, index);
-        // This is safe because the offset is wrapped inside available memory by `wrap_index()`.
+        // This is safe because the offset is wrapped inside valid memory region.
         unsafe { &mut *self.ptr().add(index) }
     }
 }
@@ -453,18 +465,20 @@ impl<T> RawVec<T> {
     /// See [`RawVec::cap`] for more.
     // ANCHOR: RawVec_with_capacity
     pub fn with_capacity(cap: usize) -> Self {
-        let layout = Layout::array::<T>(cap).unwrap();
+        let layout = Layout::array::<T>(cap).unwrap(); // 1
+
+        // 2
         if layout.size() == 0 {
             // This is safe for zero sized types. However, be careful when facing
             // zero capacity layouts. It must be replaced with an actual pointer
             // before operations such as dereference or read/write.
-            let ptr = ptr::NonNull::dangling().as_ptr();
+            let ptr = ptr::NonNull::dangling().as_ptr(); // 3
             Self { ptr, cap: 0 }
         } else {
             // This is safe because it conforms to the [safety contracts][1].
             //
-            // [1] https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-1
-            let ptr = unsafe { alloc(layout) };
+            // [1]: https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-1
+            let ptr = unsafe { alloc(layout) }; // 4
             if ptr.is_null() {
                 handle_alloc_error(layout);
             }
@@ -483,27 +497,27 @@ impl<T> RawVec<T> {
     // ANCHOR: RawVec_try_grow
     pub fn try_grow(&mut self) {
         if mem::size_of::<T>() == 0 {
-            return;
+            return; // 1
         }
 
         if self.cap == 0 {
-            *self = Self::with_capacity(1);
+            *self = Self::with_capacity(1); // 2
             return;
         }
 
-        let old_layout = Layout::array::<T>(self.cap).unwrap();
-        let new_cap = if self.cap == 0 { 1 } else { self.cap * 2 };
+        let old_layout = Layout::array::<T>(self.cap).unwrap(); // 3
+        let new_cap = self.cap << 1;
         let new_size = old_layout.size() * new_cap;
         // This is safe because it conforms to the [safety contracts][1].
         //
-        // [1] https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-4
+        // [1]: https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-4
         let ptr = unsafe { realloc(self.ptr.cast(), old_layout, new_size) };
         if ptr.is_null() {
             handle_alloc_error(old_layout);
         }
         // ...Old allocation is unusable and may be released from here at anytime.
 
-        self.ptr = ptr.cast();
+        self.ptr = ptr.cast(); // 4
         self.cap = new_cap;
     }
     // ANCHOR_END: RawVec_try_grow
