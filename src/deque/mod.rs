@@ -541,19 +541,14 @@ impl<T> Drop for RawVec<T> {
     /// Deallocates the underlying memory region by calculating the type layout
     /// and number of elements.
     ///
-    /// This method only deallocates when containing actual sized elements.
-    ///
-    /// Note that this only drop the memory block allocated by `RawVec` itself
-    /// without dropping the contents. Callers may need to drop the contents
-    /// by themselves.
+    /// This only drop the memory block allocated by `RawVec` itself but not
+    /// dropping the contents. Callers need to drop the contents by themselves.
     fn drop(&mut self) {
-        let size = mem::size_of::<T>() * self.cap;
-        if size > 0 {
-            let align = mem::align_of::<T>();
-            let layout = Layout::from_size_align(size, align).unwrap();
+        let layout = Layout::array::<T>(self.cap).unwrap(); // 1
+        if layout.size() > 0 {
             // This is safe because it conforms to the [safety contracts][1].
             //
-            // [1] https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-2
+            // [1]: https://doc.rust-lang.org/1.49.0/alloc/alloc/trait.GlobalAlloc.html#safety-2
             unsafe { dealloc(self.ptr.cast(), layout) }
         }
     }
