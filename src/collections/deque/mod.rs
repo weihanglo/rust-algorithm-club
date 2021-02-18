@@ -106,7 +106,7 @@ impl<T> Deque<T> {
     /// # Complexity
     ///
     /// Constant.
-    // ANCHOR: push_back
+    // ANCHOR: pop_back
     pub fn pop_back(&mut self) -> Option<T> {
         if self.is_empty() {
             return None; // 1
@@ -117,7 +117,7 @@ impl<T> Deque<T> {
         // This is safe because the offset is wrapped inside valid memory region.
         unsafe { Some(self.ptr().add(self.head).read()) } // 3
     }
-    // ANCHOR_END: push_back
+    // ANCHOR_END: pop_back
 
     /// Peeks the first element of the container.
     /// If there are no elements in the container, return `None`.
