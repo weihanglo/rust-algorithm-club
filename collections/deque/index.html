@@ -704,7 +704,16 @@ Copy:
         unsafe { Some(self.ptr().add(tail).read()) } // 3
     }
 
+    pub fn pop_back(&amp;mut self) -&gt; Option&lt;T&gt; {
+        if self.is_empty() {
+            return None; // 1
+        }
 
+        self.head = self.wrapping_sub(self.head, 1); // 2
+
+        // This is safe because the offset is wrapped inside valid memory region.
+        unsafe { Some(self.ptr().add(self.head).read()) } // 3
+    }
 <span class="boring">}
 </span></code></pre></pre>
 <ol>
