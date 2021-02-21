@@ -20,9 +20,9 @@ There are also some meta issues tracking features under construction 🚧. Take 
 
 Before submitting your contribution, make sure your works satisify the following requirements:
 
-- Do not broke existing tests. Run `cargo test` before sending pull requests. A new algorithm is also expected to contain its own unit tests.
+- Do not break existing tests. Run `cargo test` before sending pull requests. A new algorithm is also expected to contain its own unit tests.
 - Every public interface must be documented. The documention needn't be perfect but at least explain its intent and usage clearly.
-- Try to keep the writing style and structure consistent across posts. E.g. contains a brief description at first paragraph, explain performance with asymptotic notations.
+- Try to keep the writing style and structure consistent across posts. E.g. contains a brief description at first paragraph, explains performance with asymptotic notations.
 - Coding style should conform to Rust conventions. Such as using `into` to refer to an ownership transfer or naming additional contructors prefixed by `with`. Currently, the use of [Clippy][rust-clippy] and [rustfmt][rust-fmt] are not required.
 
 [issues]: https://github.com/weihanglo/rust-algorithm-club/search?q=&type=Issues&utf8=%E2%9C%93
