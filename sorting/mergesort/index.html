@@ -170,7 +170,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#合併排序-mergesort" id="合併排序-mergesort">合併排序 Mergesort</a></h1>
+                        <h1 id="合併排序-mergesort"><a class="header" href="#合併排序-mergesort">合併排序 Mergesort</a></h1>
 <p>Mergesort 是一個泛用且高效穩定的排序法，最佳與最差時間複雜都是 $O(n \log n) $。Mergesort 可謂著名「Divide and Conquer」手法的經典案例，先將序列分成更小的子序列（Divide），一個個排序後（Conquer），再合併已排序的子序列（Combine）。</p>
 <ul>
 <li><strong>高效穩定</strong>：最佳、平均，與最差時間複雜度皆為 $O(n \log n) $。</li>
@@ -178,7 +178,7 @@
 <li><strong>非原地排序</strong>：除了資料本身，仍需額外花費儲存空間來排序。</li>
 <li><strong>分治演算法</strong>：將主問題化作數個子問題，各個擊破。</li>
 </ul>
-<h2><a class="header" href="#步驟" id="步驟">步驟</a></h2>
+<h2 id="步驟"><a class="header" href="#步驟">步驟</a></h2>
 <p>Mergesort 演算法分為以下步驟：</p>
 <ol>
 <li><strong>Divide</strong>：將含有 n 個元素的序列分割成含有 n / 2 個子序列。</li>
@@ -188,7 +188,7 @@
 <p>其中，Conquer 步驟中的「排序」可以不斷遞迴 Mergesort 自身，因此需要停止遞迴的條件（base case），我們將條件設定為「子序列的長度小於 2」，因為長度為 1 的序列可視為已完成排序。</p>
 <p>將 Mergesort 視覺化排序如下：</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Merge_sort_animation2.gif" alt="mergsort" /></p>
-<h2><a class="header" href="#說明" id="說明">說明</a></h2>
+<h2 id="說明"><a class="header" href="#說明">說明</a></h2>
 <p>以 ASCII diagram 圖解 Mergesort。</p>
 <p>先將原始序列分割成數個長度為一的子序列。</p>
 <pre><code>Split array into length 1 subarray.
@@ -216,14 +216,14 @@
                 V
     [1, 2, 3, 4, 5, 6, 7, 8]
 </code></pre>
-<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<h2 id="效能"><a class="header" href="#效能">效能</a></h2>
 <table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(n \log n) $</td></tr>
 <tr><td>Best</td><td>$O(n \log n) $</td></tr>
 <tr><td>Average</td><td>$O(n \log n) $</td></tr>
 <tr><td>Worst space</td><td>$O(n) $ auxiliary</td></tr>
 </tbody></table>
-<h3><a class="header" href="#time-complexity" id="time-complexity">Time Complexity</a></h3>
+<h3 id="time-complexity"><a class="header" href="#time-complexity">Time Complexity</a></h3>
 <p>透過遞迴關係式，很容易計算 Mergesort 的時間複雜度。假設排序長度為 $n $ 的序列最多需要 $T(n) $ 時間。可以觀察到，如果序列只有一個元素，Mergesort 僅需要常數時間就可以完成排序，寫成 $T(n) = 1 $。</p>
 <p>如果 $n &gt; 2 $，Mergesort 會將序列分為 $\lceil \frac{n}{2} \rceil $ 部分，以及 $\lfloor \frac{n}{2} \rfloor $ 部分。我們可以將排序前者寫成 $T(\lceil \frac{n}{2} \rceil) $，而後者花費時間為 $ T(\lfloor \frac{n}{2} \rfloor) $。</p>
 <p>最後，合併兩個子序列僅需 $n $ 個操作。可得下列遞迴關係式。<br />
@@ -236,9 +236,9 @@ T(n) =
 \end{cases}
 $$</p>
 <p>根據 <a href="master-theorem">Master Theorem</a>，可得複雜度為 $O(n \log n) $。</p>
-<h3><a class="header" href="#space-complexity" id="space-complexity">Space Complexity</a></h3>
+<h3 id="space-complexity"><a class="header" href="#space-complexity">Space Complexity</a></h3>
 <p>Mergesort 的缺點之一就是在合併子序列時，需要額外的空間依序插入排序資料；若是遞迴版本的 Mergesort 還需額外加上遞迴花費的 call stack 空間，因此額外空間複雜度為 $O(n) + O(\log n) = O(n) $（以陣列實作）。</p>
-<h2><a class="header" href="#實作" id="實作">實作</a></h2>
+<h2 id="實作"><a class="header" href="#實作">實作</a></h2>
 <p>一般來說，Divide and Conquer 有兩種設計、解決問題的技巧：Top-down（自上而下）與 Buttom-up（自下而上）。前者是先對問題有整體的輪廓概念，再逐步針對細節一一處理；後者則是先準備每個問題需要的基礎步驟與元件，再將這些步驟結合，解決整體的問題。</p>
 <p>Mergesort 的實作分為兩部分：</p>
 <ul>
@@ -246,7 +246,7 @@ $$</p>
 <li><code>merge</code>：合併子序列，對應到 Conquer 與 Combine 功能。</li>
 </ul>
 <p>先來看看如何分割序列。</p>
-<h3><a class="header" href="#top-down-split" id="top-down-split">Top-down split</a></h3>
+<h3 id="top-down-split"><a class="header" href="#top-down-split">Top-down split</a></h3>
 <p>自上而下的解法會不斷以類似 binary search 的方式找中點，進而分割序列。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -278,7 +278,7 @@ $$</p>
 <li>將兩個 <code>slice</code> 合併排序至 <code>ret</code> vector 中。</li>
 <li>將 <code>ret</code> 的結果複製到原始 <code>arr</code> 中，使回傳值保有相同起始位址。</li>
 </ol>
-<h3><a class="header" href="#buttom-up-split" id="buttom-up-split">Buttom-up split</a></h3>
+<h3 id="buttom-up-split"><a class="header" href="#buttom-up-split">Buttom-up split</a></h3>
 <p>自下而上的解法則是預定好最小的子序列長度，直接使用 for 迴圈從頭開始逐一擊破。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -317,7 +317,7 @@ $$</p>
 <li>繼續下兩個子序列的合併步驟。</li>
 <li>將下個疊代的子序列長度加倍，繼續合併。</li>
 </ol>
-<h3><a class="header" href="#the-merge-part" id="the-merge-part">The merge part</a></h3>
+<h3 id="the-merge-part"><a class="header" href="#the-merge-part">The merge part</a></h3>
 <p>無論是 Top-down 還是 Buttom-up 版本的解法，皆免不了 <code>merge</code> 這個共同步驟，將子序列合併為較大的序列。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -360,10 +360,10 @@ $$</p>
 <blockquote>
 <p><code>slice.copy_from_slice</code> 底層使用 C 的 <code>memcpy</code>，比起 for-loop 一個個賦值，直接複製整塊記憶體比較快了。</p>
 </blockquote>
-<h2><a class="header" href="#變形" id="變形">變形</a></h2>
-<h3><a class="header" href="#timsort" id="timsort">Timsort</a></h3>
+<h2 id="變形"><a class="header" href="#變形">變形</a></h2>
+<h3 id="timsort"><a class="header" href="#timsort">Timsort</a></h3>
 <p>在真實世界資料中，早有許多部分排序的分區（natural run），倘若跳過排序這些分區的步驟，就可減少許多不必要的操作，<a href="../timsort">Timsort</a> 就是為了完全利用榨乾這些分區的混合排序法。</p>
-<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Merge_sort">Wiki: Merge sort</a></li>
 <li><a href="www.cs.umd.edu/%7Emeesh/">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>

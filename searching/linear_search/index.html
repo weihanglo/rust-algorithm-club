@@ -170,10 +170,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#線性搜尋-linear-search" id="線性搜尋-linear-search">線性搜尋 Linear Search</a></h1>
+                        <h1 id="線性搜尋-linear-search"><a class="header" href="#線性搜尋-linear-search">線性搜尋 Linear Search</a></h1>
 <p>線性搜尋，又稱為循序搜尋（sequential search），是一個在序列中找尋目標的方法。正如字面上的意義，線性搜尋會按照順序疊代序列，挨家挨戶比對每個元素與目標值是否相等，若相等則停止疊代，並回傳搜尋所得結果。</p>
 <p>線性搜尋乍看之下，是最簡單實作也最 naïve 的實作，效能應該不怎麼好。事實上，在資料量不多時（少於 100 個元素），線性搜尋的效能也不會太差，因為其他搜尋演算法可能需要建立特殊資料結構，就會導致時空間初始開銷暴增，複雜度的常數項成本變大。</p>
-<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<h2 id="效能"><a class="header" href="#效能">效能</a></h2>
 <table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(n)$</td></tr>
 <tr><td>Best</td><td>$O(1)$</td></tr>
@@ -181,7 +181,7 @@
 <tr><td>Worst space</td><td>$O(1)$</td></tr>
 </tbody></table>
 <p>若序列中總共有 $n$ 個元素，則線性搜尋最差的狀況為元素不在序列中，就是全部元素都比較一次，共比較 $n - 1$ 次，最差複雜度為  $O(n)$。</p>
-<h2><a class="header" href="#實作" id="實作">實作</a></h2>
+<h2 id="實作"><a class="header" href="#實作">實作</a></h2>
 <p>線性搜尋就是用一個 for-loop 解決。要注意的是，<code>T</code> 泛型參數至少要實作 <code>PartialEq</code> 才能比較。程式碼中使用了疊代器的 <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.enumerate">enumerate</a>，建立一個新疊代器，每次疊代產生疊代次數與對應的值。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -209,7 +209,7 @@
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <p><a href="https://en.wikipedia.org/wiki/Linear_search">Wiki: Linear search</a></p>
 
                     </main>

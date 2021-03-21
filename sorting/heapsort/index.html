@@ -170,7 +170,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#堆積排序-heapsort" id="堆積排序-heapsort">堆積排序 Heapsort</a></h1>
+                        <h1 id="堆積排序-heapsort"><a class="header" href="#堆積排序-heapsort">堆積排序 Heapsort</a></h1>
 <p>Heapsort（堆積排序）可以看作是 <a href="../selection_sort">selection sort</a> 的變形，同樣會將資料分為 sorted pile 與 unsorted pile，並在 unsorted pile 中尋找最大值（或最小值），加入 sorted pile 中。</p>
 <p>和 selection sort 不同之處是，heapsort 利用<a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">堆積（heap）</a>這種半排序（partially sorted）的資料結構輔助並加速排序。</p>
 <p>Heapsort 的特性如下：</p>
@@ -180,7 +180,7 @@
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 <li><strong>較差的 CPU 快取</strong>：heap 不連續存取位址的特性，不利於 <a href="https://en.wikipedia.org/wiki/CPU_cache">CPU 快取</a>。</li>
 </ul>
-<h2><a class="header" href="#步驟" id="步驟">步驟</a></h2>
+<h2 id="步驟"><a class="header" href="#步驟">步驟</a></h2>
 <p>Heapsort 的演算法分為兩大步驟：</p>
 <ol>
 <li>將資料轉換為 heap 資料結構（遞增排序用 max-heap, 遞減排序選擇 min-heap）。</li>
@@ -194,7 +194,7 @@
 </ol>
 <p>透過 GIF 動畫感受一下 heapsort 的威力吧！</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif" alt="" /></p>
-<h2><a class="header" href="#說明" id="說明">說明</a></h2>
+<h2 id="說明"><a class="header" href="#說明">說明</a></h2>
 <p>在開始之前，定義幾個 heap 常用名詞：</p>
 <ul>
 <li><strong>Heap ordering property</strong>：一個 heap 必須要滿足的條件。以 heap 種類不同有幾種變形。
@@ -262,7 +262,7 @@
 (Done!)
 </code></pre>
 <p>以上便是 heapsort 演算法的簡單流程，是不是和 selection sort 非常相似呢！</p>
-<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<h2 id="效能"><a class="header" href="#效能">效能</a></h2>
 <table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(n \log n) $</td></tr>
 <tr><td>Best</td><td>$O(n \log n) $</td></tr>
@@ -270,7 +270,7 @@
 <tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
 <p>Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n) $，同樣分為兩部分簡單解釋。</p>
-<h3><a class="header" href="#build-heap-heapify" id="build-heap-heapify">Build heap (heapify)</a></h3>
+<h3 id="build-heap-heapify"><a class="header" href="#build-heap-heapify">Build heap (heapify)</a></h3>
 <p>建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。</p>
 <p><strong>Heapify</strong> 是指將序列修正至符合 heap ordering 的序列。給定一個元素，假定其為非法的 heap order，而該元素之後的 subtree 視為符合 heap ordering property。欲修正這個在錯誤位置的元素，必須透過與其 children node 置換往下篩，這個往下篩的過程就稱為 <strong>sift down</strong>，在<a href="#%E5%AF%A6%E4%BD%9C">實作</a>一節會詳細解釋，這邊只要知道 sift down 會不斷將該元素與其 child node 比較，若不符合 heap order 則與 child node 置換，並繼續疊代每一個 level。所以 sift down 的時間複雜度為 $O(\lceil {\log_2(n)} \rceil) = O(\log n) $， $n $ 為陣列元素個數。</p>
 <p>Heapify 從最末個元素開始反向疊代，每個元素都呼叫 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
@@ -278,11 +278,11 @@
 <blockquote>
 <p>實際上，build heap 步驟的複雜度可達到 $O(n) $，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
 </blockquote>
-<h3><a class="header" href="#sorting-sift-down" id="sorting-sift-down">Sorting (sift down)</a></h3>
+<h3 id="sorting-sift-down"><a class="header" href="#sorting-sift-down">Sorting (sift down)</a></h3>
 <p>講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 <strong>sift down</strong> 修正符合 heap order。所以總共需要做 $n $ 次 sift down，複雜度為 $O(n \log n) $。</p>
-<h3><a class="header" href="#sum-up" id="sum-up">Sum up</a></h3>
+<h3 id="sum-up"><a class="header" href="#sum-up">Sum up</a></h3>
 <p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 $O(n \log n) $。</p>
-<h2><a class="header" href="#實作" id="實作">實作</a></h2>
+<h2 id="實作"><a class="header" href="#實作">實作</a></h2>
 <p>Heapsort 的實作相對簡單，只需要不斷呼叫 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -352,7 +352,7 @@
 <li><strong>置換</strong>：若 <code>root</code> 元素比 <code>child</code> 的元素小，則置換兩者，並將 <code>child</code> 設置為下個疊代的 <code>root</code>，繼續檢查最初的 <code>start</code> 元素是否滿足 heap ordering。</li>
 </ol>
 <p>以上就是簡單的 <code>sift_down</code> 實作，也是整個 heapsort 的精髓。</p>
-<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">Wiki: Heap</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Heapsort">Wiki: Heapsort</a></li>

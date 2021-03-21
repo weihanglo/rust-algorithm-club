@@ -170,14 +170,14 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#雙端佇列-deque" id="雙端佇列-deque">雙端佇列 Deque</a></h1>
+                        <h1 id="雙端佇列-deque"><a class="header" href="#雙端佇列-deque">雙端佇列 Deque</a></h1>
 <p>雙端佇列（double-ended queue，通常縮寫為 deque）是一般化（generalize）的<a href="../queue">佇列</a>或<a href="../stack">堆疊</a>。比起佇列只能「先進先出 FIFO」，以及堆疊只有「後進先出 LIFO」，雙端佇列可以從最前端或最末端任意方向，在常數時間複雜度內增刪元素，更為方便。</p>
 <p>雙端佇列常見用動態陣列或是鏈結串列實作，動態陣列的實作會因空間不夠，需要重新配置記憶體，但通常會支援隨機存取（random access）；鏈結串列的實作版本雖無法隨機存取，相對地增刪元素不需記憶體重配置。</p>
 <p>雙端佇列顯著的缺點是：無論以動態陣列或連結串列實作，基本款實作通常無法在 $O(k)$ 時間複雜度的情況下，選定範圍內 k 個元素並取得單一切片（slice）。這肇因於動態陣列的實作通常內部儲存空間經過多次增刪，空間利用會不連續；而用鏈結串列實作者，則因不支援隨機存取而無法達到相應的複雜度。</p>
 <blockquote>
 <p>本次實作的程式碼置於在 <a href="/doc/rust_algorithm_club/collections/struct.Deque.html"><code>rust_algorithm_club::collections::Deque</code></a> API 文件中。</p>
 </blockquote>
-<h2><a class="header" href="#架構設計" id="架構設計">架構設計</a></h2>
+<h2 id="架構設計"><a class="header" href="#架構設計">架構設計</a></h2>
 <p>雙端佇列有個實作重點：可在<strong>常數時間</strong>從頭尾兩端增刪元素。在資料結構設計上，會儲存分別指向頭尾的兩個指標，長相可能如下：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -190,7 +190,7 @@
 <span class="boring">}
 </span></code></pre></pre>
 <p>第一直覺肯定是選用<a href="../doubly_linked_list">雙向鏈結串列</a>可以雙向增刪節點的特性，作為解決方案。不過這裡我們採用動態陣列實作，更精確來說，底層儲存容器同樣是有兩個分別指向頭尾的指標的「環形緩衝區（Ring buffer）」。</p>
-<h3><a class="header" href="#環形緩衝區" id="環形緩衝區">環形緩衝區</a></h3>
+<h3 id="環形緩衝區"><a class="header" href="#環形緩衝區">環形緩衝區</a></h3>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Circular_buffer.svg/240px-Circular_buffer.svg.png" alt="" /></p>
 <p><a href="https://en.wikipedia.org/wiki/Circular_buffer">環形緩衝區（Ring buffer）</a> 是一個長度大小固定的緩衝區，可以視為頭尾相連的記憶體區塊，上圖雖以環狀呈現，但在計算機架構中儲存方式通常是線性陣列，再搭配指向頭端的 <code>head</code> 與指向尾端的 <code>tail</code> 兩個指標構成。</p>
 <p>環形緩衝區有分兩種，一種是有循環的，緩衝區寫滿了就覆蓋尾端舊的資料，另一種是不會循環，緩衝區會放滿的，後者就是本次實作會用到的，以下將來探討：</p>
@@ -277,7 +277,7 @@ t       h
 <li>邏輯索引的映射會利用環繞算術運算配合<a href="https://en.wikipedia.org/wiki/Modulo_operation">模除運算</a>，將索引值限制在緩衝區範圍內。</li>
 </ol>
 <p>第四點很難懂齁？免驚，下面實作範例「<a href="#%E9%82%8F%E8%BC%AF%E7%B4%A2%E5%BC%95%E6%98%A0%E5%B0%84">邏輯索引映射</a>」段落就會解釋給你聽！</p>
-<h3><a class="header" href="#手動配置記憶體" id="手動配置記憶體">手動配置記憶體</a></h3>
+<h3 id="手動配置記憶體"><a class="header" href="#手動配置記憶體">手動配置記憶體</a></h3>
 <p>這一段，我們將為環形緩衝區打造屬於它自己的底層儲存空間。你可能想問，既然環形緩衝區是一個固定長度的陣列，為什麼不直接利用 Rust 標準函式庫的 <code>Vec</code> 呢？因為 <a href="https://doc.rust-lang.org/1.49.0/alloc/vec/struct.Vec.html#capacity-and-reallocation"><code>Vec</code> 的容量和記憶體配置</a>屬於實作細節，雖然目前是滿了才擴充容量重新配置空間，但難保未來改變，為了更細緻控制記憶體，決定弄髒手，自行配置記憶體。</p>
 <blockquote>
 <p>⚠️ 以下範例有 <code>unsafe</code> 程式碼，未經審計，請謹慎使用。</p>
@@ -418,7 +418,7 @@ t       h
 <li>呼叫 <code>realloc</code> 之後，原先記憶體區塊可能被釋放，因此不該繼續用舊指標，此以新指標取代之。</li>
 </ol>
 <p>終於將手動配置記憶體的邏輯封裝在 <code>RawVec</code> 裡面，外部不需要弄髒手搞記憶體了！</p>
-<h3><a class="header" href="#deque" id="deque"><code>Deque</code></a></h3>
+<h3 id="deque"><a class="header" href="#deque"><code>Deque</code></a></h3>
 <p>有了 <code>RawVec</code>，現在可以將先前缺失的 <code>SomeStorageType</code> 補上，初始化的方法也異常單純。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -441,7 +441,7 @@ impl&lt;T&gt; Deque&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>至此，<code>Deque</code> 結構體的佈局設計告一段落，接下來就是各種方法實作。</p>
-<h2><a class="header" href="#基本操作" id="基本操作">基本操作</a></h2>
+<h2 id="基本操作"><a class="header" href="#基本操作">基本操作</a></h2>
 <p>身為一個雙端佇列，會有以下符合定義的基本操作：</p>
 <ul>
 <li><code>new</code>：初始化一個容器。</li>
@@ -464,7 +464,7 @@ impl&lt;T&gt; Deque&lt;T&gt; {
 <li><code>try_grow</code>：嘗試動態增加底層儲存空間。</li>
 <li><code>wrapping_add</code>、<code>wrapping_sub</code>：確保邏輯索引的增減正確映射到底層實際索引位址。</li>
 </ul>
-<h3><a class="header" href="#邏輯索引映射" id="邏輯索引映射">邏輯索引映射</a></h3>
+<h3 id="邏輯索引映射"><a class="header" href="#邏輯索引映射">邏輯索引映射</a></h3>
 <p><a href="#%E7%92%B0%E5%BD%A2%E7%B7%A9%E8%A1%9D%E5%8D%80">前一段</a>提及環形緩衝區可以從頭尾增加元素，這一段來說明「如何封裝環形緩衝區內部的物理索引」，讓外部的邏輯索引可映射到內部已儲存合法數值的緩衝區位址。</p>
 <p>再回來看容量為 8 的雙端佇列的例子，已進行一系列操作：</p>
 <ol>
@@ -560,7 +560,7 @@ impl&lt;T&gt; Deque&lt;T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#動態增加記憶體空間" id="動態增加記憶體空間">動態增加記憶體空間</a></h3>
+<h3 id="動態增加記憶體空間"><a class="header" href="#動態增加記憶體空間">動態增加記憶體空間</a></h3>
 <p>前面提及環形緩衝區是長度固定的陣列，但雙端佇列若必須固定長度就太沒路用，直觀作法就是透過加倍 <code>RawVec</code> 容量，再繼續新增元素。這個想法沒錯，但會遇到一個問題：如何確保邏輯索引在記憶體加倍後依然正確映射到實際索引？這裡舉一個實際案例：</p>
 <pre><code>Before:
          h   t
@@ -645,7 +645,7 @@ Copy:
 <blockquote>
 <p>這裡維持索引正確性有稍微簡化，更高效優美的解法請參考標準函式庫 <a href="https://github.com/rust-lang/rust/blob/a118ee2/library/alloc/src/collections/vec_deque/mod.rs#L405-L447"><code>VecDeque::handle_capacity_increase</code></a> 。</p>
 </blockquote>
-<h3><a class="header" href="#查看元素" id="查看元素">查看元素</a></h3>
+<h3 id="查看元素"><a class="header" href="#查看元素">查看元素</a></h3>
 <p>查看首末兩段的元素非常簡單，不過由於涉及底層儲存空間的指標操作，所以需要寫 Unsafe Rust：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -687,7 +687,7 @@ Copy:
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>len</code> 用了環繞算術運算，讓 <code>head - tail</code> 能正確算出兩者的距離，並在用前面提及的「容量 - 1」的 $2^n - 1$ 做位元 AND 運算來捨棄高位。</p>
-<h3><a class="header" href="#增刪元素" id="增刪元素">增刪元素</a></h3>
+<h3 id="增刪元素"><a class="header" href="#增刪元素">增刪元素</a></h3>
 <p>來看從頭尾刪除元素的 <code>pop_front</code> 和 <code>pop_back</code>：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -749,9 +749,9 @@ Copy:
 <li>最後是指標位移再寫入， <a href="https://doc.rust-lang.org/1.49.0/core/ptr/fn.write.html"><code>ptr::write</code></a> 不會觸發讀取或是 drop 裸指標指向的值，但使用上仍然要確認存取該位址是否合法。</li>
 </ol>
 <p>以上就是 <code>Deque</code>   基本操作方法，至此，剩下最後一步「<a href="#drop">正確釋放記憶體</a>」，雙端佇列基本款就完成了。</p>
-<h2><a class="header" href="#特徵" id="特徵">特徵</a></h2>
+<h2 id="特徵"><a class="header" href="#特徵">特徵</a></h2>
 <p>Rust 提供許多特徵（Trait），實作特徵可以讓資料結構更方便，更符合 Rust 社群的寫作慣例。</p>
-<h3><a class="header" href="#drop" id="drop"><code>Drop</code></a></h3>
+<h3 id="drop"><a class="header" href="#drop"><code>Drop</code></a></h3>
 <p>這是 <code>Deque</code> 最重要的特徵之一，也是完成 <code>Deque</code> 基本款的最後一個必要功能。<code>Drop</code> 會用來釋放儲存在 <code>Deque</code> 裡面元素的資源。實作是將所有元素 <code>pop_back</code> 出來，所有權轉移到 <code>drop</code> 函式內，函式本體執行結束後，就會自動呼叫該元素型別的 <code>drop</code> 並釋放資源。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -767,7 +767,7 @@ Copy:
 <blockquote>
 <p>事實上 <code>Deque::drop</code> 也能更高效，<a href="https://github.com/rust-lang/rust/blob/a118ee2/library/alloc/src/collections/vec_deque/mod.rs#L117-L139"><code>std::colletions::VecDeque::drop</code></a> 就是直接 drop 兩個指向切片（slice）的指標，而非每個元素各自處理，雖然最後可能殊途同歸，視編譯器最佳化程度而定。</p>
 </blockquote>
-<h3><a class="header" href="#iterator" id="iterator"><code>Iterator</code></a></h3>
+<h3 id="iterator"><a class="header" href="#iterator"><code>Iterator</code></a></h3>
 <p>身為容器型別，沒有疊代器簡直不能用，Rust 提供許多疊代器特徵供實作，其中 <a href="https://doc.rust-lang.org/1.49.0/core/iter/trait.Iterator.html"><code>Iterator</code></a> 特徵最為基礎且重要，實作 <code>Iterator</code> 特徵需求一個 <code>next</code> 方法，會不斷回傳下一個元素。任何實作 <code>Iterator</code> 特徵的型別，都可以放入 for 迴圈疊代。</p>
 <p>而 Rust 常見的疊代器設計模式包含三個產生疊代器的方法：</p>
 <ul>
@@ -945,7 +945,7 @@ use_both(a, b);
 <blockquote>
 <p>欸，或許你有疑惑，<code>Iter::next</code> 不也同樣有生命週期問題嗎，為什麼沒有報錯呢？這是因為<a href="https://doc.rust-lang.org/1.49.0/core/marker/trait.Copy.html#impl-Copy-130">所有 <code>&amp;T</code> 引用都預設實作 Copy 特徵</a>，呼叫 <code>slice::get()</code> 時會<strong>自動複製</strong> <code>ring_buf</code> 的引用，因此沒有生命週期的問題，但 <code>&amp;mut T</code> 並沒有實作 Copy 特徵，才會遇上生命週期不符的編譯錯誤。</p>
 </blockquote>
-<h3><a class="header" href="#intoiterator" id="intoiterator"><code>IntoIterator</code></a></h3>
+<h3 id="intoiterator"><a class="header" href="#intoiterator"><code>IntoIterator</code></a></h3>
 <p>相較於 <code>Interator</code>，<a href="https://doc.rust-lang.org/1.49.0/core/iter/trait.IntoIterator.html"><code>IntoIterator</code></a> 是一個讓容器型別錦上添花的特徵，主要功能是：將一個型別自動轉換為有實作 <code>Iterator</code> 的型別，實作後該型別就可以直接放入 for 迴圈中。</p>
 <p>例如下列用法：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -1025,7 +1025,7 @@ impl&lt;T&gt; IntoIterator for Deque&lt;T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#index-and-indexmut" id="index-and-indexmut"><code>Index</code> and <code>IndexMut</code></a></h3>
+<h3 id="index-and-indexmut"><a class="header" href="#index-and-indexmut"><code>Index</code> and <code>IndexMut</code></a></h3>
 <p>用索引下標 <code>array[index]</code> 取值的語法常見於各大主流語言，Rust 提供 <a href="https://doc.rust-lang.org/1.49.0/core/ops/trait.Index.html"><code>Index</code></a> 和 <a href="https://doc.rust-lang.org/1.49.0/core/ops/trait.IndexMut.html"><code>IndexMut</code></a> 兩個特徵來實作這個運算子，讓容器型別更符合人體工學。</p>
 <p>實作方法是利用<a href="#%E9%82%8F%E8%BC%AF%E7%B4%A2%E5%BC%95%E6%98%A0%E5%B0%84">邏輯索引映射</a> 段落實作的 <code>wrap_index</code> 得出實際索引，再透過指標取值即可。唯一需要注意的是越界存取（out of bound access）可能產生未定義行為，不符合 Rust 對記憶體安全的要求，所以在裸指標存取之前，就要直接 <code>assert!</code> 索引是否在元素數量的安全範圍內，防止越界存取。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -1052,7 +1052,7 @@ impl&lt;T&gt; IndexMut&lt;usize&gt; for Deque&lt;T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#debug" id="debug"><code>Debug</code></a></h3>
+<h3 id="debug"><a class="header" href="#debug"><code>Debug</code></a></h3>
 <p>最後，介紹一下 <code>fmt::Formatter</code> 有許多方便的 debug 格式化輸出的方法，例如 <a href="https://doc.rust-lang.org/1.49.0/alloc/fmt/struct.Formatter.html#method.debug_list"><code>debug_list</code></a> 可以丟一個疊代器，會轉化成序列般的輸出格式。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -1075,7 +1075,7 @@ struct RawVec&lt;T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<h2 id="效能"><a class="header" href="#效能">效能</a></h2>
 <p>以環形緩衝區為底層儲存容器的雙端序列，各操作複雜度如下:</p>
 <table><thead><tr><th>Operation</th><th>Best case</th><th>Worst case</th></tr></thead><tbody>
 <tr><td>push_front(v)</td><td>$O(1)$</td><td>$O(1)$~</td></tr>
@@ -1093,7 +1093,7 @@ $v$：資料值。<br />
 </blockquote>
 <p>雙端佇列任何操作都是直接對 head 或 tail 的索引讀寫記憶體，複雜度皆為 $O(1)$，不過因為增減元素需要動態調整儲存空間大小，所以這些方法的時間複雜度需要平攤。</p>
 <p>空間複雜度則是只用了一個環形緩衝區儲存元素，和幾個欄位儲存 tail、head 還有容量，因此額外空間複雜度只有 $O(1)$。</p>
-<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/stable/std/collections/vec_deque/struct.VecDeque.html">Rust Documentation: <code>VecDeque</code></a></li>
 <li><a href="https://github.com/rust-lang/rust/blob/ff6ee2a/library/alloc/src/raw_vec.rs">Rust <code>RawVec</code> Implementation</a></li>

@@ -170,7 +170,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#希爾排序-shellsort" id="希爾排序-shellsort">希爾排序 Shellsort</a></h1>
+                        <h1 id="希爾排序-shellsort"><a class="header" href="#希爾排序-shellsort">希爾排序 Shellsort</a></h1>
 <p>眾所周知，<a href="../insertion_sort">Insertion sort</a> 用在幾乎完成排序的序列上非常高效，換句話說，當元素置換不需移動太遠時，效率很高。反之，如果有元素錯位非常遙遠，效能就會大打折扣。Shellsort 以一個 gap sequence 將資料依指定的間隔（gap）分組進行 insertion sort，使得較遠的元素能夠快速歸位，下一次的排序就會因前次排序結果愈來愈接近完成而加速。</p>
 <p>Shellsort 最後一個 gap 必定是 1，也就是排序會退化成 insertion sort，此時大部分元素皆排序完成，insertion sort 會非常高效。</p>
 <p>Shellsort 特性如下：</p>
@@ -180,7 +180,7 @@
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 <li>可視為一般化（Generalizaion）的 <a href="../insertion_sort">insertion sort</a>。</li>
 </ul>
-<h2><a class="header" href="#步驟" id="步驟">步驟</a></h2>
+<h2 id="步驟"><a class="header" href="#步驟">步驟</a></h2>
 <p>Shellsort 分為兩個步驟：</p>
 <ol>
 <li>決定一組 gap sequence。</li>
@@ -189,7 +189,7 @@
 <blockquote>
 <p>最後一次排序（gap = 1）會退化為 insertion sort，完成整個排序。</p>
 </blockquote>
-<h3><a class="header" href="#gap-sequneces" id="gap-sequneces">Gap Sequneces</a></h3>
+<h3 id="gap-sequneces"><a class="header" href="#gap-sequneces">Gap Sequneces</a></h3>
 <p>Shellsort 的效率取決於 gap sequence 的選擇，這邊舉幾個常見的 gap sequence：</p>
 <table><thead><tr><th></th><th>Sequence</th></tr></thead><tbody>
 <tr><td>Marcin Ciura</td><td>1, 4, 10, 23, 57, 132, 301, 701</td></tr>
@@ -198,7 +198,7 @@
 </tbody></table>
 <p>感受一下 gap sequence 為 23, 10, 4, 1 的 shellsort 吧。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Sorting_shellsort_anim.gif" alt="" /></p>
-<h2><a class="header" href="#說明" id="說明">說明</a></h2>
+<h2 id="說明"><a class="header" href="#說明">說明</a></h2>
 <p>Shellsort 其實就是進行好幾次不同 gap 的 insertion sort，以下用 ASCII diagram 解釋。</p>
 <p>假定這裡有一個序列需要遞增排序。</p>
 <pre><code>[5, 3, 8, 7, 4, 9, 6, 2]
@@ -256,7 +256,7 @@
 <blockquote>
 <p>Insertion sort 的 ASCII diagram 我們就不展示了，請參考 <a href="../insertion_sort">Insertion sort</a>。</p>
 </blockquote>
-<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<h2 id="效能"><a class="header" href="#效能">效能</a></h2>
 <table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(n^2) $ ~  $O(n \log^2 n) $ (Depends on gap sequence)</td></tr>
 <tr><td>Best</td><td>$O(n \log n) $</td></tr>
@@ -264,7 +264,7 @@
 <tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
 <p>Shellsort 的複雜度不容易計算，取決於 gap sequence 怎麼安排，太少 gap 會讓速度太接近 insertion sort，太多 gap 則會有過多額外開銷。目前已知的 gap sequence 中，最差時間複雜度可以達到 $O(n \log^2 n) $，有著不錯的表現。有興趣可以參考<a href="http://www.dtic.mil/get-tr-doc/pdf?AD=AD0740110">這篇文章</a>。</p>
-<h2><a class="header" href="#實作" id="實作">實作</a></h2>
+<h2 id="實作"><a class="header" href="#實作">實作</a></h2>
 <p>我們這裡以 <a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Marcin 的 Paper</a> 中提到的經驗式為例，首先，先建立一個 gap sequence 的常數。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -305,7 +305,7 @@ pub fn shellsort(arr: &amp;mut [i32]) {
 <li>最內層迴圈，執行插入動作，將每個元素置換到正確位置。</li>
 <li>由於 <code>gap</code> 的型別是 <code>&amp;usize</code>，需透過 <code>*gap</code> dereference 得到 <code>usize</code> 型別。</li>
 </ol>
-<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Shellsort">Wiki: Shellsort</a></li>
 <li><a href="http://sun.aei.polsl.pl/%7Emciura/publikacje/shellsort.pdf">Best Increments for the Average Case of Shellsort, M. Ciura, 2001</a></li>

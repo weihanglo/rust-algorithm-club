@@ -170,14 +170,14 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#佇列-queue" id="佇列-queue">佇列 Queue</a></h1>
+                        <h1 id="佇列-queue"><a class="header" href="#佇列-queue">佇列 Queue</a></h1>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Data_Queue.svg/450px-Data_Queue.svg.png" alt="Queue - Wiki" /></p>
 <p>佇列是一個具有<em>先進先出</em> FIFO 特性的資料結構。從 Wikipedia 上的圖為例，一個資料從左邊進入佇列並從右邊離開，最先進入佇列的資料會最先被取出。</p>
 <p>佇列常見實作方式有：陣列 array、鏈結串列 linked list。為了使概念容易理解，我們選擇以類似陣列的 Vector 實作。</p>
 <blockquote>
 <p>本次實作的程式碼置於 <a href="/doc/rust_algorithm_club/collections/struct.Queue.html"><code>rust_algorithm_club::collections::Queue</code></a> API 文件中。</p>
 </blockquote>
-<h2><a class="header" href="#架構設計" id="架構設計">架構設計</a></h2>
+<h2 id="架構設計"><a class="header" href="#架構設計">架構設計</a></h2>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -187,14 +187,14 @@
 <span class="boring">}
 </span></code></pre></pre>
 <p>以 <code>items</code> 保存加入佇列的資料。大部分用陣列實作的佇列可能會有 <code>front</code> 和 <code>rear</code> 兩個欄位負責保存指向佇列開頭和尾端的索引，作為佇列新增刪除資料的依據，但是透過 Rust 的 <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html"><code>std::vec::Vec</code></a>（線形動態成長的陣列容器），我們可以直接取得佇列第一以及最後一筆資料，所以這邊實作忽略這兩個欄位。</p>
-<h2><a class="header" href="#基本操作" id="基本操作">基本操作</a></h2>
+<h2 id="基本操作"><a class="header" href="#基本操作">基本操作</a></h2>
 <ul>
 <li><code>enqueue</code>：將新資料加入佇列</li>
 <li><code>dequeue</code>：將最先放入的資料移出佇列</li>
 <li><code>peek</code>：在不將資料移出佇列的情況下取得最先放入的資料</li>
 <li><code>size</code>：取得佇列大小</li>
 </ul>
-<h3><a class="header" href="#定義佇列" id="定義佇列">定義佇列</a></h3>
+<h3 id="定義佇列"><a class="header" href="#定義佇列">定義佇列</a></h3>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -204,7 +204,7 @@
 <span class="boring">}
 </span></code></pre></pre>
 <p>初始化具有 <code>Vec</code> 的佇列。</p>
-<h3><a class="header" href="#將新資料加入佇列" id="將新資料加入佇列">將新資料加入佇列</a></h3>
+<h3 id="將新資料加入佇列"><a class="header" href="#將新資料加入佇列">將新資料加入佇列</a></h3>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -214,7 +214,7 @@
 <span class="boring">}
 </span></code></pre></pre>
 <p>由於 <code>enqueue</code> 會改變 <code>items</code>，因此需要佇列的 mutable reference。再來，我們沒有限制佇列大小，全由 Rust 的 <code>Vec</code> 自行分配空間，將新資料放到 <code>items</code> 的最後端。</p>
-<h3><a class="header" href="#將最先放入的資料移出佇列" id="將最先放入的資料移出佇列">將最先放入的資料移出佇列</a></h3>
+<h3 id="將最先放入的資料移出佇列"><a class="header" href="#將最先放入的資料移出佇列">將最先放入的資料移出佇列</a></h3>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -227,7 +227,7 @@
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>items</code> 有可能是空的，在移出資料之前需要檢查，然後移出 index 為零的資料，也就是最先放入的資料。</p>
-<h3><a class="header" href="#取得佇列大小" id="取得佇列大小">取得佇列大小</a></h3>
+<h3 id="取得佇列大小"><a class="header" href="#取得佇列大小">取得佇列大小</a></h3>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -237,7 +237,7 @@
 <span class="boring">}
 </span></code></pre></pre>
 <p>取得 <code>items</code> 的大小。</p>
-<h3><a class="header" href="#不改變佇列的情況下取得最先放入的資料" id="不改變佇列的情況下取得最先放入的資料">不改變佇列的情況下，取得最先放入的資料</a></h3>
+<h3 id="不改變佇列的情況下取得最先放入的資料"><a class="header" href="#不改變佇列的情況下取得最先放入的資料">不改變佇列的情況下，取得最先放入的資料</a></h3>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -248,14 +248,14 @@
 </span></code></pre></pre>
 <p>這裡的作法很單純，就是呼叫 <code>Vec</code> 底層 <a href="http://doc.rust-lang.org/std/primitive.slice.html#method.first"><code>slice::first</code></a>，回傳一個 <code>Option&lt;T&gt;</code>，不會影響到底層的
 <code>Vec</code> 的內容。</p>
-<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<h2 id="效能"><a class="header" href="#效能">效能</a></h2>
 <table><thead><tr><th>Operation</th><th>Best Complexity</th><th>Worst Complexity</th></tr></thead><tbody>
 <tr><td>enqueue (insert)</td><td>O(1)</td><td>O(1)</td></tr>
 <tr><td>dequeue (delete)</td><td>O(n)*</td><td>O(n)*</td></tr>
 </tbody></table>
 <p>*：注意，一般來說 <code>dequeue</code> 會選用 <code>O(1)</code> 的實作方式，這裡直接呼叫 <a href="http://doc.rust-lang.org/std/vec/struct.Vec.html#method.remove"><code>Vec::remove</code></a> 會導致整個 <code>Vec&lt;T&gt;</code> 的元素向前位移一個，是較耗費計算資源的 <code>O(n)</code> 操作。</p>
 <p>我們可以選用其他方式實作，例如用額外指標紀錄當前 head 所在位置的<a href="../deque/">雙端佇列 Deque</a>，或是使用<a href="../singly_linked_list/">單向鏈結串列 Singly linked list</a> 實作，都能達到 <code>O(1)</code> 的時間複雜度。</p>
-<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)">Queue (abstract data type)</a></li>
 </ul>

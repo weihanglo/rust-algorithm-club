@@ -170,7 +170,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#布隆過濾器-bloom-filter" id="布隆過濾器-bloom-filter">布隆過濾器 Bloom Filter</a></h1>
+                        <h1 id="布隆過濾器-bloom-filter"><a class="header" href="#布隆過濾器-bloom-filter">布隆過濾器 Bloom Filter</a></h1>
 <p>Bloom filter 是一種機率資料結構（probabilistic data structure），類似於<a href="../set">集合</a>，常用於需快速驗證成員是否「可能存在」或是「絕對不存在」在容器中，亦即有機會出現假陽性（false positive），但絕不會有假陰性（false negative）。</p>
 <p>Bloom filter 的優勢是：</p>
 <ul>
@@ -199,7 +199,7 @@
 <blockquote>
 <p>本次實作的程式碼置於 <a href="/doc/rust_algorithm_club/collections/struct.BloomFilter.html"><code>rust_algorithm_club::collections::BloomFilter</code></a> API 文件中。</p>
 </blockquote>
-<h2><a class="header" href="#概念" id="概念">概念</a></h2>
+<h2 id="概念"><a class="header" href="#概念">概念</a></h2>
 <p>Bloom filter 由下列兩個部分組成：</p>
 <ul>
 <li>一個 $m$ 位元的位元陣列（bit array）</li>
@@ -234,8 +234,8 @@
 <p>答案是可以， 這篇<a href="https://www.eecs.harvard.edu/%7Emichaelm/postscripts/rsa2008.pdf">「Less Hashing, Same Performance:Building a Better Bloom Filter」</a>提及，在不犧牲漸進假陽性機率（asymptotic false positive probability）的前提下，透過兩個不同的雜湊函數 $h_1(x)$ 和 $h_2(x)$，配合以下公式，就可以模擬出多個雜湊函數：</p>
 <p>$$g_i(x) = h_1(x) + ih_2(x)$$</p>
 <p>數學看暈了嗎？來點程式碼吧。</p>
-<h2><a class="header" href="#架構設計" id="架構設計">架構設計</a></h2>
-<h3><a class="header" href="#利用-vec-儲存位元" id="利用-vec-儲存位元">利用 <code>Vec</code> 儲存位元</a></h3>
+<h2 id="架構設計"><a class="header" href="#架構設計">架構設計</a></h2>
+<h3 id="利用-vec-儲存位元"><a class="header" href="#利用-vec-儲存位元">利用 <code>Vec</code> 儲存位元</a></h3>
 <p>Bloom filter 底層以位元陣列作為儲存容器，如果目標是最省空間，該用 Rust 的什麼型別來儲存位元呢？</p>
 <p>直觀作法是在 struct 新增一個 <code>bits</code> 位元陣列的 <code>array</code> 型別：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -286,7 +286,7 @@ error[E0277]: the size for values of type `[bool]` cannot be known at compilatio
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#儲存兩個雜湊函數" id="儲存兩個雜湊函數">儲存兩個雜湊函數</a></h3>
+<h3 id="儲存兩個雜湊函數"><a class="header" href="#儲存兩個雜湊函數">儲存兩個雜湊函數</a></h3>
 <p>再來，要在 <code>BloomFilter</code> 儲存兩個 hasher，也就是實作前面提及<a href="https://www.eecs.harvard.edu/%7Emichaelm/postscripts/rsa2008.pdf">用兩個雜湊函數模擬 $k$ 個</a>論文中的兩個 hasher，這兩個在 <code>BloomFilter</code> 建構時同時建立，並在操作 <code>BloomFilter</code> 的方法上共用。</p>
 <p>這次直接使用標準函式庫內預設雜湊演算法 <a href="http://doc.rust-lang.org/std/collections/hash_map/struct.DefaultHasher.html"><code>DefaultHasher</code></a> 作為隨機的兩個雜湊函數 <code>BloomFilter.hashers</code>。由於是模擬 $k$ 個函數的雜湊行為，仍需另闢欄位，儲存 $k$ 實際上是多少個雜湊函數 <code>BloomFilter.hash_fn_count</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -305,7 +305,7 @@ pub struct BloomFilter {
 <span class="boring">}
 </span></code></pre></pre>
 <p>就剩最後一里路了！</p>
-<h3><a class="header" href="#使用-a-hrefhttpsdocrust-langorgcoremarkerstructphantomdatahtmlphantomdataa-讓編譯器閉嘴" id="使用-a-hrefhttpsdocrust-langorgcoremarkerstructphantomdatahtmlphantomdataa-讓編譯器閉嘴">使用 <a href="https://doc.rust-lang.org/core/marker/struct.PhantomData.html"><code>PhantomData</code></a> 讓編譯器閉嘴</a></h3>
+<h3 id="使用-a-hrefhttpsdocrust-langorgcoremarkerstructphantomdatahtmlphantomdataa-讓編譯器閉嘴"><a class="header" href="#使用-a-hrefhttpsdocrust-langorgcoremarkerstructphantomdatahtmlphantomdataa-讓編譯器閉嘴">使用 <a href="https://doc.rust-lang.org/core/marker/struct.PhantomData.html"><code>PhantomData</code></a> 讓編譯器閉嘴</a></h3>
 <p>眾所周知，透過<a href="https://doc.rust-lang.org/book/ch10-01-syntax.html">泛型（Generic）</a>，Rust 可重用相同的容器型別，特化接受不同型別的容器，例如 <code>HashMap&lt;K, V&gt;</code> 可以特化為鍵為 <code>String</code>，值為 <code>u32</code> 的 <code>HashMap&lt;String, u32&gt;</code>，<code>Vec&lt;T&gt;</code> 可以成為二維位元組 <code>Vec&lt;Vec&lt;u8&gt;&gt;</code>。看 <a href="http://doc.rust-lang.org/std/collections/index.html"><code>std::collections</code></a> 提供的容器，所有泛型型別參數（Type Parameter）像是 <code>T</code>、<code>K</code>、<code>V</code> 都是跟著 struct 宣告，也因為這些容器的確實際儲存了這些型別的元素，泛型型別參數跟著 struct 很合理。</p>
 <p>有趣的是，作為一個容器，Bloom filter 其實不儲存元素本身，而是記錄元素是否「曾經新增至」該容器中。這給了一些想像空間：如何提供型別參數給 Bloom filter？提供兩個方向：</p>
 <ol>
@@ -366,7 +366,7 @@ pub struct BloomFilter&lt;T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#sized-讓容器可以儲存-dsts" id="sized-讓容器可以儲存-dsts"><code>?Sized</code> 讓容器可以儲存 DSTs</a></h2>
+<h2 id="sized-讓容器可以儲存-dsts"><a class="header" href="#sized-讓容器可以儲存-dsts"><code>?Sized</code> 讓容器可以儲存 DSTs</a></h2>
 <p>最後，有鑑於讓Bloom fliter 能夠接受更多型別，元素不一定要符合編譯期確定大小的 <a href="http://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait bound，可以透過加上 <code>?Sized</code> trait bound 解除預設的限制，如此一來 <code>BloomFilter</code> 就可接受 slice 和 trait object 這些 <a href="https://doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait">DSTs</a> 了，傳入 string literal 變為可能 <code>bloom_filter.insert(&quot;1234&quot;)</code>。</p>
 <pre><code class="language-diff">use std::collections::hash_map::DefaultHasher;
 use std::marker::PhantomData;
@@ -376,7 +376,7 @@ use std::marker::PhantomData;
     // .. snip
 }
 </code></pre>
-<h2><a class="header" href="#基本操作" id="基本操作">基本操作</a></h2>
+<h2 id="基本操作"><a class="header" href="#基本操作">基本操作</a></h2>
 <p>Bloom filter 為類似集合的容器，當然有<a href="../set#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">類似的操作</a>，事實上，這類機率性集合成員檢測的資料結構有個較少聽見但令人印象深刻的名字，稱為「Approximate Membership Query（AMQ）」，提供 <code>add(element)</code> 和 <code>query(element)</code> 兩個基本操作。</p>
 <p>本文的 <code>BloomFilter</code> 提供下列幾個公開方法：</p>
 <ul>
@@ -391,7 +391,7 @@ use std::marker::PhantomData;
 <li><code>optimal_bits_count</code>：給定預期儲存元素個數 $n$ 與假陽性機率 $\epsilon$，得位元陣列最適位元數 $m$。</li>
 <li><code>optimal_hashers_count</code>：給定預期假陽性機率，得最適雜湊函數個數 $k$。</li>
 </ul>
-<h3><a class="header" href="#初始化" id="初始化">初始化</a></h3>
+<h3 id="初始化"><a class="header" href="#初始化">初始化</a></h3>
 <p>Bloom filter 有四個參數 $m$、$n$、$k$、$\epsilon$ 可以調整（詳見 <a href="#%E6%95%88%E8%83%BD">效能</a>一節），對使用者來說，有幾個雜湊函數或底層是多少個位元都是實作細節了，更關心的可能是</p>
 <p><em>「我有一百萬筆資料需要驗證存在，容錯率需要在 0.1%，我需要多大的儲存空間？」</em></p>
 <p>因此，建構函數 <code>new</code> 提供輸入預期儲存元素個數 $n$ 和預期的假陽性機率 $\epsilon$ 是天經地義的事：</p>
@@ -457,7 +457,7 @@ fn optimal_hashers_count(err_rate: f64) -&gt; usize {
 <li>透過 std 內建的 <a href="http://doc.rust-lang.org/std/collections/hash_map/struct.RandomState.html"><code>RandomState</code></a> 產生兩個不同初始狀態的雜湊函數，以模擬 $k$ 個雜湊函數</li>
 <li>初始化一個全零的位元陣列</li>
 </ol>
-<h3><a class="header" href="#新增" id="新增">新增</a></h3>
+<h3 id="新增"><a class="header" href="#新增">新增</a></h3>
 <p>新增一個元素到 Bloom filter，說穿了就做一件事：將元素透過 $k$ 個雜湊函數，產出 $k$ 個索引位置，並將位元陣列上這些位置的位元翻轉至 1。</p>
 <p>整個 <code>insert</code> 函數即為計算 $g_i(x) = h_1(x) + ih_2(x)$ 模擬 $k$ 個雜湊函數的過程：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -516,7 +516,7 @@ where
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#查詢" id="查詢">查詢</a></h3>
+<h3 id="查詢"><a class="header" href="#查詢">查詢</a></h3>
 <p>查詢元素是否在 Bloom filter 裡面，就是看看該元素透過 $k$ 個雜湊函數輸出的每個索引位置<strong>全部為 1</strong>，則可能存在；否則就是絕對不存在。</p>
 <p>實作步驟和插入非常相似：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -621,7 +621,7 @@ impl&lt;T: ?Sized&gt; BloomFilter&lt;T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<h2 id="效能"><a class="header" href="#效能">效能</a></h2>
 <table><thead><tr><th>Notation</th><th>Description</th></tr></thead><tbody>
 <tr><td>$n$</td><td>預期儲存 $n$ 個元素到容器中</td></tr>
 <tr><td>$m$</td><td>使用 $m$ 位元的位元陣列來儲存</td></tr>
@@ -637,7 +637,7 @@ impl&lt;T: ?Sized&gt; BloomFilter&lt;T&gt; {
 <p>新增和搜尋一個元素個別需要雜湊 $k$ 次，因此時間複雜度為 $O(k)$ 顯而易見，然而，$k$ 通常相對 $m$ $n$ 是非常小的數字，例如
 <a href="https://hur.st/bloomfilter/?n=1M&amp;p=0.001&amp;m=&amp;k=">在 0.1% 錯誤率下儲存一百萬個元素僅需 1.71 MiB 和 7 個雜湊函數</a>，實務上直接當作 $O(1)$ 也不算錯。</p>
 <p>至於空間複雜度，由於必須事先配置好 $m$ 位元的位元陣列，就算新增的元素 $n \gt m$，也不會再新增新位元，因此空間使用為 $O(m)$ 個位元。實務上，當 $n$ 成長到接近 $m$ 時，假陽性的機率會大增，不堪使用，進而需要能動態調整儲存空間的 Bloom filter 變形。</p>
-<h2><a class="header" href="#變形" id="變形">變形</a></h2>
+<h2 id="變形"><a class="header" href="#變形">變形</a></h2>
 <p>經典款 Bloom filter 容易實作，歷久不衰，不過仍有許多可以增進空間：</p>
 <ul>
 <li>Data locality 不夠好：Bloom filter 底層儲存是位元陣列<a href="https://en.wikipedia.org/wiki/Random_access">隨機存取</a>，較不符合現代 CPU 架構的 cache line 使用姿勢。Cloudflare 技術部落格文 <a href="https://blog.cloudflare.com/when-bloom-filters-dont-bloom/">When Bloom filters don’t bloom</a> 以幽默筆法帶出這個問題，值得一讀。</li>
@@ -646,11 +646,11 @@ impl&lt;T: ?Sized&gt; BloomFilter&lt;T&gt; {
 <li>bits per entry 較高：以類似功能的的資料結構來說，Bloom filter 在空間利用率上，欲維持一定的假陽性機率，每個元素所需位元數相對較高，需要 $1.44 \log_2{\frac{1}{\epsilon}}$ 個位元。</li>
 </ul>
 <p>這裡介紹幾款嘗試解決上述問題的 filter，您也可以去 <a href="https://en.wikipedia.org/wiki/Bloom_filter#Extensions_and_applications">Wikipedia 看看其他更多變形的介紹</a>。</p>
-<h3><a class="header" href="#可以計數的-counting-bloom-filter" id="可以計數的-counting-bloom-filter">可以計數的 Counting Bloom filter</a></h3>
+<h3 id="可以計數的-counting-bloom-filter"><a class="header" href="#可以計數的-counting-bloom-filter">可以計數的 Counting Bloom filter</a></h3>
 <p><a href="https://en.wikipedia.org/wiki/Counting_Bloom_filter">📚 維基百科</a></p>
 <p>經典款 Bloom filter 之所以無法刪除元素，是因為沒有記錄哪些元素新增/刪除的資訊，而 Counting Bloom filter 顧名思義，原本用一個位元儲存 0 / 1 資訊，延伸為多位元方便儲存計數（counting），有了個別元素增刪資訊，Bloom filter 因此能實作「刪除元素」。搜尋一個 Counting Bloom filter 是否擁有 n 次以上 x，答案一樣和 Bloom filter 類似是「可能有 n 次以上的 x」或是「x 絕對沒有 n 次以上」。事實上，可將 Counting Bloom filter 視為 Bloom filter 的一般化形式（generalized form），而經典款 Bloom filter 反過來可當作只記一次數的特化。</p>
 <p>但 Counting Bloom filter 的缺點是空間需求大，端看決定要用幾個位元計數，例如常見用 4 個位元計數，則是經典款的四倍空間消耗。</p>
-<h3><a class="header" href="#動態適應空間大小的-scalable-bloom-filter" id="動態適應空間大小的-scalable-bloom-filter">動態適應空間大小的 Scalable Bloom Filter</a></h3>
+<h3 id="動態適應空間大小的-scalable-bloom-filter"><a class="header" href="#動態適應空間大小的-scalable-bloom-filter">動態適應空間大小的 Scalable Bloom Filter</a></h3>
 <p><a href="https://gsd.di.uminho.pt/members/cbm/ps/dbloom.pdf">📚 論文連結</a></p>
 <p>Scalable Bloom Filter 的特色是：動態適應空間大小，不需事先知道預期儲存的元素個數。</p>
 <p>Scalable Bloom Filter 的實作蠻暴力的，本身是由一至多個經典款 Bloom filter 組成，若一個 filter 滿了（超過 fill ratio），則會新增一個 filter，往後所有新增都在這個新 filter 上面，直到它也滿了，可視為一個 recursive data structure。</p>
@@ -660,7 +660,7 @@ impl&lt;T: ?Sized&gt; BloomFilter&lt;T&gt; {
 <li>成長因子 $s$：每個新增的 filter 空間大小成長率，論文的經驗法則得出預期小成長趨勢選擇 $s = 2$，有較大成長趨勢則 $s = 4$ 效果好。</li>
 <li>錯誤緊縮率 $r$： 每個新增的 filter 會以等比級數得到更緊縮的假陽性機率上限，由於是等比級數，逼近極限時會小於原始機率，這讓整體假陽性機率得以保持。論文中實證 0.8 到 0.9 在元素預期有大成長率下有最佳平均空間利用率。</li>
 </ul>
-<h3><a class="header" href="#quotient-filter" id="quotient-filter">Quotient filter</a></h3>
+<h3 id="quotient-filter"><a class="header" href="#quotient-filter">Quotient filter</a></h3>
 <p><a href="http://vldb.org/pvldb/vol5/p1627_michaelabender_vldb2012.pdf">📚 論文連結</a>（直接讀論文更易懂）</p>
 <p>商數過濾器（Quotient filterF）利用<a href="../hash_map">雜湊表</a>為底層儲存容器，來做集合成員檢測的 AMQ，為了節省空間使用量，Quotient filter 的雜湊表只儲存 partial-key，俗稱指紋（fingerprint），指紋的鍵短空間用量低，副作用是更容易碰撞，代表需要更有效處理雜湊碰撞（hash collision）。</p>
 <p>一般來說，<a href="../hash_map#%E8%99%95%E7%90%86%E9%9B%9C%E6%B9%8A%E7%A2%B0%E6%92%9E">處理雜湊碰撞</a>有 separate chaining 和 Open addressping 兩大類方法，而 Quotient filter 選擇了另一條詭譎的方法：利用 open addressing 中 linear probing 的方式，對每個 slot 儲存額外資訊，使得我們可辨認碰撞的元素是在相同指紋下的同個 bucket 內。換句話說，額外資訊就是在「透過 linear probing 模擬 separate chaining」。</p>
@@ -678,7 +678,7 @@ impl&lt;T: ?Sized&gt; BloomFilter&lt;T&gt; {
 <p>Quotient filter 與它等價的 open addressing hash map</p>
 </blockquote>
 <p><em>Image Source: <a href="http://vldb.org/pvldb/vol5/p1627_michaelabender_vldb2012.pdf">Bender, et al., 2012. “Don’t Thrash: How to Cache Your Hash on Flash”</a>.</em></p>
-<h3><a class="header" href="#支援刪除元素的-cuckoo-filter" id="支援刪除元素的-cuckoo-filter">支援刪除元素的 Cuckoo filter</a></h3>
+<h3 id="支援刪除元素的-cuckoo-filter"><a class="header" href="#支援刪除元素的-cuckoo-filter">支援刪除元素的 Cuckoo filter</a></h3>
 <p><a href="https://www.cs.cmu.edu/%7Edga/papers/cuckoo-conext2014.pdf">📚 論文連結</a>（有趣易讀，誠摯推薦）</p>
 <p>Cuckoo hashing 是一種解決雜湊碰撞的方法，透過一次計算兩個雜湊函數產生兩個索引位置，若其中一個位置有空位則插入空位，若都沒有空位，則隨機踢掉一個，被踢掉的再去找下一個替死鬼，直到全部都有位置，或踢掉次數大於一定值則停止。這種行為和杜鵑鳥（cuckoo、布穀鳥）鳩佔鵲巢的生物習性很像，因此得名。</p>
 <p>Cuckoo filter 利用<a href="./hash_map">雜湊表</a>為底層儲存容器，來做集合成員檢測的 AMQ，會和 cuckoo 扯上關係則是因為使用 Cuckoo hashing 解決雜湊碰撞，以增加空間使用率（達到 95% occupancy）。Cuckoo filter 的雜湊表和 Quotient filter 一樣，為了減少空間使用量而只儲存 partial-key。</p>
@@ -699,7 +699,7 @@ $$</p>
 </ul>
 <p><img src="./cuckoo-filter.png" alt="" /></p>
 <p><em>Image Source: <a href="https://www.cs.cmu.edu/%7Edga/papers/cuckoo-conext2014.pdf">Fan, et al., 2014. “Cuckoo Filter: Practically Better Than Bloom”</a>.</em></p>
-<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://citeseerx.ist.psu.edu/viewdoc/download;?doi=10.1.1.641.9096&amp;rep=rep1&amp;type=pdf">Burton H. Bloom: Space/Time Trade-offs in Hash Coding with Allowable Errors</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Bloom_filter">Wiki: Bloom filter</a></li>

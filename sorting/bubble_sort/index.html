@@ -170,7 +170,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#氣泡排序-bubble-sort" id="氣泡排序-bubble-sort">氣泡排序 Bubble sort</a></h1>
+                        <h1 id="氣泡排序-bubble-sort"><a class="header" href="#氣泡排序-bubble-sort">氣泡排序 Bubble sort</a></h1>
 <p>Bubble sort 是最簡單的排序法之一，由於排序時每個元素會如同泡泡般，一個一個浮出序列頂部，因而得名。由於其簡單好理解，名稱又有趣，常作為第一個學習的入門排序法。不過其效率不彰，甚至不如同為 quardratic time 的 insertion sort。Bubble sort 的原理很平凡，就是相鄰兩兩元素互相比較，如果大小順序錯了，就置換位置。再往下一個 pair 比較。</p>
 <p>Bubble sort 的特性如下：</p>
 <ul>
@@ -178,7 +178,7 @@
 <li><strong>穩定排序</strong>：相同鍵值的元素，排序後相對位置不改變。</li>
 <li><strong>原地排序</strong>：不需額外花費儲存空間來排序。</li>
 </ul>
-<h2><a class="header" href="#步驟" id="步驟">步驟</a></h2>
+<h2 id="步驟"><a class="header" href="#步驟">步驟</a></h2>
 <ol>
 <li>比較兩個相鄰元素，若首個元素比次個元素大，置換兩者的位置。</li>
 <li>依序對相鄰元素執行步驟一，直到抵達序列頂端，此時頂端元素排序完成。</li>
@@ -186,7 +186,7 @@
 </ol>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="" />
 <em>Swfung8 - CC BY-SA 3.0</em></p>
-<h2><a class="header" href="#說明" id="說明">說明</a></h2>
+<h2 id="說明"><a class="header" href="#說明">說明</a></h2>
 <p>給定一組序列 <code>[5, 3, 8, 7, 2]</code>，以 bubble sort 遞增排序。以 ASCII diagram 表示：</p>
 <p><strong>第一次疊代</strong></p>
 <pre><code class="language-bash"> *  *               *  *
@@ -244,19 +244,19 @@
 [3, 4, 5, 7, 8] -&gt; [3, 4, 5, 7, 8] # 不需置換
 </code></pre>
 <p>很簡單的排序法！</p>
-<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<h2 id="效能"><a class="header" href="#效能">效能</a></h2>
 <table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(n^2) $</td></tr>
 <tr><td>Best</td><td>$O(n) $</td></tr>
 <tr><td>Average</td><td>$O(n^2) $</td></tr>
 <tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
-<h3><a class="header" href="#time-complexity" id="time-complexity">Time complexity</a></h3>
+<h3 id="time-complexity"><a class="header" href="#time-complexity">Time complexity</a></h3>
 <p>Bubble sort 總共需要 $n - 1 $ 次疊代，每次疊代至少需要執行 $n - 1 - i $ 置換（ $i $ 為第幾次疊代），總共需要疊代</p>
 <p>$$\sum_{i=0}^{n-1} (n - i - 1) = n^2 - \sum_{i=0}^{n-1}i - n = n^2 - \frac{n(n - 1)}{2} - n = \frac{n^2}{2} - \frac{n}{2}$$</p>
 <p>次，因此，時間複雜度為 $O(n^2) $。</p>
 <p>Bubble sort 在已排序完成的序列上，只需要疊代序列一次，發現完全沒有置換任何元素，即停止排序，可達到最佳時間複雜度。</p>
-<h2><a class="header" href="#實作" id="實作">實作</a></h2>
+<h2 id="實作"><a class="header" href="#實作">實作</a></h2>
 <p>Bubble sort 簡單實作如下：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -309,7 +309,7 @@
 <li>若未排序部分 <code>new_len</code> 為零，代表排序完成。</li>
 <li>外層迴圈將新長度值 <code>new_len</code> 賦予 <code>len</code>，下一次疊代就可少做一次比較。</li>
 </ol>
-<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Bubble_sort">Wiki: Bubble sort</a></li>
 <li>Sorting GIF was created by Swfung8 (Own work) <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a> via Wikimedia Commons.</li>

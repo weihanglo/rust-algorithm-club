@@ -170,7 +170,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#萊文斯坦距離-levenshtein-distance" id="萊文斯坦距離-levenshtein-distance">萊文斯坦距離 Levenshtein distance</a></h1>
+                        <h1 id="萊文斯坦距離-levenshtein-distance"><a class="header" href="#萊文斯坦距離-levenshtein-distance">萊文斯坦距離 Levenshtein distance</a></h1>
 <p>萊文斯坦距離（Levenshtein distance）是一種量化兩字串間差異的演算法，代表從一個字串轉換為另一個字串最少需要多少次編輯操作，這種量化指標的演算法稱為<a href="https://en.wikipedia.org/wiki/Edit_distance">「編輯距離（Edit distance）」</a>，不同的演算法允許的編輯操作不盡相同，萊文斯坦距離允許使用：</p>
 <ul>
 <li>插入（insertion）</li>
@@ -187,8 +187,8 @@
 </ul>
 <p>API 文件中。</p>
 </blockquote>
-<h2><a class="header" href="#概念" id="概念">概念</a></h2>
-<h3><a class="header" href="#萊文斯坦的遞迴函數" id="萊文斯坦的遞迴函數">萊文斯坦的遞迴函數</a></h3>
+<h2 id="概念"><a class="header" href="#概念">概念</a></h2>
+<h3 id="萊文斯坦的遞迴函數"><a class="header" href="#萊文斯坦的遞迴函數">萊文斯坦的遞迴函數</a></h3>
 <p>編輯距離愛拿 kitten 和 sitting 當例子，這兩個單字的編輯距離為 3，可以透過以下步驟，算出 kitten 與 sitting 轉換會經歷三個編輯操作：</p>
 <ol>
 <li><strong>s</strong>itting -&gt; <strong>k</strong>itting：置換 /k</li>
@@ -228,7 +228,7 @@ $$</p>
 <blockquote>
 <p>複雜度的 3 次方會減一是因為只要 m n 其中一個歸零，該路徑就不再遞迴。</p>
 </blockquote>
-<h3><a class="header" href="#動態規劃的距離矩陣" id="動態規劃的距離矩陣">動態規劃的距離矩陣</a></h3>
+<h3 id="動態規劃的距離矩陣"><a class="header" href="#動態規劃的距離矩陣">動態規劃的距離矩陣</a></h3>
 <p>由於上述遞迴複雜度過搞，因此處理萊文斯坦距離，通常會選擇由下至上（bottom-up） 的動態規劃（Dynamic programming），利用一個距離矩陣，將兩個字串所有子字串間的萊文斯坦距離累積紀錄起來，省去重複計算的成本。</p>
 <p>首先，先將最基礎的 a、b 其一為空字串時的編輯距離寫上去，因為其中一個為空字串，編輯距離必定是隨著另一字串增加，逐一插入字元（最左方的直行）或刪除字元（上方橫列）。</p>
 <blockquote>
@@ -258,7 +258,7 @@ $$</p>
 <p><img src="matrix.png" alt="" /></p>
 <p><em>圖三：字串 kitten 與 sitting 的完整編輯距離矩陣</em></p>
 <p>這就是透過動態規劃，將會重複計算的子字串編輯距離紀錄起來，降低原始算式的時空間複雜度，非常簡單暴力的演算法。</p>
-<h2><a class="header" href="#實作" id="實作">實作</a></h2>
+<h2 id="實作"><a class="header" href="#實作">實作</a></h2>
 <p>萊文斯坦距離的函式簽名很簡單，就是吃兩個 string 回傳一個距離：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -285,7 +285,7 @@ $$</p>
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#距離矩陣" id="距離矩陣">距離矩陣</a></h3>
+<h3 id="距離矩陣"><a class="header" href="#距離矩陣">距離矩陣</a></h3>
 <p>接下來實作矩陣的部分，這是純天然沒有特別最佳化的版本，要做三件事：</p>
 <ul>
 <li>建立一個 a+1 x b+1 的空矩陣，加一是因為要算入 a b 為空字串的狀況。</li>
@@ -381,7 +381,7 @@ $$</p>
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#使用一維陣列減少記憶體配置" id="使用一維陣列減少記憶體配置">使用一維陣列減少記憶體配置</a></h3>
+<h3 id="使用一維陣列減少記憶體配置"><a class="header" href="#使用一維陣列減少記憶體配置">使用一維陣列減少記憶體配置</a></h3>
 <p>Rust 的 <code>Vec</code> 並非簡單的 array，而是在堆積（heap）上配置記憶體，而每一個 <code>Vec</code> 都會帶一個指標和兩個值：指標指向在堆積上的資料，一個值儲存資料當前的長度，一個值儲存容量（圖解請參考 <a href="https://cheats.rs/#general-purpose-heap-storage">cheats.rs</a>）。所以 <code>Vec</code> 會佔三個 usize 的大小，在 64 位元作業系統中就是 24 個位元組。</p>
 <p>但實際上，我們的距離矩陣根本不需要真的矩陣，只需要兩個東西</p>
 <ul>
@@ -412,7 +412,7 @@ $$</p>
 <blockquote>
 <p>若要更有趣的索引方式，可以實作 <a href="http://doc.rust-lang.org/core/ops/trait.Index.html"><code>core::ops::Index</code></a> trait，這裡就不贅述了。</p>
 </blockquote>
-<h3><a class="header" href="#拋棄矩陣降低空間複雜度" id="拋棄矩陣降低空間複雜度">拋棄矩陣：降低空間複雜度</a></h3>
+<h3 id="拋棄矩陣降低空間複雜度"><a class="header" href="#拋棄矩陣降低空間複雜度">拋棄矩陣：降低空間複雜度</a></h3>
 <p>回想一下，當我們在計算一個編輯距離時，其實只需要取得三個累積的編輯距離：插入 <code>matrix[i, j-1]</code>、刪除 <code>matrix[i-1, j]</code>，以及置換 <code>matrix[i-1, j-1]</code>。如圖四</p>
 <p><img src="pre-opt-1.png" alt="" /></p>
 <p><em>圖四：計算一個編輯距離所需之資料。</em></p>
@@ -475,7 +475,7 @@ $$</p>
 </ol>
 <p><img src="opt-2.png" alt="" /></p>
 <p><em>圖六：使用一維陣列疊代計算，藍色為額外儲存的置換的累積編輯距離</em></p>
-<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<h2 id="效能"><a class="header" href="#效能">效能</a></h2>
 <table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(mn)$</td></tr>
 <tr><td>Worst space</td><td>$O(\min(m,n))$</td></tr>
@@ -486,7 +486,7 @@ $$</p>
 $n$：字串 b 的長度</p>
 </blockquote>
 <p>顯而易見，萊文斯坦距離最差時間複雜度就是內外兩個迴圈疊代兩個字串的所有字元。而空間複雜度原本是 $m \cdot n$ 的矩陣，在最佳化動態規劃後，只需兩字串長度 m 或 n 中最小值長度陣列作為儲存空間。</p>
-<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Wiki: Levenshtein distance</a></li>
 <li><a href="https://github.com/rust-lang/cargo/blob/7d7fe6797ad07f313706380d251796702272b150/src/cargo/util/lev_distance.rs">Levenshtein distance in Cargo</a></li>

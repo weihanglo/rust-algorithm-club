@@ -170,7 +170,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#內插搜尋-interpolation-search" id="內插搜尋-interpolation-search">內插搜尋 Interpolation Search</a></h1>
+                        <h1 id="內插搜尋-interpolation-search"><a class="header" href="#內插搜尋-interpolation-search">內插搜尋 Interpolation Search</a></h1>
 <p>內插搜尋 Interpolation search 為<a href="../binary_search">二元搜尋</a>的變種，差別在於二分點的選擇方法，二元搜尋選擇中間的元素作為二分點，而內插搜尋則名副其實，以內插法找尋二分點。內插法有許多種類，本次搜尋演算法選擇使用常見的<a href="https://en.wikipedia.org/wiki/Linear_interpolation">線性內插（linear interpolation）</a>實作。</p>
 <p>內插搜尋的特色如下：</p>
 <ul>
@@ -178,7 +178,7 @@
 <li>對資料分佈敏感，資料均勻分佈時，效能勝過二元搜尋。</li>
 <li>資料分佈不均勻時，最差複雜度高達 $O(n)$。</li>
 </ul>
-<h2><a class="header" href="#步驟" id="步驟">步驟</a></h2>
+<h2 id="步驟"><a class="header" href="#步驟">步驟</a></h2>
 <ol>
 <li>確認資料已經排好序。</li>
 <li>利用第一個元素 a 與最後的元素 b，以及搜尋上下界 hi 與 lo 位置，作為兩個端點。</li>
@@ -191,7 +191,7 @@
 </li>
 <li>搜尋停止在 a’、b’ 兩元素搜尋位置重疊，以及目標值比下界 a’ 小或比上界 b’ 大。</li>
 </ol>
-<h2><a class="header" href="#說明" id="說明">說明</a></h2>
+<h2 id="說明"><a class="header" href="#說明">說明</a></h2>
 <p>迅速說明線性內插法。線性內插法是中學必修的數學概念，給定兩點 $(x_0,y_0)$ 與 $(x_1,y_1)$，欲求在 $[x_0,x_1]$ 區間內直線上 $x’$ 點的 y 值，可以透過斜率公式求解：</p>
 <p>$$
 \frac{y - y_0}{x’ - x_0} = \frac{y_1 - y_0}{x_1 - x_0 }
@@ -213,7 +213,7 @@ $$</p>
 <p>查看 <code>arr[9]</code> 為 28，比搜尋目標 27 來得大。將 28 當作我們新的上界，搜尋範變成第 [0, 8] 個元素（28 不需列入搜尋），繼續計算內插</p>
 <p>$$x’ = \lfloor 27 / (27 - 1) \cdot (8 - 0) \rfloor = 8$$</p>
 <p>查看 <code>arr[8]</code> 為 27，恰恰是搜尋目標 27，搜尋到此結束。</p>
-<h2><a class="header" href="#效能" id="效能">效能</a></h2>
+<h2 id="效能"><a class="header" href="#效能">效能</a></h2>
 <table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(n)$</td></tr>
 <tr><td>Best</td><td>$O(1)$</td></tr>
@@ -228,7 +228,7 @@ $$</p>
 <p>線性內插搜尋對資料的期望是均勻機率分佈（uniform probability distribution）。想求平均時間複雜度 $O(\log \log n)$ ，須先透過機率密度函數，計算條件機率，一步步縮小範圍，求得平均誤差，最後求得期望值。這部分計算較為複雜，有興趣的朋友可以參考閱讀資料「<a href="http://www.cs.technion.ac.il/%7Eitai/publications/Algorithms/p550-perl.pdf">Perl, Y., Itai, A., &amp; Avni, H. (1978). Interpolation search—a log log N search.</a>」。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Uniform_Distribution_PDF_SVG.svg/320px-Uniform_Distribution_PDF_SVG.svg.png" alt="" /></p>
 <p><em>PDF of uniform distribution by IkamusumeFan - CC BY-SA 3.0</em></p>
-<h2><a class="header" href="#實作" id="實作">實作</a></h2>
+<h2 id="實作"><a class="header" href="#實作">實作</a></h2>
 <p>內插搜尋的實作共分為幾部分：</p>
 <ol>
 <li>處理空序列狀況。</li>
@@ -386,8 +386,8 @@ $$</p>
 <p>如同<a href="../binary_search">二元搜尋</a>與<a href="../exponential_search">指數搜尋
 </a>，未特別處理重複元素的內插搜尋，並無法預期會選擇哪一個元素。</p>
 </blockquote>
-<h2><a class="header" href="#變形與衍生" id="變形與衍生">變形與衍生</a></h2>
-<h3><a class="header" href="#interpolation-search-tree" id="interpolation-search-tree">Interpolation Search Tree</a></h3>
+<h2 id="變形與衍生"><a class="header" href="#變形與衍生">變形與衍生</a></h2>
+<h3 id="interpolation-search-tree"><a class="header" href="#interpolation-search-tree">Interpolation Search Tree</a></h3>
 <p>Interpolation search tree（IST），姑且稱它「內插搜尋樹」，是一個將內插搜尋結合樹的資料結構。如上述提及，內插搜尋達到 $O(\log \log n)$ 的搜尋時間，但僅適用於均勻機率分佈的資料。而 IST 利用動態內插搜尋，讓 1）內插搜尋樹的搜尋可以使用在更多元的<strong>規律機率分佈</strong>的資料中，且 2）可以達到以下的執行效能：</p>
 <ul>
 <li>$O(n)$ 空間複雜度。</li>
@@ -396,7 +396,7 @@ $$</p>
 <li>線性時間的循序存取，而取得前後節點或最小值都是常數時間。</li>
 </ul>
 <p>更多詳細證明可以閱讀參考資料「<a href="https://people.mpi-inf.mpg.de/%7Emehlhorn/ftp/DynamicInterpolationSearch.pdf">Andersson, A. (1996, October). Faster deterministic sorting and searching in linear space</a>」。</p>
-<h2><a class="header" href="#參考資料" id="參考資料">參考資料</a></h2>
+<h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Interpolation_search">Wiki: Interpolation search</a></li>
 <li><a href="http://www.cs.technion.ac.il/%7Eitai/publications/Algorithms/p550-perl.pdf">Perl, Y., Itai, A., &amp; Avni, H. (1978). Interpolation search—a log log N search. Communications of the ACM, 21(7), 550-553.</a></li>
