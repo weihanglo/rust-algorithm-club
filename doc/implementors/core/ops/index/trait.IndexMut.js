@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["rust_algorithm_club"] = [{"text":"impl&lt;T&gt; IndexMut&lt;usize&gt; for Deque&lt;T&gt;","synthetic":false,"types":[]}];
+implementors["rust_algorithm_club"] = [{"text":"impl&lt;T&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/ops/index/trait.IndexMut.html\" title=\"trait core::ops::index::IndexMut\">IndexMut</a>&lt;<a class=\"primitive\" href=\"https://doc.rust-lang.org/nightly/std/primitive.usize.html\">usize</a>&gt; for <a class=\"struct\" href=\"rust_algorithm_club/collections/struct.Deque.html\" title=\"struct rust_algorithm_club::collections::Deque\">Deque</a>&lt;T&gt;","synthetic":false,"types":["rust_algorithm_club::collections::deque::Deque"]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
