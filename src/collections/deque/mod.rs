@@ -242,9 +242,9 @@ impl<T> Deque<T> {
                 // The content of ring buffer won't overlapped, so it's safe to
                 // call `copy_nonoverlapping`. It's also safe to advance the
                 // pointer by `old_cap` since the buffer has been doubled.
+                let src = self.ptr(); // 4-1
+                let dst = unsafe { self.ptr().add(old_cap) }; // 4-2
                 unsafe {
-                    let src = self.ptr(); // 4-1
-                    let dst = self.ptr().add(old_cap); // 4-2
                     ptr::copy_nonoverlapping(src, dst, self.head);
                 }
                 self.head += old_cap; // 5
@@ -354,11 +354,11 @@ impl<'a, T> Iterator for IterMut<'a, T> {
         // trait: the `&mut self` is bound to an anonymous lifetime which rustc
         // cannot figure out whether it would outlive returning element. Hence
         // the explicit pointer casting is required.
-        unsafe {
+        
             let ptr = self.ring_buf as *mut [T]; // 1
-            let slice = &mut *ptr; // 2
+            let slice = unsafe { &mut *ptr }; // 2
             slice.get_mut(tail) // 3
-        }
+        
     }
 }
 // ANCHOR_END: IterMut
