@@ -4,7 +4,7 @@ version = "0.0.1"
 edition = '2018'
 authors = ["Weihang Lo <me@weihanglo.tw>"]
 description = "Learn algorithms and data structures with Rust"
-homepage = "https://rust-algo.club"
+homepage = "https://weihanglo.tw/rust-algorithm-club"
 repository = "https://github.com/weihanglo/rust-algorithm-club"
 
 [dev-dependencies]

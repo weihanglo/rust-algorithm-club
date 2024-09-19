@@ -4,7 +4,7 @@
 
 # Rust Algorithm Club
 
-> ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here](https://rust-algo.club) if you are able to read Chinese.
+> ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here](https://weihanglo.tw/rust-algorithm-club) if you are able to read Chinese.
 
 Welcome to the Rust Algorithm Club! This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
 You can find out more on the [Rust Algorithm Club][main-site] main site. Just pick up some algorithms you are interested in and start learning. If you are brave enough, we recommend you the [auto-generated API documentation][generated-doc]. Go and fight with the source code.
@@ -18,9 +18,9 @@ This project along with its source code are on [GitHub][source-code] and we are 
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
 [source-code]: https://github.com/weihanglo/rust-algorithm-club
-[main-site]: https://rust-algo.club
+[main-site]: https://weihanglo.tw/rust-algorithm-club/
 [ci-status]: https://github.com/weihanglo/rust-algorithm-club/actions?query=workflow%3ACI
-[generated-doc]: https://rust-algo.club/doc/rust_algorithm_club/
+[generated-doc]: https://weihanglo.tw/rust-algorithm-club/doc/rust_algorithm_club/
 [edition-guide]: https://rust-lang.github.io/edition-guide/rust-2018
 
 ## General Concepts
