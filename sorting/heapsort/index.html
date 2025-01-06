@@ -1,49 +1,50 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>堆積排序 Heapsort - Rust Algorithm Club</title>
-                
+
 
         <!-- Custom HTML head -->
-        
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Learn algorithms and data structures with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
-                <link rel="icon" href="../../favicon.svg">
-                        <link rel="shortcut icon" href="../../favicon.png">
-                <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
-                <link rel="stylesheet" href="../../css/print.css" media="print">
-        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
-                <link rel="stylesheet" href="../../fonts/fonts.css">
-        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../highlight.css">
         <link rel="stylesheet" href="../../tomorrow-night.css">
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
-                <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-            </head>
-    <body>
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -59,74 +60,82 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">💡 基礎概念</li><li class="chapter-item expanded "><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🔍 搜尋</li><li class="chapter-item expanded "><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li class="chapter-item expanded "><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li class="chapter-item expanded "><a href="../../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li class="chapter-item expanded "><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">📚 排序</li><li class="chapter-item expanded affix "><li class="part-title">簡單排序</li><li class="chapter-item expanded "><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li class="chapter-item expanded "><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li class="chapter-item expanded "><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li><li class="chapter-item expanded affix "><li class="part-title">高效排序</li><li class="chapter-item expanded "><a href="../../sorting/heapsort/index.html" class="active">堆積排序 Heapsort</a></li><li class="chapter-item expanded "><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li class="chapter-item expanded "><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li><li class="chapter-item expanded affix "><li class="part-title">混合排序</li><li class="chapter-item expanded "><div>🚧 內省排序 Introsort</div></li><li class="chapter-item expanded "><div>🚧 自適應合併排序 Timsort</div></li><li class="chapter-item expanded "><div>🚧 模式消除快速排序 Pdqsort</div></li><li class="chapter-item expanded affix "><li class="part-title">特殊排序</li><li class="chapter-item expanded "><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li class="chapter-item expanded "><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🏠 資料結構</li><li class="chapter-item expanded affix "><li class="part-title">堆疊與佇列</li><li class="chapter-item expanded "><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li class="chapter-item expanded "><a href="../../collections/queue/index.html">佇列 Queue</a></li><li class="chapter-item expanded "><a href="../../collections/deque/index.html">雙端佇列 Deque</a></li><li class="chapter-item expanded affix "><li class="part-title">鏈結串列</li><li class="chapter-item expanded "><a href="../../collections/linked_list/index.html">鏈結串列概述</a></li><li class="chapter-item expanded "><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li class="chapter-item expanded "><div>🚧 雙向鏈結串列 Doubly linked list</div></li><li class="chapter-item expanded "><div>🚧 循環鏈結串列 Circular linked list</div></li><li class="chapter-item expanded affix "><li class="part-title">關聯容器</li><li class="chapter-item expanded "><a href="../../collections/associative-container/index.html">關聯容器概述</a></li><li class="chapter-item expanded "><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li class="chapter-item expanded "><div>🚧 有序映射表 Ordered map</div></li><li class="chapter-item expanded "><div>🚧 多重映射表 Multimap</div></li><li class="chapter-item expanded "><a href="../../collections/set/index.html">集合 Set</a></li><li class="chapter-item expanded "><a href="../../collections/bloom_filter/index.html">布隆過濾器 Bloom filter</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🧵 字串處理</li><li class="chapter-item expanded "><a href="../../hamming_distance/index.html">漢明距離 Hamming distance</a></li><li class="chapter-item expanded "><a href="../../levenshtein_distance/index.html">萊文斯坦距離 Levenshtein distance</a></li><li class="chapter-item expanded "><div>🚧 最長共同子字串 Longest common substring</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="chapter-item expanded affix "><a href="../../404.html">404</a></li></ol>            </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                                            </div>
+                    </div>
 
                     <h1 class="menu-title">Rust Algorithm Club</h1>
 
                     <div class="right-buttons">
-                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                                                                        <a href="https://github.com/weihanglo/rust-algorithm-club" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/weihanglo/rust-algorithm-club" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                                                
+
                     </div>
                 </div>
 
-                                <div id="search-wrapper" class="hidden">
+                <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
                         <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
@@ -136,9 +145,9 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -241,12 +250,13 @@
 </code></pre>
 <p>以上便是 heapsort 演算法的簡單流程，是不是和 selection sort 非常相似呢！</p>
 <h2 id="效能"><a class="header" href="#效能">效能</a></h2>
-<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(n \log n) $</td></tr>
 <tr><td>Best</td><td>$O(n \log n) $</td></tr>
 <tr><td>Average</td><td>$O(n \log n) $</td></tr>
 <tr><td>Worst space</td><td>$O(1) $ auxiliary</td></tr>
 </tbody></table>
+</div>
 <p>Heapsort 最佳、最差、平均的時間複雜度皆為 $O(n \log n) $，同樣分為兩部分簡單解釋。</p>
 <h3 id="build-heap-heapify"><a class="header" href="#build-heap-heapify">Build heap (heapify)</a></h3>
 <p>建立一個 binary heap 有兩種方法，一種是一個個元素慢慢加入 heap 來建立；另一種則是給定隨意的序列，再透過 heapify 演算法修正序列為有效的 heap。一般來說 heapsort 常用實作後者。</p>
@@ -254,7 +264,7 @@
 <p>Heapify 從最末個元素開始反向疊代，每個元素都呼叫 <code>sift_down</code> 調整 heap 符合 heap ordering。總共要做 $n $ 次 <code>sift_down</code> 操作，但由於最後一層所以 leaf 已符合 heap order（因為沒有 child node），我們的迴圈可以跳過所有 leaf node 直接從非 leaf node 開始，因此複雜度為</p>
 <p>$$\lfloor n / 2 \rfloor \cdot O(\log n) = O(n \log n)$$</p>
 <blockquote>
-<p>實際上，build heap 步驟的複雜度可達到 $O(n) $，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/%7Emeesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
+<p>實際上，build heap 步驟的複雜度可達到 $O(n) $，可以看看 UMD 演算法課程 <a href="http://www.cs.umd.edu/~meesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">Lecture note 的分析</a>。</p>
 </blockquote>
 <h3 id="sorting-sift-down"><a class="header" href="#sorting-sift-down">Sorting (sift down)</a></h3>
 <p>講完了 heapify，就換到排序部分，所謂的排序其實就是利用 max-heap（或 min-heap）的最大值（最小值）會在首個元素的特性，與最後一個元素置換，完成排序，並將剩餘的部分透過 <strong>sift down</strong> 修正符合 heap order。所以總共需要做 $n $ 次 sift down，複雜度為 $O(n \log n) $。</p>
@@ -262,8 +272,7 @@
 <p>綜合這兩部分，可以看出 Sorting part 對複雜度有決定性影響，最佳複雜度為 $O(n \log n) $。</p>
 <h2 id="實作"><a class="header" href="#實作">實作</a></h2>
 <p>Heapsort 的實作相對簡單，只需要不斷呼叫 heap 內部的 <code>sift_down</code> 方法就可以完成排序。整個演算法架構如下：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn heapsort(arr: &amp;mut [i32]) {
     // -- Heapify part --
@@ -281,8 +290,7 @@
         sift_down(arr, 0, end - 1);                     // 4
     }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <ol>
 <li>這部分是 heapify，從最小 non-leaf node 開始（<code>end</code> / 2），修正序列至滿足 heap order，再反向疊代做 heapify。</li>
 <li>這部分負責排序，每次疊代都將排序 heap 的 root 元素，步驟如 3 - 4：</li>
@@ -290,8 +298,7 @@
 <li>並利用 <code>sift_down</code> 將序列修正至 max-heap 資料結構，依照定義，此時 unsorted pile 首個元素成為 max-heap root，是最大值。</li>
 </ol>
 <p>Heapsort 全靠 <code>sift_down</code> 神救援，那 <code>sift_down</code> 到底有什麼神奇魔力，一探究竟吧！</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn sift_down(arr: &amp;mut [i32], start: usize, end: usize) {
     let mut root = start;
@@ -314,8 +321,7 @@
         }
     }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><code>sift_down</code> 的功能是將 node 往下移。通常用在 heap 刪除或取代 node 時，將序列修正為有效的 heap。 這裡實作的版本有三個參數：</p>
 <ul>
 <li><code>arr</code>：欲修正為符合 heap 定義的序列。</li>
@@ -334,7 +340,7 @@
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">Wiki: Heap</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Heapsort">Wiki: Heapsort</a></li>
-<li><a href="www.cs.umd.edu/%7Emeesh/">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
+<li><a href="www.cs.umd.edu/~meesh/">CMSC 351 Algorithms, Fall, 2011, University of Maryland.</a></li>
 <li>Sorting GIF by RolandH <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA-3.0</a> via Wikimedia Commons.</li>
 </ul>
 
@@ -342,55 +348,56 @@
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="../../sorting/shellsort/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../sorting/shellsort/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
-                                                    <a rel="next" href="../../sorting/quicksort/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+
+                            <a rel="next prefetch" href="../../sorting/quicksort/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="../../sorting/shellsort/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../sorting/shellsort/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
-                                    <a rel="next" href="../../sorting/quicksort/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+
+                    <a rel="next prefetch" href="../../sorting/quicksort/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                            </nav>
+            </nav>
 
         </div>
 
-        
-        
-        
-                <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        
-                <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
-        
-                <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
-                <script type="text/javascript" src="../../theme/custom.js"></script>
-        
-        
+        <script src="../../theme/custom.js"></script>
+
+
+    </div>
     </body>
 </html>

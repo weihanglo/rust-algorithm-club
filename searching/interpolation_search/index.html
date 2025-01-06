@@ -1,49 +1,50 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>內插搜尋 Interpolation search - Rust Algorithm Club</title>
-                
+
 
         <!-- Custom HTML head -->
-        
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Learn algorithms and data structures with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
-                <link rel="icon" href="../../favicon.svg">
-                        <link rel="shortcut icon" href="../../favicon.png">
-                <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
-                <link rel="stylesheet" href="../../css/print.css" media="print">
-        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
-                <link rel="stylesheet" href="../../fonts/fonts.css">
-        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../highlight.css">
         <link rel="stylesheet" href="../../tomorrow-night.css">
         <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
-                <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-            </head>
-    <body>
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -59,74 +60,82 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">💡 基礎概念</li><li class="chapter-item expanded "><a href="../../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🔍 搜尋</li><li class="chapter-item expanded "><a href="../../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li class="chapter-item expanded "><a href="../../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li class="chapter-item expanded "><a href="../../searching/interpolation_search/index.html" class="active">內插搜尋 Interpolation search</a></li><li class="chapter-item expanded "><a href="../../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">📚 排序</li><li class="chapter-item expanded affix "><li class="part-title">簡單排序</li><li class="chapter-item expanded "><a href="../../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li class="chapter-item expanded "><a href="../../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li class="chapter-item expanded "><a href="../../sorting/shellsort/index.html">希爾排序 Shellsort</a></li><li class="chapter-item expanded affix "><li class="part-title">高效排序</li><li class="chapter-item expanded "><a href="../../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li class="chapter-item expanded "><a href="../../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li class="chapter-item expanded "><a href="../../sorting/mergesort/index.html">合併排序 Mergesort</a></li><li class="chapter-item expanded affix "><li class="part-title">混合排序</li><li class="chapter-item expanded "><div>🚧 內省排序 Introsort</div></li><li class="chapter-item expanded "><div>🚧 自適應合併排序 Timsort</div></li><li class="chapter-item expanded "><div>🚧 模式消除快速排序 Pdqsort</div></li><li class="chapter-item expanded affix "><li class="part-title">特殊排序</li><li class="chapter-item expanded "><a href="../../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li class="chapter-item expanded "><a href="../../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li class="chapter-item expanded "><a href="../../sorting/radix_sort/index.html">基數排序 Radix sort</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🏠 資料結構</li><li class="chapter-item expanded affix "><li class="part-title">堆疊與佇列</li><li class="chapter-item expanded "><a href="../../collections/stack/index.html">堆疊 Stack</a></li><li class="chapter-item expanded "><a href="../../collections/queue/index.html">佇列 Queue</a></li><li class="chapter-item expanded "><a href="../../collections/deque/index.html">雙端佇列 Deque</a></li><li class="chapter-item expanded affix "><li class="part-title">鏈結串列</li><li class="chapter-item expanded "><a href="../../collections/linked_list/index.html">鏈結串列概述</a></li><li class="chapter-item expanded "><a href="../../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li class="chapter-item expanded "><div>🚧 雙向鏈結串列 Doubly linked list</div></li><li class="chapter-item expanded "><div>🚧 循環鏈結串列 Circular linked list</div></li><li class="chapter-item expanded affix "><li class="part-title">關聯容器</li><li class="chapter-item expanded "><a href="../../collections/associative-container/index.html">關聯容器概述</a></li><li class="chapter-item expanded "><a href="../../collections/hash_map/index.html">雜湊表 Hash map</a></li><li class="chapter-item expanded "><div>🚧 有序映射表 Ordered map</div></li><li class="chapter-item expanded "><div>🚧 多重映射表 Multimap</div></li><li class="chapter-item expanded "><a href="../../collections/set/index.html">集合 Set</a></li><li class="chapter-item expanded "><a href="../../collections/bloom_filter/index.html">布隆過濾器 Bloom filter</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🧵 字串處理</li><li class="chapter-item expanded "><a href="../../hamming_distance/index.html">漢明距離 Hamming distance</a></li><li class="chapter-item expanded "><a href="../../levenshtein_distance/index.html">萊文斯坦距離 Levenshtein distance</a></li><li class="chapter-item expanded "><div>🚧 最長共同子字串 Longest common substring</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../../CONTRIBUTING.html">貢獻指南</a></li><li class="chapter-item expanded affix "><a href="../../404.html">404</a></li></ol>            </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                                            </div>
+                    </div>
 
                     <h1 class="menu-title">Rust Algorithm Club</h1>
 
                     <div class="right-buttons">
-                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                                                                        <a href="https://github.com/weihanglo/rust-algorithm-club" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/weihanglo/rust-algorithm-club" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                                                
+
                     </div>
                 </div>
 
-                                <div id="search-wrapper" class="hidden">
+                <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
                         <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
@@ -136,9 +145,9 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -184,7 +193,7 @@ $$</p>
 <pre><code>[1, 9, 10, 15, 17, 17, 18, 23, 27, 28, 29, 30, 31, 34]
 </code></pre>
 <p>我們將序列索引當作 x 軸，元素值作為 y 軸。可得已知兩點為 $(0, 1)$ 及 $(13, 34)$。</p>
-<p>首先，透過斜率公式，計算出在 $y = 27$ 時，$x’$，也就是 27 在序列中可能的位置為 </p>
+<p>首先，透過斜率公式，計算出在 $y = 27$ 時，$x’$，也就是 27 在序列中可能的位置為</p>
 <p>$$x’ = \lfloor 27 / (34 - 1) \cdot (13 - 0) \rfloor = 10$$</p>
 <p>查看 <code>arr[10]</code> 為 29，比搜尋目標 27 來得大。將 29 當作我們新的上界，搜尋範變成第 [0, 9] 個元素（29 不需列入搜尋），繼續計算內插</p>
 <p>$$x’ = \lfloor 27 / (28 - 1) \cdot (9 - 0) \rfloor = 9$$</p>
@@ -192,18 +201,19 @@ $$</p>
 <p>$$x’ = \lfloor 27 / (27 - 1) \cdot (8 - 0) \rfloor = 8$$</p>
 <p>查看 <code>arr[8]</code> 為 27，恰恰是搜尋目標 27，搜尋到此結束。</p>
 <h2 id="效能"><a class="header" href="#效能">效能</a></h2>
-<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(n)$</td></tr>
 <tr><td>Best</td><td>$O(1)$</td></tr>
 <tr><td>Average</td><td>$O(n)$</td></tr>
 <tr><td>Average</td><td>$O(\log \log n)$ on uniform distributed data</td></tr>
 <tr><td>Worst space</td><td>$O(1)$</td></tr>
 </tbody></table>
+</div>
 <blockquote>
 <p>$n$：資料筆數</p>
 </blockquote>
 <p>線性內差搜尋的最差時間複雜度為 $O(n)$，也就是每次內差的結果都落在邊界旁，搜尋範圍只縮小一個元素。這種情況容易發生在資料依排序呈指數或對數等非線性函數。例如 $y = 2^x$。</p>
-<p>線性內插搜尋對資料的期望是均勻機率分佈（uniform probability distribution）。想求平均時間複雜度 $O(\log \log n)$ ，須先透過機率密度函數，計算條件機率，一步步縮小範圍，求得平均誤差，最後求得期望值。這部分計算較為複雜，有興趣的朋友可以參考閱讀資料「<a href="http://www.cs.technion.ac.il/%7Eitai/publications/Algorithms/p550-perl.pdf">Perl, Y., Itai, A., &amp; Avni, H. (1978). Interpolation search—a log log N search.</a>」。</p>
+<p>線性內插搜尋對資料的期望是均勻機率分佈（uniform probability distribution）。想求平均時間複雜度 $O(\log \log n)$ ，須先透過機率密度函數，計算條件機率，一步步縮小範圍，求得平均誤差，最後求得期望值。這部分計算較為複雜，有興趣的朋友可以參考閱讀資料「<a href="http://www.cs.technion.ac.il/~itai/publications/Algorithms/p550-perl.pdf">Perl, Y., Itai, A., &amp; Avni, H. (1978). Interpolation search—a log log N search.</a>」。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Uniform_Distribution_PDF_SVG.svg/320px-Uniform_Distribution_PDF_SVG.svg.png" alt="" /></p>
 <p><em>PDF of uniform distribution by IkamusumeFan - CC BY-SA 3.0</em></p>
 <h2 id="實作"><a class="header" href="#實作">實作</a></h2>
@@ -215,15 +225,13 @@ $$</p>
 <li>將內插值映射到結果的 <code>Result</code>。</li>
 </ol>
 <p>首先是函式宣告。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn interpolation_search(
     arr: &amp;[i32],
     target: &amp;i32,
 ) -&gt; Result&lt;usize, usize&gt;
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>映入眼簾的是 <code>i32</code>，而非泛型參數，為什麼呢？是因為內插搜尋為了計算線性內插，資料僅限定在「數值資料」，而 Rust 並沒有特別一類 <strong>Numeric</strong> 的型別，自己透過 trait 實作又異常繁瑣，因此先以 <code>i32</code> 代替。而回傳值的部分，與指數搜尋／二元搜尋一模一樣，回傳的 <code>Result</code></p>
 <ul>
 <li>若為 <code>Ok</code>，其值代表目標值在序列內的索引位置；</li>
@@ -233,8 +241,7 @@ $$</p>
 <p>延續數值型別的話題，Rust 社群提供 <a href="https://github.com/rust-num/num">num</a> crate，定義了各種數值型別與 trait，大整數、複數、虛數、有理數都囊括其中，非常有趣。</p>
 </blockquote>
 <p>再來就是第一第二部分，處理空序列與建立共用變數，非常直觀。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    if arr.is_empty() {
         return Err(0)
@@ -244,15 +251,13 @@ $$</p>
     let mut lo = 0_usize;
 
     let mut interpolant = 0_usize;
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <ul>
 <li><code>hi</code>、<code>lo</code> 兩個變數劃定的搜尋範圍上下界。</li>
 <li><code>interpolant</code> 儲存線性插值，代表每次疊代的搜尋位置。</li>
 </ul>
 <p>接下來就是主要的迴圈，負責疊代計算內插值。分為三個部分，直接看程式碼先。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    loop {
         let lo_val = arr[lo];
@@ -278,8 +283,7 @@ $$</p>
             break
         }
     }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <ol>
 <li>迴圈的三個終止條件，分別為：
 <ul>
@@ -292,8 +296,7 @@ $$</p>
 <li>比較插值與目標值。相等則跳出迴圈；若目標大於小於插值，則縮小搜尋範圍。注意，範圍需手動加減一，排除上下界，以免無限迴圈產生。</li>
 </ol>
 <p>最後一部分則是決定線性插值所得的索引位置是否為目標值，並將該值映射到 <code>Result</code> 上。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    if *target &gt; arr[hi] {
         Err(hi + 1)
@@ -302,11 +305,9 @@ $$</p>
     } else {
         Ok(interpolant)
     }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>完整的程式碼如下。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn interpolation_search(
     arr: &amp;[i32],
@@ -358,8 +359,7 @@ $$</p>
         Ok(interpolant)
     }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <blockquote>
 <p>如同<a href="../binary_search">二元搜尋</a>與<a href="../exponential_search">指數搜尋
 </a>，未特別處理重複元素的內插搜尋，並無法預期會選擇哪一個元素。</p>
@@ -373,12 +373,12 @@ $$</p>
 <li>在規律分佈的資料中，預期搜尋時間為 $O(\log \log n)$，最差時間複雜度則為 $O((\log n)^2)$</li>
 <li>線性時間的循序存取，而取得前後節點或最小值都是常數時間。</li>
 </ul>
-<p>更多詳細證明可以閱讀參考資料「<a href="https://people.mpi-inf.mpg.de/%7Emehlhorn/ftp/DynamicInterpolationSearch.pdf">Andersson, A. (1996, October). Faster deterministic sorting and searching in linear space</a>」。</p>
+<p>更多詳細證明可以閱讀參考資料「<a href="https://people.mpi-inf.mpg.de/~mehlhorn/ftp/DynamicInterpolationSearch.pdf">Andersson, A. (1996, October). Faster deterministic sorting and searching in linear space</a>」。</p>
 <h2 id="參考資料"><a class="header" href="#參考資料">參考資料</a></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Interpolation_search">Wiki: Interpolation search</a></li>
-<li><a href="http://www.cs.technion.ac.il/%7Eitai/publications/Algorithms/p550-perl.pdf">Perl, Y., Itai, A., &amp; Avni, H. (1978). Interpolation search—a log log N search. Communications of the ACM, 21(7), 550-553.</a></li>
-<li><a href="https://people.mpi-inf.mpg.de/%7Emehlhorn/ftp/DynamicInterpolationSearch.pdf">Andersson, A. (1996, October). Faster deterministic sorting and searching in linear space. In Foundations of Computer Science, 1996. Proceedings., 37th Annual Symposium on (pp. 135-141). IEEE.</a></li>
+<li><a href="http://www.cs.technion.ac.il/~itai/publications/Algorithms/p550-perl.pdf">Perl, Y., Itai, A., &amp; Avni, H. (1978). Interpolation search—a log log N search. Communications of the ACM, 21(7), 550-553.</a></li>
+<li><a href="https://people.mpi-inf.mpg.de/~mehlhorn/ftp/DynamicInterpolationSearch.pdf">Andersson, A. (1996, October). Faster deterministic sorting and searching in linear space. In Foundations of Computer Science, 1996. Proceedings., 37th Annual Symposium on (pp. 135-141). IEEE.</a></li>
 <li>Linear interpolation visualisation SVG By Cmglee <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons.</li>
 <li>Probability density function of uniform distribution SVG By IkamusumeFan <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons.</li>
 </ul>
@@ -387,55 +387,56 @@ $$</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="../../searching/binary_search/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../searching/binary_search/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
-                                                    <a rel="next" href="../../searching/exponential_search/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+
+                            <a rel="next prefetch" href="../../searching/exponential_search/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="../../searching/binary_search/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../searching/binary_search/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
-                                    <a rel="next" href="../../searching/exponential_search/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+
+                    <a rel="next prefetch" href="../../searching/exponential_search/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                            </nav>
+            </nav>
 
         </div>
 
-        
-        
-        
-                <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        
-                <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
-        
-                <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
-                <script type="text/javascript" src="../../theme/custom.js"></script>
-        
-        
+        <script src="../../theme/custom.js"></script>
+
+
+    </div>
     </body>
 </html>

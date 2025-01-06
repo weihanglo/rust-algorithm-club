@@ -1,49 +1,50 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>萊文斯坦距離 Levenshtein distance - Rust Algorithm Club</title>
-                
+
 
         <!-- Custom HTML head -->
-        
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Learn algorithms and data structures with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
-                <link rel="icon" href="../favicon.svg">
-                        <link rel="shortcut icon" href="../favicon.png">
-                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
-                <link rel="stylesheet" href="../css/print.css" media="print">
-        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-                <link rel="stylesheet" href="../fonts/fonts.css">
-        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
         <link rel="stylesheet" href="../tomorrow-night.css">
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
-                <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-            </head>
-    <body>
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -59,74 +60,82 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Rust Algorithm Club</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">💡 基礎概念</li><li class="chapter-item expanded "><a href="../concepts/asymptotic-notation/index.html">漸進符號 Asymptotic Notation</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🔍 搜尋</li><li class="chapter-item expanded "><a href="../searching/linear_search/index.html">線性搜尋 Linear search</a></li><li class="chapter-item expanded "><a href="../searching/binary_search/index.html">二元搜尋 Binary search</a></li><li class="chapter-item expanded "><a href="../searching/interpolation_search/index.html">內插搜尋 Interpolation search</a></li><li class="chapter-item expanded "><a href="../searching/exponential_search/index.html">指數搜尋 Exponential search</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">📚 排序</li><li class="chapter-item expanded affix "><li class="part-title">簡單排序</li><li class="chapter-item expanded "><a href="../sorting/insertion_sort/index.html">插入排序 Insertion sort</a></li><li class="chapter-item expanded "><a href="../sorting/selection_sort/index.html">選擇排序 Selection sort</a></li><li class="chapter-item expanded "><a href="../sorting/bubble_sort/index.html">氣泡排序 Bubble sort</a></li><li class="chapter-item expanded "><a href="../sorting/shellsort/index.html">希爾排序 Shellsort</a></li><li class="chapter-item expanded affix "><li class="part-title">高效排序</li><li class="chapter-item expanded "><a href="../sorting/heapsort/index.html">堆積排序 Heapsort</a></li><li class="chapter-item expanded "><a href="../sorting/quicksort/index.html">快速排序 Quicksort</a></li><li class="chapter-item expanded "><a href="../sorting/mergesort/index.html">合併排序 Mergesort</a></li><li class="chapter-item expanded affix "><li class="part-title">混合排序</li><li class="chapter-item expanded "><div>🚧 內省排序 Introsort</div></li><li class="chapter-item expanded "><div>🚧 自適應合併排序 Timsort</div></li><li class="chapter-item expanded "><div>🚧 模式消除快速排序 Pdqsort</div></li><li class="chapter-item expanded affix "><li class="part-title">特殊排序</li><li class="chapter-item expanded "><a href="../sorting/counting_sort/index.html">計數排序 Counting sort</a></li><li class="chapter-item expanded "><a href="../sorting/bucket_sort/index.html">桶排序 Bucket sort</a></li><li class="chapter-item expanded "><a href="../sorting/radix_sort/index.html">基數排序 Radix sort</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🏠 資料結構</li><li class="chapter-item expanded affix "><li class="part-title">堆疊與佇列</li><li class="chapter-item expanded "><a href="../collections/stack/index.html">堆疊 Stack</a></li><li class="chapter-item expanded "><a href="../collections/queue/index.html">佇列 Queue</a></li><li class="chapter-item expanded "><a href="../collections/deque/index.html">雙端佇列 Deque</a></li><li class="chapter-item expanded affix "><li class="part-title">鏈結串列</li><li class="chapter-item expanded "><a href="../collections/linked_list/index.html">鏈結串列概述</a></li><li class="chapter-item expanded "><a href="../collections/singly_linked_list/index.html">單向鏈結串列 Singly linked list</a></li><li class="chapter-item expanded "><div>🚧 雙向鏈結串列 Doubly linked list</div></li><li class="chapter-item expanded "><div>🚧 循環鏈結串列 Circular linked list</div></li><li class="chapter-item expanded affix "><li class="part-title">關聯容器</li><li class="chapter-item expanded "><a href="../collections/associative-container/index.html">關聯容器概述</a></li><li class="chapter-item expanded "><a href="../collections/hash_map/index.html">雜湊表 Hash map</a></li><li class="chapter-item expanded "><div>🚧 有序映射表 Ordered map</div></li><li class="chapter-item expanded "><div>🚧 多重映射表 Multimap</div></li><li class="chapter-item expanded "><a href="../collections/set/index.html">集合 Set</a></li><li class="chapter-item expanded "><a href="../collections/bloom_filter/index.html">布隆過濾器 Bloom filter</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">🧵 字串處理</li><li class="chapter-item expanded "><a href="../hamming_distance/index.html">漢明距離 Hamming distance</a></li><li class="chapter-item expanded "><a href="../levenshtein_distance/index.html" class="active">萊文斯坦距離 Levenshtein distance</a></li><li class="chapter-item expanded "><div>🚧 最長共同子字串 Longest common substring</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../CONTRIBUTING.html">貢獻指南</a></li><li class="chapter-item expanded affix "><a href="../404.html">404</a></li></ol>            </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                                            </div>
+                    </div>
 
                     <h1 class="menu-title">Rust Algorithm Club</h1>
 
                     <div class="right-buttons">
-                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                                                                        <a href="https://github.com/weihanglo/rust-algorithm-club" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/weihanglo/rust-algorithm-club" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                                                
+
                     </div>
                 </div>
 
-                                <div id="search-wrapper" class="hidden">
+                <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
                         <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
@@ -136,9 +145,9 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -238,19 +247,16 @@ $$</p>
 <p>這就是透過動態規劃，將會重複計算的子字串編輯距離紀錄起來，降低原始算式的時空間複雜度，非常簡單暴力的演算法。</p>
 <h2 id="實作"><a class="header" href="#實作">實作</a></h2>
 <p>萊文斯坦距離的函式簽名很簡單，就是吃兩個 string 回傳一個距離：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn levenshtein_distance(source: &amp;str, target: &amp;str) -&gt; usize
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>首先，先實作第一個子函數</p>
 <p>$$
 \max(i,j) \hspace{10 pt} \text{if} \min(i,j) = 0
 $$</p>
 <p>當任一字串長度為 0 時（min(i,j）），編輯距離為另一字串之長度。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn levenshtein_distance(source: &amp;str, target: &amp;str) -&gt; usize {
     if source.is_empty() {
@@ -261,8 +267,7 @@ $$</p>
     }
     /// ...snip
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <h3 id="距離矩陣"><a class="header" href="#距離矩陣">距離矩陣</a></h3>
 <p>接下來實作矩陣的部分，這是純天然沒有特別最佳化的版本，要做三件事：</p>
 <ul>
@@ -270,8 +275,7 @@ $$</p>
 <li>填入 a b 為空字串時第一列與第一行的編輯距離，也就是全插入和全刪除的狀況。</li>
 <li>按照前一節的概念計算整個距離矩陣。</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // ...snip
     let source_count = source.chars().count(); // 1
@@ -287,16 +291,14 @@ $$</p>
     for j in 1..=target_count {
         distances[0][j] = j;
     }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <ol>
 <li>使用 <a href="http://doc.rust-lang.org/std/primitive.str.html#method.chars"><code>str::chars</code></a> 計算字串長度，Rust 的 <a href="http://doc.rust-lang.org/std/primitive.str.html#method.len"><code>str::len</code></a> 回傳的是位元組（byte）的長度，沒有考慮人類閱讀 UTF-8 編碼字串的視覺字元長度。選用 Chars 可以處理絕大部分常見的 UTF-8 字串問題（支援 CJK）。</li>
 <li>使用 <code>vec!</code> 巨集建立一個 vector of vector，也就是我們的距離矩陣。</li>
 <li>填入第一行和第一列空字串時的狀況，也就是初始化成圖一的情形。</li>
 </ol>
 <p>第二步則是撰寫計算距離矩陣編輯操作的邏輯：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    // ...snip
     for (i, ch1) in source.chars().enumerate() {
@@ -310,8 +312,7 @@ $$</p>
 
     // 5
     *distances.last().and_then(|d| d.last()).unwrap()
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <ol>
 <li>計算插入操作成本，對應萊文斯坦函數中 $\operatorname{lev} _{a,b}(i,j-1) + 1$ 子函數。</li>
 <li>計算刪除操作成本，對應萊文斯坦函數中 $\operatorname{lev} _{a,b}(i-1,j) + 1$ 子函數。</li>
@@ -320,8 +321,7 @@ $$</p>
 <li>算完整個距離矩陣後，最後一列最後一行元素就是 a b 兩字串的萊文斯坦距離，你可能好奇，直接呼叫 <code>unwrap</code> 沒有處理錯誤合理嗎？其實在「一定不可能出錯」的地方，呼叫 <code>unwrap</code> 完全可接受，省去不必要的空值處理。</li>
 </ol>
 <p>完整程式碼如下：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn levenshtein_distance_naive(source: &amp;str, target: &amp;str) -&gt; usize {
     if source.is_empty() {
@@ -357,8 +357,7 @@ $$</p>
     // 5
     *distances.last().and_then(|d| d.last()).unwrap()
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <h3 id="使用一維陣列減少記憶體配置"><a class="header" href="#使用一維陣列減少記憶體配置">使用一維陣列減少記憶體配置</a></h3>
 <p>Rust 的 <code>Vec</code> 並非簡單的 array，而是在堆積（heap）上配置記憶體，而每一個 <code>Vec</code> 都會帶一個指標和兩個值：指標指向在堆積上的資料，一個值儲存資料當前的長度，一個值儲存容量（圖解請參考 <a href="https://cheats.rs/#general-purpose-heap-storage">cheats.rs</a>）。所以 <code>Vec</code> 會佔三個 usize 的大小，在 64 位元作業系統中就是 24 個位元組。</p>
 <p>但實際上，我們的距離矩陣根本不需要真的矩陣，只需要兩個東西</p>
@@ -398,8 +397,7 @@ $$</p>
 <p><img src="opt-1.png" alt="" /></p>
 <p><em>圖五：僅使用一維陣列儲存前一列的資訊。黃色為儲存的陣列，藍色為額外儲存的置換的累積編輯距離</em></p>
 <p>這個最佳化的程式碼，比起矩陣解法又更簡短了，以下一一說明：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn levenshtein_distance(source: &amp;str, target: &amp;str) -&gt; usize {
     // 1
@@ -433,8 +431,7 @@ $$</p>
 
     *distances.last().unwrap() // 8
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <ol>
 <li>和前一段相同，計算空字串的距離。</li>
 <li>不需要初始化 a x b 個元素，只需要初始化最多一列的陣列。這裡利用 <code>0..=count</code> 這種 <a href="http://doc.rust-lang.org/core/ops/struct.RangeInclusive.html"><code>core::ops::RangeInclusive</code></a> 的寫法，直接產出含有 0 到字串長度的 <code>Vec&lt;usize&gt;</code>，這段等同 naive 作法中填入第一列全插入的編輯距離，但省下自己手寫一個迴圈。</li>
@@ -454,11 +451,12 @@ $$</p>
 <p><img src="opt-2.png" alt="" /></p>
 <p><em>圖六：使用一維陣列疊代計算，藍色為額外儲存的置換的累積編輯距離</em></p>
 <h2 id="效能"><a class="header" href="#效能">效能</a></h2>
-<table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Complexity</th></tr></thead><tbody>
 <tr><td>Worst</td><td>$O(mn)$</td></tr>
 <tr><td>Worst space</td><td>$O(\min(m,n))$</td></tr>
 <tr><td>Worst space (naive)</td><td>$O(mn)$</td></tr>
 </tbody></table>
+</div>
 <blockquote>
 <p>$m$：字串 a 的長度<br />
 $n$：字串 b 的長度</p>
@@ -477,55 +475,56 @@ $n$：字串 b 的長度</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="../hamming_distance/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../hamming_distance/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
-                                                    <a rel="next" href="../CONTRIBUTING.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+
+                            <a rel="next prefetch" href="../CONTRIBUTING.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="../hamming_distance/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../hamming_distance/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
-                                    <a rel="next" href="../CONTRIBUTING.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+
+                    <a rel="next prefetch" href="../CONTRIBUTING.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                            </nav>
+            </nav>
 
         </div>
 
-        
-        
-        
-                <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        
-                <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
-        
-                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-                <script type="text/javascript" src="../theme/custom.js"></script>
-        
-        
+        <script src="../theme/custom.js"></script>
+
+
+    </div>
     </body>
 </html>

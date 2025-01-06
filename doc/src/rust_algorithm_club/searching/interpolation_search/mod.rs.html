@@ -1,162 +1,153 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/searching/interpolation_search/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><script defer src="../../../../main.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../../rust_algorithm_club/index.html"><div class="logo-container"><img src="https://rust-algo.club/favicon.png" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../../rust_algorithm_club/index.html"><div class="logo-container">
-                    <img src="https://rust-algo.club/favicon.png" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../../rust_algorithm_club/index.html">
-                        <img src="https://rust-algo.club/favicon.png" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1"> 1</span>
-<span id="2"> 2</span>
-<span id="3"> 3</span>
-<span id="4"> 4</span>
-<span id="5"> 5</span>
-<span id="6"> 6</span>
-<span id="7"> 7</span>
-<span id="8"> 8</span>
-<span id="9"> 9</span>
-<span id="10">10</span>
-<span id="11">11</span>
-<span id="12">12</span>
-<span id="13">13</span>
-<span id="14">14</span>
-<span id="15">15</span>
-<span id="16">16</span>
-<span id="17">17</span>
-<span id="18">18</span>
-<span id="19">19</span>
-<span id="20">20</span>
-<span id="21">21</span>
-<span id="22">22</span>
-<span id="23">23</span>
-<span id="24">24</span>
-<span id="25">25</span>
-<span id="26">26</span>
-<span id="27">27</span>
-<span id="28">28</span>
-<span id="29">29</span>
-<span id="30">30</span>
-<span id="31">31</span>
-<span id="32">32</span>
-<span id="33">33</span>
-<span id="34">34</span>
-<span id="35">35</span>
-<span id="36">36</span>
-<span id="37">37</span>
-<span id="38">38</span>
-<span id="39">39</span>
-<span id="40">40</span>
-<span id="41">41</span>
-<span id="42">42</span>
-<span id="43">43</span>
-<span id="44">44</span>
-<span id="45">45</span>
-<span id="46">46</span>
-<span id="47">47</span>
-<span id="48">48</span>
-<span id="49">49</span>
-<span id="50">50</span>
-<span id="51">51</span>
-<span id="52">52</span>
-<span id="53">53</span>
-<span id="54">54</span>
-<span id="55">55</span>
-<span id="56">56</span>
-<span id="57">57</span>
-<span id="58">58</span>
-<span id="59">59</span>
-<span id="60">60</span>
-<span id="61">61</span>
-<span id="62">62</span>
-<span id="63">63</span>
-<span id="64">64</span>
-<span id="65">65</span>
-<span id="66">66</span>
-<span id="67">67</span>
-<span id="68">68</span>
-<span id="69">69</span>
-<span id="70">70</span>
-<span id="71">71</span>
-<span id="72">72</span>
-<span id="73">73</span>
-<span id="74">74</span>
-<span id="75">75</span>
-<span id="76">76</span>
-</pre><pre class="rust"><code><span class="doccomment">/// Search in sorted sequences by checking the next position based on an</span>
-<span class="doccomment">/// linear interpolation of the search key.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Parameters</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * `arr`: Slice to search in.</span>
-<span class="doccomment">/// * `target`: Object to search for.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Notes</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Since interpolations only be applied on numeric types, we choose `i32` to</span>
-<span class="doccomment">/// avoid overkilling. If you desire a full functional trait of numeric types,</span>
-<span class="doccomment">/// [num][1] crate would meet your needs.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [1]: https://github.com/rust-num/num</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interpolation_search</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span>[<span class="ident">i32</span>], <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="ident">i32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">usize</span><span class="op">&gt;</span> {
-    <span class="comment">// 1. Handle empty sequence.</span>
-    <span class="kw">if</span> <span class="ident">arr</span>.<span class="ident">is_empty</span>() {
-        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="number">0</span>);
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/searching/interpolation_search/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-46132b98.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rust_algorithm_club" data-themes="" data-resource-suffix="" data-rustdoc-version="1.86.0-nightly (3f43b1a63 2025-01-03)" data-channel="nightly" data-search-js="search-75f5ac3e.js" data-settings-js="settings-0f613d39.js" ><script src="../../../../static.files/storage-59e33391.js"></script><script defer src="../../../../static.files/src-script-56102188.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">rust_algorithm_club/searching/interpolation_search/</div>mod.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
+<a href="#2" id="2">2</a>
+<a href="#3" id="3">3</a>
+<a href="#4" id="4">4</a>
+<a href="#5" id="5">5</a>
+<a href="#6" id="6">6</a>
+<a href="#7" id="7">7</a>
+<a href="#8" id="8">8</a>
+<a href="#9" id="9">9</a>
+<a href="#10" id="10">10</a>
+<a href="#11" id="11">11</a>
+<a href="#12" id="12">12</a>
+<a href="#13" id="13">13</a>
+<a href="#14" id="14">14</a>
+<a href="#15" id="15">15</a>
+<a href="#16" id="16">16</a>
+<a href="#17" id="17">17</a>
+<a href="#18" id="18">18</a>
+<a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
+<a href="#38" id="38">38</a>
+<a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
+<a href="#41" id="41">41</a>
+<a href="#42" id="42">42</a>
+<a href="#43" id="43">43</a>
+<a href="#44" id="44">44</a>
+<a href="#45" id="45">45</a>
+<a href="#46" id="46">46</a>
+<a href="#47" id="47">47</a>
+<a href="#48" id="48">48</a>
+<a href="#49" id="49">49</a>
+<a href="#50" id="50">50</a>
+<a href="#51" id="51">51</a>
+<a href="#52" id="52">52</a>
+<a href="#53" id="53">53</a>
+<a href="#54" id="54">54</a>
+<a href="#55" id="55">55</a>
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a>
+<a href="#58" id="58">58</a>
+<a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
+<a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
+<a href="#75" id="75">75</a>
+<a href="#76" id="76">76</a></pre></div><pre class="rust"><code><span class="doccomment">/// Search in sorted sequences by checking the next position based on an
+/// linear interpolation of the search key.
+///
+/// # Parameters
+///
+/// * `arr`: Slice to search in.
+/// * `target`: Object to search for.
+///
+/// # Notes
+///
+/// Since interpolations only be applied on numeric types, we choose `i32` to
+/// avoid overkilling. If you desire a full functional trait of numeric types,
+/// [num][1] crate would meet your needs.
+///
+/// [1]: https://github.com/rust-num/num
+</span><span class="kw">pub fn </span>interpolation_search(arr: <span class="kw-2">&amp;</span>[i32], target: <span class="kw-2">&amp;</span>i32) -&gt; <span class="prelude-ty">Result</span>&lt;usize, usize&gt; {
+    <span class="comment">// 1. Handle empty sequence.
+    </span><span class="kw">if </span>arr.is_empty() {
+        <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="number">0</span>);
     }
 
-    <span class="comment">// 2. Setup variable storing iteration informaion.</span>
-    <span class="comment">// hi -&gt; upper bound of search range.</span>
-    <span class="comment">// lo -&gt; lower bound of search range.</span>
-    <span class="comment">// interpolant -&gt; position to probe in the sequence</span>
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hi</span> <span class="op">=</span> <span class="ident">arr</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lo</span> <span class="op">=</span> <span class="number">0_usize</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interpolant</span> <span class="op">=</span> <span class="number">0_usize</span>;
+    <span class="comment">// 2. Setup variable storing iteration informaion.
+    // hi -&gt; upper bound of search range.
+    // lo -&gt; lower bound of search range.
+    // interpolant -&gt; position to probe in the sequence
+    </span><span class="kw">let </span><span class="kw-2">mut </span>hi = arr.len() - <span class="number">1</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>lo = <span class="number">0_usize</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>interpolant = <span class="number">0_usize</span>;
 
-    <span class="comment">// 3. Main loop to calculate the interpolant.</span>
-    <span class="kw">loop</span> {
-        <span class="kw">let</span> <span class="ident">lo_val</span> <span class="op">=</span> <span class="ident">arr</span>[<span class="ident">lo</span>];
-        <span class="kw">let</span> <span class="ident">hi_val</span> <span class="op">=</span> <span class="ident">arr</span>[<span class="ident">hi</span>];
+    <span class="comment">// 3. Main loop to calculate the interpolant.
+    </span><span class="kw">loop </span>{
+        <span class="kw">let </span>lo_val = arr[lo];
+        <span class="kw">let </span>hi_val = arr[hi];
 
-        <span class="comment">// 3.1. Three condition to exit the loop</span>
-        <span class="comment">//   a. hi and lo flag overlapping -&gt; all elements are scanned.</span>
-        <span class="comment">//   b. target value is less than the lowest value</span>
-        <span class="comment">//   c. target value exceeds the highest value</span>
-        <span class="kw">if</span> <span class="ident">hi</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lo</span> <span class="op">|</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">target</span> <span class="op">&lt;</span> <span class="ident">lo_val</span> <span class="op">|</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">target</span> <span class="op">&gt;</span> <span class="ident">hi_val</span> {
+        <span class="comment">// 3.1. Three condition to exit the loop
+        //   a. hi and lo flag overlapping -&gt; all elements are scanned.
+        //   b. target value is less than the lowest value
+        //   c. target value exceeds the highest value
+        </span><span class="kw">if </span>hi &lt;= lo || <span class="kw-2">*</span>target &lt; lo_val || <span class="kw-2">*</span>target &gt; hi_val {
             <span class="kw">break</span>;
         }
 
-        <span class="comment">// 3.2. The linear interpolation part</span>
-        <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">target</span> <span class="op">-</span> <span class="ident">lo_val</span>) <span class="op">*</span> (<span class="ident">hi</span> <span class="op">-</span> <span class="ident">lo</span>) <span class="kw">as</span> <span class="ident">i32</span> <span class="op">/</span> (<span class="ident">hi_val</span> <span class="op">-</span> <span class="ident">lo_val</span>);
-        <span class="ident">interpolant</span> <span class="op">=</span> <span class="ident">lo</span> <span class="op">+</span> <span class="ident">offset</span> <span class="kw">as</span> <span class="ident">usize</span>;
+        <span class="comment">// 3.2. The linear interpolation part
+        </span><span class="kw">let </span>offset = (<span class="kw-2">*</span>target - lo_val) * (hi - lo) <span class="kw">as </span>i32 / (hi_val - lo_val);
+        interpolant = lo + offset <span class="kw">as </span>usize;
 
-        <span class="kw">let</span> <span class="ident">mid_val</span> <span class="op">=</span> <span class="ident">arr</span>[<span class="ident">interpolant</span>];
+        <span class="kw">let </span>mid_val = arr[interpolant];
 
-        <span class="comment">// 3.3. Comparison between the interpolant and targert value.</span>
-        <span class="comment">// New boundaries must step one index further to avoid infinite searching.</span>
-        <span class="kw">if</span> <span class="ident">mid_val</span> <span class="op">&gt;</span> <span class="kw-2">*</span><span class="ident">target</span> {
-            <span class="ident">hi</span> <span class="op">=</span> <span class="ident">interpolant</span> <span class="op">-</span> <span class="number">1</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">mid_val</span> <span class="op">&lt;</span> <span class="kw-2">*</span><span class="ident">target</span> {
-            <span class="ident">lo</span> <span class="op">=</span> <span class="ident">interpolant</span> <span class="op">+</span> <span class="number">1</span>;
-        } <span class="kw">else</span> {
+        <span class="comment">// 3.3. Comparison between the interpolant and targert value.
+        // New boundaries must step one index further to avoid infinite searching.
+        </span><span class="kw">if </span>mid_val &gt; <span class="kw-2">*</span>target {
+            hi = interpolant - <span class="number">1</span>;
+        } <span class="kw">else if </span>mid_val &lt; <span class="kw-2">*</span>target {
+            lo = interpolant + <span class="number">1</span>;
+        } <span class="kw">else </span>{
             <span class="kw">break</span>;
         }
     }
 
-    <span class="comment">// 4. Determine whether the returning interpolant equals to target value.</span>
-    <span class="comment">// `Result::Err` here maps to a position safe to insert while remains ordering.</span>
-    <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">target</span> <span class="op">&gt;</span> <span class="ident">arr</span>[<span class="ident">hi</span>] {
-        <span class="prelude-val">Err</span>(<span class="ident">hi</span> <span class="op">+</span> <span class="number">1</span>)
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">target</span> <span class="op">&lt;</span> <span class="ident">arr</span>[<span class="ident">lo</span>] {
-        <span class="prelude-val">Err</span>(<span class="ident">lo</span>)
-    } <span class="kw">else</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">interpolant</span>)
+    <span class="comment">// 4. Determine whether the returning interpolant equals to target value.
+    // `Result::Err` here maps to a position safe to insert while remains ordering.
+    </span><span class="kw">if </span><span class="kw-2">*</span>target &gt; arr[hi] {
+        <span class="prelude-val">Err</span>(hi + <span class="number">1</span>)
+    } <span class="kw">else if </span><span class="kw-2">*</span>target &lt; arr[lo] {
+        <span class="prelude-val">Err</span>(lo)
+    } <span class="kw">else </span>{
+        <span class="prelude-val">Ok</span>(interpolant)
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">base</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>base {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="macro">sorted_no_duplicate_cases!</span>(<span class="ident">interpolation_search</span>);
+    <span class="macro">sorted_no_duplicate_cases!</span>(interpolation_search);
 }
-</code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="rust_algorithm_club" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
-</body></html>
+</code></pre></div></section></main></body></html>
