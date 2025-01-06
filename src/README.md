@@ -15,7 +15,7 @@
 [swift-algorithm-club]: https://github.com/raywenderlich/swift-algorithm-club
 [rust]: https://www.rust-lang.org/
 [source-code]: https://github.com/weihanglo/rust-algorithm-club
-[main-site]: https://weihanglo.tw/rust-algorithm-club
+[main-site]: https://weihanglo.tw/rust-algorithm-club/
 [ci-status]: https://github.com/weihanglo/rust-algorithm-club/actions?query=workflow%3ACI
 [generated-doc]: https://weihanglo.tw/rust-algorithm-club/doc/rust_algorithm_club/
 [edition-guide]: https://rust-lang.github.io/edition-guide/rust-2018

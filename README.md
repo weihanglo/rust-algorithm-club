@@ -4,7 +4,7 @@
 
 # Rust Algorithm Club
 
-> ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here](https://weihanglo.tw/rust-algorithm-club) if you are able to read Chinese.
+> ### 🚧 🚧 This repo is under construction. Most materials are written in Chinese. [Check it out here][main-site] if you are able to read Chinese.
 
 Welcome to the Rust Algorithm Club! This repository was originally inspired by [Swift Algorithm Club][swift-algorithm-club]. All algorithms here would be explained and implemented in [Rust programming language][rust]!
 You can find out more on the [Rust Algorithm Club][main-site] main site. Just pick up some algorithms you are interested in and start learning. If you are brave enough, we recommend you the [auto-generated API documentation][generated-doc]. Go and fight with the source code.
